@@ -8,6 +8,7 @@ idade = 31
 e_maior = idade >= 18
 altura = 1.83
 peso = 92
+imc = peso / (altura * altura)
 
 print(f"Nome: {nome} {sobrenome}")
 print(f"Idade: {idade}")
@@ -17,4 +18,4 @@ print(f"E maior de idade: {e_maior}")
 
 
 print("***IMC****")
-print(f"Seu IMC e {peso / (altura * altura):.2f}")
+print(f"Seu IMC e {imc:.2f}")
