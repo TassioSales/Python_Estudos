@@ -9,11 +9,22 @@ print(list(nova_lista))
 
 def filtra(produto):
     if produto["preco"] > 80:
+        produto["E_caro"] = True
+    return True
+
+
+def filtro_pessoa(pessoas):
+    if pessoas['idade'] > 18:
         return True
-    else:
-        return False
 
 
 nova_lista_dois = filter(filtra, produtos)
+nova_lista_tres = filter(filtro_pessoa, pessoas)
 
-print(list(nova_lista_dois))
+for produto  in nova_lista_dois:
+    print(produto)
+
+print()
+
+for pessoa in nova_lista_tres:
+    print(pessoa)
