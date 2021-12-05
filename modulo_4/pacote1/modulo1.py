@@ -1,0 +1,1 @@
+variavel1 ="Varialvel1"
