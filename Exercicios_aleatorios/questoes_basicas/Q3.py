@@ -41,6 +41,7 @@ if __name__ == "__main__":
     redo_list = []
 
     while True:
+
         todo = input("Digite uma tarfe ou undo, redo, ls: ")
 
         if todo == 'ls':
