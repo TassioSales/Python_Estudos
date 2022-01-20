@@ -8,4 +8,6 @@ print(p2)
 print(p2.nome, p2.idade)
 print(p2.idade)
 p2.get_ano_nascimento()
+print(p2.gera_id())
+print(p1.gera_id())
 
