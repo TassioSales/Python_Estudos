@@ -14,6 +14,7 @@ def converter_segundos():
     # Exibe o resultado formatado
     print(f'{segundos_totais} segundos equivalem a: {horas:02d}:{minutos:02d}:{segundos:02d} (horas:minutos:segundos)')
 
+
 # Execução somente se o arquivo for executado diretamente
 if __name__ == '__main__':
     converter_segundos()
