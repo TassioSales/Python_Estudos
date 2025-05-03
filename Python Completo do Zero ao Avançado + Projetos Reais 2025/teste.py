@@ -1,4 +1,4 @@
-i = 6
-while (i > 0):          
-    i = i - 3    
-    print (i) 
+i = 1
+while i < n:
+      "iteração"
+      i = i + 1
