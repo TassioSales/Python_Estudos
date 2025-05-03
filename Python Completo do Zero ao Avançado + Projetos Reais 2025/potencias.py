@@ -1,15 +1,10 @@
-def calcular_potencias():
-    # Solicita a base da potência ao usuário
-    base = int(input("Digite a base da potência: "))
-    # Solicita o número final ao usuário
-    numero_final = int(input("Digite até qual número deseja calcular: "))
-    
-    # Inicia a contagem a partir da base
-    numero = base
-    while numero <= numero_final:
-        print(f"{base} ** {numero} = {base ** numero}")
-        numero += 1
+# Programa para exibir as potências de 3 até 25 usando while
 
-# Executa a função
-if __name__ == "__main__":
-    calcular_potencias()
+from os import name
+
+
+numero = 3
+while numero <= 25:
+    print(f"3 ** {numero} = {3 ** numero}")
+    numero += 1
+
