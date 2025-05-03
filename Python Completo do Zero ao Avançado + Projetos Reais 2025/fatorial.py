@@ -1,16 +1,10 @@
-# Programa para calcular o fatorial de um número natural usando while
-
-# Recebe um número natural do usuário
-n = int(input("Digite um número natural: "))
-
-# Inicializa as variáveis
-fatorial = 1
-contador = 1
-
-# Calcula o fatorial usando um loop while
-while contador <= n:
-    fatorial *= contador
-    contador += 1
-
-# Imprime o resultado
-print(f"O fatorial de {n} é {fatorial}")
+n = int(input("Digite o valor de n: "))
+if n < 0:
+    print("Número inválido, fatorial é definido apenas para números naturais")
+elif n == 0:
+    print(1)
+else:
+    fatorial = 1
+    for i in range(1, n + 1):
+        fatorial *= i
+    print(fatorial)
