@@ -65,8 +65,8 @@ def exibir_dados(dados):
             print(f"IMC: {imc_valor:.2f} - Situação: {situacao}")
     except Exception as e:
         print(f"Erro ao exibir dados: {e}")
-        return None, None   
     return imc_valor, situacao
+
 
 def main():
     """
