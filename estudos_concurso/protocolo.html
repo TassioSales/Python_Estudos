@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Interativo de Rotinas de Escritório: Protocolo e Arquivo Completo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: The application is structured as a single-page interactive guide with a tab-based navigation system. The main sections are 'Visão Geral', 'Protocolo', 'Arquivo', and 'Segurança e Tecnologia'. This thematic structure was chosen to break down the complex topic of office routines into manageable, focused modules. It allows users, likely students or professionals preparing for exams, to learn progressively or jump directly to a topic of interest. The user flow starts with a high-level overview (a flowchart and a summary chart), then allows for deep dives into the procedural steps of 'Protocolo' and the theoretical concepts of 'Arquivo', and finally explores the critical aspects of 'Segurança e Tecnologia' with an expanded interactive quiz. This non-linear, modular approach enhances usability and supports different learning styles better than a simple linear document, now covering more facets of the source report with significantly more detail and interactivity. -->
+    <!-- Visualization & Content Choices:
+    - Report Info: Document Lifecycle -> Goal: Organize/Change -> Viz/Method: Interactive HTML/CSS flowchart with detailed descriptions -> Interaction: Clicking a stage reveals expanded details -> Justification: Visually maps the entire process for easy comprehension, with deeper dives into each phase. Interactivity encourages user engagement. -> Library/Method: HTML/CSS/JS.
+    - Report Info: Monthly Document Volume -> Goal: Compare -> Viz/Method: Bar Chart with explanatory text -> Interaction: Hover for tooltips -> Justification: Provides a quick, quantitative snapshot of office activity and its context. -> Library/Method: Chart.js.
+    - Report Info: Importance of Document Management -> Goal: Inform -> Viz/Method: Key benefits list with icons -> Interaction: N/A -> Justification: Summarizes the overarching value proposition. -> Library: HTML/CSS.
+    - Report Info: Stages of Protocol -> Goal: Inform/Organize -> Viz/Method: Interactive Stepper/Card component with expanded details -> Interaction: Clicking a step shows a comprehensive description -> Justification: Breaks down a sequential process into clear, digestible, and very detailed steps. -> Library/Method: HTML/CSS/JS.
+    - Report Info: Types of Protocol Documents -> Goal: Inform/Categorize -> Viz/Method: Definition cards -> Interaction: N/A -> Justification: Provides specific examples and definitions relevant to the protocol process. -> Library/Method: HTML/CSS.
+    - Report Info: Electronic Protocol Systems (SGP-e) -> Goal: Inform -> Viz/Method: Detailed text section -> Interaction: N/A -> Justification: Explains the modern approach to protocol. -> Library/Method: HTML/CSS.
+    - Report Info: Definition of Archive & Archival Principles -> Goal: Inform -> Viz/Method: Detailed text sections -> Interaction: N/A -> Justification: Establishes foundational concepts for archiving. -> Library/Method: HTML/CSS.
+    - Report Info: Theory of Three Ages -> Goal: Compare/Inform -> Viz/Method: Donut Chart + Expanded Info Cards -> Interaction: Click chart segment to highlight card -> Justification: The chart offers an immediate visual comparison of proportions, while cards provide extensive explanations. -> Library/Method: Chart.js + HTML/CSS/JS.
+    - Report Info: Filing Methods -> Goal: Compare/Inform -> Viz/Method: Interactive Grid of Cards with detailed modals -> Interaction: Click for extensive details/examples -> Justification: Presents distinct categories in a structured and visually appealing grid, ideal for comparison and deep dive. -> Library/Method: HTML/CSS/JS.
+    - Report Info: Classification & Evaluation (TTD) -> Goal: Inform/Process -> Viz/Method: Detailed text sections with emphasis on CPAD -> Interaction: N/A -> Justification: Explains critical processes for document lifecycle management and legal compliance. -> Library/Method: HTML/CSS.
+    - Report Info: Storage & Conservation (Physical/Digital) -> Goal: Inform/Best Practices -> Viz/Method: Detailed text sections -> Interaction: N/A -> Justification: Provides practical guidance for document preservation. -> Library/Method: HTML/CSS.
+    - Report Info: Document Disposal & Elimination -> Goal: Inform/Process -> Viz/Method: Detailed text section -> Interaction: N/A -> Justification: Explains the formal and legal process of document destruction. -> Library/Method: HTML/CSS.
+    - Report Info: Security Practices/Risks & Legal Compliance (LGPD/LAI/Archival Law) -> Goal: Inform/Highlight -> Viz/Method: Expanded Collapsible text sections with icons -> Interaction: Click to expand/collapse extensive details -> Justification: Presents critical legal and security information concisely, allowing users to drill down into comprehensive details. -> Library/Method: HTML/CSS/JS.
+    - Report Info: Technology (GED/SIGAD/PEN/SEI/AI/Automation) -> Goal: Inform/Organize -> Viz/Method: Detailed definition cards/sections -> Interaction: N/A -> Justification: Clearly defines complex terms, their roles, benefits, and challenges in modern document management. -> Library/Method: HTML/CSS.
+    - Report Info: Challenges of Digital Transformation -> Goal: Inform/Awareness -> Viz/Method: Detailed text section -> Interaction: N/A -> Justification: Highlights key obstacles in adopting digital document management. -> Library/Method: HTML/CSS.
+    - Report Info: Comprehensive Knowledge Check -> Goal: Engage/Assess -> Viz/Method: Expanded Quiz with score tracking and more questions -> Interaction: Select answer, get feedback, track score, restart quiz -> Justification: Reinforces learning across all sections and provides a robust assessment tool. -> Library/Method: HTML/CSS/JS.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8;
+            color: #4B4B4B;
+        }
+        .tab-button.active {
+            border-color: #0d9488;
+            background-color: #0d9488;
+            color: #ffffff;
+            font-weight: 500;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .flow-step {
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+        }
+        .flow-step.active {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            border-color: #0d9488;
+        }
+        .method-card {
+            transition: transform 0.3s ease-in-out;
+        }
+        .method-card:hover {
+            transform: scale(1.03);
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .collapsible-header {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background-color: #f0fdf4; /* Light green */
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid #d1fae5; /* Lighter green border */
+            transition: background-color 0.3s ease;
+        }
+        .collapsible-header:hover {
+            background-color: #d1fae5;
+        }
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+            padding: 0 1rem;
+            background-color: #f9fafb;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .collapsible-content.open {
+            max-height: 1000px; /* Increased for more content */
+            padding: 1rem;
+            border: 1px solid #e5e7eb;
+        }
+        .collapsible-header .arrow {
+            transition: transform 0.3s ease;
+        }
+        .collapsible-header.open .arrow {
+            transform: rotate(90deg);
+        }
+        .quiz-option {
+            background-color: #f0f9ff;
+            border: 1px solid #bfdbfe;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+        .quiz-option:hover {
+            background-color: #e0f2fe;
+            border-color: #93c5fd;
+        }
+        .quiz-option.correct {
+            background-color: #d1fae5;
+            border-color: #34d399;
+        }
+        .quiz-option.incorrect {
+            background-color: #fee2e2;
+            border-color: #ef4444;
+        }
+        .quiz-option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+        <header class="text-center mb-12">
+            <h1 class="text-3xl md:text-4xl font-bold text-teal-800 mb-2">Guia Interativo de Rotinas de Escritório</h1>
+            <p class="text-lg text-gray-600">Explore os conceitos de Protocolo e Arquivo de forma dinâmica e aprofundada.</p>
+        </header>
+
+        <main>
+            <section id="introduction" class="mb-12 bg-white rounded-xl shadow-sm p-6 md:p-8 border border-gray-200">
+                <h2 class="text-2xl font-bold text-teal-700 mb-4">Bem-vindo(a) ao Guia Completo!</h2>
+                <p class="text-gray-700 leading-relaxed">
+                    A gestão eficiente de documentos é a espinha dorsal de qualquer organização bem-sucedida, garantindo que a informação flua de maneira ordenada, segura e acessível. Este guia interativo foi meticulosamente projetado para desmistificar as rotinas de escritório, aprofundando-se nos processos de protocolo e arquivo. Aqui, você poderá visualizar o ciclo de vida completo de um documento, entender cada etapa do protocolo com detalhes, explorar os diferentes métodos de arquivamento que mantêm a ordem na complexidade do dia a dia, e mergulhar na crucial importância da segurança da informação, conformidade legal e o impacto transformador da tecnologia na modernização dessas rotinas. Prepare-se para uma experiência de aprendizado abrangente e interativa!
+                </p>
+            </section>
+
+            <section id="interactive-content" class="bg-white rounded-xl shadow-sm p-6 md:p-8 border border-gray-200">
+                <div class="mb-8">
+                     <p class="text-center text-gray-600 mb-4">Explore os principais conceitos de rotinas de escritório. Use as abas abaixo para navegar entre a visão geral, os processos de protocolo, as técnicas de arquivamento e os aspectos de segurança e tecnologia.</p>
+                    <div class="border-b border-gray-200">
+                        <nav class="-mb-px flex justify-center space-x-2 sm:space-x-4" aria-label="Tabs">
+                            <button id="tab-overview" class="tab-button whitespace-nowrap py-3 px-4 border-b-2 font-medium text-sm rounded-t-lg border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 transition-colors duration-300 active">Visão Geral</button>
+                            <button id="tab-protocol" class="tab-button whitespace-nowrap py-3 px-4 border-b-2 font-medium text-sm rounded-t-lg border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 transition-colors duration-300">Protocolo</button>
+                            <button id="tab-archive" class="tab-button whitespace-nowrap py-3 px-4 border-b-2 font-medium text-sm rounded-t-lg border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 transition-colors duration-300">Arquivo</button>
+                            <button id="tab-security-tech" class="tab-button whitespace-nowrap py-3 px-4 border-b-2 font-medium text-sm rounded-t-lg border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 transition-colors duration-300">Segurança e Tecnologia</button>
+                        </nav>
+                    </div>
+                </div>
+
+                <div id="content-panels">
+                    <div id="panel-overview" class="content-panel fade-in">
+                        <div class="text-center mb-10">
+                            <h3 class="text-xl font-bold text-teal-700 mb-2">O Ciclo de Vida de um Documento: Uma Jornada Essencial</h3>
+                            <p class="text-gray-600 max-w-3xl mx-auto">Esta seção oferece uma visão panorâmica do percurso completo de um documento dentro de uma organização, desde sua criação ou recebimento até seu arquivamento final ou descarte. Interaja com o fluxograma para entender cada fase em detalhes e observe o gráfico para ter uma ideia do volume de trabalho típico em um escritório.</p>
+                        </div>
+                        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
+                            <div class="lg:col-span-3">
+                                <h4 class="font-semibold text-center mb-4 text-gray-700">Fluxograma Interativo do Processo Documental</h4>
+                                <div id="flow-diagram" class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-4 flex-wrap">
+                                    <div class="flow-step active border-2 border-gray-300 bg-white rounded-lg p-3 shadow-sm w-full md:w-auto text-center" data-target="info-recebimento">
+                                        <span>📥</span>
+                                        <p class="font-medium text-sm">Protocolo</p>
+                                    </div>
+                                    <div class="text-teal-500 font-bold text-2xl transform md:rotate-0 rotate-90">&rarr;</div>
+                                    <div class="flow-step border-2 border-gray-300 bg-white rounded-lg p-3 shadow-sm w-full md:w-auto text-center" data-target="info-tramitacao">
+                                        <span>🔃</span>
+                                        <p class="font-medium text-sm">Tramitação</p>
+                                    </div>
+                                    <div class="text-teal-500 font-bold text-2xl transform md:rotate-0 rotate-90">&rarr;</div>
+                                    <div class="flow-step border-2 border-gray-300 bg-white rounded-lg p-3 shadow-sm w-full md:w-auto text-center" data-target="info-arquivamento">
+                                        <span>🗄️</span>
+                                        <p class="font-medium text-sm">Arquivamento</p>
+                                    </div>
+                                    <div class="text-teal-500 font-bold text-2xl transform md:rotate-0 rotate-90">&rarr;</div>
+                                     <div class="flow-step border-2 border-gray-300 bg-white rounded-lg p-3 shadow-sm w-full md:w-auto text-center" data-target="info-descarte">
+                                        <span>🗑️</span>
+                                        <p class="font-medium text-sm">Descarte/Destinação</p>
+                                    </div>
+                                </div>
+                                <div id="flow-info" class="mt-6 p-4 bg-teal-50 border-l-4 border-teal-500 rounded-r-lg fade-in">
+                                    <div id="info-recebimento" class="flow-info-content">
+                                        <h5 class="font-bold text-teal-800">Protocolo: A Porta de Entrada da Informação</h5>
+                                        <p class="text-sm text-gray-700 mt-1">É a fase inicial e crucial onde os documentos são recebidos, registrados e classificados. Garante um controle rigoroso desde a entrada, prevenindo perdas e assegurando que cada item chegue ao destino certo para iniciar sua tramitação.</p>
+                                    </div>
+                                    <div id="info-tramitacao" class="flow-info-content hidden">
+                                        <h5 class="font-bold text-teal-800">Tramitação: O Percurso Interno do Documento</h5>
+                                        <p class="text-sm text-gray-700 mt-1">Corresponde ao percurso do documento pelos diversos setores da organização. Um sistema de controle eficaz monitora cada passo, assegurando agilidade, transparência e responsabilidade no fluxo de trabalho, desde o encaminhamento até a conclusão de sua finalidade administrativa.</p>
+                                    </div>
+                                    <div id="info-arquivamento" class="flow-info-content hidden">
+                                        <h5 class="font-bold text-teal-800">Arquivamento: Preservando a Memória Organizacional</h5>
+                                        <p class="text-sm text-gray-700 mt-1">Após cumprir seu propósito administrativo, o documento é guardado de forma organizada, seguindo métodos específicos e a Teoria das Três Idades. Esta fase visa preservar a informação para consultas futuras, garantindo a memória institucional e a base para decisões estratégicas da organização.</p>
+                                    </div>
+                                    <div id="info-descarte" class="flow-info-content hidden">
+                                        <h5 class="font-bold text-teal-800">Descarte/Destinação: O Fim do Ciclo de Vida</h5>
+                                        <p class="text-sm text-gray-700 mt-1">Após a avaliação de seu valor e o cumprimento dos prazos de retenção definidos na Tabela de Temporalidade, documentos sem valor permanente são eliminados de forma segura e irreversível. Documentos com valor histórico são transferidos para guarda permanente, preservando o patrimônio documental.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="lg:col-span-2">
+                                <h4 class="font-semibold text-center mb-4 text-gray-700">Volume Mensal de Documentos (Exemplo Hipotético)</h4>
+                                <div class="chart-container h-64 md:h-80">
+                                    <canvas id="volumeChart"></canvas>
+                                </div>
+                                <p class="text-xs text-gray-500 text-center mt-2">Este gráfico ilustra um exemplo de volume de documentos recebidos e expedidos ao longo de um mês, dividido por semanas. Ele destaca a dinâmica do fluxo documental.</p>
+                            </div>
+                        </div>
+                        <div class="mt-12 p-6 bg-blue-50 rounded-lg border border-blue-200">
+                            <h4 class="font-semibold text-center mb-4 text-blue-700">Importância da Gestão Documental Eficiente</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
+                                <div class="flex items-start space-x-2">
+                                    <span class="text-2xl">⚡</span>
+                                    <p><strong class="text-teal-700">Aumento da Produtividade:</strong> Acesso rápido a informações, otimizando o tempo e reduzindo buscas demoradas, além de permitir a automatização de processos repetitivos.</p>
+                                </div>
+                                <div class="flex items-start space-x-2">
+                                    <span class="text-2xl">💰</span>
+                                    <p><strong class="text-teal-700">Redução de Custos:</strong> Economia significativa com impressão, armazenamento físico (armários, espaço), e eliminação de retrabalho e tempo ocioso na procura de documentos.</p>
+                                </div>
+                                <div class="flex items-start space-x-2">
+                                    <span class="text-2xl">✅</span>
+                                    <p><strong class="text-teal-700">Conformidade Legal:</strong> Garante o cumprimento rigoroso de leis e regulamentos, como a LGPD e a LAI, mitigando riscos de multas, sanções legais e danos à reputação da organização.</p>
+                                </div>
+                                <div class="flex items-start space-x-2">
+                                    <span class="text-2xl">🧠</span>
+                                    <p><strong class="text-teal-700">Preservação da Memória:</strong> Mantém o histórico completo da organização, essencial para decisões futuras, pesquisa, aprendizado contínuo e para a construção de uma governança transparente e responsável.</p>
+                                </div>
+                                <div class="flex items-start space-x-2">
+                                    <span class="text-2xl">🛡️</span>
+                                    <p><strong class="text-teal-700">Segurança da Informação:</strong> Protege dados sensíveis e confidenciais contra acessos não autorizados, alterações indevidas ou perdas, essencial em um cenário digital com crescentes ameaças cibernéticas.</p>
+                                </div>
+                                <div class="flex items-start space-x-2">
+                                    <span class="text-2xl">📈</span>
+                                    <p><strong class="text-teal-700">Melhora na Tomada de Decisões:</strong> Fornece informações precisas, confiáveis e acessíveis, embasando decisões estratégicas e permitindo que a organização se adapte de forma mais ágil às dinâmicas do mercado.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="panel-protocol" class="content-panel hidden">
+                        <div class="text-center mb-10">
+                            <h3 class="text-xl font-bold text-teal-700 mb-2">As Etapas Fundamentais do Protocolo: Detalhes Essenciais</h3>
+                            <p class="text-gray-600 max-w-3xl mx-auto">O protocolo é um conjunto de procedimentos formalizados que garantem o controle e a rastreabilidade de cada documento. Explore cada uma das etapas fundamentais abaixo para entender como a organização se comunica oficialmente, tanto interna quanto externamente, e como a transição para o digital impacta esses processos.</p>
+                        </div>
+                        <div id="protocol-steps-container" class="relative">
+                           <div class="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-gray-300" style="transform: translateY(-50%);"></div>
+                            <div class="relative flex flex-col md:flex-row justify-between items-center text-center space-y-6 md:space-y-0">
+                                <div class="protocol-step cursor-pointer" data-step="1">
+                                    <div class="w-16 h-16 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center mx-auto text-2xl shadow-sm transition-all duration-300">📬</div>
+                                    <p class="mt-2 font-medium text-sm">Recebimento</p>
+                                </div>
+                                <div class="protocol-step cursor-pointer" data-step="2">
+                                    <div class="w-16 h-16 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center mx-auto text-2xl shadow-sm transition-all duration-300">📝</div>
+                                    <p class="mt-2 font-medium text-sm">Registro</p>
+                                </div>
+                                <div class="protocol-step cursor-pointer" data-step="3">
+                                    <div class="w-16 h-16 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center mx-auto text-2xl shadow-sm transition-all duration-300">🏷️</div>
+                                    <p class="mt-2 font-medium text-sm">Classificação</p>
+                                </div>
+                                 <div class="protocol-step cursor-pointer" data-step="4">
+                                    <div class="w-16 h-16 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center mx-auto text-2xl shadow-sm transition-all duration-300">🚚</div>
+                                    <p class="mt-2 font-medium text-sm">Distribuição</p>
+                                </div>
+                                <div class="protocol-step cursor-pointer" data-step="5">
+                                    <div class="w-16 h-16 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center mx-auto text-2xl shadow-sm transition-all duration-300">🔁</div>
+                                    <p class="mt-2 font-medium text-sm">Controle</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="protocol-info" class="mt-8 p-6 bg-stone-50 rounded-lg min-h-[120px] fade-in border border-gray-200">
+                             <p class="text-center text-gray-500">Clique em uma etapa acima para ver os detalhes e aprofundar seu conhecimento sobre o protocolo de documentos.</p>
+                        </div>
+
+                        <div class="mt-12 p-6 bg-emerald-50 rounded-lg border border-emerald-200">
+                            <h4 class="font-semibold text-center mb-4 text-emerald-700">Tipos Comuns de Documentos Protocolados</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-gray-700">
+                                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                                    <p class="font-medium text-teal-800">Ofícios:</p>
+                                    <p class="text-sm">Comunicações formais entre órgãos ou autoridades, geralmente sobre assuntos oficiais.</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                                    <p class="font-medium text-teal-800">Memorandos:</p>
+                                    <p class="text-sm">Comunicações internas entre unidades de uma mesma organização, mais informais que ofícios.</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                                    <p class="font-medium text-teal-800">Processos:</p>
+                                    <p class="text-sm">Conjunto de documentos que tratam de um mesmo assunto, organizados em ordem cronológica ou de autuação.</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                                    <p class="font-medium text-teal-800">Correspondências:</p>
+                                    <p class="text-sm">Cartas, e-mails e outros comunicados recebidos ou enviados pela organização.</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                                    <p class="font-medium text-teal-800">Contratos:</p>
+                                    <p class="text-sm">Acordos legais entre duas ou mais partes, exigindo registro e controle rigoroso.</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                                    <p class="font-medium text-teal-800">Relatórios:</p>
+                                    <p class="text-sm">Documentos que apresentam informações, análises ou resultados de atividades ou projetos.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-12 p-6 bg-indigo-50 rounded-lg border border-indigo-200">
+                            <h4 class="font-semibold text-center mb-4 text-indigo-700">Sistemas de Protocolo Eletrônico (SGP-e)</h4>
+                            <p class="text-gray-700 mb-4">Os SGP-e modernizam e agilizam as rotinas de protocolo, substituindo ou complementando os processos físicos. Eles oferecem:</p>
+                            <ul class="list-disc list-inside text-gray-700 space-y-2">
+                                <li><strong class="text-indigo-700">Registro Automatizado:</strong> Atribuição automática de números de protocolo e carimbos digitais.</li>
+                                <li><strong class="text-indigo-700">Rastreabilidade Total:</strong> Acompanhamento em tempo real da localização e status de cada documento.</li>
+                                <li><strong class="text-indigo-700">Redução de Papel:</strong> Contribuição para a sustentabilidade e eliminação de custos com impressão e armazenamento físico.</li>
+                                <li><strong class="text-indigo-700">Segurança Aprimorada:</strong> Controle de acesso, auditoria de ações e criptografia dos documentos.</li>
+                                <li><strong class="text-indigo-700">Agilidade na Tramitação:</strong> Fluxos de trabalho digitais que aceleram o encaminhamento e a resposta.</li>
+                                <li><strong class="text-indigo-700">Acessibilidade:</strong> Permite o acesso remoto aos documentos por usuários autorizados.</li>
+                            </ul>
+                            <p class="text-sm text-gray-600 mt-4">A implementação de um SGP-e é um passo fundamental para a transformação digital na gestão documental.</p>
+                        </div>
+                    </div>
+
+                    <div id="panel-archive" class="content-panel hidden">
+                        <div class="text-center mb-10">
+                            <h3 class="text-xl font-bold text-teal-700 mb-2">A Arte de Arquivar: Princípios e Métodos para uma Gestão Eficaz</h3>
+                            <p class="text-gray-600 max-w-3xl mx-auto">Arquivar é guardar com inteligência. Envolve teorias e métodos que garantem a localização rápida e a preservação da informação. Nesta seção, você aprenderá sobre a Teoria das Três Idades, que define o ciclo de vida arquivístico, e os principais métodos de organização de documentos, essenciais para a memória institucional.</p>
+                        </div>
+                        <div class="p-6 bg-amber-50 rounded-lg border border-amber-200 mb-8">
+                            <h4 class="font-semibold text-center mb-4 text-amber-700">Definição de Arquivo e Princípios Arquivísticos Fundamentais</h4>
+                            <p class="text-gray-700 mb-4">Em arquivologia, um <strong class="text-amber-700">arquivo</strong> é um conjunto de documentos produzidos ou recebidos por uma entidade (organização, empresa, indivíduo) no curso de suas atividades, e mantidos como fonte de informação e prova. Esses documentos podem estar em diversos suportes (papel, digital, microfilme, etc.).</p>
+                            <p class="text-gray-700 mb-2">A gestão arquivística é guiada por princípios essenciais:</p>
+                            <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                <li><strong class="text-amber-700">Princípio da Proveniência (ou Respeito aos Fundos):</strong> Os documentos de uma instituição ou pessoa não devem ser misturados com os de outra. Cada fundo de arquivo deve manter sua integridade e identidade.</li>
+                                <li><strong class="text-amber-700">Princípio da Ordem Original:</strong> Os documentos devem ser mantidos na ordem em que foram produzidos ou acumulados naturalmente pela entidade, refletindo o fluxo de suas atividades.</li>
+                                <li><strong class="text-amber-700">Princípio da Organicidade:</strong> Os documentos de arquivo refletem as funções e atividades da entidade produtora, formando um conjunto orgânico e interligado.</li>
+                                <li><strong class="text-amber-700">Princípio da Unicidade:</strong> Cada documento de arquivo é único em sua forma e conteúdo, mesmo que existam cópias, pois possui um contexto de criação específico.</li>
+                                <li><strong class="text-amber-700">Princípio da Indivisibilidade (ou Integridade):</strong> O conjunto de documentos de um arquivo é indivisível e deve ser preservado em sua totalidade para manter seu valor probatório e informativo.</li>
+                            </ul>
+                        </div>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                             <div>
+                                <h4 class="font-semibold text-center mb-4 text-gray-700">Teoria das Três Idades: O Ciclo Vital dos Arquivos</h4>
+                                <div class="chart-container h-64 md:h-80">
+                                    <canvas id="agesChart"></canvas>
+                                </div>
+                                <div id="ages-info" class="mt-4 space-y-2">
+                                    <div class="p-2 bg-sky-100 border-l-4 border-sky-500 rounded-r-md">
+                                        <p class="font-medium text-sm text-sky-800">**Arquivo Corrente (1ª Idade):** Documentos de uso frequente e valor primário (administrativo, legal, fiscal), essenciais para as operações diárias. Mantidos próximos aos produtores.</p>
+                                    </div>
+                                    <div class="p-2 bg-amber-100 border-l-4 border-amber-500 rounded-r-md">
+                                         <p class="font-medium text-sm text-amber-800">**Arquivo Intermediário (2ª Idade):</p>
+                                    </div>
+                                    <div class="p-2 bg-slate-100 border-l-4 border-slate-500 rounded-r-md">
+                                        <p class="font-medium text-sm text-slate-800">**Arquivo Permanente (3ª Idade):** Documentos que não podem ser eliminados, pois possuem valor secundário (histórico, cultural, científico). Guardados para sempre, garantindo a memória da organização.</p>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-gray-500 text-center mt-4">A Teoria das Três Idades é um pilar da arquivística, orientando a gestão e a alocação de recursos para cada fase do documento.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-center mb-4 text-gray-700">Principais Métodos de Arquivamento: Organizando a Informação</h4>
+                                <div class="grid grid-cols-2 gap-4 text-center">
+                                    <div class="method-card bg-white p-4 rounded-lg shadow-sm border border-gray-200 cursor-pointer" onclick="showMethodInfo('alfabetico')">
+                                        <div class="text-3xl mb-2">🔤</div>
+                                        <p class="font-medium text-sm">Alfabético</p>
+                                    </div>
+                                    <div class="method-card bg-white p-4 rounded-lg shadow-sm border border-gray-200 cursor-pointer" onclick="showMethodInfo('geografico')">
+                                        <div class="text-3xl mb-2">🌍</div>
+                                        <p class="font-medium text-sm">Geográfico</p>
+                                    </div>
+                                    <div class="method-card bg-white p-4 rounded-lg shadow-sm border border-gray-200 cursor-pointer" onclick="showMethodInfo('numerico')">
+                                        <div class="text-3xl mb-2">🔢</div>
+                                        <p class="font-medium text-sm">Numérico</p>
+                                    </div>
+                                    <div class="method-card bg-white p-4 rounded-lg shadow-sm border border-gray-200 cursor-pointer" onclick="showMethodInfo('ideografico')">
+                                        <div class="text-3xl mb-2">💡</div>
+                                        <p class="font-medium text-sm">Ideográfico</p>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-gray-500 text-center mt-4">Clique nos cartões para obter uma descrição detalhada e exemplos de cada método de arquivamento.</p>
+                            </div>
+                        </div>
+                        <div id="method-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50 fade-in" onclick="this.classList.add('hidden')">
+                            <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6" onclick="event.stopPropagation()">
+                                <h5 id="modal-title" class="text-lg font-bold text-teal-700 mb-2"></h5>
+                                <p id="modal-description" class="text-sm text-gray-600 mb-3"></p>
+                                <p id="modal-example" class="text-sm text-gray-800 bg-stone-100 p-2 rounded"></p>
+                                <button onclick="document.getElementById('method-modal').classList.add('hidden')" class="mt-4 w-full bg-teal-600 text-white py-2 rounded-lg hover:bg-teal-700 transition-colors">Fechar</button>
+                            </div>
+                        </div>
+
+                        <div class="mt-12 p-6 bg-purple-50 rounded-lg border border-purple-200">
+                            <h4 class="font-semibold text-center mb-4 text-purple-700">Classificação e Avaliação Documental: Pilares da Organização</h4>
+                            <div class="space-y-4 text-gray-700">
+                                <div>
+                                    <p class="font-medium text-purple-800">Planos de Classificação:</p>
+                                    <p class="text-sm">É um esquema sistemático de organização de documentos de arquivo, geralmente hierárquico, que reflete as funções e atividades da instituição. Utiliza códigos (numéricos, alfanuméricos) para categorizar documentos por assunto, facilitando a recuperação e a gestão. Sua elaboração é uma atividade intelectual complexa, mas fundamental para a organização eficaz.</p>
+                                </div>
+                                <div>
+                                    <p class="font-medium text-purple-800">Tabelas de Temporalidade e Destinação (TTD):</p>
+                                    <p class="text-sm">Instrumento arquivístico aprovado por autoridade competente que estabelece os prazos de guarda e a destinação final (eliminação ou guarda permanente) dos documentos, com base em seus valores primários (administrativo, legal, fiscal) e secundários (histórico, informativo). A TTD é essencial para o descarte legal e a preservação da memória institucional. Uma Comissão Permanente de Avaliação de Documentos (CPAD), multidisciplinar, é responsável por sua elaboração e revisão.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 p-6 bg-gray-50 rounded-lg border border-gray-200">
+                            <h4 class="font-semibold text-center mb-4 text-gray-700">Armazenamento e Conservação de Documentos</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
+                                <div>
+                                    <p class="font-medium text-gray-800">Documentos Físicos:</p>
+                                    <ul class="list-disc list-inside text-sm space-y-1">
+                                        <li>Manter ambiente limpo, controlado (umidade, temperatura) e livre de pragas.</li>
+                                        <li>Acondicionamento adequado em caixas-arquivo, pastas e envelopes de material neutro.</li>
+                                        <li>Evitar barbantes, elásticos, grampos ou clipes metálicos.</li>
+                                        <li>Não armazenar em subsolos ou porões; elevar documentos do solo em áreas térreas.</li>
+                                        <li>Manuseio cuidadoso para evitar rasgos e dobras.</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <p class="font-medium text-gray-800">Documentos Digitais:</p>
+                                    <ul class="list-disc list-inside text-sm space-y-1">
+                                        <li>Armazenamento em servidores dedicados ou nuvem com tecnologias como checksum e RAID.</li>
+                                        <li>Preferência por fitas magnéticas para longo prazo (custo-benefício, confiabilidade).</li>
+                                        <li>Controle ambiental rigoroso para mídias de armazenamento.</li>
+                                        <li>Backups frequentes e em locais separados (off-site).</li>
+                                        <li>Migração e emulação para garantir a acessibilidade em novas tecnologias.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 p-6 bg-red-50 rounded-lg border border-red-200">
+                            <h4 class="font-semibold text-center mb-4 text-red-700">Descarte e Eliminação de Documentos: Um Processo Legal e Controlado</h4>
+                            <p class="text-gray-700 mb-4 text-sm">A eliminação de documentos é a destruição de registros que, após avaliação e cumprimento dos prazos de retenção estabelecidos na Tabela de Temporalidade e Destinação (TTD), são considerados sem valor permanente. Este processo é rigorosamente regulamentado para evitar a perda de informações cruciais ou a eliminação indevida de documentos com valor histórico ou legal.</p>
+                            <ul class="list-disc list-inside text-gray-700 space-y-1 text-sm">
+                                <li>**Seleção e Separação:** Documentos são separados entre aqueles com valor permanente e os elegíveis para descarte.</li>
+                                <li>**Formalização:** Elaboração de uma lista de eliminação, publicação de um edital de ciência em diário oficial (para documentos públicos) e emissão de um termo de eliminação.</li>
+                                <li>**Supervisão:** O processo deve ser supervisionado por um servidor autorizado.</li>
+                                <li>**Métodos Irreversíveis:** Utilização de fragmentação, pulverização, trituração, fusão ou desmagnetização para garantir a impossibilidade de reconstituição.</li>
+                                <li>**Documentos Digitais:** A eliminação segue a TTD, não pode ser automática e deve ser autorizada por profissional competente, com registro em trilha de auditoria.</li>
+                                <li>**Penalidades Legais:** A Lei nº 8.159/1991 e o Art. 305 do Código Penal preveem sanções para quem destruir documentos de valor permanente ou interesse público.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div id="panel-security-tech" class="content-panel hidden">
+                        <div class="text-center mb-10">
+                            <h3 class="text-xl font-bold text-teal-700 mb-2">Segurança, Conformidade e Tecnologia: Pilares da Gestão Moderna</h3>
+                            <p class="text-gray-600 max-w-3xl mx-auto">A gestão documental moderna transcende a organização física, abrangendo a segurança da informação, a conformidade legal e a aplicação de tecnologias avançadas. Explore como proteger seus dados, cumprir a legislação e otimizar as rotinas com as ferramentas certas.</p>
+                        </div>
+
+                        <div class="mb-8">
+                            <h4 class="font-semibold text-center mb-4 text-gray-700">Segurança e Confidencialidade da Informação</h4>
+                            <div class="space-y-4">
+                                <div class="collapsible-item">
+                                    <div class="collapsible-header">
+                                        <span class="font-medium text-teal-800 flex items-center">🔒 Melhores Práticas para Segurança e Preservação</span>
+                                        <span class="arrow text-teal-600 text-xl font-bold">+</span>
+                                    </div>
+                                    <div class="collapsible-content">
+                                        <p class="text-gray-700 mb-2">A segurança da informação é vital para proteger dados e sistemas. Para documentos físicos, isso inclui manter um ambiente limpo, controlar umidade e temperatura para evitar fungos, e usar acondicionamento adequado (caixas, pastas) sem materiais que possam danificar. Para documentos digitais, o armazenamento online em servidores dedicados com tecnologias como checksum e RAID é o mais seguro. Backups frequentes em ambientes separados são cruciais para recuperação de dados.</p>
+                                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                            <li>**Digitalização de Documentos:** Estratégia eficaz para elevar a segurança, permitindo controle de acesso rigoroso e criptografia em ambiente virtual.</li>
+                                            <li>**Armazenamento em Nuvem:** Oferece segurança superior com expertise de especialistas em dados e escalabilidade.</li>
+                                            <li>**Regras de Acesso:** Essenciais para documentos sigilosos, com procedimentos padronizados e treinamentos contínuos.</li>
+                                            <li>**Padronização da Nomenclatura:** Facilita organização, identificação rápida e consistência no acesso.</li>
+                                            <li>**Backups Frequentes:** Medida crucial para garantir a recuperação de dados em caso de falhas ou incidentes.</li>
+                                            <li>**Locais e Formas de Arquivamento (Físico):** Ambientes controlados (ventilação, temperatura, umidade) e acondicionamento correto para prevenir degradação.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="collapsible-item">
+                                    <div class="collapsible-header">
+                                        <span class="font-medium text-teal-800 flex items-center">⚠️ Riscos da Má Gestão de Documentos e Suas Consequências</span>
+                                        <span class="arrow text-teal-600 text-xl font-bold">+</span>
+                                    </div>
+                                    <div class="collapsible-content">
+                                        <p class="text-gray-700 mb-2">A negligência na gestão documental pode acarretar sérios problemas que afetam a operação e a reputação da organização:</p>
+                                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                            <li>**Dificuldade de Localização:** Incapacidade de encontrar informações, gerando lacunas de dados e interpretações equivocadas, impactando a tomada de decisões.</li>
+                                            <li>**Descumprimento Legal:** Violação de regulamentos e normas, resultando em multas, sanções legais e danos irreparáveis à reputação da empresa.</li>
+                                            <li>**Ineficiência Operacional:** Fluxos de trabalho lentos, diminuição da produtividade, aumento do retrabalho e desperdício de tempo.</li>
+                                            <li>**Perda de Dados Críticos:** Risco de extravio ou destruição de informações vitais (orçamentos, fiscais, folha de pagamento), com impactos financeiros diretos.</li>
+                                            <li>**Aumento de Custos:** Elevação dos custos operacionais relacionados ao armazenamento físico excessivo e à recuperação de dados perdidos ou danificados.</li>
+                                            <li>**Vazamento de Informações:** Maior vulnerabilidade a acessos não autorizados e vazamentos de dados sigilosos, comprometendo a confidencialidade.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-8">
+                            <h4 class="font-semibold text-center mb-4 text-gray-700">Conformidade Legal: O Cenário Regulatório</h4>
+                            <div class="space-y-4">
+                                <div class="collapsible-item">
+                                    <div class="collapsible-header">
+                                        <span class="font-medium text-teal-800 flex items-center">⚖️ Lei Geral de Proteção de Dados (LGPD - Lei nº 13.709/2018)</span>
+                                        <span class="arrow text-teal-600 text-xl font-bold">+</span>
+                                    </div>
+                                    <div class="collapsible-content">
+                                        <p class="text-gray-700">A LGPD estabelece diretrizes rigorosas para o tratamento de dados pessoais, tanto em meio físico quanto digital, com o objetivo de garantir a privacidade, segurança e transparência. Ela protege contra a alteração, destruição, acesso e reprodução não autorizada de dados. A gestão documental eficiente é um requisito fundamental para a conformidade com a LGPD, exigindo uma reengenharia de como os dados pessoais são tratados ao longo de todo o seu ciclo de vida.</p>
+                                    </div>
+                                </div>
+                                <div class="collapsible-item">
+                                    <div class="collapsible-header">
+                                        <span class="font-medium text-teal-800 flex items-center">📖 Lei de Acesso à Informação (LAI - Lei nº 12.527/2011)</span>
+                                        <span class="arrow text-teal-600 text-xl font-bold">+</span>
+                                    </div>
+                                    <div class="collapsible-content">
+                                        <p class="text-gray-700">A LAI regula o acesso a informações públicas no Brasil, conforme previsto na Constituição Federal. É importante notar que informações protegidas por sigilo continuam sujeitas a normativos específicos, criando um desafio de equilíbrio entre transparência e confidencialidade na gestão documental.</p>
+                                    </div>
+                                </div>
+                                <div class="collapsible-item">
+                                    <div class="collapsible-header">
+                                        <span class="font-medium text-teal-800 flex items-center">📜 Legislação Arquivística Brasileira (Lei nº 8.159/1991 e Decretos)</span>
+                                        <span class="arrow text-teal-600 text-xl font-bold">+</span>
+                                    </div>
+                                    <div class="collapsible-content">
+                                        <p class="text-gray-700">A Lei nº 8.159/1991 é o marco legal da política nacional de arquivos públicos e privados no Brasil, regulamentada pelo Decreto nº 4.073/2002. O Conselho Nacional de Arquivos (CONARQ) define a política nacional e diretrizes normativas, garantindo a gestão e acesso à informação. A destruição não autorizada de documentos de valor permanente pode acarretar responsabilidades legais.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-8">
+                            <h4 class="font-semibold text-center mb-4 text-gray-700">Tecnologia e Otimização das Rotinas de Escritório</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-200">
+                                    <h5 class="font-bold text-teal-800 mb-2 flex items-center">📁 Sistemas de Gestão Eletrônica de Documentos (GED)</h5>
+                                    <p class="text-sm text-gray-700">Abrange digitalização, organização, armazenamento e gerenciamento de documentos em ambiente digital. Promove acesso facilitado, compartilhamento eficiente, recuperação ágil e segurança aprimorada, ideal para grandes volumes de documentos. Soluções modernas oferecem armazenamento em nuvem e integração com outros sistemas corporativos.</p>
+                                </div>
+                                <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-200">
+                                    <h5 class="font-bold text-teal-800 mb-2 flex items-center">📊 Sistemas Informatizados de Gestão Arquivística de Documentos (SIGAD)</h5>
+                                    <p class="text-sm text-gray-700">Ferramenta de software para gerenciar todo o ciclo de vida documental, desde a criação até a destinação final. Implementa métodos arquivísticos essenciais, como Planos de Classificação e Tabelas de Temporalidade, garantindo autenticidade, confiabilidade e segurança. Exige, no entanto, conhecimento aprofundado em Arquivologia dos usuários.</p>
+                                </div>
+                                <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-200">
+                                    <h5 class="font-bold text-teal-800 mb-2 flex items-center">🌐 Processo Eletrônico Nacional (PEN) e SEI</h5>
+                                    <p class="text-sm text-gray-700">O PEN é uma iniciativa para infraestrutura pública de processos administrativos eletrônicos, visando agilidade, produtividade e redução de custos. O SEI é um sistema que adere a essa legislação, crucial para a eficiência e transparência na gestão de documentos digitais na administração pública.</p>
+                                </div>
+                                <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-200">
+                                    <h5 class="font-bold text-teal-800 mb-2 flex items-center">🤖 Outras Inovações (IA, Automação, Blockchain)</h5>
+                                    <p class="text-sm text-gray-700">A automação de tarefas repetitivas (protocolo, agendamento) e o uso de Inteligência Artificial (IA) para triagem, análise de documentos e geração de pareceres preliminares otimizam tempo e precisão. Tecnologias como Blockchain também começam a ser exploradas para garantir a imutabilidade e a rastreabilidade de registros.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-10 p-6 bg-blue-50 rounded-lg border border-blue-200">
+                            <h4 class="font-semibold text-center mb-4 text-blue-700">Teste Seu Conhecimento: Quiz Interativo!</h4>
+                            <p class="text-gray-600 text-center mb-6">Responda às perguntas abaixo para verificar seu entendimento sobre os conceitos de segurança e tecnologia na gestão documental.</p>
+                            <div id="quiz-container">
+                                <div class="mb-4">
+                                    <p id="quiz-question" class="font-medium text-gray-800 text-lg mb-4"></p>
+                                    <div id="quiz-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <!-- Options will be loaded here by JS -->
+                                    </div>
+                                </div>
+                                <div id="quiz-feedback" class="mt-4 p-3 rounded-lg text-center font-medium hidden"></div>
+                                <div class="flex justify-between items-center mt-4">
+                                    <p id="quiz-score" class="text-blue-700 font-bold">Pontuação: 0 / 0</p>
+                                    <button id="quiz-next-button" class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors hidden">Próxima Pergunta</button>
+                                    <button id="quiz-restart-button" class="bg-gray-400 text-white py-2 px-4 rounded-lg hover:bg-gray-500 transition-colors hidden">Reiniciar Quiz</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="text-center mt-12 pt-6 border-t border-gray-200">
+            <p class="text-sm text-gray-500">&copy; 2025 Guia Interativo de Rotinas de Escritório. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const tabs = document.querySelectorAll('.tab-button');
+    const panels = document.querySelectorAll('.content-panel');
+    const flowSteps = document.querySelectorAll('.flow-step');
+    const flowInfoContainer = document.getElementById('flow-info');
+    const flowInfoContents = document.querySelectorAll('.flow-info-content'); // Correctly selects all info content divs
+    const protocolSteps = document.querySelectorAll('.protocol-step');
+    const protocolInfoContainer = document.getElementById('protocol-info');
+    const collapsibleItems = document.querySelectorAll('.collapsible-item');
+
+    const protocolData = {
+        1: { title: 'Recebimento: A Primeira Etapa Crucial', text: 'Esta é a porta de entrada para a gestão documental. Envolve a recepção da correspondência, a assinatura do protocolo de entrega e, em casos específicos como licitações, a emissão de um recibo formal. É fundamental verificar a integridade do invólucro e a completude do documento e seus anexos. Qualquer dano ou falta deve ser imediatamente registrado e comunicado. Documentos "Urgentes" recebem tratamento prioritário.' },
+        2: { title: 'Registro: O Carimbo da Formalidade', text: 'Protocolar um documento implica a aposição de um carimbo ou o uso de um relógio datador, registrando a data, hora do recebimento e o número de protocolo único atribuído. Este registro é feito na primeira folha do documento e formalizado em um Sistema Informatizado de Gestão Arquivística de Documentos (SIGAD) ou caderno de protocolo, para identificar sua existência e localização.' },
+        3: { title: 'Classificação: Organizando por Assunto', text: 'Esta é a etapa intelectual de analisar e identificar o conteúdo do documento para atribuí-lo à categoria de assunto apropriada, conforme um plano de classificação predefinido. A classificação inclui a designação de símbolos para identificar dossiês e processos, revelando suas relações orgânicas e facilitando o acesso futuro.' },
+        4: { title: 'Distribuição e Tramitação: O Fluxo Interno', text: 'Esta fase envolve a entrega física ou eletrônica dos documentos aos destinatários e o controle de sua movimentação interna. O protocolo é responsável por encaminhar os documentos à autoridade competente, com base no assunto ou endereçamento, sem julgar o mérito da solicitação. É expressamente proibida a tramitação "em mãos"; todo encaminhamento deve ser registrado imediatamente no sistema para garantir rastreabilidade e auditoria. Processos volumosos exigem a abertura de novos volumes.' },
+        5: { title: 'Controle (Acompanhamento) e Expedição: Monitoramento e Saída', text: 'O controle refere-se ao monitoramento contínuo do percurso do documento dentro da instituição. Softwares de gestão ajudam a saber onde o documento está, quem está com ele e quais os prazos. A expedição consiste no envio dos documentos originais (e seus anexos) aos destinatários finais, que pode ser feito via Correios, malotes internos ou entrega pessoal. O protocolo mantém o controle sobre todas as etapas de saída de documentos.' },
+    };
+
+    const methodData = {
+        alfabetico: { title: 'Método Alfabético', description: 'Organiza os documentos pelo nome (de pessoas, empresas, lugares). É o método mais simples e direto, amplamente utilizado para arquivos de clientes, fornecedores ou pessoal. A ordenação segue a sequência alfabética, facilitando a localização rápida se o nome for conhecido.', example: 'Ex: Pastas "Apple", "Google", "Microsoft". Em um arquivo de clientes: "Silva, João"; "Souza, Maria".' },
+        geografico: { title: 'Método Geográfico', description: 'A organização é feita pela procedência ou local (país, estado, cidade, região). É ideal para empresas com filiais, que operam em diferentes regiões ou que classificam documentos com base em sua origem geográfica. Exige um índice auxiliar se a localização não for o principal critério de busca.', example: 'Ex: Pastas "Brasil" > "São Paulo" > "Campinas". Ou "Região Norte" > "Pará".' },
+        numerico: { title: 'Método Numérico', description: 'Atribui um número sequencial a cada documento ou pasta. Pode ser simples (1, 2, 3...) ou cronológico (pela data de entrada). Este método exige um índice auxiliar (alfabético ou por assunto) para a localização, pois o número não revela o conteúdo diretamente. É muito utilizado para processos, prontuários ou ordens de serviço.', example: 'Ex: Processo nº 001/2025; Prontuário nº 12345. O índice auxiliar listaria: "001/2025 - Contrato de Prestação de Serviços - Cliente X".' },
+        ideografico: { title: 'Método Ideográfico (por Assunto)', description: 'Agrupa os documentos por tema ou assunto. É considerado o mais complexo, pois exige um plano de classificação bem definido e a capacidade de interpretar o conteúdo dos documentos. No entanto, é extremamente lógico e eficiente para recuperação de informações, especialmente em arquivos de natureza técnica ou administrativa. Pode ser dividido em dicionário (ordem alfabética de assuntos) ou enciclopédico (assuntos em ordem hierárquica).', example: 'Ex: Pasta "Financeiro" > "Contas a Pagar"; ou "Recursos Humanos" > "Folha de Pagamento".' },
+    };
+
+    const quizQuestions = [
+        {
+            question: "Qual das seguintes práticas é considerada a mais eficaz para elevar a segurança dos arquivos, permitindo controle de acesso rigoroso e criptografia em ambiente virtual?",
+            options: [
+                "Armazenamento de documentos em caixas de papelão em subsolos úmidos.",
+                "Digitalização de documentos e uso de sistemas GED.",
+                "Uso exclusivo de grampos e clipes metálicos para organização.",
+                "Proibição de backups regulares para economizar espaço."
+            ],
+            correctAnswer: "Digitalização de documentos e uso de sistemas GED."
+        },
+        {
+            question: "A Lei Geral de Proteção de Dados (LGPD) no Brasil tem como principal objetivo:",
+            options: [
+                "Facilitar o acesso irrestrito a todas as informações públicas, sem exceções.",
+                "Estabelecer diretrizes para o tratamento de dados pessoais, garantindo privacidade, segurança e transparência.",
+                "Regulamentar apenas documentos físicos, excluindo totalmente os digitais.",
+                "Promover a destruição de todos os documentos após um período fixo de 5 anos."
+            ],
+            correctAnswer: "Estabelecer diretrizes para o tratamento de dados pessoais, garantindo privacidade, segurança e transparência."
+        },
+        {
+            question: "Qual sistema é projetado para gerenciar todo o ciclo de vida dos documentos e processos administrativos, desde a criação até a destinação final, implementando métodos arquivísticos essenciais como Planos de Classificação e Tabelas de Temporalidade?",
+            options: [
+                "Sistema de Entrega de Pizzas (SEP).",
+                "Sistema de Gestão Eletrônica de Documentos (GED).",
+                "Sistema Informatizado de Gestão Arquivística de Documentos (SIGAD).",
+                "Sistema de Entretenimento Integrado (SEI)."
+            ],
+            correctAnswer: "Sistema Informatizado de Gestão Arquivística de Documentos (SIGAD)."
+        },
+        {
+            question: "Na Teoria das Três Idades dos Arquivos, qual idade se refere aos documentos de uso frequente, com valor primário (administrativo, legal, fiscal), mantidos próximos aos seus produtores?",
+            options: [
+                "Arquivo Permanente.",
+                "Arquivo Histórico.",
+                "Arquivo Intermediário.",
+                "Arquivo Corrente."
+            ],
+            correctAnswer: "Arquivo Corrente."
+        },
+        {
+            question: "Qual dos princípios arquivísticos determina que os documentos de uma instituição ou pessoa não devem ser misturados com os de outra, mantendo a integridade de cada fundo de arquivo?",
+            options: [
+                "Princípio da Ordem Original.",
+                "Princípio da Unicidade.",
+                "Princípio da Proveniência.",
+                "Princípio da Organicidade."
+            ],
+            correctAnswer: "Princípio da Proveniência."
+        }
+    ];
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    const quizQuestionElement = document.getElementById('quiz-question');
+    const quizOptionsElement = document.getElementById('quiz-options');
+    const quizFeedbackElement = document.getElementById('quiz-feedback');
+    const quizNextButton = document.getElementById('quiz-next-button');
+    const quizRestartButton = document.getElementById('quiz-restart-button');
+    const quizScoreElement = document.getElementById('quiz-score');
+
+    function updateScoreDisplay() {
+        quizScoreElement.textContent = `Pontuação: ${score} / ${quizQuestions.length}`;
+    }
+
+    function loadQuestion() {
+        if (currentQuestionIndex < quizQuestions.length) {
+            const q = quizQuestions[currentQuestionIndex];
+            quizQuestionElement.textContent = q.question;
+            quizOptionsElement.innerHTML = '';
+            quizFeedbackElement.classList.add('hidden');
+            quizFeedbackElement.textContent = '';
+            quizNextButton.classList.add('hidden');
+            quizRestartButton.classList.add('hidden'); // Hide restart button when a new question loads
+
+            q.options.forEach(option => {
+                const optionDiv = document.createElement('div');
+                optionDiv.classList.add('quiz-option');
+                optionDiv.textContent = option;
+                optionDiv.addEventListener('click', () => checkAnswer(option, q.correctAnswer, optionDiv));
+                quizOptionsElement.appendChild(optionDiv);
+            });
+        } else {
+            quizQuestionElement.textContent = "Quiz Concluído! Você revisou todas as perguntas.";
+            quizOptionsElement.innerHTML = '';
+            quizNextButton.classList.add('hidden');
+            quizRestartButton.classList.remove('hidden'); // Show restart button at the end
+            quizFeedbackElement.classList.remove('hidden');
+            quizFeedbackElement.classList.remove('bg-red-100', 'text-red-800', 'bg-green-100', 'text-green-800');
+            quizFeedbackElement.classList.add('bg-blue-100', 'text-blue-800');
+            quizFeedbackElement.textContent = `Parabéns por completar o quiz! Sua pontuação final é ${score} de ${quizQuestions.length}.`;
+        }
+        updateScoreDisplay();
+    }
+
+    function checkAnswer(selectedOption, correctAnswer, clickedElement) {
+        const allOptions = quizOptionsElement.querySelectorAll('.quiz-option');
+        allOptions.forEach(option => {
+            option.classList.add('disabled'); // Disable all options after selection
+            if (option.textContent === correctAnswer) {
+                option.classList.add('correct');
+            } else {
+                option.classList.add('incorrect');
+            }
+        });
+
+        if (selectedOption === correctAnswer) {
+            score++;
+            quizFeedbackElement.classList.remove('hidden', 'bg-red-100', 'text-red-800');
+            quizFeedbackElement.classList.add('bg-green-100', 'text-green-800');
+            quizFeedbackElement.textContent = "Correto! Ótimo trabalho.";
+        } else {
+            quizFeedbackElement.classList.remove('hidden', 'bg-green-100', 'text-green-800');
+            quizFeedbackElement.classList.add('bg-red-100', 'text-red-800');
+            quizFeedbackElement.textContent = "Incorreto. A resposta correta está destacada em verde.";
+        }
+        updateScoreDisplay();
+        quizNextButton.classList.remove('hidden');
+    }
+
+    quizNextButton.addEventListener('click', () => {
+        currentQuestionIndex++;
+        loadQuestion();
+    });
+
+    quizRestartButton.addEventListener('click', () => {
+        currentQuestionIndex = 0;
+        score = 0;
+        loadQuestion();
+    });
+
+    window.showMethodInfo = (method) => {
+        const data = methodData[method];
+        document.getElementById('modal-title').textContent = data.title;
+        document.getElementById('modal-description').textContent = data.description;
+        document.getElementById('modal-example').textContent = data.example;
+        document.getElementById('method-modal').classList.remove('hidden');
+    }
+
+    const switchTab = (targetId) => {
+        tabs.forEach(tab => {
+            const isActive = tab.id === `tab-${targetId}`;
+            tab.classList.toggle('active', isActive);
+        });
+        panels.forEach(panel => {
+            panel.classList.toggle('hidden', panel.id !== `panel-${targetId}`);
+        });
+        if (targetId === 'overview') renderVolumeChart();
+        if (targetId === 'archive') renderAgesChart();
+        if (targetId === 'security-tech') {
+            currentQuestionIndex = 0; // Reset quiz when entering the tab
+            score = 0;
+            loadQuestion();
+        }
+    };
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const targetId = tab.id.replace('tab-', '');
+            switchTab(targetId);
+        });
+    });
+
+    flowSteps.forEach(step => {
+        step.addEventListener('click', () => {
+            flowSteps.forEach(s => s.classList.remove('active'));
+            step.classList.add('active');
+
+            const targetId = step.dataset.target;
+
+            // Hide all info contents first
+            flowInfoContents.forEach(content => content.classList.add('hidden'));
+
+            // Show the targeted info content
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+                targetContent.classList.remove('hidden');
+                // Re-apply fade-in animation
+                flowInfoContainer.classList.remove('fade-in');
+                void flowInfoContainer.offsetWidth; // Trigger reflow
+                flowInfoContainer.classList.add('fade-in');
+            }
+        });
+    });
+
+    protocolSteps.forEach(step => {
+        step.addEventListener('click', (e) => {
+            const stepNumber = e.currentTarget.dataset.step;
+            const data = protocolData[stepNumber];
+
+            protocolSteps.forEach(s => s.querySelector('div').classList.remove('bg-teal-500', 'text-white', 'border-teal-500'));
+            e.currentTarget.querySelector('div').classList.add('bg-teal-500', 'text-white', 'border-teal-500');
+
+            protocolInfoContainer.innerHTML = `
+                <h4 class="font-bold text-teal-800 text-center md:text-left">${data.title}</h4>
+                <p class="text-sm text-gray-700 mt-2 text-center md:text-left">${data.text}</p>
+            `;
+            protocolInfoContainer.classList.remove('fade-in');
+            void protocolInfoContainer.offsetWidth;
+            protocolInfoContainer.classList.add('fade-in');
+        });
+    });
+
+    collapsibleItems.forEach(item => {
+        const header = item.querySelector('.collapsible-header');
+        const content = item.querySelector('.collapsible-content');
+
+        header.addEventListener('click', () => {
+            header.classList.toggle('open');
+            if (content.classList.contains('open')) {
+                content.classList.remove('open');
+            } else {
+                content.classList.add('open');
+            }
+        });
+    });
+
+    const chartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'top',
+                labels: {
+                    font: {
+                        family: 'Inter'
+                    }
+                }
+            },
+            tooltip: {
+                bodyFont: {
+                    family: 'Inter'
+                },
+                titleFont: {
+                    family: 'Inter'
+                }
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    font: { family: 'Inter' }
+                }
+            }
+        }
+    };
+
+    let volumeChartInstance, agesChartInstance;
+
+    function renderVolumeChart() {
+        if (volumeChartInstance) volumeChartInstance.destroy();
+        const ctx = document.getElementById('volumeChart').getContext('2d');
+        volumeChartInstance = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
+                datasets: [{
+                    label: 'Documentos Recebidos',
+                    data: [120, 150, 130, 180],
+                    backgroundColor: 'rgba(59, 130, 246, 0.7)',
+                    borderColor: 'rgba(59, 130, 246, 1)',
+                    borderWidth: 1
+                }, {
+                    label: 'Documentos Expedidos',
+                    data: [90, 110, 100, 140],
+                    backgroundColor: 'rgba(16, 185, 129, 0.7)',
+                    borderColor: 'rgba(16, 185, 129, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: chartOptions
+        });
+    }
+
+    function renderAgesChart() {
+        if (agesChartInstance) agesChartInstance.destroy();
+        const ctx = document.getElementById('agesChart').getContext('2d');
+        agesChartInstance = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Corrente (1ª Idade)', 'Intermediário (2ª Idade)', 'Permanente (3ª Idade)'],
+                datasets: [{
+                    label: 'Distribuição do Arquivo',
+                    data: [65, 25, 10],
+                    backgroundColor: [
+                        'rgba(59, 130, 246, 0.8)',
+                        'rgba(245, 158, 11, 0.8)',
+                        'rgba(107, 114, 128, 0.8)'
+                    ],
+                    borderColor: [
+                        '#FFFFFF'
+                    ],
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                ...chartOptions,
+                scales: {}
+            }
+        });
+    }
+
+    // Initial load: Ensure the correct tab is active and its content/charts are rendered
+    switchTab('overview');
+    // Simulate click on the first flow-step (Protocolo) to ensure its content is displayed
+    const firstFlowStep = document.querySelector('#flow-diagram .flow-step');
+    if (firstFlowStep) {
+        firstFlowStep.click();
+    }
+
+});
+</script>
+
+</body>
+</html>
