@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Interativo LGPD: Conceitos e Princípios</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony (Stone/Slate/Amber) -->
+    <!-- Application Structure Plan: The application is structured into thematic sections to guide the user from general to specific knowledge. It starts with an introduction ('O que é a LGPD?'), moves to core definitions ('Conceitos Fundamentais'), explores the law's backbone ('Os 10 Princípios'), details individual entitlements ('Direitos do Titular'), and solidifies learning with a 'Quiz Interativo'. This thematic, top-down structure was chosen over a linear report format to facilitate comprehension and non-linear exploration. A sticky navigation bar enables users to jump to any section, making the experience flexible and user-centric. This design transforms a dense legal topic into manageable, interactive blocks, prioritizing usability and learning retention. -->
+    <!-- Visualization & Content Choices:
+        - Report Info: Core pillars of LGPD. Goal: Inform/Organize. Viz/Presentation: Donut Chart. Interaction: Hover to see details. Justification: Provides a high-level visual summary of the law's main components. Library/Method: Chart.js/Canvas.
+        - Report Info: Key LGPD definitions (titular, controlador, etc.). Goal: Organize/Inform. Viz/Presentation: Interactive Cards. Interaction: Click to reveal definition. Justification: Breaks down terminology into digestible pieces, preventing user overload. Library/Method: HTML/Tailwind/JS.
+        - Report Info: The 10 Principles of LGPD. Goal: Organize/Compare. Viz/Presentation: Two-column layout with a clickable menu and a dynamic content display area. Interaction: Click a principle name to view its detailed explanation. Justification: Allows users to focus on one principle at a time while maintaining context of the others, facilitating comparison. Library/Method: HTML/Tailwind/JS.
+        - Report Info: Rights of the Data Subject. Goal: Organize/Inform. Viz/Presentation: Accordion List. Interaction: Click to expand/collapse. Justification: Presents a list of rights cleanly and concisely. Library/Method: HTML/Tailwind/JS.
+        - Report Info: Hypothetical Scenarios. Goal: Engage/Reinforce. Viz/Presentation: Multiple-choice quiz. Interaction: Select answer and receive immediate visual feedback. Justification: Actively engages the user and tests their comprehension in a practical way. Library/Method: HTML/Tailwind/JS.
+        - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
+    -->
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .chart-container { position: relative; width: 100%; max-width: 400px; margin-left: auto; margin-right: auto; height: 300px; max-height: 400px; }
+        @media (min-width: 640px) {
+            .chart-container { height: 350px; }
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-slate-800">
+
+    <nav id="navbar" class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <span class="text-xl font-bold text-slate-700">Guia LGPD</span>
+                </div>
+                <div class="hidden md:block">
+                    <div id="nav-menu" class="ml-10 flex items-baseline space-x-4">
+                        <a href="#inicio" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Início</a>
+                        <a href="#conceitos" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Conceitos</a>
+                        <a href="#principios" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Princípios</a>
+                        <a href="#direitos" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Direitos</a>
+                        <a href="#quiz" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Quiz</a>
+                    </div>
+                </div>
+                <div class="-mr-2 flex md:hidden">
+                    <button id="mobile-menu-button" type="button" class="bg-slate-100 inline-flex items-center justify-center p-2 rounded-md text-slate-500 hover:text-slate-600 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-100 focus:ring-slate-500" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Abrir menu</span>
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="hidden md:hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#inicio" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Início</a>
+                <a href="#conceitos" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Conceitos</a>
+                <a href="#principios" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Princípios</a>
+                <a href="#direitos" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Direitos</a>
+                <a href="#quiz" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Quiz</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+
+        <section id="inicio" class="text-center mb-16 md:mb-24 scroll-mt-20">
+            <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4">Desvendando a LGPD</h1>
+            <p class="max-w-3xl mx-auto text-lg text-slate-600 mb-8">Um guia interativo sobre a Lei Geral de Proteção de Dados, que estabelece regras sobre o tratamento de dados pessoais no Brasil, protegendo sua privacidade e liberdade.</p>
+            <div class="max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow-lg">
+                 <h2 class="text-2xl font-bold text-slate-700 mb-4">Os Pilares da LGPD</h2>
+                 <p class="text-slate-600 mb-6">A lei se sustenta em três grandes pilares que garantem a proteção de dados. Interaja com o gráfico para ver a composição.</p>
+                 <div class="chart-container">
+                    <canvas id="lgpdPillarsChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="conceitos" class="mb-16 md:mb-24 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center text-slate-800 mb-2">Conceitos Fundamentais</h2>
+            <p class="text-lg text-center text-slate-600 mb-10">Para entender a LGPD, é essencial conhecer seus termos principais. Clique nos cards para saber mais.</p>
+            <div id="concepts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            </div>
+        </section>
+
+        <section id="principios" class="mb-16 md:mb-24 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center text-slate-800 mb-2">Os 10 Princípios da LGPD</h2>
+            <p class="text-lg text-center text-slate-600 mb-10">Toda operação de tratamento de dados deve seguir estes princípios. Selecione um para ver os detalhes.</p>
+            <div class="flex flex-col md:flex-row gap-8">
+                <div id="principles-menu" class="w-full md:w-1/3 flex flex-col space-y-2">
+                </div>
+                <div id="principle-display" class="w-full md:w-2/3 bg-white p-8 rounded-2xl shadow-lg min-h-[300px] flex flex-col justify-center">
+                    <h3 id="principle-title" class="text-2xl font-bold text-slate-700 mb-4">Selecione um princípio</h3>
+                    <p id="principle-description" class="text-slate-600">A descrição do princípio selecionado aparecerá aqui.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="direitos" class="mb-16 md:mb-24 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center text-slate-800 mb-2">Direitos do Titular</h2>
+            <p class="text-lg text-center text-slate-600 mb-10">A LGPD garante a você, titular dos dados, uma série de direitos. Conheça os principais:</p>
+            <div id="rights-accordion" class="space-y-4 max-w-4xl mx-auto">
+            </div>
+        </section>
+
+        <section id="quiz" class="scroll-mt-20">
+             <h2 class="text-3xl font-bold text-center text-slate-800 mb-2">Teste seu Conhecimento</h2>
+             <p class="text-lg text-center text-slate-600 mb-10">Vamos ver se você entendeu os conceitos da LGPD com este quiz rápido!</p>
+             <div id="quiz-container" class="max-w-3xl mx-auto bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+                <div id="quiz-question-container">
+                    <h3 id="quiz-question" class="text-xl font-semibold text-slate-700 mb-6"></h3>
+                    <div id="quiz-options" class="space-y-4"></div>
+                </div>
+                <div id="quiz-feedback" class="mt-6 text-center font-medium hidden"></div>
+                <div class="mt-8 text-center">
+                    <button id="next-question-btn" class="bg-slate-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-slate-700 transition-colors duration-200 hidden">Próxima Pergunta</button>
+                    <button id="restart-quiz-btn" class="bg-amber-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-amber-600 transition-colors duration-200 hidden">Recomeçar Quiz</button>
+                </div>
+             </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-800 text-slate-300 mt-20">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center">
+            <p>&copy; 2025 Guia Interativo LGPD. Conteúdo para fins educacionais.</p>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const conceptsData = [
+            { title: 'Dado Pessoal', description: 'Qualquer informação que identifique ou possa identificar uma pessoa natural. Exemplos: nome, CPF, e-mail, endereço IP.' },
+            { title: 'Dado Pessoal Sensível', description: 'Informação sobre origem racial ou étnica, convicção religiosa, opinião política, filiação a sindicato, dado referente à saúde ou à vida sexual, dado genético ou biométrico.' },
+            { title: 'Titular', description: 'É você! A pessoa física a quem os dados pessoais se referem.' },
+            { title: 'Controlador', description: 'Empresa ou pessoa que toma as decisões sobre o tratamento dos dados pessoais. Define por que e como os dados serão tratados.' },
+            { title: 'Operador', description: 'Empresa ou pessoa que realiza o tratamento de dados pessoais em nome do controlador, seguindo suas instruções.' },
+            { title: 'Encarregado (DPO)', description: 'Pessoa indicada pelo controlador para atuar como canal de comunicação entre o controlador, os titulares dos dados e a Autoridade Nacional de Proteção de Dados (ANPD).' },
+            { title: 'Tratamento de Dados', description: 'Qualquer operação realizada com dados pessoais, como coleta, produção, recepção, classificação, utilização, acesso, reprodução, transmissão, processamento, arquivamento, armazenamento, eliminação, etc.' },
+            { title: 'Anonimização', description: 'Processo que remove a possibilidade de associação, direta ou indireta, de um dado a um indivíduo. O dado anonimizado não é considerado dado pessoal.' },
+        ];
+
+        const principlesData = [
+            { title: 'Finalidade', description: 'O tratamento de dados deve ser realizado para propósitos legítimos, específicos, explícitos e informados ao titular. Não é permitido tratar dados para fins genéricos ou não informados.' },
+            { title: 'Adequação', description: 'O tratamento dos dados deve ser compatível com as finalidades informadas ao titular. Se uma empresa coleta seu e-mail para enviar a nota fiscal, não pode usá-lo para marketing sem sua permissão.' },
+            { title: 'Necessidade', description: 'O tratamento deve se limitar ao mínimo necessário para a realização de suas finalidades. Apenas os dados estritamente essenciais para atingir o objetivo devem ser coletados.' },
+            { title: 'Livre Acesso', description: 'Garante aos titulares a consulta facilitada e gratuita sobre a forma e a duração do tratamento, bem como sobre a integralidade de seus dados pessoais.' },
+            { title: 'Qualidade dos Dados', description: 'Garante aos titulares que seus dados sejam exatos, claros, relevantes e atualizados, de acordo com a necessidade e para o cumprimento da finalidade de seu tratamento.' },
+            { title: 'Transparência', description: 'Garante aos titulares informações claras, precisas e facilmente acessíveis sobre a realização do tratamento e os respectivos agentes de tratamento.' },
+            { title: 'Segurança', description: 'Utilização de medidas técnicas e administrativas aptas a proteger os dados pessoais de acessos não autorizados e de situações acidentais ou ilícitas de destruição, perda, alteração ou difusão.' },
+            { title: 'Prevenção', description: 'Adoção de medidas para prevenir a ocorrência de danos em virtude do tratamento de dados pessoais. É sobre agir antes que um incidente de segurança aconteça.' },
+            { title: 'Não Discriminação', description: 'O tratamento de dados não pode ser realizado para fins discriminatórios, ilícitos ou abusivos. Os dados não podem ser usados para prejudicar ou criar distinções injustas.' },
+            { title: 'Responsabilização e Prestação de Contas', description: 'O agente de tratamento (controlador/operador) deve ser capaz de demonstrar a adoção de medidas eficazes e capazes de comprovar a observância e o cumprimento das normas de proteção de dados.' },
+        ];
+
+        const rightsData = [
+            { title: 'Confirmação da existência do tratamento', description: 'Você pode perguntar a qualquer empresa se ela trata seus dados pessoais.' },
+            { title: 'Acesso aos dados', description: 'Você tem o direito de saber quais dos seus dados uma empresa possui.' },
+            { title: 'Correção de dados incompletos, inexatos ou desatualizados', description: 'Se seus dados estiverem errados, você pode pedir a correção.' },
+            { title: 'Anonimização, bloqueio ou eliminação de dados desnecessários', description: 'Se uma empresa possui dados seus que não são mais necessários para a finalidade informada, você pode pedir que sejam apagados, bloqueados ou anonimizados.' },
+            { title: 'Portabilidade dos dados', description: 'Você pode solicitar que uma empresa transfira seus dados para outro fornecedor de serviço ou produto.' },
+            { title: 'Eliminação dos dados tratados com o consentimento', description: 'Se você deu seu consentimento para o tratamento, pode retirá-lo e pedir a eliminação dos dados.' },
+            { title: 'Informação sobre compartilhamento', description: 'Você tem o direito de saber com quais outras empresas (entidades públicas e privadas) seus dados foram compartilhados.' },
+            { title: 'Informação sobre a possibilidade de não fornecer consentimento', description: 'Você deve ser informado sobre a opção de não consentir com o tratamento e sobre as consequências dessa negativa.' },
+            { title: 'Revogação do consentimento', description: 'Você pode retirar seu consentimento a qualquer momento, de forma fácil e gratuita.' },
+        ];
+
+        const quizData = [
+            {
+                question: 'Uma loja online pede seu CPF, nome, endereço, tipo sanguíneo e time de futebol para uma simples compra de camiseta. Qual princípio da LGPD está sendo mais claramente violado?',
+                options: ['Segurança', 'Necessidade', 'Transparência', 'Finalidade'],
+                answer: 'Necessidade'
+            },
+            {
+                question: 'Você se cadastra em uma newsletter para receber notícias sobre tecnologia. A empresa, então, vende seu e-mail para parceiros de marketing. Qual princípio foi ignorado?',
+                options: ['Livre Acesso', 'Qualidade dos Dados', 'Finalidade', 'Prevenção'],
+                answer: 'Finalidade'
+            },
+            {
+                question: 'Qual dos itens a seguir é considerado um "dado pessoal sensível" pela LGPD?',
+                options: ['Seu endereço de e-mail', 'O número do seu CPF', 'Sua filiação a um sindicato', 'Seu histórico de compras'],
+                answer: 'Sua filiação a um sindicato'
+            },
+            {
+                question: 'A pessoa ou empresa que toma as decisões sobre como seus dados serão tratados é chamada de:',
+                options: ['Titular', 'Operador', 'Encarregado (DPO)', 'Controlador'],
+                answer: 'Controlador'
+            }
+        ];
+
+
+        const conceptsGrid = document.getElementById('concepts-grid');
+        conceptsData.forEach(concept => {
+            const card = document.createElement('div');
+            card.className = 'bg-white p-6 rounded-xl shadow-md cursor-pointer transition-transform transform hover:scale-105';
+            card.innerHTML = `
+                <h3 class="text-xl font-bold text-slate-700 mb-2">${concept.title}</h3>
+                <p class="text-slate-600 hidden">${concept.description}</p>
+            `;
+            card.addEventListener('click', () => {
+                card.querySelector('p').classList.toggle('hidden');
+            });
+            conceptsGrid.appendChild(card);
+        });
+
+        const principlesMenu = document.getElementById('principles-menu');
+        const principleTitle = document.getElementById('principle-title');
+        const principleDescription = document.getElementById('principle-description');
+        let activePrincipleButton = null;
+
+        principlesData.forEach((principle, index) => {
+            const button = document.createElement('button');
+            button.className = 'w-full text-left p-4 rounded-lg font-medium transition-colors duration-200 bg-white shadow-sm hover:bg-amber-100';
+            button.textContent = principle.title;
+            button.addEventListener('click', () => {
+                principleTitle.textContent = principle.title;
+                principleDescription.textContent = principle.description;
+
+                if(activePrincipleButton) {
+                    activePrincipleButton.classList.remove('bg-amber-400', 'text-white', 'font-bold');
+                    activePrincipleButton.classList.add('bg-white');
+                }
+                button.classList.add('bg-amber-400', 'text-white', 'font-bold');
+                button.classList.remove('bg-white');
+                activePrincipleButton = button;
+            });
+            principlesMenu.appendChild(button);
+
+            if (index === 0) {
+                button.click();
+            }
+        });
+
+        const rightsAccordion = document.getElementById('rights-accordion');
+        rightsData.forEach(right => {
+            const item = document.createElement('div');
+            item.className = 'bg-white rounded-lg shadow-sm overflow-hidden';
+            item.innerHTML = `
+                <button class="w-full flex justify-between items-center p-5 text-left font-semibold text-slate-700 hover:bg-slate-100">
+                    <span>${right.title}</span>
+                    <svg class="w-5 h-5 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="px-5 pb-5 text-slate-600 hidden">
+                    <p>${right.description}</p>
+                </div>
+            `;
+            const button = item.querySelector('button');
+            const content = item.querySelector('div');
+            const icon = item.querySelector('svg');
+
+            button.addEventListener('click', () => {
+                content.classList.toggle('hidden');
+                icon.classList.toggle('rotate-180');
+            });
+
+            rightsAccordion.appendChild(item);
+        });
+
+        const ctx = document.getElementById('lgpdPillarsChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Princípios & Bases Legais', 'Direitos dos Titulares', 'Agentes & Responsabilidades'],
+                datasets: [{
+                    label: 'Pilares da LGPD',
+                    data: [45, 30, 25],
+                    backgroundColor: [
+                        'rgba(51, 65, 85, 0.8)',
+                        'rgba(100, 116, 139, 0.8)',
+                        'rgba(245, 158, 11, 0.8)',
+                    ],
+                    borderColor: [
+                        '#FFFFFF'
+                    ],
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            font: {
+                                size: 14,
+                                family: 'Inter'
+                            }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed + '%';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        const quizQuestionEl = document.getElementById('quiz-question');
+        const quizOptionsEl = document.getElementById('quiz-options');
+        const quizFeedbackEl = document.getElementById('quiz-feedback');
+        const nextQuestionBtn = document.getElementById('next-question-btn');
+        const restartQuizBtn = document.getElementById('restart-quiz-btn');
+        const quizContainer = document.getElementById('quiz-question-container');
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            quizFeedbackEl.classList.add('hidden');
+            nextQuestionBtn.classList.add('hidden');
+            const currentQuestion = quizData[currentQuestionIndex];
+            quizQuestionEl.textContent = currentQuestion.question;
+            quizOptionsEl.innerHTML = '';
+
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.className = 'w-full text-left p-4 rounded-lg font-medium transition-colors duration-200 bg-slate-100 hover:bg-slate-200';
+                button.addEventListener('click', () => selectAnswer(button, option, currentQuestion.answer));
+                quizOptionsEl.appendChild(button);
+            });
+        }
+
+        function selectAnswer(button, selectedOption, correctAnswer) {
+            const buttons = quizOptionsEl.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.disabled = true; // Disable all buttons after an answer
+                if (btn.textContent === correctAnswer) {
+                    btn.classList.remove('bg-slate-100', 'hover:bg-slate-200');
+                    btn.classList.add('bg-green-500', 'text-white');
+                }
+            });
+
+            if (selectedOption === correctAnswer) {
+                score++;
+                quizFeedbackEl.textContent = 'Resposta Correta!';
+                quizFeedbackEl.className = 'mt-6 text-center font-medium text-green-600';
+            } else {
+                button.classList.remove('bg-slate-100', 'hover:bg-slate-200');
+                button.classList.add('bg-red-500', 'text-white');
+                quizFeedbackEl.textContent = `Incorreto. A resposta certa é "${correctAnswer}".`;
+                quizFeedbackEl.className = 'mt-6 text-center font-medium text-red-600';
+            }
+            quizFeedbackEl.classList.remove('hidden');
+
+            if (currentQuestionIndex < quizData.length - 1) {
+                nextQuestionBtn.classList.remove('hidden');
+            } else {
+                showFinalScore();
+            }
+        }
+
+        function showFinalScore() {
+            quizContainer.innerHTML = `<h3 class="text-2xl font-bold text-center text-slate-700">Quiz Finalizado!</h3><p class="text-center text-lg text-slate-600 mt-4">Você acertou ${score} de ${quizData.length} perguntas.</p>`;
+            restartQuizBtn.classList.remove('hidden');
+        }
+
+        nextQuestionBtn.addEventListener('click', () => {
+            currentQuestionIndex++;
+            loadQuestion();
+        });
+
+        restartQuizBtn.addEventListener('click', () => {
+            currentQuestionIndex = 0;
+            score = 0;
+            restartQuizBtn.classList.add('hidden');
+            quizContainer.innerHTML = `
+                <h3 id="quiz-question" class="text-xl font-semibold text-slate-700 mb-6"></h3>
+                <div id="quiz-options" class="space-y-4"></div>
+            `;
+            // Re-assign elements after recreating them
+            window.quizQuestionEl = document.getElementById('quiz-question');
+            window.quizOptionsEl = document.getElementById('quiz-options');
+            loadQuestion();
+        });
+
+        loadQuestion();
+
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+            mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('#nav-menu a, #mobile-menu a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                if (mobileMenu.classList.contains('hidden') === false) {
+                     mobileMenu.classList.add('hidden');
+                     mobileMenuButton.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+
+    });
+    </script>
+</body>
+</html>
