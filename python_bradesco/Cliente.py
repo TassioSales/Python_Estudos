@@ -1,14 +1,41 @@
 class Cliente:
-    def __init__(self, nome, cpf, data_nascimento, sexo, estado_civil, profissao, nacionalidade,
-                 naturalidade, endereco, telefone, email):
-        self.nome = nome
-        self.cpf = cpf
-        self.data_nascimento = data_nascimento
-        self.sexo = sexo
-        self.estado_civil = estado_civil
-        self.profissao = profissao
-        self.nacionalidade = nacionalidade
-        self.naturalidade = naturalidade
-        self.endereco = endereco
-        self.telefone = telefone
-        self.email = email
+    """
+    Representa um cliente do sistema bancário.
+    """
+    def __init__(
+        self,
+        nome: str,
+        cpf: str,
+        data_nascimento: str,
+        sexo: str,
+        estado_civil: str,
+        profissao: str,
+        nacionalidade: str,
+        naturalidade: str,
+        endereco: str,
+        telefone: str,
+        email: str
+    ):
+        self._nome = nome
+        self._cpf = cpf
+        self._data_nascimento = data_nascimento
+        self._sexo = sexo
+        self._estado_civil = estado_civil
+        self._profissao = profissao
+        self._nacionalidade = nacionalidade
+        self._naturalidade = naturalidade
+        self._endereco = endereco
+        self._telefone = telefone
+        self._email = email
+
+    @property
+    def nome(self) -> str:
+        """Retorna o nome do cliente."""
+        return self._nome
+
+    @nome.setter
+    def nome(self, nome: str) -> None:
+        """Define o nome do cliente."""
+        self._nome = nome
+
+
