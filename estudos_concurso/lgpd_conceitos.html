@@ -6,721 +6,332 @@
     <title>Guia Interativo da LGPD: Aprofundado</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Warm Neutrals (FDFBF8, F5F5F5, FFFFFF) & Muted Teal (2C7A7B, 319795, 4FD1C5) -->
-    <!-- Application Structure Plan: A comprehensive, single-page educational journey through Brazil's LGPD, designed for deep exploration. The structure is thematic and progressive: it begins with an engaging introduction, followed by interactive cards for fundamental concepts and principles. New sections detail Data Subject Rights, the Scope of Application (with collapsible details), Legal Bases (interactive cards), and Obligations/Responsibilities of Data Agents (with collapsible sub-sections for security, incident response, and accountability). A dedicated section for the ANPD provides further context. The journey culminates in an expanded, interactive quiz with a results chart for knowledge reinforcement. This architecture prioritizes user understanding and non-linear exploration of complex legal topics, making dense information digestible through interactive elements and clear visual hierarchy. -->
-    <!-- Visualization & Content Choices: LGPD Intro -> Inform -> Enhanced Text Block -> Provide a compelling overview. | Key Concepts/Principles -> Organize/Inform -> Interactive HTML Cards (JS toggle, improved styling) -> Break down complex terms with richer descriptions and visual cues. | Data Subject Rights -> Inform -> Styled HTML list with Unicode icons (refined layout) -> Clear, scannable presentation of essential rights and their practical implications. | Escopo de Aplicação -> Inform -> Collapsible HTML sections (improved styling) -> Detail where the law applies and its exceptions with more specific examples. | Bases Legais -> Inform/Organize -> Interactive HTML Cards (JS toggle, improved styling) -> Present the legal justifications for data processing in an explorable format with concise explanations. | Obrigações e Responsabilidades -> Inform/Organize -> Nested Collapsible HTML sections (new, enhanced styling) -> Detail the duties of controllers and operators, including security, incident response, and accountability, allowing users to drill down. | Papel da ANPD -> Inform -> Detailed Text Block -> Explain the role of the national authority with more functions. | Quiz Scenarios -> Engagement/Compare -> Expanded Interactive Quiz (JS logic) + Bar Chart (Chart.js) -> Actively engage the user with more questions covering the expanded content, providing immediate visual feedback on their understanding. This approach uses robust HTML, Tailwind CSS, and vanilla JavaScript to create a highly informative, aesthetically pleasing, and interactive learning experience without relying on SVG or Mermaid JS. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #FDFBF8; /* Light, warm neutral background */
-            color: #3C3C3C; /* Dark gray for main text */
-        }
-        .nav-link {
-            transition: color 0.3s ease, transform 0.2s ease;
-            position: relative;
-            padding-bottom: 4px;
-        }
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 50%;
-            background-color: #2C7A7B;
-            transition: width 0.3s ease-out, left 0.3s ease-out;
-        }
-        .nav-link:hover::after {
-            width: 100%;
-            left: 0;
-        }
-        .nav-link:hover {
-            color: #2C7A7B;
-            transform: translateY(-2px);
-        }
-        .section-card {
-            background-color: #ffffff;
-            border-radius: 1.5rem; /* rounded-3xl for a softer look */
-            padding: 2.5rem; /* p-10 */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03); /* Softer shadow */
-            border: 1px solid #f0f0f0; /* Lighter border */
-            margin-bottom: 4rem; /* More space between sections */
-        }
-        .card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-            background-color: #fcfcfc; /* Slightly off-white for cards */
-            border: 1px solid #e0e0e0; /* Subtle border */
-        }
-        .card:hover {
-            transform: translateY(-7px); /* More pronounced lift */
-            box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.1), 0 6px 10px -3px rgba(0, 0, 0, 0.07); /* Stronger shadow */
-            background-color: #f5f5f5; /* Slight background change on hover */
-        }
-        .collapsible-header {
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.25rem 1.5rem; /* py-5 px-6 */
-            background-color: #F5F5F5; /* Light gray for headers */
-            border-radius: 0.75rem; /* rounded-xl */
-            margin-bottom: 0.5rem;
-            transition: background-color 0.3s ease, box-shadow 0.2s ease;
-            font-weight: 600; /* semibold */
-            color: #2C7A7B; /* Teal for header text */
-            border: 1px solid #e0e0e0;
-        }
-        .collapsible-header:hover {
-            background-color: #E0E0E0; /* Darker gray on hover */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        }
-        .collapsible-content {
-            padding: 1.5rem; /* p-6 */
-            background-color: #ffffff;
-            border-radius: 0.75rem;
-            border: 1px solid #e0e0e0;
-            margin-top: -0.5rem;
-            border-top-left-radius: 0;
-            border-top-right-radius: 0;
-            line-height: 1.7; /* Better line spacing */
-        }
-        .collapsible-content ul, .collapsible-content ol {
-            margin-top: 1rem;
-            margin-bottom: 1rem;
-        }
-        .collapsible-content li {
-            margin-bottom: 0.5rem;
-        }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 280px; /* Slightly taller base height */
-            max-height: 350px; /* Increased max height */
-        }
-         @media (min-width: 768px) {
-            .chart-container {
-                height: 320px; /* Taller on desktop */
-                max-height: 400px;
-            }
-        }
-        .quiz-option-button {
-            transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
-        }
-        .quiz-option-button:hover:not(:disabled) {
-            transform: translateY(-2px);
-            background-color: #d1fae5; /* Light green hover */
-            border-color: #34d399; /* Green border */
-        }
-        .quiz-option-button:disabled {
-            cursor: not-allowed;
-        }
-        .quiz-option-button.selected-correct {
-            background-color: #a7f3d0; /* Light green */
-            border-color: #34d399; /* Green */
-            font-weight: 600;
-        }
-        .quiz-option-button.selected-incorrect {
-            background-color: #fecaca; /* Light red */
-            border-color: #ef4444; /* Red */
-            font-weight: 600;
-        }
-        .quiz-option-button.correct-answer {
-            background-color: #d1fae5; /* Light green for correct answer */
-            border-color: #34d399; /* Green */
-            font-weight: 600;
-        }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(120deg, #f0f9ff 0%, #fef3c7 100%); }
+        .section-card { background: #fff; border-radius: 1.5rem; padding: 2.5rem; box-shadow: 0 4px 16px #1e3a8a11; border: 1px solid #f0f0f0; margin-bottom: 3rem; }
+        .card { transition: transform 0.3s, box-shadow 0.3s, background 0.3s; background: #fcfcfc; border: 1px solid #e0e0e0; }
+        .card:hover { transform: translateY(-7px) scale(1.03); box-shadow: 0 15px 25px -5px #f59e4222; background: #f5f5f5; }
+        .collapsible-header { cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.5rem; background: #f5f5f5; border-radius: 0.75rem; margin-bottom: 0.5rem; font-weight: 600; color: #1e3a8a; border: 1px solid #e0e0e0; }
+        .collapsible-header:hover { background: #e0e0e0; }
+        .collapsible-content { padding: 1.5rem; background: #fff; border-radius: 0.75rem; border: 1px solid #e0e0e0; margin-top: -0.5rem; border-top-left-radius: 0; border-top-right-radius: 0; line-height: 1.7; }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin: 0 auto; height: 320px; }
+        .quiz-option-button { transition: background 0.2s, border 0.2s, transform 0.1s; }
+        .quiz-option-button:hover:not(:disabled) { transform: translateY(-2px); background: #d1fae5; border-color: #34d399; }
+        .quiz-option-button:disabled { cursor: not-allowed; }
+        .quiz-option-button.selected-correct { background: #a7f3d0; border-color: #34d399; font-weight: 600; }
+        .quiz-option-button.selected-incorrect { background: #fecaca; border-color: #ef4444; font-weight: 600; }
+        .quiz-option-button.correct-answer { background: #d1fae5; border-color: #34d399; font-weight: 600; }
+        .study-tips { background: linear-gradient(90deg, #fef3c7 60%, #f0f9ff 100%); border-left: 6px solid #f59e42; }
+        .no-js-message { display: block; background: #f59e42; color: #1e3a8a; padding: 1rem; text-align: center; font-weight: bold; border-radius: 0.5rem; margin: 1rem 0; }
     </style>
 </head>
 <body class="antialiased">
-
-    <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 shadow-md">
-        <div class="container mx-auto px-6 py-5 flex justify-between items-center">
-            <h1 class="text-3xl font-extrabold text-teal-800">LGPD <span class="text-teal-600">Pro</span></h1>
-            <nav class="hidden md:flex space-x-7">
-                <a href="#conceitos" class="nav-link text-gray-700 font-medium text-lg">Conceitos</a>
-                <a href="#principios" class="nav-link text-gray-700 font-medium text-lg">Princípios</a>
-                <a href="#direitos" class="nav-link text-gray-700 font-medium text-lg">Direitos</a>
-                <a href="#escopo" class="nav-link text-gray-700 font-medium text-lg">Escopo</a>
-                <a href="#bases-legais" class="nav-link text-gray-700 font-medium text-lg">Bases Legais</a>
-                <a href="#obrigacoes" class="nav-link text-gray-700 font-medium text-lg">Obrigações</a>
-                <a href="#anpd" class="nav-link text-gray-700 font-medium text-lg">ANPD</a>
-                <a href="#quiz" class="nav-link text-gray-700 font-medium text-lg">Quiz</a>
-            </nav>
-            <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none p-2 rounded-md hover:bg-gray-100">
-                <span class="text-3xl">☰</span>
-            </button>
+<noscript>
+    <div class="no-js-message">Este site requer JavaScript para funcionar corretamente. Por favor, ative o JavaScript no seu navegador.</div>
+</noscript>
+<header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 shadow-md">
+    <div class="container mx-auto px-6 py-5 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-tr from-blue-800 to-amber-400 shadow-lg">
+                <i data-feather="shield" class="text-white"></i>
+            </span>
+            <h1 class="text-3xl font-extrabold text-blue-800">LGPD <span class="text-amber-500">Pro</span></h1>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4 shadow-inner">
-             <a href="#conceitos" class="block py-3 nav-link text-gray-700 font-medium text-lg border-b border-gray-100">Conceitos</a>
-             <a href="#principios" class="block py-3 nav-link text-gray-700 font-medium text-lg border-b border-gray-100">Princípios</a>
-             <a href="#direitos" class="block py-3 nav-link text-gray-700 font-medium text-lg border-b border-gray-100">Direitos</a>
-             <a href="#escopo" class="block py-3 nav-link text-gray-700 font-medium text-lg border-b border-gray-100">Escopo</a>
-             <a href="#bases-legais" class="block py-3 nav-link text-gray-700 font-medium text-lg border-b border-gray-100">Bases Legais</a>
-             <a href="#obrigacoes" class="block py-3 nav-link text-gray-700 font-medium text-lg border-b border-gray-100">Obrigações</a>
-             <a href="#anpd" class="block py-3 nav-link text-gray-700 font-medium text-lg border-b border-gray-100">ANPD</a>
-             <a href="#quiz" class="block py-3 nav-link text-gray-700 font-medium text-lg">Quiz</a>
-        </div>
-    </header>
-
-    <main class="container mx-auto p-6 md:p-8">
-
-        <section id="intro" class="text-center section-card">
-            <h2 class="text-4xl md:text-5xl font-extrabold text-teal-900 mb-6 leading-tight">Desvendando a <span class="text-teal-600">LGPD</span>: Seu Guia Completo</h2>
-            <p class="max-w-4xl mx-auto text-xl text-gray-700 leading-relaxed">
-                A Lei Geral de Proteção de Dados (Lei nº 13.709/2018) é um marco legal no Brasil, que estabelece um novo paradigma para o tratamento de dados pessoais. Seu objetivo primordial é proteger os direitos fundamentais de liberdade e de privacidade, garantindo maior controle aos cidadãos sobre suas informações. Este guia interativo foi criado para desmistificar a LGPD, oferecendo um caminho claro e envolvente para seu entendimento.
-            </p>
-            <p class="max-w-4xl mx-auto text-lg text-gray-600 mt-6 leading-relaxed">
-                Navegue pelas seções para explorar desde os conceitos essenciais e princípios que a regem, até os direitos dos titulares, o escopo de aplicação, as bases legais que justificam o tratamento, as obrigações das organizações e o papel crucial da Autoridade Nacional de Proteção de Dados (ANPD). Ao final, um quiz desafiará seu conhecimento recém-adquirido.
-            </p>
-        </section>
-
-        <section id="conceitos" class="scroll-mt-28 section-card">
-            <h3 class="text-3xl md:text-4xl font-bold text-center text-teal-900 mb-4">Conceitos Fundamentais da LGPD</h3>
-            <p class="text-center text-gray-600 text-lg mb-10">Para compreender a LGPD, é essencial dominar sua terminologia. Clique em cada cartão para revelar definições claras e exemplos práticos dos termos mais importantes.</p>
-            <div id="concepts-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            </div>
-        </section>
-
-        <section id="principios" class="scroll-mt-28 section-card">
-            <h3 class="text-3xl md:text-4xl font-bold text-center text-teal-900 mb-4">Os 10 Princípios Essenciais da LGPD</h3>
-            <p class="text-center text-gray-600 text-lg mb-10">O tratamento de dados pessoais deve ser pautado por um conjunto de princípios que garantem a boa-fé e a conformidade. Explore cada um deles para entender a base ética e legal da lei.</p>
-            <div id="principles-container" class="space-y-5">
-            </div>
-        </section>
-
-        <section id="direitos" class="scroll-mt-28 section-card bg-teal-50/50">
-            <h3 class="text-3xl md:text-4xl font-bold text-center text-teal-900 mb-6">Direitos do Titular de Dados</h3>
-            <p class="text-center text-gray-700 text-lg mb-10">A LGPD confere aos cidadãos (titulares dos dados) uma série de direitos que visam garantir o controle e a transparência sobre suas informações pessoais. Conheça seus direitos e como exercê-los.</p>
-            <div id="rights-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
-            </div>
-        </section>
-
-        <section id="escopo" class="scroll-mt-28 section-card">
-            <h3 class="text-3xl md:text-4xl font-bold text-center text-teal-900 mb-4">Escopo de Aplicação da LGPD</h3>
-            <p class="text-center text-gray-600 text-lg mb-10">A LGPD tem uma abrangência vasta, regulamentando o tratamento de dados em diversas situações. Entenda onde a lei se aplica e as exceções importantes.</p>
-            <div id="scope-container" class="space-y-6">
-                <div class="collapsible-item">
-                    <div class="collapsible-header">
-                        <h4 class="text-xl">Abrangência e Critérios de Aplicação</h4>
-                        <span class="transform transition-transform duration-300 text-2xl">▼</span>
-                    </div>
-                    <div class="collapsible-content hidden">
-                        <p class="mb-4">A LGPD se aplica a qualquer operação de tratamento de dados pessoais, realizada por pessoa natural ou jurídica de direito público ou privado, independentemente do meio (físico ou digital), do país da sede da organização ou do país onde os dados estão localizados, desde que:</p>
-                        <ul class="list-disc list-inside text-gray-700 pl-4">
-                            <li>A operação de tratamento seja realizada em território nacional.</li>
-                            <li>O objetivo do tratamento seja a oferta ou o fornecimento de bens ou serviços ou o tratamento de dados de indivíduos localizados no território nacional.</li>
-                            <li>Os dados pessoais objeto do tratamento tenham sido coletados no território nacional.</li>
-                        </ul>
-                        <p class="mt-4">Isso significa que empresas estrangeiras que oferecem serviços a brasileiros ou coletam dados de pessoas no Brasil também estão sujeitas à LGPD.</p>
-                    </div>
-                </div>
-                <div class="collapsible-item">
-                    <div class="collapsible-header">
-                        <h4 class="text-xl">Exceções à Aplicação da LGPD</h4>
-                        <span class="transform transition-transform duration-300 text-2xl">▼</span>
-                    </div>
-                    <div class="collapsible-content hidden">
-                        <p class="mb-4">A LGPD não se aplica ao tratamento de dados pessoais realizado:</p>
-                        <ul class="list-disc list-inside text-gray-700 pl-4">
-                            <li>Por pessoa natural para fins exclusivamente particulares e não econômicos.</li>
-                            <li>Para fins exclusivamente jornalísticos, artísticos ou acadêmicos.</li>
-                            <li>Para fins de segurança pública, defesa nacional, segurança do Estado ou atividades de investigação e repressão de infrações penais.</li>
-                            <li>Por dados provenientes de fora do território nacional e que não sejam objeto de comunicação, uso compartilhado ou transferência internacional com agentes de tratamento brasileiros.</li>
-                        </ul>
-                        <p class="mt-4">É importante notar que, mesmo nas exceções, outras leis e regulamentos podem se aplicar, e a ética na manipulação de dados deve sempre ser considerada.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="bases-legais" class="scroll-mt-28 section-card bg-teal-50/50">
-            <h3 class="text-3xl md:text-4xl font-bold text-center text-teal-900 mb-4">Bases Legais para o Tratamento de Dados</h3>
-            <p class="text-center text-gray-700 text-lg mb-10">Para que o tratamento de dados pessoais seja legítimo e em conformidade com a LGPD, ele deve estar fundamentado em uma das dez bases legais previstas na lei. Clique para entender cada uma e suas aplicações.</p>
-            <div id="legal-bases-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            </div>
-        </section>
-
-        <section id="obrigacoes" class="scroll-mt-28 section-card">
-            <h3 class="text-3xl md:text-4xl font-bold text-center text-teal-900 mb-4">Obrigações e Responsabilidades dos Agentes de Tratamento</h3>
-            <p class="text-center text-gray-600 text-lg mb-10">Controladores e Operadores de dados possuem deveres e responsabilidades cruciais para garantir a conformidade e a segurança no tratamento de dados pessoais.</p>
-            <div id="obligations-container" class="space-y-6">
-                <div class="collapsible-item">
-                    <div class="collapsible-header">
-                        <h4 class="text-xl">Papel e Responsabilidade dos Agentes</h4>
-                        <span class="transform transition-transform duration-300 text-2xl">▼</span>
-                    </div>
-                    <div class="collapsible-content hidden">
-                        <p class="mb-4">O <strong>Controlador</strong> é a pessoa (física ou jurídica) que toma as decisões sobre o tratamento dos dados, ou seja, define a finalidade e os meios. O <strong>Operador</strong>, por sua vez, realiza o tratamento de dados em nome do controlador, seguindo suas instruções.</p>
-                        <ul class="list-disc list-inside text-gray-700 pl-4">
-                            <li>Ambos devem manter registros das operações de tratamento de dados que realizam.</li>
-                            <li>Respondem solidariamente por danos patrimoniais, morais, individuais ou coletivos causados por tratamento de dados em desconformidade com a LGPD.</li>
-                            <li>O Operador será responsabilizado solidariamente se descumprir as obrigações da LGPD ou as instruções lícitas do controlador.</li>
-                            <li>O Controlador pode ser obrigado a elaborar um Relatório de Impacto à Proteção de Dados Pessoais (RIPD) em certas situações.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="collapsible-item">
-                    <div class="collapsible-header">
-                        <h4 class="text-xl">Medidas de Segurança e Boas Práticas</h4>
-                        <span class="transform transition-transform duration-300 text-2xl">▼</span>
-                    </div>
-                    <div class="collapsible-content hidden">
-                        <p class="mb-4">É dever dos agentes de tratamento adotar medidas de segurança, técnicas e administrativas, aptas a proteger os dados pessoais de acessos não autorizados e de situações acidentais ou ilícitas de destruição, perda, alteração, comunicação ou qualquer forma de tratamento inadequado ou ilícito.</p>
-                        <ul class="list-disc list-inside text-gray-700 pl-4">
-                            <li><strong>Privacy by Design e by Default:</strong> A privacidade deve ser incorporada desde a concepção de produtos e serviços, e as configurações padrão devem ser as mais protetivas.</li>
-                            <li><strong>Governança de Dados:</strong> Implementar programas de governança em privacidade, que incluam políticas claras, treinamentos e auditorias internas.</li>
-                            <li><strong>Anonimização e Pseudonimização:</strong> Utilizar técnicas para proteger os dados sempre que possível, tornando-os anônimos ou pseudonimizados.</li>
-                            <li><strong>Planos de Contingência:</strong> Ter planos para lidar com incidentes de segurança e garantir a continuidade dos negócios.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="collapsible-item">
-                    <div class="collapsible-header">
-                        <h4 class="text-xl">Notificação de Incidentes de Segurança</h4>
-                        <span class="transform transition-transform duration-300 text-2xl">▼</span>
-                    </div>
-                    <div class="collapsible-content hidden">
-                        <p class="mb-4">Em caso de incidente de segurança que possa acarretar risco ou dano relevante aos titulares, o controlador deverá comunicar à ANPD e ao titular, em prazo razoável. A comunicação deve conter, no mínimo:</p>
-                        <ol class="list-decimal list-inside text-gray-700 pl-4">
-                            <li>A descrição da natureza dos dados pessoais afetados.</li>
-                            <li>Informações sobre os titulares envolvidos.</li>
-                            <li>A indicação das medidas técnicas e de segurança utilizadas para a proteção dos dados.</li>
-                            <li>Os riscos relacionados ao incidente.</li>
-                            <li>As medidas que foram ou serão adotadas para reverter ou mitigar os efeitos do prejuízo.</li>
-                            <li>A indicação do Encarregado (DPO).</li>
-                        </ol>
-                        <p class="mt-4">A ANPD poderá determinar a adoção de medidas adicionais para salvaguardar os direitos dos titulares.</p>
-                    </div>
-                </div>
-                 <div class="collapsible-item">
-                    <div class="collapsible-header">
-                        <h4 class="text-xl">Sanções e Exclusão de Responsabilidade</h4>
-                        <span class="transform transition-transform duration-300 text-2xl">▼</span>
-                    </div>
-                    <div class="collapsible-content hidden">
-                        <p class="mb-4">As sanções administrativas aplicáveis pela ANPD podem incluir:</p>
-                        <ul class="list-disc list-inside text-gray-700 pl-4">
-                            <li>Advertência, com indicação de prazo para adoção de medidas corretivas.</li>
-                            <li>Multa simples de até 2% do faturamento da pessoa jurídica de direito privado, grupo ou conglomerado no Brasil no seu último exercício, limitada a R$ 50 milhões por infração.</li>
-                            <li>Multa diária.</li>
-                            <li>Publicização da infração após devidamente apurada e confirmada.</li>
-                            <li>Bloqueio ou eliminação dos dados pessoais a que se refere a infração.</li>
-                            <li>Suspensão parcial ou total do funcionamento do banco de dados ou da atividade de tratamento de dados.</li>
-                        </ul>
-                        <p class="mt-4">A responsabilidade dos agentes pode ser excluída se provarem:</p>
-                        <ul class="list-disc list-inside text-gray-700 pl-4">
-                            <li>Que não realizaram o tratamento de dados pessoais que lhes é atribuído.</li>
-                            <li>Que, embora tenham realizado o tratamento, não houve violação à legislação de proteção de dados.</li>
-                            <li>Que o dano decorre de culpa exclusiva do titular dos dados ou de terceiro.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="anpd" class="scroll-mt-28 section-card bg-teal-50/50">
-            <h3 class="text-3xl md:text-4xl font-bold text-center text-teal-900 mb-4">O Papel Crucial da ANPD</h3>
-            <p class="text-center text-gray-700 text-lg mb-10">A Autoridade Nacional de Proteção de Dados (ANPD) é o órgão central na aplicação da LGPD, com funções regulatórias, fiscalizatórias e orientadoras.</p>
-            <ul class="list-disc list-inside text-gray-700 max-w-3xl mx-auto leading-relaxed pl-4">
-                <li><strong>Fiscalizar e Aplicar Sanções:</strong> É responsável por investigar e aplicar as sanções administrativas previstas na LGPD em caso de descumprimento.</li>
-                <li><strong>Regulamentar e Orientar:</strong> Elabora normas e regulamentos complementares à LGPD, além de guias e orientações para a aplicação da lei.</li>
-                <li><strong>Promover o Conhecimento:</strong> Atua na promoção do conhecimento sobre as normas de proteção de dados e as políticas públicas sobre o tema.</li>
-                <li><strong>Receber Reclamações:</strong> Recebe reclamações dos titulares, apura-as e adota as providências cabíveis.</li>
-                <li><strong>Colaborar com Outros Órgãos:</strong> Coopera com outras autoridades e órgãos públicos para garantir a efetividade da proteção de dados.</li>
-                <li><strong>Elaborar Estudos:</strong> Realiza estudos e pesquisas sobre as práticas de proteção de dados pessoais e tecnologias emergentes.</li>
-                <li><strong>Dispor sobre Padrões Técnicos:</strong> Pode estabelecer padrões técnicos mínimos de segurança para o tratamento de dados.</li>
+        <nav class="hidden md:flex space-x-7">
+            <a href="#conceitos" class="nav-link text-gray-700 font-medium text-lg">Conceitos</a>
+            <a href="#principios" class="nav-link text-gray-700 font-medium text-lg">Princípios</a>
+            <a href="#direitos" class="nav-link text-gray-700 font-medium text-lg">Direitos</a>
+            <a href="#escopo" class="nav-link text-gray-700 font-medium text-lg">Escopo</a>
+            <a href="#bases-legais" class="nav-link text-gray-700 font-medium text-lg">Bases Legais</a>
+            <a href="#obrigacoes" class="nav-link text-gray-700 font-medium text-lg">Obrigações</a>
+            <a href="#anpd" class="nav-link text-gray-700 font-medium text-lg">ANPD</a>
+            <a href="#quiz" class="nav-link text-gray-700 font-medium text-lg">Quiz</a>
+        </nav>
+        <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none p-2 rounded-md hover:bg-gray-100">
+            <span class="text-3xl">☰</span>
+        </button>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4 shadow-inner">
+         <a href="#conceitos" class="block py-3 nav-link text-gray-700 font-medium text-lg border-b border-gray-100">Conceitos</a>
+         <a href="#principios" class="block py-3 nav-link text-gray-700 font-medium text-lg border-b border-gray-100">Princípios</a>
+         <a href="#direitos" class="block py-3 nav-link text-gray-700 font-medium text-lg border-b border-gray-100">Direitos</a>
+         <a href="#escopo" class="block py-3 nav-link text-gray-700 font-medium text-lg border-b border-gray-100">Escopo</a>
+         <a href="#bases-legais" class="block py-3 nav-link text-gray-700 font-medium text-lg border-b border-gray-100">Bases Legais</a>
+         <a href="#obrigacoes" class="block py-3 nav-link text-gray-700 font-medium text-lg border-b border-gray-100">Obrigações</a>
+         <a href="#anpd" class="block py-3 nav-link text-gray-700 font-medium text-lg border-b border-gray-100">ANPD</a>
+         <a href="#quiz" class="block py-3 nav-link text-gray-700 font-medium text-lg">Quiz</a>
+    </div>
+</header>
+<main class="container mx-auto p-6 md:p-8">
+    <section id="intro" class="text-center section-card">
+        <h2 class="text-4xl md:text-5xl font-extrabold text-blue-900 mb-6 leading-tight flex items-center justify-center gap-2"><i data-feather="lock" class="text-amber-500"></i>Desvendando a <span class="text-amber-500">LGPD</span>: Seu Guia Completo</h2>
+        <p class="max-w-4xl mx-auto text-xl text-gray-700 leading-relaxed">
+            A Lei Geral de Proteção de Dados (Lei nº 13.709/2018) é um marco legal no Brasil, que estabelece um novo paradigma para o tratamento de dados pessoais. Seu objetivo primordial é proteger os direitos fundamentais de liberdade e de privacidade, garantindo maior controle aos cidadãos sobre suas informações. Este guia interativo foi criado para desmistificar a LGPD, oferecendo um caminho claro e envolvente para seu entendimento.
+        </p>
+        <p class="max-w-4xl mx-auto text-lg text-gray-600 mt-6 leading-relaxed">
+            Navegue pelas seções para explorar desde os conceitos essenciais e princípios que a regem, até os direitos dos titulares, o escopo de aplicação, as bases legais que justificam o tratamento, as obrigações das organizações e o papel crucial da Autoridade Nacional de Proteção de Dados (ANPD). Ao final, um quiz desafiará seu conhecimento recém-adquirido.
+        </p>
+    </section>
+    <section id="conceitos" class="scroll-mt-28 section-card">
+        <h3 class="text-3xl md:text-4xl font-bold text-center text-blue-900 mb-4 flex items-center justify-center gap-2"><i data-feather="book" class="text-blue-800"></i>Conceitos Fundamentais da LGPD</h3>
+        <p class="text-center text-gray-600 text-lg mb-10">Para compreender a LGPD, é essencial dominar sua terminologia. Clique em cada cartão para revelar definições claras e exemplos práticos dos termos mais importantes.</p>
+        <div id="concepts-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+    </section>
+    <section id="principios" class="scroll-mt-28 section-card">
+        <h3 class="text-3xl md:text-4xl font-bold text-center text-blue-900 mb-4 flex items-center justify-center gap-2"><i data-feather="list" class="text-blue-800"></i>Os 10 Princípios Essenciais da LGPD</h3>
+        <p class="text-center text-gray-600 text-lg mb-10">O tratamento de dados pessoais deve ser pautado por um conjunto de princípios que garantem a boa-fé e a conformidade. Explore cada um deles para entender a base ética e legal da lei.</p>
+        <div id="principles-container" class="space-y-5"></div>
+    </section>
+    <section id="direitos" class="scroll-mt-28 section-card bg-blue-50/50">
+        <h3 class="text-3xl md:text-4xl font-bold text-center text-blue-900 mb-6 flex items-center justify-center gap-2"><i data-feather="user-check" class="text-blue-800"></i>Direitos do Titular de Dados</h3>
+        <p class="text-center text-gray-700 text-lg mb-10">A LGPD confere aos cidadãos (titulares dos dados) uma série de direitos que visam garantir o controle e a transparência sobre suas informações pessoais. Conheça seus direitos e como exercê-los.</p>
+        <div id="rights-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10"></div>
+    </section>
+    <section id="escopo" class="scroll-mt-28 section-card">
+        <h3 class="text-3xl md:text-4xl font-bold text-center text-blue-900 mb-4 flex items-center justify-center gap-2"><i data-feather="globe" class="text-blue-800"></i>Escopo de Aplicação da LGPD</h3>
+        <p class="text-center text-gray-600 text-lg mb-10">A LGPD tem uma abrangência vasta, regulamentando o tratamento de dados em diversas situações. Entenda onde a lei se aplica e as exceções importantes.</p>
+        <div id="scope-container" class="space-y-6"></div>
+    </section>
+    <section id="bases-legais" class="scroll-mt-28 section-card bg-blue-50/50">
+        <h3 class="text-3xl md:text-4xl font-bold text-center text-blue-900 mb-4 flex items-center justify-center gap-2"><i data-feather="check-circle" class="text-blue-800"></i>Bases Legais para o Tratamento de Dados</h3>
+        <p class="text-center text-gray-700 text-lg mb-10">Para que o tratamento de dados pessoais seja legítimo e em conformidade com a LGPD, ele deve estar fundamentado em uma das dez bases legais previstas na lei. Clique para entender cada uma e suas aplicações.</p>
+        <div id="legal-bases-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+    </section>
+    <section id="obrigacoes" class="scroll-mt-28 section-card">
+        <h3 class="text-3xl md:text-4xl font-bold text-center text-blue-900 mb-4 flex items-center justify-center gap-2"><i data-feather="shield" class="text-blue-800"></i>Obrigações e Responsabilidades dos Agentes de Tratamento</h3>
+        <p class="text-center text-gray-600 text-lg mb-10">Controladores e Operadores de dados possuem deveres e responsabilidades cruciais para garantir a conformidade e a segurança no tratamento de dados pessoais.</p>
+        <div id="obligations-container" class="space-y-6"></div>
+    </section>
+    <section id="anpd" class="scroll-mt-28 section-card bg-blue-50/50">
+        <h3 class="text-3xl md:text-4xl font-bold text-center text-blue-900 mb-4 flex items-center justify-center gap-2"><i data-feather="activity" class="text-blue-800"></i>O Papel Crucial da ANPD</h3>
+        <p class="text-center text-gray-700 text-lg mb-10">A Autoridade Nacional de Proteção de Dados (ANPD) é o órgão central na aplicação da LGPD, com funções regulatórias, fiscalizatórias e orientadoras.</p>
+        <ul class="list-disc list-inside text-gray-700 max-w-3xl mx-auto leading-relaxed pl-4">
+            <li><strong>Fiscalizar e Aplicar Sanções:</strong> É responsável por investigar e aplicar as sanções administrativas previstas na LGPD em caso de descumprimento.</li>
+            <li><strong>Regulamentar e Orientar:</strong> Elabora normas e regulamentos complementares à LGPD, além de guias e orientações para a aplicação da lei.</li>
+            <li><strong>Promover o Conhecimento:</strong> Atua na promoção do conhecimento sobre as normas de proteção de dados e as políticas públicas sobre o tema.</li>
+            <li><strong>Receber Reclamações:</strong> Recebe reclamações dos titulares, apura-as e adota as providências cabíveis.</li>
+            <li><strong>Colaborar com Outros Órgãos:</strong> Coopera com outras autoridades e órgãos públicos para garantir a efetividade da proteção de dados.</li>
+            <li><strong>Elaborar Estudos:</strong> Realiza estudos e pesquisas sobre as práticas de proteção de dados pessoais e tecnologias emergentes.</li>
+            <li><strong>Dispor sobre Padrões Técnicos:</strong> Pode estabelecer padrões técnicos mínimos de segurança para o tratamento de dados.</li>
+        </ul>
+    </section>
+    <section class="mt-12">
+        <div class="study-tips rounded-lg p-6 shadow-md max-w-3xl mx-auto">
+            <h3 class="font-bold text-lg mb-2 flex items-center gap-2"><i data-feather="book-open" class="text-amber-500"></i>Dicas de Estudo</h3>
+            <ul class="list-disc list-inside text-slate-700 space-y-1">
+                <li>Monte mapas mentais a partir dos conceitos e princípios.</li>
+                <li>Pratique o quiz para fixar os pontos-chave da LGPD.</li>
+                <li>Releia os direitos do titular antes de provas.</li>
+                <li>Use exemplos práticos para memorizar os princípios.</li>
+                <li>Volte a esta página para revisões rápidas antes da prova!</li>
             </ul>
-        </section>
-
-        <section id="quiz" class="scroll-mt-28 section-card">
-            <h3 class="text-3xl md:text-4xl font-bold text-center text-teal-900 mb-4">Teste seu Conhecimento sobre a LGPD</h3>
-             <p class="text-center text-gray-600 text-lg mb-10">Agora que você explorou os conceitos e princípios da LGPD, desafie-se com nosso quiz aprofundado para consolidar seu aprendizado!</p>
-            <div class="bg-white p-8 md:p-10 rounded-3xl shadow-lg border border-gray-100 max-w-4xl mx-auto">
-                <div id="quiz-container">
-                    <div id="quiz-question-container" class="mb-8">
-                        <p id="question-text" class="text-xl font-semibold text-gray-800 leading-relaxed"></p>
-                    </div>
-                    <div id="quiz-options-container" class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    </div>
-                    <div id="quiz-feedback" class="mt-8 text-center text-lg font-bold"></div>
-                    <div class="mt-8 flex justify-center">
-                        <button id="next-question-btn" class="bg-teal-700 text-white font-bold py-3 px-8 rounded-xl hover:bg-teal-800 transition-colors shadow-md hidden">Próxima Pergunta</button>
-                    </div>
+        </div>
+    </section>
+    <section id="quiz" class="scroll-mt-28 section-card">
+        <h3 class="text-3xl md:text-4xl font-bold text-center text-blue-900 mb-4 flex items-center justify-center gap-2"><i data-feather="help-circle" class="text-amber-500"></i>Teste seu Conhecimento sobre a LGPD</h3>
+         <p class="text-center text-gray-600 text-lg mb-10">Agora que você explorou os conceitos e princípios da LGPD, desafie-se com nosso quiz aprofundado para consolidar seu aprendizado!</p>
+        <div class="bg-white p-8 md:p-10 rounded-3xl shadow-lg border border-gray-100 max-w-4xl mx-auto">
+            <div id="quiz-container">
+                <div id="quiz-question-container" class="mb-8">
+                    <p id="question-text" class="text-xl font-semibold text-gray-800 leading-relaxed"></p>
                 </div>
-
-                <div id="quiz-results-container" class="hidden text-center">
-                    <h4 class="text-3xl font-bold text-teal-900 mb-5">Quiz Finalizado! Seu Desempenho:</h4>
-                    <p id="results-summary" class="text-xl text-gray-700 mb-8"></p>
-                    <div class="chart-container">
-                        <canvas id="results-chart"></canvas>
-                    </div>
-                    <button id="restart-quiz-btn" class="mt-10 bg-teal-700 text-white font-bold py-3 px-8 rounded-xl hover:bg-teal-800 transition-colors shadow-md">Refazer Quiz</button>
+                <div id="quiz-options-container" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
+                <div id="quiz-feedback" class="mt-8 text-center text-lg font-bold"></div>
+                <div class="mt-8 flex justify-center">
+                    <button id="next-question-btn" class="bg-blue-800 text-white font-bold py-3 px-8 rounded-xl hover:bg-blue-900 transition-colors shadow-md hidden">Próxima Pergunta</button>
                 </div>
             </div>
-        </section>
-
-    </main>
-
-    <footer class="bg-gray-100 mt-20">
-        <div class="container mx-auto px-6 py-10 text-center text-gray-600">
-            <p class="text-lg mb-2">Este é um material educacional e interativo sobre a Lei Geral de Proteção de Dados (LGPD).</p>
-            <p class="text-md">Desenvolvido para facilitar o aprendizado e aprofundamento nos temas da privacidade e proteção de dados no Brasil.</p>
-            <p class="text-sm mt-4">&copy; 2025 Guia Interativo da LGPD. Todos os direitos reservados.</p>
+            <div id="quiz-results-container" class="hidden text-center">
+                <h4 class="text-3xl font-bold text-blue-900 mb-5">Quiz Finalizado! Seu Desempenho:</h4>
+                <p id="results-summary" class="text-xl text-gray-700 mb-8"></p>
+                <div class="chart-container">
+                    <canvas id="results-chart"></canvas>
+                </div>
+                <button id="restart-quiz-btn" class="mt-10 bg-blue-800 text-white font-bold py-3 px-8 rounded-xl hover:bg-blue-900 transition-colors shadow-md">Refazer Quiz</button>
+            </div>
         </div>
-    </footer>
+    </section>
+</main>
+<footer class="bg-gray-100 mt-20">
+    <div class="container mx-auto px-6 py-10 text-center text-gray-600">
+        <p class="text-lg mb-2">Este é um material educacional e interativo sobre a Lei Geral de Proteção de Dados (LGPD).</p>
+        <p class="text-md">Desenvolvido para facilitar o aprendizado e aprofundamento nos temas da privacidade e proteção de dados no Brasil.</p>
+        <p class="text-sm mt-4">&copy; 2025 Guia Interativo da LGPD. Todos os direitos reservados.</p>
+    </div>
+</footer>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    feather.replace();
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
+    // Perguntas do Quiz com explicações didáticas
+    const quizData = [
+        {
+            question: "Qual dos seguintes é um exemplo de 'Dado Pessoal Sensível' de acordo com a LGPD?",
+            options: ["Nome completo", "Endereço de e-mail", "Filiação a um sindicato", "Número de telefone"],
+            answer: "Filiação a um sindicato",
+            explanation: "A filiação a sindicato é considerada dado pessoal sensível, pois pode expor convicções e preferências protegidas pela lei."
+        },
+        {
+            question: "Uma empresa coleta dados de clientes para processar pedidos. Se ela usar esses mesmos dados para enviar publicidade sem consentimento ou outra base legal, qual princípio da LGPD seria violado?",
+            options: ["Princípio da Transparência", "Princípio da Finalidade", "Princípio da Adequação", "Princípio da Necessidade"],
+            answer: "Princípio da Finalidade",
+            explanation: "O princípio da finalidade exige que os dados sejam usados apenas para o propósito informado ao titular. Usar para marketing sem base legal viola esse princípio."
+        },
+        {
+            question: "O direito do titular de solicitar a transferência de seus dados para outro fornecedor de serviço é conhecido como:",
+            options: ["Direito de Acesso", "Direito de Correção", "Direito à Portabilidade", "Direito de Eliminação"],
+            answer: "Direito à Portabilidade",
+            explanation: "A portabilidade permite ao titular transferir seus dados entre fornecedores, promovendo concorrência e autonomia."
+        },
+        {
+            question: "Qual é o órgão responsável por fiscalizar e aplicar sanções relacionadas à LGPD no Brasil?",
+            options: ["Ministério Público", "Procon", "ANPD (Autoridade Nacional de Proteção de Dados)", "Secretaria Nacional do Consumidor (SENACON)"],
+            answer: "ANPD (Autoridade Nacional de Proteção de Dados)",
+            explanation: "A ANPD é a autoridade central para fiscalização, orientação e aplicação de sanções da LGPD."
+        },
+        {
+            question: "A LGPD se aplica a dados tratados por uma pessoa natural para fins exclusivamente particulares?",
+            options: ["Sim, sempre", "Não, é uma das exceções", "Apenas se os dados forem sensíveis", "Apenas se houver consentimento explícito"],
+            answer: "Não, é uma das exceções",
+            explanation: "A LGPD não se aplica ao tratamento de dados para fins exclusivamente particulares e não econômicos."
+        },
+        {
+            question: "Uma loja online precisa do CPF do cliente para emitir a nota fiscal. Qual base legal justifica o tratamento do CPF neste caso?",
+            options: ["Consentimento", "Legítimo Interesse", "Cumprimento de Obrigação Legal ou Regulatória", "Proteção ao Crédito"],
+            answer: "Cumprimento de Obrigação Legal ou Regulatória",
+            explanation: "A emissão de nota fiscal é uma obrigação legal, justificando o tratamento do CPF sem necessidade de consentimento."
+        },
+        {
+            question: "Qual o prazo máximo para um Controlador responder a uma solicitação de acesso ou confirmação da existência de dados, de forma completa?",
+            options: ["Imediato", "5 dias úteis", "15 dias corridos", "30 dias corridos"],
+            answer: "15 dias corridos",
+            explanation: "A LGPD prevê até 15 dias corridos para resposta completa ao titular."
+        },
+        {
+            question: "Se um Operador de dados age em desconformidade com as instruções lícitas do Controlador e causa um vazamento de dados, qual a sua responsabilidade perante a LGPD?",
+            options: ["Nenhuma, a responsabilidade é exclusiva do Controlador", "Solidária com a do Controlador", "Apenas se o Controlador não tiver um Encarregado (DPO)", "Apenas se o Operador for uma empresa de grande porte"],
+            answer: "Solidária com a do Controlador",
+            explanation: "O operador responde solidariamente se descumprir a LGPD ou as instruções lícitas do controlador."
+        },
+        {
+            question: "O princípio da LGPD que exige que o tratamento de dados seja limitado ao estritamente necessário para atingir suas finalidades é o da:",
+            options: ["Transparência", "Segurança", "Necessidade", "Adequação"],
+            answer: "Necessidade",
+            explanation: "O princípio da necessidade limita o tratamento ao mínimo necessário para o objetivo pretendido."
+        },
+        {
+            question: "Qual das seguintes bases legais NÃO se aplica ao tratamento de dados pessoais sensíveis?",
+            options: ["Consentimento", "Obrigação legal ou regulatória", "Legítimo Interesse", "Proteção da vida ou incolumidade física"],
+            answer: "Legítimo Interesse",
+            explanation: "O legítimo interesse não é base legal para dados sensíveis, exceto em situações específicas previstas em lei."
+        }
+    ];
 
-            const concepts = [
-                { title: 'Dado Pessoal', icon: '👤', description: 'Qualquer informação relacionada a uma pessoa natural identificada ou identificável. Abrange desde nome, CPF, e-mail e endereço, até dados de localização, IP, cookies e informações sobre hábitos de consumo.' },
-                { title: 'Dado Pessoal Sensível', icon: '❤️', description: 'Categoria especial de dado pessoal que exige maior proteção. Refere-se a origem racial ou étnica, convicção religiosa, opinião política, filiação a sindicato ou organização de caráter religioso, filosófico ou político, dado referente à saúde ou à vida sexual, dado genético ou biométrico, quando vinculado a uma pessoa natural.' },
-                { title: 'Titular', icon: '🙋', description: 'A pessoa natural a quem se referem os dados pessoais que são objeto de tratamento. É o indivíduo que possui os direitos garantidos pela LGPD sobre seus próprios dados.' },
-                { title: 'Controlador', icon: '⚖️', description: 'Pessoa natural ou jurídica, de direito público ou privado, a quem competem as decisões referentes ao tratamento de dados pessoais. É quem define a finalidade e os meios do tratamento.' },
-                { title: 'Operador', icon: '⚙️', description: 'Pessoa natural ou jurídica, de direito público ou privado, que realiza o tratamento de dados pessoais em nome do controlador. Atua sob as instruções do controlador.' },
-                { title: 'Encarregado (DPO)', icon: '👮', description: 'Pessoa indicada pelo controlador e operador para atuar como canal de comunicação entre o controlador, os titulares dos dados e a Autoridade Nacional de Proteção de Dados (ANPD). Também é conhecido como Data Protection Officer (DPO).' },
-                { title: 'ANPD', icon: '🏛️', description: 'A Autoridade Nacional de Proteção de Dados é o órgão da administração pública federal responsável por zelar pela proteção de dados pessoais, implementar e fiscalizar o cumprimento da LGPD no Brasil.' },
-                { title: 'Tratamento', icon: '🔄', description: 'Toda operação realizada com dados pessoais, como coleta, produção, recepção, classificação, utilização, acesso, reprodução, transmissão, distribuição, processamento, arquivamento, armazenamento, eliminação, avaliação ou controle da informação, modificação, comunicação, transferência, difusão ou extração.' }
-            ];
+    let currentQuestion = 0;
+    let score = 0;
 
-            const principles = [
-                { title: 'Finalidade', description: 'Realizar o tratamento para propósitos legítimos, específicos, explícitos e informados ao titular, sem possibilidade de tratamento posterior incompatível com essas finalidades. Exige clareza sobre o porquê dos dados estarem sendo coletados.' },
-                { title: 'Adequação', description: 'Compatibilidade do tratamento com as finalidades informadas ao titular, ou seja, o tratamento deve ser adequado ao propósito para o qual os dados foram coletados.' },
-                { title: 'Necessidade', description: 'Limitação do tratamento ao mínimo necessário para a realização de suas finalidades, abrangendo apenas dados pertinentes, proporcionais e não excessivos em relação aos objetivos do tratamento.' },
-                { title: 'Livre Acesso', description: 'Garantia, aos titulares, de consulta facilitada e gratuita sobre a forma e a duração do tratamento, bem como sobre a integralidade de seus dados pessoais. O acesso deve ser simples e desburocratizado.' },
-                { title: 'Qualidade dos Dados', description: 'Garantia, aos titulares, de que seus dados sejam exatos, claros, relevantes e atualizados, de acordo com a necessidade e para o cumprimento da finalidade de seu tratamento.' },
-                { title: 'Transparência', description: 'Garantia, aos titulares, de informações claras, precisas e facilmente acessíveis sobre a realização do tratamento e os respectivos agentes de tratamento, observados os segredos comercial e industrial.' },
-                { title: 'Segurança', description: 'Utilização de medidas técnicas e administrativas aptas a proteger os dados pessoais de acessos não autorizados e de situações acidentais ou ilícitas de destruição, perda, alteração, comunicação ou qualquer forma de tratamento inadequado ou ilícito.' },
-                { title: 'Prevenção', description: 'Adoção de medidas para prevenir a ocorrência de danos em virtude do tratamento de dados pessoais, como a implementação de controles de segurança e avaliações de risco.' },
-                { title: 'Não Discriminação', description: 'Impossibilidade de realização do tratamento de dados pessoais para fins discriminatórios ilícitos ou abusivos. O tratamento não pode gerar distinções injustas ou prejudiciais.' },
-                { title: 'Responsabilização e Prestação de Contas', description: 'Demonstração, pelo agente de tratamento, da adoção de medidas eficazes e capazes de comprovar a observância e o cumprimento das normas de proteção de dados pessoais e, inclusive, da eficácia dessas medidas.' }
-            ];
+    const quizContainer = document.getElementById('quiz-container');
+    const questionText = document.getElementById('question-text');
+    const optionsContainer = document.getElementById('quiz-options-container');
+    const feedbackEl = document.getElementById('quiz-feedback');
+    const nextButton = document.getElementById('next-question-btn');
+    const resultsContainer = document.getElementById('quiz-results-container');
+    const restartButton = document.getElementById('restart-quiz-btn');
+    const resultsSummary = document.getElementById('results-summary');
 
-            const rights = [
-                { icon: '✅', title: 'Confirmação da Existência', description: 'O titular tem o direito de confirmar se existe ou não tratamento de seus dados pessoais por uma organização. A resposta deve ser fornecida de forma simplificada imediatamente, ou por declaração clara e completa em até 15 dias.' },
-                { icon: '🔍', title: 'Acesso aos Dados', description: 'O titular pode solicitar e obter acesso aos seus dados pessoais que estão sendo tratados. A resposta deve ser fornecida de forma simplificada imediatamente, ou por declaração clara e completa em até 15 dias.' },
-                { icon: '✏️', title: 'Correção de Dados', description: 'Direito de solicitar a correção de dados incompletos, inexatos ou desatualizados, garantindo a qualidade da informação.' },
-                { icon: '🚫', title: 'Anonimização, Bloqueio ou Eliminação', description: 'O titular pode pedir que seus dados sejam anonimizados (perdem a capacidade de identificação), bloqueados (suspensão temporária do tratamento) ou eliminados (exclusão definitiva), se forem desnecessários, excessivos ou tratados em desconformidade com a LGPD.' },
-                { icon: '➡️', title: 'Portabilidade', description: 'O direito de solicitar a transferência de seus dados pessoais para outro fornecedor de serviço ou produto, mediante requisição expressa, observados os segredos comercial e industrial. A ANPD regulamentará essa portabilidade.' },
-                { icon: '🗑️', title: 'Eliminação dos Dados', description: 'O titular tem o direito de solicitar a eliminação dos dados pessoais tratados com base no seu consentimento, exceto nas hipóteses previstas em lei (ex: cumprimento de obrigação legal).' },
-                { icon: 'ℹ️', title: 'Informação sobre Compartilhamento', description: 'O titular tem o direito de ser informado sobre as entidades públicas e privadas com as quais o controlador realizou uso compartilhado de seus dados.' },
-                { icon: '🤔', title: 'Informação sobre o Não Consentimento', description: 'O titular deve ser informado sobre a possibilidade de não fornecer consentimento e sobre as consequências da negativa, caso o consentimento seja a base legal para o tratamento.' },
-                { icon: '⏪', title: 'Revogação do Consentimento', description: 'O titular pode revogar seu consentimento a qualquer momento, por meio de procedimento gratuito e facilitado, devendo ser informado sobre as consequências dessa revogação.' },
-                { icon: '⚖️', title: 'Oposição ao Tratamento', description: 'O titular pode se opor ao tratamento de dados realizado com dispensa de consentimento (ex: legítimo interesse), caso entenda que há descumprimento à LGPD. A ANPD e outros órgãos de defesa do consumidor podem ser acionados.' }
-            ];
-
-            const legalBases = [
-                { title: 'Consentimento', description: 'Manifestação livre, informada e inequívoca pela qual o titular concorda com o tratamento de seus dados pessoais para uma finalidade determinada. É revogável a qualquer momento.' },
-                { title: 'Obrigação Legal ou Regulatória', description: 'O tratamento é necessário para o cumprimento de uma obrigação legal ou regulatória imposta ao controlador (Ex: dados de funcionários para fins trabalhistas e fiscais).' },
-                { title: 'Execução de Políticas Públicas', description: 'Pela administração pública, para a execução de políticas públicas previstas em leis ou regulamentos, ou respaldadas em contratos, convênios ou instrumentos congêneres.' },
-                { title: 'Estudos por Órgão de Pesquisa', description: 'Realização de estudos por órgão de pesquisa, garantida, sempre que possível, a anonimização dos dados pessoais.' },
-                { title: 'Execução ou Criação de Contrato', description: 'Para a execução de contrato ou de procedimentos preliminares relacionados a contrato do qual seja parte o titular, a pedido do titular dos dados.' },
-                { title: 'Exercício Regular de Direitos', description: 'Para o exercício regular de direitos em processo judicial, administrativo ou arbitral.' },
-                { title: 'Proteção da Vida', description: 'Para a proteção da vida ou incolumidade física do titular ou de terceiro em situação de emergência ou risco iminente.' },
-                { title: 'Tutela da Saúde', description: 'Para a tutela da saúde, exclusivamente, em procedimento realizado por profissionais de saúde, serviços de saúde ou autoridade sanitária.' },
-                { title: 'Legítimo Interesse', description: 'Para atender aos interesses legítimos do controlador ou de terceiro, exceto quando prevalecerem direitos e liberdades fundamentais do titular que exijam a proteção dos dados pessoais. Exige avaliação de impacto e transparência.' },
-                { title: 'Proteção ao Crédito', description: 'Para a proteção do crédito, inclusive quanto ao disposto na legislação pertinente.' }
-            ];
-
-            const conceptsGrid = document.getElementById('concepts-grid');
-            concepts.forEach(concept => {
-                const card = document.createElement('div');
-                card.className = 'card bg-white p-6 rounded-2xl border border-gray-200/80 cursor-pointer shadow-sm hover:shadow-lg';
-                card.innerHTML = `
-                    <div class="flex items-center mb-3">
-                        <span class="text-4xl mr-4">${concept.icon}</span>
-                        <h4 class="font-bold text-xl text-teal-900">${concept.title}</h4>
-                    </div>
-                    <p class="text-gray-700 hidden text-base leading-relaxed">${concept.description}</p>
-                `;
-                card.addEventListener('click', () => {
-                    card.querySelector('p').classList.toggle('hidden');
-                });
-                conceptsGrid.appendChild(card);
-            });
-
-            const principlesContainer = document.getElementById('principles-container');
-            principles.forEach(principle => {
-                const item = document.createElement('div');
-                item.className = 'bg-white rounded-xl border border-gray-200/80 overflow-hidden shadow-sm';
-                item.innerHTML = `
-                    <div class="p-5 cursor-pointer flex justify-between items-center hover:bg-teal-50/50">
-                        <h4 class="font-semibold text-lg text-teal-800">${principle.title}</h4>
-                        <span class="transform transition-transform duration-300 text-xl">▼</span>
-                    </div>
-                    <div class="px-5 pb-5 text-gray-700 hidden text-base leading-relaxed">
-                        <p>${principle.description}</p>
-                    </div>
-                `;
-                item.querySelector('div').addEventListener('click', () => {
-                    item.querySelector('.hidden, .block').classList.toggle('hidden');
-                    item.querySelector('span').classList.toggle('rotate-180');
-                });
-                principlesContainer.appendChild(item);
-            });
-
-            const rightsGrid = document.getElementById('rights-grid');
-            rights.forEach(right => {
-                const item = document.createElement('div');
-                item.className = 'flex items-start bg-white p-6 rounded-xl shadow-md border border-gray-100';
-                item.innerHTML = `
-                    <span class="text-3xl mr-5 mt-1">${right.icon}</span>
-                    <div>
-                        <h4 class="font-bold text-lg text-teal-900 mb-1">${right.title}</h4>
-                        <p class="text-gray-700 text-sm leading-relaxed">${right.description}</p>
-                    </div>
-                `;
-                rightsGrid.appendChild(item);
-            });
-
-            const legalBasesGrid = document.getElementById('legal-bases-grid');
-            legalBases.forEach(base => {
-                const card = document.createElement('div');
-                card.className = 'card bg-white p-6 rounded-2xl border border-gray-200/80 cursor-pointer shadow-sm hover:shadow-lg';
-                card.innerHTML = `
-                    <div class="flex items-center mb-3">
-                        <h4 class="font-bold text-xl text-teal-900">${base.title}</h4>
-                    </div>
-                    <p class="text-gray-700 hidden text-base leading-relaxed">${base.description}</p>
-                `;
-                card.addEventListener('click', () => {
-                    card.querySelector('p').classList.toggle('hidden');
-                });
-                legalBasesGrid.appendChild(card);
-            });
-
-            document.querySelectorAll('.collapsible-item').forEach(item => {
-                item.querySelector('.collapsible-header').addEventListener('click', () => {
-                    const content = item.querySelector('.collapsible-content');
-                    const icon = item.querySelector('.collapsible-header span');
-                    content.classList.toggle('hidden');
-                    icon.classList.toggle('rotate-180');
-                });
-            });
-
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-            document.querySelectorAll('#mobile-menu a').forEach(link => {
-                link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
-            });
-
-            const quizData = [
-                {
-                    question: "Qual dos seguintes é um exemplo de 'Dado Pessoal Sensível' de acordo com a LGPD?",
-                    options: ["Nome completo", "Endereço de e-mail", "Filiação a um sindicato", "Número de telefone"],
-                    answer: "Filiação a um sindicato"
-                },
-                {
-                    question: "Uma empresa coleta dados de clientes para processar pedidos. Se ela usar esses mesmos dados para enviar publicidade sem consentimento ou outra base legal, qual princípio da LGPD seria violado?",
-                    options: ["Princípio da Transparência", "Princípio da Finalidade", "Princípio da Adequação", "Princípio da Necessidade"],
-                    answer: "Princípio da Finalidade"
-                },
-                {
-                    question: "O direito do titular de solicitar a transferência de seus dados para outro fornecedor de serviço é conhecido como:",
-                    options: ["Direito de Acesso", "Direito de Correção", "Direito à Portabilidade", "Direito de Eliminação"],
-                    answer: "Direito à Portabilidade"
-                },
-                {
-                    question: "Qual é o órgão responsável por fiscalizar e aplicar sanções relacionadas à LGPD no Brasil?",
-                    options: ["Ministério Público", "Procon", "ANPD (Autoridade Nacional de Proteção de Dados)", "Secretaria Nacional do Consumidor (SENACON)"],
-                    answer: "ANPD (Autoridade Nacional de Proteção de Dados)"
-                },
-                {
-                    question: "A LGPD se aplica a dados tratados por uma pessoa natural para fins exclusivamente particulares?",
-                    options: ["Sim, sempre", "Não, é uma das exceções", "Apenas se os dados forem sensíveis", "Apenas se houver consentimento explícito"],
-                    answer: "Não, é uma das exceções"
-                },
-                {
-                    question: "Uma loja online precisa do CPF do cliente para emitir a nota fiscal. Qual base legal justifica o tratamento do CPF neste caso?",
-                    options: ["Consentimento", "Legítimo Interesse", "Cumprimento de Obrigação Legal ou Regulatória", "Proteção ao Crédito"],
-                    answer: "Cumprimento de Obrigação Legal ou Regulatória"
-                },
-                {
-                    question: "Qual o prazo máximo para um Controlador responder a uma solicitação de acesso ou confirmação da existência de dados, de forma completa?",
-                    options: ["Imediato", "5 dias úteis", "15 dias corridos", "30 dias corridos"],
-                    answer: "15 dias corridos"
-                },
-                {
-                    question: "Se um Operador de dados age em desconformidade com as instruções lícitas do Controlador e causa um vazamento de dados, qual a sua responsabilidade perante a LGPD?",
-                    options: ["Nenhuma, a responsabilidade é exclusiva do Controlador", "Solidária com a do Controlador", "Apenas se o Controlador não tiver um Encarregado (DPO)", "Apenas se o Operador for uma empresa de grande porte"],
-                    answer: "Solidária com a do Controlador"
-                },
-                {
-                    question: "O princípio da LGPD que exige que o tratamento de dados seja limitado ao estritamente necessário para atingir suas finalidades é o da:",
-                    options: ["Transparência", "Segurança", "Necessidade", "Adequação"],
-                    answer: "Necessidade"
-                },
-                {
-                    question: "Qual das seguintes bases legais NÃO se aplica ao tratamento de dados pessoais sensíveis?",
-                    options: ["Consentimento", "Obrigação legal ou regulatória", "Legítimo Interesse", "Proteção da vida ou incolumidade física"],
-                    answer: "Legítimo Interesse"
-                },
-                {
-                    question: "O que significa o princípio da 'Responsabilização e Prestação de Contas' na LGPD?",
-                    options: ["Que o controlador deve indenizar o titular em qualquer situação de dano", "Que o agente de tratamento deve demonstrar a adoção de medidas eficazes para o cumprimento das normas de proteção de dados", "Que apenas a ANPD é responsável por fiscalizar a lei", "Que os dados devem ser eliminados após o uso, sem exceções"],
-                    answer: "Que o agente de tratamento deve demonstrar a adoção de medidas eficazes para o cumprimento das normas de proteção de dados"
-                },
-                {
-                    question: "Em caso de incidente de segurança que possa gerar risco ou dano relevante aos titulares, a quem o controlador deve comunicar, além do titular?",
-                    options: ["Apenas ao Encarregado (DPO)", "Apenas à Polícia Federal", "À ANPD (Autoridade Nacional de Proteção de Dados)", "Apenas aos órgãos de defesa do consumidor"],
-                    answer: "À ANPD (Autoridade Nacional de Proteção de Dados)"
-                }
-            ];
-
-            let currentQuestionIndex = 0;
-            let score = 0;
-            let resultsChart;
-
-            const quizContainer = document.getElementById('quiz-container');
-            const questionText = document.getElementById('question-text');
-            const optionsContainer = document.getElementById('quiz-options-container');
-            const feedbackEl = document.getElementById('quiz-feedback');
-            const nextButton = document.getElementById('next-question-btn');
-            const resultsContainer = document.getElementById('quiz-results-container');
-            const restartButton = document.getElementById('restart-quiz-btn');
-
-            function startQuiz() {
-                currentQuestionIndex = 0;
-                score = 0;
-                quizContainer.style.display = 'block';
-                resultsContainer.classList.add('hidden');
-                nextButton.classList.add('hidden');
-                feedbackEl.textContent = '';
-                showQuestion();
-            }
-
-            function showQuestion() {
-                feedbackEl.textContent = '';
-                const currentQuestion = quizData[currentQuestionIndex];
-                questionText.textContent = `${currentQuestionIndex + 1}. ${currentQuestion.question}`;
-                optionsContainer.innerHTML = '';
-
-                currentQuestion.options.forEach(option => {
-                    const button = document.createElement('button');
-                    button.textContent = option;
-                    button.className = 'quiz-option-button w-full text-left p-4 bg-gray-100 rounded-lg hover:bg-teal-100 border-2 border-transparent focus:border-teal-500 focus:outline-none transition-colors';
-                    button.onclick = () => selectAnswer(button, option, currentQuestion.answer);
-                    optionsContainer.appendChild(button);
-                });
-            }
-
-            function selectAnswer(button, selectedOption, correctAnswer) {
-                Array.from(optionsContainer.children).forEach(btn => {
-                    btn.disabled = true;
-                    if (btn.textContent === correctAnswer) {
-                        btn.classList.add('correct-answer');
-                    }
-                });
-
-                if (selectedOption === correctAnswer) {
-                    score++;
-                    button.classList.add('selected-correct');
-                    feedbackEl.textContent = '✅ Resposta Correta! Muito bem!';
-                    feedbackEl.className = 'mt-8 text-center text-lg font-bold text-green-700';
-                } else {
-                    button.classList.add('selected-incorrect');
-                    feedbackEl.textContent = '❌ Resposta Incorreta. Revise o conteúdo!';
-                    feedbackEl.className = 'mt-8 text-center text-lg font-bold text-red-700';
-                }
-                nextButton.classList.remove('hidden');
-            }
-
-            function showNextQuestion() {
-                currentQuestionIndex++;
-                if (currentQuestionIndex < quizData.length) {
-                    nextButton.classList.add('hidden');
-                    showQuestion();
-                } else {
-                    showResults();
-                }
-            }
-
-            function showResults() {
-                quizContainer.style.display = 'none';
-                resultsContainer.classList.remove('hidden');
-
-                document.getElementById('results-summary').textContent = `Você acertou ${score} de ${quizData.length} perguntas.`;
-
-                const ctx = document.getElementById('results-chart').getContext('2d');
-                if (resultsChart) {
-                    resultsChart.destroy();
-                }
-                resultsChart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['Corretas', 'Incorretas'],
-                        datasets: [{
-                            label: 'Seu Desempenho',
-                            data: [score, quizData.length - score],
-                            backgroundColor: ['#319795', '#E53E3E'], /* Muted Teal and Red */
-                            borderColor: ['#2C7A7B', '#C53030'],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        indexAxis: 'y',
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            x: {
-                                beginAtZero: true,
-                                ticks: {
-                                    stepSize: 1,
-                                    color: '#555'
-                                },
-                                grid: {
-                                    color: '#eee'
-                                }
-                            },
-                            y: {
-                                ticks: {
-                                    color: '#555'
-                                },
-                                grid: {
-                                    display: false
-                                }
-                            }
-                        },
-                        plugins: {
-                            legend: {
-                                display: false
-                            },
-                            tooltip: {
-                                enabled: false,
-                                callbacks: {
-                                    label: function(context) {
-                                        let label = context.dataset.label || '';
-                                        if (label) {
-                                            label += ': ';
-                                        }
-                                        if (context.parsed.x !== null) {
-                                            label += context.parsed.x;
-                                        }
-                                        return label;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
-            }
-
-            nextButton.addEventListener('click', showNextQuestion);
-            restartButton.addEventListener('click', startQuiz);
-
-            startQuiz();
+    function showQuestion() {
+        feedbackEl.textContent = '';
+        feedbackEl.className = 'mt-8 text-center text-lg font-bold';
+        nextButton.classList.add('hidden');
+        questionText.innerHTML = `<span class='text-blue-800 font-bold'>Questão ${currentQuestion + 1} de ${quizData.length}:</span> ${quizData[currentQuestion].question}`;
+        optionsContainer.innerHTML = '';
+        quizData[currentQuestion].options.forEach(option => {
+            const button = document.createElement('button');
+            button.textContent = option;
+            button.className = 'quiz-option-button w-full text-left p-4 bg-gray-100 rounded-lg hover:bg-blue-100 border-2 border-transparent focus:border-blue-500 focus:outline-none transition-colors';
+            button.onclick = () => selectAnswer(button, option);
+            optionsContainer.appendChild(button);
         });
-    </script>
+    }
 
+    function selectAnswer(button, selectedOption) {
+        const correct = quizData[currentQuestion].answer;
+        const explanation = quizData[currentQuestion].explanation;
+        Array.from(optionsContainer.children).forEach(btn => {
+            btn.disabled = true;
+            if (btn.textContent === correct) {
+                btn.classList.add('correct-answer');
+            }
+        });
+        if (selectedOption === correct) {
+            score++;
+            button.classList.add('selected-correct');
+            feedbackEl.innerHTML = `✅ <span class='text-green-700'>Correto!</span><br><span class='text-gray-700 text-base'>${explanation}</span>`;
+            feedbackEl.className = 'mt-8 text-center text-lg font-bold text-green-700';
+        } else {
+            button.classList.add('selected-incorrect');
+            feedbackEl.innerHTML = `❌ <span class='text-red-700'>Incorreto.</span><br><span class='text-gray-700 text-base'>${explanation}</span>`;
+            feedbackEl.className = 'mt-8 text-center text-lg font-bold text-red-700';
+        }
+        nextButton.classList.remove('hidden');
+    }
+
+    function showNextQuestion() {
+        currentQuestion++;
+        if (currentQuestion < quizData.length) {
+            showQuestion();
+        } else {
+            showResults();
+        }
+    }
+
+    function showResults() {
+        quizContainer.style.display = 'none';
+        resultsContainer.classList.remove('hidden');
+        resultsSummary.innerHTML = `Você acertou <span class='text-blue-800 font-bold'>${score}</span> de <span class='text-blue-800 font-bold'>${quizData.length}</span> perguntas.<br><span class='text-gray-700 text-base'>${score < quizData.length ? 'Revise os conceitos em que errou e tente novamente!' : 'Excelente! Você dominou os conceitos da LGPD.'}</span>`;
+        const ctx = document.getElementById('results-chart').getContext('2d');
+        if (window.resultsChart) window.resultsChart.destroy();
+        window.resultsChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Corretas', 'Incorretas'],
+                datasets: [{
+                    label: 'Seu Desempenho',
+                    data: [score, quizData.length - score],
+                    backgroundColor: ['#2563eb', '#ef4444'],
+                    borderColor: ['#1e3a8a', '#b91c1c'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { beginAtZero: true, ticks: { stepSize: 1, color: '#555' }, grid: { color: '#eee' } },
+                    y: { ticks: { color: '#555' }, grid: { display: false } }
+                },
+                plugins: { legend: { display: false } }
+            }
+        });
+    }
+
+    nextButton.addEventListener('click', showNextQuestion);
+    restartButton.addEventListener('click', () => {
+        currentQuestion = 0;
+        score = 0;
+        quizContainer.style.display = 'block';
+        resultsContainer.classList.add('hidden');
+        showQuestion();
+    });
+
+    // Inicialização
+    quizContainer.style.display = 'block';
+    resultsContainer.classList.add('hidden');
+    showQuestion();
+});
+</script>
 </body>
 </html>
