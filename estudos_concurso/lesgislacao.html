@@ -6,34 +6,31 @@
     <title>Guia Interativo de Legislação Administrativa</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Calm & Authoritative -->
-    <!-- Application Structure Plan: A single-page application with a top navigation bar for quick scrolling. The structure is thematic, not linear, to improve learning and exploration. It starts with an introduction, then moves to core interactive sections: 1) "Organização da Administração" uses an interactive HTML/CSS diagram and cards to explain Direct vs. Indirect administration, allowing users to click and reveal details. 2) "Princípios Fundamentais" uses a tabbed interface and interactive cards for Expressed and Implicit principles, making dense information digestible. 3) "Legislação Essencial" features a categorized, interactive grid of laws. 4) A "Recursos" section links to study materials. This interactive, non-linear design transforms the static report into an engaging learning tool, prioritizing user exploration over passive reading. -->
-    <!-- Visualization & Content Choices: 
-        - Org. da Administração (Direta vs. Indireta): Goal: Organize/Compare -> Method: Interactive HTML/CSS diagram with clickable cards. Interaction: Click reveals details. Justification: Visually clarifies hierarchy and relationships more effectively than text or a static table. Reduces initial cognitive load.
-        - Descentralização vs. Desconcentração: Goal: Compare -> Method: Side-by-side HTML/CSS info boxes. Interaction: Static comparison. Justification: Direct visual juxtaposition is the clearest method for this core distinction.
-        - Princípios (LIMPE & Implícitos): Goal: Inform/Organize -> Method: Interactive cards in a grid layout. Interaction: Click to expand. Justification: Breaks down abstract concepts into manageable, engaging chunks.
-        - Leis Essenciais: Goal: Organize/Inform -> Method: Categorized grid of interactive cards. Interaction: Click for summary. Justification: More scannable and user-friendly than a long list.
-        - Características (Adm. Direta vs. Indireta): Goal: Compare -> Method: Donut Chart (Chart.js/Canvas). Interaction: Hover on slices. Justification: Provides a quick visual summary of key differences like personality and control type.
-        - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #F8F9FA; }
-        .chart-container { position: relative; width: 100%; max-width: 450px; margin-left: auto; margin-right: auto; height: 320px; max-height: 400px; }
-        .smooth-scroll { scroll-behavior: smooth; }
-        .nav-link { transition: color 0.3s, border-bottom-color 0.3s; }
-        .nav-link:hover { color: #2563EB; border-bottom-color: #2563EB; }
-        .card { transition: transform 0.3s, box-shadow 0.3s; }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(120deg, #f0f9ff 0%, #fef3c7 100%); }
+        .card { transition: transform 0.3s, box-shadow 0.3s, background 0.3s; background: #fcfcfc; border: 1px solid #e0e0e0; }
+        .card:hover { transform: translateY(-7px) scale(1.03); box-shadow: 0 15px 25px -5px #f59e4222; background: #f5f5f5; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
-        .tab-button.active { border-color: #2563EB; color: #2563EB; background-color: #EFF6FF; }
+        .tab-button.active { border-color: #2563EB; color: #2563EB; background: #EFF6FF; font-weight: bold; }
+        .study-tips { background: linear-gradient(90deg, #fef3c7 60%, #f0f9ff 100%); border-left: 6px solid #f59e42; }
+        .no-js-message { display: block; background: #f59e42; color: #1e3a8a; padding: 1rem; text-align: center; font-weight: bold; border-radius: 0.5rem; margin: 1rem 0; }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 smooth-scroll">
-
+<body class="bg-gray-50 text-gray-800">
+<noscript>
+    <div class="no-js-message">Este site requer JavaScript para funcionar corretamente. Por favor, ative o JavaScript no seu navegador.</div>
+</noscript>
     <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <h1 class="text-xl md:text-2xl font-bold text-blue-800">Direito Administrativo</h1>
+            <div class="flex items-center gap-2">
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-tr from-blue-800 to-amber-400 shadow-lg">
+                    <i data-feather="layers" class="text-white"></i>
+                </span>
+                <h1 class="text-xl md:text-2xl font-bold text-blue-800">Direito Administrativo</h1>
+            </div>
             <div class="hidden md:flex space-x-8">
                 <a href="#organizacao" class="nav-link text-gray-600 pb-1 border-b-2 border-transparent">Organização</a>
                 <a href="#principios" class="nav-link text-gray-600 pb-1 border-b-2 border-transparent">Princípios</a>
@@ -41,7 +38,7 @@
                 <a href="#recursos" class="nav-link text-gray-600 pb-1 border-b-2 border-transparent">Recursos</a>
             </div>
             <button id="mobile-menu-button" class="md:hidden text-gray-700">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                <i data-feather="menu"></i>
             </button>
         </nav>
         <div id="mobile-menu" class="hidden md:hidden px-6 pb-4 space-y-2">
@@ -51,19 +48,16 @@
             <a href="#recursos" class="block nav-link text-gray-600">Recursos</a>
         </div>
     </header>
-
     <main class="container mx-auto px-6 py-12">
         <section id="intro" class="text-center mb-20">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Desvendando a Legislação Administrativa Brasileira</h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 flex items-center justify-center gap-2"><i data-feather="book-open" class="text-amber-500"></i>Desvendando a Legislação Administrativa Brasileira</h2>
             <p class="max-w-3xl mx-auto text-lg text-gray-600">
                 Bem-vindo a este guia interativo. O Direito Administrativo regula a função do Estado, equilibrando as prerrogativas do poder público com os direitos dos cidadãos. Explore os pilares da Administração Pública, sua organização, princípios e as leis que a governam de forma dinâmica e simplificada.
             </p>
         </section>
-
         <section id="organizacao" class="mb-20">
-            <h2 class="text-3xl font-bold text-center mb-4 text-gray-900">Organização da Administração Pública</h2>
+            <h2 class="text-3xl font-bold text-center mb-4 text-gray-900 flex items-center justify-center gap-2"><i data-feather="git-branch" class="text-blue-800"></i>Organização da Administração Pública</h2>
             <p class="text-lg text-gray-600 text-center max-w-3xl mx-auto mb-12">A Administração Pública brasileira estrutura-se de duas formas principais: Direta e Indireta. Esta divisão define como o Estado executa suas atividades, seja de forma centralizada ou descentralizada, por meio de entidades com funções específicas. Explore abaixo essa estrutura fundamental.</p>
-
             <div class="grid md:grid-cols-2 gap-12 items-start">
                 <div>
                     <h3 class="text-2xl font-semibold mb-6 text-center text-gray-800">Estrutura Visual</h3>
@@ -99,7 +93,6 @@
                         </div>
                     </div>
                 </div>
-                
                 <div>
                     <h3 class="text-2xl font-semibold mb-6 text-center text-gray-800">Conceitos-Chave</h3>
                     <div class="grid grid-cols-1 gap-6">
@@ -126,50 +119,54 @@
                 </div>
             </div>
         </section>
-
         <section id="principios" class="mb-20">
-            <h2 class="text-3xl font-bold text-center mb-4 text-gray-900">Princípios Fundamentais</h2>
+            <h2 class="text-3xl font-bold text-center mb-4 text-gray-900 flex items-center justify-center gap-2"><i data-feather="award" class="text-blue-800"></i>Princípios Fundamentais</h2>
             <p class="text-lg text-gray-600 text-center max-w-3xl mx-auto mb-12">Toda a atuação do Estado é guiada por princípios que funcionam como alicerces, garantindo que a administração atue de forma justa, ética e em prol do interesse público. Eles se dividem em expressos (claramente listados na Constituição) e implícitos (derivados do sistema jurídico).</p>
-            
             <div class="w-full max-w-4xl mx-auto">
                 <div class="mb-6 flex border-b border-gray-300">
                     <button class="tab-button flex-1 py-3 px-4 text-lg font-medium text-gray-500 border-b-2 border-transparent transition active" data-tab="expresso">Expressos (LIMPE)</button>
                     <button class="tab-button flex-1 py-3 px-4 text-lg font-medium text-gray-500 border-b-2 border-transparent transition" data-tab="implicito">Implícitos</button>
                 </div>
-
                 <div id="tab-expresso" class="tab-content active">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="principios-expressos-grid"></div>
                 </div>
-
                 <div id="tab-implicito" class="tab-content">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="principios-implicitos-grid"></div>
                 </div>
             </div>
         </section>
-
         <section id="legislacao" class="mb-20">
-            <h2 class="text-3xl font-bold text-center mb-4 text-gray-900">Legislação Essencial</h2>
+            <h2 class="text-3xl font-bold text-center mb-4 text-gray-900 flex items-center justify-center gap-2"><i data-feather="file-text" class="text-blue-800"></i>Legislação Essencial</h2>
             <p class="text-lg text-gray-600 text-center max-w-3xl mx-auto mb-12">O Direito Administrativo é formado por um vasto conjunto de leis. Conhecer as normas mais importantes é crucial para entender o funcionamento da máquina pública, os direitos dos cidadãos e os deveres dos agentes públicos.</p>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="legislacao-grid"></div>
         </section>
-
         <section id="recursos">
-            <h2 class="text-3xl font-bold text-center mb-4 text-gray-900">Recursos de Estudo</h2>
+            <h2 class="text-3xl font-bold text-center mb-4 text-gray-900 flex items-center justify-center gap-2"><i data-feather="youtube" class="text-red-500"></i>Recursos de Estudo</h2>
             <p class="text-lg text-gray-600 text-center max-w-3xl mx-auto mb-12">Aprofundar seus conhecimentos é fundamental. A seguir, uma seleção de canais no YouTube que oferecem conteúdo de qualidade sobre Direito Administrativo, ideais para estudantes e concurseiros.</p>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="recursos-grid"></div>
         </section>
-
+        <section class="mt-12">
+            <div class="study-tips rounded-lg p-6 shadow-md max-w-3xl mx-auto">
+                <h3 class="font-bold text-lg mb-2 flex items-center gap-2"><i data-feather="book-open" class="text-amber-500"></i>Dicas de Estudo</h3>
+                <ul class="list-disc list-inside text-slate-700 space-y-1">
+                    <li>Monte mapas mentais a partir dos princípios e leis.</li>
+                    <li>Crie quadros comparativos entre Administração Direta e Indireta.</li>
+                    <li>Releia os princípios antes de provas e simulados.</li>
+                    <li>Use exemplos práticos para memorizar as diferenças entre entidades.</li>
+                    <li>Volte a esta página para revisões rápidas antes da prova!</li>
+                </ul>
+            </div>
+        </section>
     </main>
-
     <footer class="bg-gray-800 text-white mt-20">
         <div class="container mx-auto px-6 py-8 text-center">
             <p>Guia Interativo de Legislação Administrativa</p>
             <p class="text-sm text-gray-400 mt-2">Criado para fins educacionais. Conteúdo baseado no relatório de Legislação Administrativa.</p>
         </div>
     </footer>
-
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            feather.replace();
             const data = {
                 indireta: [
                     { nome: "Autarquias", desc: "Entidades de direito público, criadas por lei para executar atividades típicas de Estado.", ex: "INSS, Banco Central." },
@@ -210,7 +207,6 @@
                     { nome: "Prof. Herbert Almeida", desc: "Professor especialista em Direito Administrativo, com aulas detalhadas sobre a Nova Lei de Licitações e outros temas.", url: "https://www.youtube.com/@profherbertalmeida" }
                 ]
             };
-
             const indiretaCardsContainer = document.getElementById('indireta-cards');
             data.indireta.forEach(item => {
                 const card = document.createElement('div');
@@ -221,7 +217,6 @@
                 });
                 indiretaCardsContainer.appendChild(card);
             });
-            
             const createPrincipioCard = (principio) => {
                 const card = document.createElement('div');
                 card.className = 'card bg-white p-6 rounded-xl shadow-md cursor-pointer border border-gray-200';
@@ -231,13 +226,10 @@
                 `;
                 return card;
             };
-
             const principiosExpressosGrid = document.getElementById('principios-expressos-grid');
             data.principiosExpressos.forEach(p => principiosExpressosGrid.appendChild(createPrincipioCard(p)));
-
             const principiosImplicitosGrid = document.getElementById('principios-implicitos-grid');
             data.principiosImplicitos.forEach(p => principiosImplicitosGrid.appendChild(createPrincipioCard(p)));
-
             const legislacaoGrid = document.getElementById('legislacao-grid');
             const temaCores = {
                 'Fundamentos': 'bg-red-100 text-red-800',
@@ -260,7 +252,6 @@
                 `;
                 legislacaoGrid.appendChild(card);
             });
-            
             const recursosGrid = document.getElementById('recursos-grid');
             data.recursos.forEach(recurso => {
                 const card = document.createElement('a');
@@ -274,8 +265,6 @@
                 `;
                 recursosGrid.appendChild(card);
             });
-
-
             const tabs = document.querySelectorAll('.tab-button');
             const tabContents = document.querySelectorAll('.tab-content');
             tabs.forEach(tab => {
@@ -287,20 +276,17 @@
                     target.classList.add('active');
                 });
             });
-
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             mobileMenuButton.addEventListener('click', () => {
                 mobileMenu.classList.toggle('hidden');
             });
-            
             const mobileLinks = mobileMenu.querySelectorAll('a');
             mobileLinks.forEach(link => {
                 link.addEventListener('click', () => {
                     mobileMenu.classList.add('hidden');
                 });
             });
-            
             const wrapLabel = (label) => {
                 const maxLength = 16;
                 if (typeof label !== 'string' || label.length <= maxLength) {
@@ -320,7 +306,6 @@
                 lines.push(currentLine);
                 return lines;
             };
-
             const tooltipTitleCallback = (tooltipItems) => {
                 const item = tooltipItems[0];
                 let label = item.chart.data.labels[item.dataIndex];
@@ -330,7 +315,6 @@
                   return label;
                 }
             };
-            
             const ctxControle = document.getElementById('controleChart').getContext('2d');
             new Chart(ctxControle, {
                 type: 'doughnut',
@@ -369,6 +353,5 @@
             });
         });
     </script>
-
 </body>
 </html>
