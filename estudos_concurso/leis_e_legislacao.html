@@ -1,397 +1,475 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visualizador Interativo: Organização da Administração Pública Brasileira</title>
+    <title>Guia Visual e Didático: Administração Pública e Legislação</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free/css/all.min.css">
-    <script src="https://unpkg.com/@popperjs/core@2"></script>
-    <!-- Heroicons for SVG icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/feather-icons"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .content-section { display: none; }
-        .content-section.active { display: block; animation: fadeIn 0.5s; }
-        .nav-button { transition: all 0.2s ease-in-out; position: relative; }
-        .nav-button.active { background: linear-gradient(90deg, #1e3a8a 60%, #f59e42 100%); color: white; box-shadow: 0 2px 8px #1e3a8a22; }
-        .nav-button:not(.active):hover { background-color: #e0f2fe; }
-        .nav-button.active::after { content: ''; position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%); width: 60%; height: 3px; background: linear-gradient(90deg, #f59e42 0%, #1e3a8a 100%); border-radius: 2px; }
+        .chart-container { position: relative; width: 100%; max-width: 400px; margin-left: auto; margin-right: auto; height: 300px; max-height: 400px; }
+        @media (min-width: 640px) { .chart-container { height: 350px; } }
         .concept-card { transition: transform 0.3s, box-shadow 0.3s; }
         .concept-card:hover { transform: translateY(-5px) scale(1.03); box-shadow: 0 6px 24px #f59e4222; }
-        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 350px; max-height: 450px; }
-        @media (min-width: 768px) { .chart-container { height: 400px; } }
-        .diagram-box { border: 2px solid #94a3b8; border-radius: 0.75rem; padding: 1.2rem; text-align: center; cursor: pointer; transition: all 0.2s; background: linear-gradient(135deg, #f0f9ff 60%, #fef3c7 100%); box-shadow: 0 2px 8px #1e3a8a11; }
-        .diagram-box:hover { border-color: #1e3a8a; background: linear-gradient(135deg, #fef3c7 60%, #f0f9ff 100%); }
-        .diagram-connector { flex-grow: 1; background-color: #94a3b8; height: 2px; }
-        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(30,58,138,0.7); display: flex; align-items: center; justify-content: center; z-index: 50; }
-        .modal-content { background-color: white; padding: 2rem; border-radius: 0.75rem; max-width: 95%; width: 800px; max-height: 90vh; overflow-y: auto; box-shadow: 0 8px 32px #1e3a8a33; position: relative; }
-        .close-modal-btn { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; color: #1e3a8a; cursor: pointer; }
-        .tooltip { position: relative; cursor: pointer; }
-        .tooltip .tooltip-text { visibility: hidden; width: 220px; background: #1e3a8a; color: #fff; text-align: center; border-radius: 0.5rem; padding: 0.5rem; position: absolute; z-index: 100; bottom: 125%; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.3s; font-size: 0.95rem; }
-        .tooltip:hover .tooltip-text { visibility: visible; opacity: 1; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px);} to { opacity: 1; transform: none; } }
+        .principle-btn.active { background: linear-gradient(90deg, #f59e42 0%, #1e3a8a 100%); color: white; font-weight: bold; }
+        .principle-btn:not(.active):hover { background-color: #fef3c7; }
+        .accordion-btn { transition: background 0.2s; }
+        .accordion-btn[aria-expanded="true"] { background: #fef3c7; }
         .study-tips { background: linear-gradient(90deg, #fef3c7 60%, #f0f9ff 100%); border-left: 6px solid #f59e42; }
         .no-js-message { display: block; background: #f59e42; color: #1e3a8a; padding: 1rem; text-align: center; font-weight: bold; border-radius: 0.5rem; margin: 1rem 0; }
+        .highlight { background: linear-gradient(90deg, #f59e42 0%, #fef3c7 100%); padding: 0.5rem 1rem; border-radius: 0.5rem; font-weight: 500; }
+        .analysis-section { background: linear-gradient(90deg, #f0f9ff 60%, #fef3c7 100%); border-left: 6px solid #1e3a8a; }
+        .faq-section { background: linear-gradient(90deg, #f0f9ff 60%, #fef3c7 100%); border-left: 6px solid #f59e42; }
+        .timeline { border-left: 4px solid #f59e42; margin-left: 1rem; padding-left: 1.5rem; }
+        .timeline-event { position: relative; margin-bottom: 2rem; }
+        .timeline-event:before { content: ''; position: absolute; left: -1.7rem; top: 0.5rem; width: 1rem; height: 1rem; background: #f59e42; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 2px #f59e42; }
+        .sidebar-nav { position: fixed; top: 5rem; left: 2rem; z-index: 40; display: none; }
+        @media (min-width: 1280px) { .sidebar-nav { display: block; } }
+        .sidebar-link { display: block; margin-bottom: 1rem; color: #334155; font-weight: 500; transition: color 0.2s; }
+        .sidebar-link:hover { color: #f59e42; }
+        .info-box { background: linear-gradient(90deg, #f0f9ff 60%, #fef3c7 100%); border-left: 6px solid #1e3a8a; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; }
+        .myth-box { background: linear-gradient(90deg, #fef3c7 60%, #f0f9ff 100%); border-left: 6px solid #f59e42; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; }
+        .quick-guide { background: linear-gradient(90deg, #f0f9ff 60%, #fef3c7 100%); border-left: 6px solid #0ea5e9; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; }
+        .cotidiano-card { background: #fffbe6; border-left: 6px solid #f59e42; border-radius: 0.5rem; padding: 1rem; margin-bottom: 1rem; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800">
+<body class="bg-stone-50 text-slate-800">
 <noscript>
     <div class="no-js-message">Este site requer JavaScript para funcionar corretamente. Por favor, ative o JavaScript no seu navegador.</div>
 </noscript>
-    <div id="app" class="container mx-auto p-4 md:p-8">
-        <header class="text-center mb-10">
-            <div class="flex justify-center items-center gap-3 mb-2">
-                <span class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-tr from-blue-800 to-amber-400 shadow-lg">
-                    <i data-feather="layers" class="text-white" style="width:2.2rem;height:2.2rem;"></i>
+<nav id="navbar" class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <div class="flex-shrink-0 flex items-center gap-2">
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-tr from-blue-800 to-amber-400 shadow-lg">
+                    <i data-feather="layers" class="text-white"></i>
                 </span>
-                <h1 class="text-3xl md:text-4xl font-bold text-slate-900">A Arquitetura do Estado Brasileiro</h1>
+                <span class="text-xl font-bold text-slate-700">Guia Administração Pública</span>
             </div>
-            <p class="text-slate-600 mt-2 text-lg">Guia Interativo sobre a Organização da Administração Pública</p>
-        </header>
-        <nav class="flex flex-wrap justify-center gap-2 mb-10">
-            <button data-target="dashboard" class="nav-button active font-semibold py-2 px-4 border border-slate-300 rounded-lg">Visão Geral</button>
-            <button data-target="principios" class="nav-button font-semibold py-2 px-4 border border-slate-300 rounded-lg">Princípios (LIMPE)</button>
-            <button data-target="comparativo" class="nav-button font-semibold py-2 px-4 border border-slate-300 rounded-lg">Comparativo Interativo</button>
-            <button data-target="conceitos" class="nav-button font-semibold py-2 px-4 border border-slate-300 rounded-lg">Técnicas de Organização</button>
-        </nav>
-        <main>
-            <!-- SEÇÃO VISÃO GERAL (DASHBOARD) -->
-            <section id="dashboard" class="content-section active">
-                <div class="text-center mb-8">
-                    <h2 class="text-2xl font-bold mb-2">Estrutura da Administração Pública</h2>
-                    <p class="max-w-3xl mx-auto text-slate-600">Esta é a arquitetura do Estado. A Administração Pública é dividida em Direta e Indireta, e ainda colabora com entidades do Terceiro Setor. Clique em qualquer um dos blocos para aprender mais sobre seus componentes e funcionamento.</p>
+            <div class="hidden md:block">
+                <div id="nav-menu" class="ml-10 flex items-baseline space-x-4">
+                    <a href="#inicio" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Início</a>
+                    <a href="#resumo" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Resumo</a>
+                    <a href="#timeline" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Linha do Tempo</a>
+                    <a href="#conceitos" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Conceitos</a>
+                    <a href="#bases-legais" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Bases Legais</a>
+                    <a href="#principios" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Princípios</a>
+                    <a href="#direitos" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Direitos</a>
+                    <a href="#cotidiano" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Leis no Cotidiano</a>
+                    <a href="#guias-rapidos" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Guias Rápidos</a>
+                    <a href="#mitos" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Mitos & Erros</a>
+                    <a href="#faq" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">FAQ</a>
+                    <a href="#analise" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Análise</a>
+                    <a href="#quiz" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Quiz</a>
                 </div>
-                <div class="flex flex-col items-center">
-                    <!-- Bloco Central: Administração Pública -->
-                    <div class="bg-gradient-to-tr from-blue-800 to-amber-400 text-white font-bold p-4 rounded-lg shadow-lg mb-4 flex items-center gap-2">
-                        <i data-feather="aperture" class="text-white"></i>
-                        ADMINISTRAÇÃO PÚBLICA
-                    </div>
-                    <div class="w-2 h-8 bg-slate-400"></div>
-                    <!-- Linha de Divisão -->
-                    <div class="flex w-full max-w-5xl items-stretch">
-                        <div class="diagram-connector"></div>
-                        <div class="flex flex-col items-center">
-                            <div class="w-2 h-4 bg-slate-400"></div>
-                            <div class="h-2 w-4 bg-slate-400"></div>
-                            <div class="w-2 h-4 bg-slate-400"></div>
-                        </div>
-                        <div class="diagram-connector"></div>
-                    </div>
-                    <!-- Blocos Principais -->
-                    <div class="w-full max-w-5xl grid grid-cols-1 md:grid-cols-3 gap-8 mt-2">
-                        <div class="diagram-box tooltip" onclick="showModal('direta')">
-                            <i data-feather="users" class="mx-auto mb-2 text-blue-800"></i>
-                            <h3 class="font-bold text-xl text-blue-800">Administração Direta</h3>
-                            <p class="text-sm text-slate-600 mt-1">O núcleo do Estado, composto pelos órgãos dos entes federativos (União, Estados, DF, Municípios).</p>
-                            <span class="tooltip-text">Clique para ver exemplos e detalhes</span>
-                        </div>
-                        <div class="diagram-box tooltip" onclick="showModal('indireta')">
-                            <i data-feather="share-2" class="mx-auto mb-2 text-blue-800"></i>
-                            <h3 class="font-bold text-xl text-blue-800">Administração Indireta</h3>
-                            <p class="text-sm text-slate-600 mt-1">Entidades com personalidade jurídica própria, criadas para executar serviços de forma descentralizada.</p>
-                            <span class="tooltip-text">Clique para ver exemplos e detalhes</span>
-                        </div>
-                        <div class="diagram-box tooltip" onclick="showModal('terceiro_setor')">
-                            <i data-feather="heart" class="mx-auto mb-2 text-blue-800"></i>
-                            <h3 class="font-bold text-xl text-blue-800">Terceiro Setor</h3>
-                            <p class="text-sm text-slate-600 mt-1">Entidades privadas sem fins lucrativos que colaboram com o Estado em atividades de interesse público.</p>
-                            <span class="tooltip-text">Clique para ver exemplos e detalhes</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- SEÇÃO PRINCÍPIOS -->
-            <section id="principios" class="content-section">
-                <div class="text-center mb-8">
-                    <h2 class="text-2xl font-bold mb-2">Princípios Constitucionais da Administração Pública</h2>
-                    <p class="max-w-3xl mx-auto text-slate-600">O artigo 37 da Constituição Federal estabelece os cinco princípios fundamentais que regem toda a atuação administrativa, conhecidos pelo acrônimo LIMPE. Clique em cada cartão para ver a sua definição e exemplos práticos.</p>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-                    <!-- Cards dos Princípios -->
-                </div>
-            </section>
-            <!-- SEÇÃO COMPARATIVO INTERATIVO -->
-            <section id="comparativo" class="content-section">
-                <div class="text-center mb-8">
-                    <h2 class="text-2xl font-bold mb-2">Comparativo Interativo da Administração Indireta</h2>
-                    <p class="max-w-3xl mx-auto text-slate-600">A Administração Indireta é composta por quatro tipos de entidades. Use as caixas de seleção abaixo para compará-las na tabela e no gráfico. Esta ferramenta permite visualizar as diferenças cruciais de regime jurídico, capital, foro e outros aspectos.</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <div id="checkbox-container" class="flex flex-wrap justify-center gap-4 mb-6 pb-4 border-b">
-                        <!-- Checkboxes serão inseridos aqui -->
-                    </div>
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div class="overflow-x-auto">
-                            <table id="comparison-table" class="min-w-full divide-y divide-slate-200">
-                                <!-- Tabela será gerada aqui -->
-                            </table>
-                        </div>
-                        <div class="chart-container">
-                            <canvas id="comparison-chart"></canvas>
-                            <div class="text-xs text-slate-500 text-center mt-2">* O gráfico é ilustrativo: valores numéricos representam aproximações qualitativas para facilitar a comparação visual.</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- SEÇÃO TÉCNICAS DE ORGANIZAÇÃO -->
-            <section id="conceitos" class="content-section">
-                <div class="text-center mb-8">
-                    <h2 class="text-2xl font-bold mb-2">Técnicas de Organização Administrativa</h2>
-                    <p class="max-w-3xl mx-auto text-slate-600">Para cumprir suas funções, o Estado utiliza técnicas para distribuir competências e tarefas. As principais são a Descentralização/Centralização e a Desconcentração/Concentração. Entender essa diferença é fundamental.</p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-amber-500">
-                        <h3 class="font-bold text-xl mb-3 flex items-center gap-2"><i data-feather="shuffle" class="text-amber-500"></i>Descentralização vs. Centralização</h3>
-                        <p class="text-slate-600">A <strong class="text-slate-800">Descentralização</strong> ocorre quando o Estado transfere a execução de um serviço para <strong class="text-slate-800">outra pessoa jurídica</strong> (pública ou privada), que comporá a Administração Indireta. Há duas pessoas jurídicas distintas. A <strong class="text-slate-800">Centralização</strong> é a execução de tarefas pelo próprio ente político, através de seus órgãos internos.</p>
-                        <div class="mt-3 text-xs text-slate-500">Exemplo: A criação do INSS (autarquia) para gerir a previdência é descentralização. Um ministério cuidando diretamente seria centralização.</div>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-sky-500">
-                        <h3 class="font-bold text-xl mb-3 flex items-center gap-2"><i data-feather="git-branch" class="text-sky-500"></i>Desconcentração vs. Concentração</h3>
-                        <p class="text-slate-600">A <strong class="text-slate-800">Desconcentração</strong> é um fenômeno <strong class="text-slate-800">interno</strong> a uma mesma pessoa jurídica. É a distribuição de competências entre vários <strong class="text-slate-800">órgãos</strong> dentro da mesma entidade para otimizar o serviço. Existe hierarquia. A <strong class="text-slate-800">Concentração</strong> é o movimento inverso, extinguindo órgãos e centralizando as tarefas.</p>
-                        <div class="mt-3 text-xs text-slate-500">Exemplo: Um ministério criando secretarias regionais (desconcentração) ou extinguindo-as (concentração).</div>
-                    </div>
-                </div>
-            </section>
-            <!-- DICAS DE ESTUDO -->
-            <section class="mt-12">
-                <div class="study-tips rounded-lg p-6 shadow-md max-w-3xl mx-auto">
-                    <h3 class="font-bold text-lg mb-2 flex items-center gap-2"><i data-feather="book-open" class="text-amber-500"></i>Dicas de Estudo</h3>
-                    <ul class="list-disc list-inside text-slate-700 space-y-1">
-                        <li>Use o comparativo interativo para fixar as diferenças entre entidades.</li>
-                        <li>Revise os princípios LIMPE com exemplos práticos para cada um.</li>
-                        <li>Monte mapas mentais a partir do diagrama da Visão Geral.</li>
-                        <li>Pratique questões de concursos sobre descentralização e desconcentração.</li>
-                        <li>Volte a esta página para revisões rápidas antes da prova!</li>
-                    </ul>
-                </div>
-            </section>
-        </main>
-    </div>
-    <!-- MODAL -->
-    <div id="modal" class="modal-overlay hidden" aria-modal="true" role="dialog">
-        <div class="modal-content">
-            <button onclick="closeModal()" class="close-modal-btn" aria-label="Fechar modal"><i data-feather="x"></i></button>
-            <div id="modal-body"></div>
+            </div>
+            <div class="-mr-2 flex md:hidden">
+                <button id="mobile-menu-button" type="button" class="bg-slate-100 inline-flex items-center justify-center p-2 rounded-md text-slate-500 hover:text-slate-600 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-100 focus:ring-slate-500" aria-controls="mobile-menu" aria-expanded="false">
+                    <span class="sr-only">Abrir menu</span>
+                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
         </div>
     </div>
+    <div class="hidden md:hidden" id="mobile-menu">
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <a href="#inicio" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Início</a>
+            <a href="#resumo" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Resumo</a>
+            <a href="#timeline" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Linha do Tempo</a>
+            <a href="#conceitos" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Conceitos</a>
+            <a href="#bases-legais" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Bases Legais</a>
+            <a href="#principios" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Princípios</a>
+            <a href="#direitos" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Direitos</a>
+            <a href="#cotidiano" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Leis no Cotidiano</a>
+            <a href="#guias-rapidos" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Guias Rápidos</a>
+            <a href="#mitos" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Mitos & Erros</a>
+            <a href="#faq" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">FAQ</a>
+            <a href="#analise" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Análise</a>
+            <a href="#quiz" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Quiz</a>
+        </div>
+    </div>
+</nav>
+<main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+    <!-- Início -->
+    <section id="inicio" class="text-center mb-16 md:mb-24 scroll-mt-20">
+        <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4 flex items-center justify-center gap-2"><i data-feather="layers" class="text-amber-500"></i>Administração Pública e Legislação</h1>
+        <p class="max-w-3xl mx-auto text-lg text-slate-600 mb-8">Guia visual, didático e interativo sobre a estrutura, princípios e funcionamento da Administração Pública brasileira, com foco em legislação, conceitos fundamentais e dicas para concursos.</p>
+        <div class="max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow-lg">
+            <h2 class="text-2xl font-bold text-slate-700 mb-4 flex items-center gap-2"><i data-feather="pie-chart" class="text-blue-800"></i>Pilares da Administração Pública</h2>
+            <p class="text-slate-600 mb-6">A estrutura administrativa se apoia em princípios, entidades e direitos fundamentais. Interaja com o gráfico para visualizar a composição.</p>
+            <div class="chart-container">
+                <canvas id="admPillarsChart"></canvas>
+            </div>
+            <div class="text-xs text-slate-500 text-center mt-2">* O gráfico é ilustrativo: valores percentuais são aproximações didáticas.</div>
+        </div>
+    </section>
+    <!-- Resumo -->
+    <section id="resumo" class="mb-16 md:mb-24 scroll-mt-20">
+        <div class="highlight text-lg md:text-xl max-w-3xl mx-auto mb-6 text-center">
+            <i data-feather="info" class="inline text-blue-800"></i>
+            <strong>Resumo:</strong> A Administração Pública brasileira é composta por órgãos e entidades que executam funções essenciais ao Estado, regida por princípios constitucionais (LIMPE), técnicas de organização e legislação específica. Compreender sua estrutura é fundamental para concursos, cidadania e atuação profissional.
+        </div>
+        <div class="info-box">
+            <b>Por que estudar Administração Pública?</b> <br>
+            <ul class="list-disc list-inside text-slate-700 mt-2">
+                <li>É tema recorrente em concursos públicos e provas.</li>
+                <li>Permite entender o funcionamento do Estado e seus limites.</li>
+                <li>Ajuda a exercer a cidadania e fiscalizar a gestão pública.</li>
+                <li>Facilita a compreensão de direitos e deveres do servidor e do cidadão.</li>
+            </ul>
+        </div>
+    </section>
+    <!-- Linha do Tempo -->
+    <section id="timeline" class="mb-16 md:mb-24 scroll-mt-20">
+        <h2 class="text-3xl font-bold text-center text-slate-800 mb-2 flex items-center justify-center gap-2"><i data-feather="activity" class="text-blue-800"></i>Linha do Tempo da Administração Pública</h2>
+        <div class="timeline max-w-2xl mx-auto mt-8">
+            <div class="timeline-event">
+                <div class="font-bold text-slate-700">1822</div>
+                <div class="text-slate-600">Independência do Brasil e início da estruturação do Estado nacional.</div>
+            </div>
+            <div class="timeline-event">
+                <div class="font-bold text-slate-700">1937</div>
+                <div class="text-slate-600">Criação do DASP (Departamento Administrativo do Serviço Público), marco da burocracia estatal.</div>
+            </div>
+            <div class="timeline-event">
+                <div class="font-bold text-slate-700">1988</div>
+                <div class="text-slate-600">Constituição Federal institui os princípios da Administração Pública (LIMPE).</div>
+            </div>
+            <div class="timeline-event">
+                <div class="font-bold text-slate-700">1995</div>
+                <div class="text-slate-600">Reforma gerencial: foco em eficiência, resultados e controle social.</div>
+            </div>
+            <div class="timeline-event">
+                <div class="font-bold text-slate-700">Atualidade</div>
+                <div class="text-slate-600">Digitalização, transparência e participação cidadã em destaque.</div>
+            </div>
+        </div>
+    </section>
+    <!-- Conceitos -->
+    <section id="conceitos" class="mb-16 md:mb-24 scroll-mt-20">
+        <h2 class="text-3xl font-bold text-center text-slate-800 mb-2 flex items-center justify-center gap-2"><i data-feather="book" class="text-blue-800"></i>Conceitos Fundamentais</h2>
+        <p class="text-lg text-center text-slate-600 mb-10">Conheça os principais conceitos da Administração Pública. Clique nos cards para saber mais.</p>
+        <div id="concepts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        <div class="mt-8 max-w-3xl mx-auto text-slate-700 text-center">
+            <span class="font-semibold">Dica:</span> Relacione cada conceito com exemplos práticos do cotidiano da gestão pública!
+        </div>
+    </section>
+    <!-- Bases Legais -->
+    <section id="bases-legais" class="mb-16 md:mb-24 scroll-mt-20">
+        <h2 class="text-3xl font-bold text-center text-slate-800 mb-2 flex items-center justify-center gap-2"><i data-feather="check-circle" class="text-amber-500"></i>Bases Legais da Administração Pública</h2>
+        <p class="text-lg text-center text-slate-600 mb-10">A atuação administrativa é fundamentada em diversas normas e princípios constitucionais e infraconstitucionais. Veja as principais bases legais:</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto" id="bases-legais-grid"></div>
+    </section>
+    <!-- Princípios -->
+    <section id="principios" class="mb-16 md:mb-24 scroll-mt-20">
+        <h2 class="text-3xl font-bold text-center text-slate-800 mb-2 flex items-center justify-center gap-2"><i data-feather="list" class="text-blue-800"></i>Princípios Constitucionais (LIMPE)</h2>
+        <p class="text-lg text-center text-slate-600 mb-10">Toda atuação administrativa deve seguir estes princípios. Selecione um para ver os detalhes e exemplos práticos.</p>
+        <div class="flex flex-col md:flex-row gap-8">
+            <div id="principles-menu" class="w-full md:w-1/3 flex flex-col space-y-2"></div>
+            <div id="principle-display" class="w-full md:w-2/3 bg-white p-8 rounded-2xl shadow-lg min-h-[300px] flex flex-col justify-center">
+                <h3 id="principle-title" class="text-2xl font-bold text-slate-700 mb-4">Selecione um princípio</h3>
+                <p id="principle-description" class="text-slate-600">A descrição do princípio selecionado aparecerá aqui.</p>
+            </div>
+        </div>
+    </section>
+    <!-- Direitos -->
+    <section id="direitos" class="mb-16 md:mb-24 scroll-mt-20">
+        <h2 class="text-3xl font-bold text-center text-slate-800 mb-2 flex items-center justify-center gap-2"><i data-feather="user-check" class="text-blue-800"></i>Direitos do Cidadão e do Servidor</h2>
+        <p class="text-lg text-center text-slate-600 mb-10">A legislação administrativa garante direitos fundamentais ao cidadão e ao servidor público. Conheça os principais:</p>
+        <div id="rights-accordion" class="space-y-4 max-w-4xl mx-auto"></div>
+        <div class="mt-8 max-w-3xl mx-auto text-slate-700 text-center">
+            <span class="font-semibold">Exemplo prático:</span> Todo cidadão pode solicitar informações públicas com base na Lei de Acesso à Informação (LAI).
+        </div>
+    </section>
+    <!-- Cotidiano -->
+    <section id="cotidiano" class="mb-16 md:mb-24 scroll-mt-20">
+        <h2 class="text-3xl font-bold text-center text-slate-800 mb-2 flex items-center justify-center gap-2"><i data-feather="users" class="text-blue-800"></i>Leis e Legislação no Cotidiano</h2>
+        <div class="cotidiano-card"><b>Exemplo 1:</b> Um cidadão solicita a correção de um erro em seu cadastro junto a um órgão público. O órgão deve atender ao pedido, salvo exceções legais.</div>
+        <div class="cotidiano-card"><b>Exemplo 2:</b> Um servidor público é obrigado a agir com eficiência e transparência, sob pena de responsabilização.</div>
+        <div class="cotidiano-card"><b>Exemplo 3:</b> Uma ONG firma parceria com o Estado para executar um projeto social, mediante termo de colaboração.</div>
+        <div class="cotidiano-card"><b>Exemplo 4:</b> O cidadão pode denunciar irregularidades ao Tribunal de Contas ou ao Ministério Público.</div>
+    </section>
+    <!-- Guias Rápidos -->
+    <section id="guias-rapidos" class="mb-16 md:mb-24 scroll-mt-20">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="quick-guide">
+                <h3 class="font-bold text-lg mb-2 flex items-center gap-2"><i data-feather="briefcase" class="text-blue-800"></i>Guia Rápido para Servidores</h3>
+                <ul class="list-disc list-inside text-slate-700 space-y-1">
+                    <li>Conheça e aplique os princípios constitucionais (LIMPE).</li>
+                    <li>Atue com transparência e eficiência.</li>
+                    <li>Respeite os direitos do cidadão.</li>
+                    <li>Evite conflitos de interesse e pratique a ética.</li>
+                    <li>Documente decisões e siga os trâmites legais.</li>
+                </ul>
+            </div>
+            <div class="quick-guide">
+                <h3 class="font-bold text-lg mb-2 flex items-center gap-2"><i data-feather="user" class="text-blue-800"></i>Guia Rápido para Cidadãos</h3>
+                <ul class="list-disc list-inside text-slate-700 space-y-1">
+                    <li>Solicite informações públicas sempre que necessário.</li>
+                    <li>Exerça seus direitos: petição, reclamação, denúncia.</li>
+                    <li>Fiscalize a atuação dos órgãos públicos.</li>
+                    <li>Participe de audiências e consultas públicas.</li>
+                    <li>Denuncie abusos e irregularidades.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <!-- Mitos & Erros -->
+    <section id="mitos" class="mb-16 md:mb-24 scroll-mt-20">
+        <h2 class="text-3xl font-bold text-center text-slate-800 mb-2 flex items-center justify-center gap-2"><i data-feather="alert-triangle" class="text-amber-500"></i>Mitos e Erros Comuns</h2>
+        <div class="myth-box"><b>Mito:</b> "A Administração Pública só existe para criar burocracia." <br><b>Realidade:</b> A Administração é essencial para garantir direitos e serviços à população.</div>
+        <div class="myth-box"><b>Mito:</b> "Servidor público não pode ser demitido." <br><b>Realidade:</b> Servidores estáveis podem ser demitidos por processo administrativo ou sentença judicial.</div>
+        <div class="myth-box"><b>Mito:</b> "Só órgãos federais compõem a Administração Pública." <br><b>Realidade:</b> Estados, DF e Municípios também possuem suas estruturas administrativas.</div>
+        <div class="myth-box"><b>Erro comum:</b> Não observar os princípios constitucionais na tomada de decisão.</div>
+        <div class="myth-box"><b>Erro comum:</b> Falta de transparência e publicidade nos atos administrativos.</div>
+    </section>
+    <!-- FAQ -->
+    <section id="faq" class="mb-16 md:mb-24 scroll-mt-20">
+        <div class="faq-section rounded-lg p-6 shadow-md max-w-3xl mx-auto">
+            <h3 class="font-bold text-lg mb-2 flex items-center gap-2"><i data-feather="help-circle" class="text-amber-500"></i>Perguntas Frequentes (FAQ)</h3>
+            <ul class="list-disc list-inside text-slate-700 space-y-2">
+                <li><b>O que é Administração Direta?</b> Conjunto de órgãos dos entes federativos (União, Estados, DF, Municípios) sem personalidade jurídica própria.</li>
+                <li><b>O que é Administração Indireta?</b> Entidades com personalidade jurídica própria, como autarquias, fundações, empresas públicas e sociedades de economia mista.</li>
+                <li><b>O que são princípios LIMPE?</b> Legalidade, Impessoalidade, Moralidade, Publicidade e Eficiência.</li>
+                <li><b>Quais são os direitos do cidadão frente à Administração?</b> Direito de petição, acesso à informação, participação e fiscalização.</li>
+                <li><b>Como denunciar irregularidades?</b> Por meio de ouvidorias, Ministério Público, Tribunal de Contas ou portais de transparência.</li>
+            </ul>
+        </div>
+    </section>
+    <!-- Análise -->
+    <section id="analise" class="mb-16 md:mb-24 scroll-mt-20">
+        <div class="analysis-section rounded-lg p-6 shadow-md max-w-3xl mx-auto">
+            <h3 class="font-bold text-lg mb-2 flex items-center gap-2"><i data-feather="bar-chart-2" class="text-blue-800"></i>Análise Crítica</h3>
+            <ul class="list-disc list-inside text-slate-700 space-y-1 mb-2">
+                <li><b>Impacto Social:</b> A Administração Pública é fundamental para a garantia de direitos e serviços essenciais à sociedade.</li>
+                <li><b>Desafios:</b> Burocracia, corrupção, falta de transparência e necessidade de modernização.</li>
+                <li><b>Comparativo Internacional:</b> O Brasil busca alinhar sua administração a padrões internacionais de eficiência e controle social.</li>
+                <li><b>Futuro:</b> Digitalização, participação cidadã e fortalecimento do controle externo são tendências.</li>
+            </ul>
+            <div class="text-slate-600 text-sm">O sucesso da Administração Pública depende da atuação ética de servidores, do controle social e da constante atualização das normas e práticas.</div>
+        </div>
+    </section>
+    <!-- Quiz -->
+    <section id="quiz" class="scroll-mt-20">
+        <h2 class="text-3xl font-bold text-center text-slate-800 mb-2 flex items-center justify-center gap-2"><i data-feather="help-circle" class="text-amber-500"></i>Teste seu Conhecimento</h2>
+        <p class="text-lg text-center text-slate-600 mb-10">Teste seus conhecimentos sobre Administração Pública com este quiz rápido!</p>
+        <div id="quiz-container" class="max-w-3xl mx-auto bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+            <div id="quiz-question-container">
+                <h3 id="quiz-question" class="text-xl font-semibold text-slate-700 mb-6"></h3>
+                <div id="quiz-options" class="space-y-4"></div>
+            </div>
+            <div id="quiz-feedback" class="mt-6 text-center font-medium hidden"></div>
+            <div class="mt-8 text-center">
+                <button id="next-question-btn" class="bg-slate-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-slate-700 transition-colors duration-200 hidden">Próxima Pergunta</button>
+                <button id="restart-quiz-btn" class="bg-amber-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-amber-600 transition-colors duration-200 hidden">Recomeçar Quiz</button>
+            </div>
+        </div>
+    </section>
+    <!-- Dicas de Estudo -->
+    <section class="mt-12">
+        <div class="study-tips rounded-lg p-6 shadow-md max-w-3xl mx-auto">
+            <h3 class="font-bold text-lg mb-2 flex items-center gap-2"><i data-feather="book-open" class="text-amber-500"></i>Dicas de Estudo</h3>
+            <ul class="list-disc list-inside text-slate-700 space-y-1">
+                <li>Monte mapas mentais a partir dos conceitos e princípios.</li>
+                <li>Pratique o quiz para fixar os pontos-chave da Administração Pública.</li>
+                <li>Releia os direitos do cidadão antes de provas.</li>
+                <li>Use exemplos práticos para memorizar os princípios.</li>
+                <li>Volte a esta página para revisões rápidas antes da prova!</li>
+            </ul>
+        </div>
+    </section>
+</main>
+<footer class="bg-slate-800 text-slate-300 mt-20">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center">
+        <p>&copy; 2025 Guia Interativo Administração Pública. Conteúdo para fins educacionais.</p>
+    </div>
+</footer>
 <script>
-const contentData = {
-    direta: {
-        title: "Administração Direta",
-        body: `
-            <p class="mb-4">É o conjunto de órgãos que integram a estrutura dos entes políticos da Federação (União, Estados, Distrito Federal e Municípios), atuando de forma centralizada. Esses órgãos <strong>não possuem personalidade jurídica própria</strong>; são meras repartições de competências da pessoa jurídica a que pertencem.</p>
-            <h4 class="font-bold mt-4 mb-2">Características Principais:</h4>
-            <ul class="list-disc list-inside space-y-2">
-                <li><strong>Composição:</strong> Órgãos da Presidência da República, Ministérios, Governadorias, Secretarias, Prefeituras.</li>
-                <li><strong>Personalidade Jurídica:</strong> Os órgãos não têm. A personalidade é do ente federativo (União, Estado, etc.).</li>
-                <li><strong>Teoria do Órgão:</strong> A vontade do agente público é imputada ao órgão e, consequentemente, ao Estado.</li>
-                <li><strong>Atuação:</strong> Centralizada, com distribuição interna de competências por meio da <strong>desconcentração</strong>.</li>
-            </ul>
-            <div class="mt-4 p-3 bg-blue-50 rounded text-blue-800 text-sm"><i data-feather='info' class='inline mr-1'></i>Exemplo: Ministérios, Secretarias Estaduais, Prefeituras.</div>
-        `
-    },
-    indireta: {
-        title: "Administração Indireta",
-        body: `
-            <p class="mb-4">É o conjunto de pessoas jurídicas, de direito público ou privado, criadas pelo Estado para desempenhar, de forma descentralizada, atividades administrativas, de serviço público ou econômicas. Elas possuem autonomia, mas são vinculadas à Administração Direta, que exerce sobre elas um controle finalístico (tutela).</p>
-            <h4 class="font-bold mt-4 mb-2">Componentes:</h4>
-            <ul class="list-disc list-inside space-y-2">
-                <li><strong>Autarquias:</strong> Pessoas jurídicas de direito público, criadas por lei, para executar atividades típicas de Estado (Ex: INSS, BACEN).</li>
-                <li><strong>Fundações Públicas:</strong> Podem ser de direito público ou privado, voltadas a atividades de interesse social (Ex: IBGE, FUNAI).</li>
-                <li><strong>Empresas Públicas:</strong> Pessoas jurídicas de direito privado, com capital 100% público, que prestam serviço público ou exploram atividade econômica (Ex: Correios, Caixa).</li>
-                <li><strong>Sociedades de Economia Mista:</strong> Pessoas jurídicas de direito privado, com capital misto (maioria pública votante), que atuam de forma semelhante às empresas públicas (Ex: Petrobras, Banco do Brasil).</li>
-            </ul>
-            <div class="mt-4 p-3 bg-blue-50 rounded text-blue-800 text-sm"><i data-feather='info' class='inline mr-1'></i>Exemplo: INSS, IBGE, Correios, Petrobras.</div>
-            <p class="mt-4">Para uma análise detalhada, utilize o <strong>Comparativo Interativo</strong> na navegação principal.</p>
-        `
-    },
-    terceiro_setor: {
-        title: "Terceiro Setor (Entidades Paraestatais)",
-        body: `
-            <p class="mb-4">Composto por pessoas jurídicas de direito privado, sem fins lucrativos, que atuam ao lado do Estado em atividades de interesse social. Elas <strong>não integram a Administração Pública</strong>, mas colaboram com ela mediante fomento público.</p>
-            <h4 class="font-bold mt-4 mb-2">Figuras Principais:</h4>
-            <ul class="list-disc list-inside space-y-2">
-                <li><strong>Organizações Sociais (OS):</strong> Entidades privadas que recebem uma qualificação do Poder Público para gerir serviços públicos (ex: hospitais, museus) através de um <strong>Contrato de Gestão</strong>.</li>
-                <li><strong>Organizações da Sociedade Civil de Interesse Público (OSCIP):</strong> Entidades privadas qualificadas para receber fomento e executar projetos de interesse público através de um <strong>Termo de Parceria</strong>.</li>
-                <li><strong>Serviços Sociais Autônomos (Sistema S):</strong> Entidades como SESI, SENAI, SESC, criadas por lei, mantidas por contribuições parafiscais, com regime de direito privado, mas voltadas a fins sociais e de apoio a categorias profissionais.</li>
-            </ul>
-            <div class="mt-4 p-3 bg-amber-50 rounded text-amber-800 text-sm"><i data-feather='info' class='inline mr-1'></i>Exemplo: APAE, Santa Casa, SENAI, OSCIP ambiental.</div>
-        `
-    },
-    principios: [
-        { initial: "L", name: "Legalidade", description: "O administrador público só pode fazer o que a lei determina ou autoriza. A lei é o fundamento e o limite de toda a ação administrativa.", exemplo: "Exemplo: Um servidor só pode conceder benefício se houver previsão legal." },
-        { initial: "I", name: "Impessoalidade", description: "A atuação administrativa deve visar o interesse público, tratando todos com isonomia, sem favoritismos ou perseguições. Os atos são do órgão, não do agente.", exemplo: "Exemplo: Proibir promoção pessoal de autoridades em campanhas públicas." },
-        { initial: "M", name: "Moralidade", description: "Exige um comportamento ético, honesto e probo. Um ato pode ser legal, mas será inválido se for imoral.", exemplo: "Exemplo: Nepotismo é imoral, mesmo que não haja lei específica proibindo." },
-        { initial: "P", name: "Publicidade", description: "A regra é a transparência. Os atos administrativos devem ser divulgados oficialmente para produzir efeitos e permitir o controle social.", exemplo: "Exemplo: Publicação de editais de concurso e licitações." },
-        { initial: "E", name: "Eficiência", description: "A Administração deve agir com presteza, perfeição e rendimento funcional, buscando os melhores resultados com o uso racional dos recursos públicos.", exemplo: "Exemplo: Digitalização de processos para agilizar o atendimento ao cidadão." },
-    ]
-};
-const comparativoData = {
-    caracteristicas: [
-        "Personalidade Jurídica", "Criação", "Capital", "Forma Societária", "Regime de Pessoal", "Foro (Federal)", "Finalidade"
-    ],
-    entidades: {
-        autarquia: {
-            nome: "Autarquia",
-            valores: ["Direito Público", "Criada por Lei", "100% Público", "N/A", "Estatutário (RJU)", "Justiça Federal", "Atividade Típica de Estado"],
-            cor: 'rgba(59, 130, 246, 0.7)'
-        },
-        fundacao: {
-            nome: "Fundação Pública",
-            valores: ["Público ou Privado", "Autorizada por Lei", "100% Público", "N/A", "Estatutário ou CLT", "Depende (Federal se de Dir. Público)", "Atividade Social"],
-            cor: 'rgba(16, 185, 129, 0.7)'
-        },
-        empresa_publica: {
-            nome: "Empresa Pública",
-            valores: ["Direito Privado", "Autorizada por Lei", "100% Público", "Qualquer", "CLT (concurso)", "Justiça Federal", "Serv. Público / Ativ. Econômica"],
-            cor: 'rgba(239, 68, 68, 0.7)'
-        },
-        sem: {
-            nome: "Sociedade de Economia Mista",
-            valores: ["Direito Privado", "Autorizada por Lei", "Misto (Controle Público)", "S.A. (Obrigatório)", "CLT (concurso)", "Justiça Estadual (Regra)", "Serv. Público / Ativ. Econômica"],
-            cor: 'rgba(245, 158, 11, 0.7)'
-        }
-    }
-};
-let comparisonChart;
 document.addEventListener('DOMContentLoaded', () => {
     feather.replace();
-    const navButtons = document.querySelectorAll('.nav-button');
-    const sections = document.querySelectorAll('.content-section');
-    navButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const targetId = button.dataset.target;
-            navButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-            sections.forEach(section => {
-                section.classList.remove('active');
-                if (section.id === targetId) {
-                    section.classList.add('active');
-                }
-            });
-        });
-    });
-    setupPrincipios();
-    setupComparativo();
-    updateComparisonTable();
-});
-function setupPrincipios() {
-    const container = document.querySelector('#principios .grid');
-    container.innerHTML = contentData.principios.map(p => `
-        <div class="concept-card bg-white p-6 rounded-lg shadow-md border-l-4 border-amber-500 cursor-pointer" tabindex="0" aria-label="${p.name}" onclick="this.querySelector('.description').classList.toggle('hidden'); this.querySelector('.exemplo').classList.toggle('hidden')" onkeydown="if(event.key==='Enter'){this.click();}">
-            <div class="flex items-center mb-3">
-                <span class="bg-amber-500 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl mr-4">${p.initial}</span>
-                <h3 class="font-bold text-xl">${p.name}</h3>
-            </div>
-            <p class="text-slate-600 description hidden mt-4">${p.description}</p>
-            <div class="exemplo hidden mt-2 text-xs text-amber-700"><i data-feather='lightbulb' class='inline mr-1'></i>${p.exemplo}</div>
-        </div>
-    `).join('');
-    feather.replace();
-}
-function setupComparativo() {
-    const checkboxContainer = document.getElementById('checkbox-container');
-    Object.keys(comparativoData.entidades).forEach((key, index) => {
-        const entidade = comparativoData.entidades[key];
-        const checkbox = `
-            <label class="inline-flex items-center">
-                <input type="checkbox" class="form-checkbox h-5 w-5 rounded" data-entidade="${key}" ${index < 2 ? 'checked' : ''} onchange="updateComparisons()">
-                <span class="ml-2 text-slate-700 font-medium">${entidade.nome}</span>
-            </label>
+    // Conceitos
+    const conceptsData = [
+        { title: 'Administração Direta', description: 'Órgãos que integram a estrutura dos entes federativos (União, Estados, DF, Municípios), sem personalidade jurídica própria.' },
+        { title: 'Administração Indireta', description: 'Entidades com personalidade jurídica própria, como autarquias, fundações, empresas públicas e sociedades de economia mista.' },
+        { title: 'Princípios LIMPE', description: 'Legalidade, Impessoalidade, Moralidade, Publicidade e Eficiência. Regras básicas para toda atuação administrativa.' },
+        { title: 'Descentralização', description: 'Transferência de execução de serviços para outra pessoa jurídica, compondo a Administração Indireta.' },
+        { title: 'Desconcentração', description: 'Distribuição de competências entre órgãos dentro da mesma pessoa jurídica.' },
+        { title: 'Terceiro Setor', description: 'Entidades privadas sem fins lucrativos que colaboram com o Estado em atividades de interesse público.' },
+        { title: 'Controle Social', description: 'Participação do cidadão na fiscalização e avaliação da Administração Pública.' },
+        { title: 'Responsabilização', description: 'Servidores e órgãos respondem por atos ilegais, imorais ou ineficientes.' },
+    ];
+    // Bases Legais
+    const basesLegaisData = [
+        { title: 'Constituição Federal (Art. 37)', description: 'Estabelece os princípios e regras básicas da Administração Pública.' },
+        { title: 'Lei 8.112/90', description: 'Regime jurídico dos servidores públicos federais.' },
+        { title: 'Lei 8.666/93', description: 'Normas para licitações e contratos da Administração Pública.' },
+        { title: 'Lei de Responsabilidade Fiscal', description: 'Estabelece normas de finanças públicas voltadas para a responsabilidade na gestão fiscal.' },
+        { title: 'Lei de Acesso à Informação (LAI)', description: 'Garante o direito de acesso a informações públicas.' },
+        { title: 'Lei 9.784/99', description: 'Regula o processo administrativo no âmbito da Administração Pública federal.' },
+    ];
+    // Princípios
+    const principlesData = [
+        { title: 'Legalidade', description: 'O administrador público só pode fazer o que a lei determina ou autoriza. Exemplo: Conceder benefício apenas se houver previsão legal.' },
+        { title: 'Impessoalidade', description: 'A atuação administrativa deve visar o interesse público, sem favoritismos. Exemplo: Proibir promoção pessoal de autoridades.' },
+        { title: 'Moralidade', description: 'Exige comportamento ético e honesto. Exemplo: Nepotismo é imoral, mesmo que não haja lei específica.' },
+        { title: 'Publicidade', description: 'Os atos administrativos devem ser divulgados oficialmente para permitir o controle social. Exemplo: Publicação de editais.' },
+        { title: 'Eficiência', description: 'A Administração deve buscar os melhores resultados com uso racional dos recursos. Exemplo: Digitalização de processos.' },
+    ];
+    // Direitos
+    const rightsData = [
+        { title: 'Direito de Petição', description: 'Todo cidadão pode apresentar pedidos, reclamações ou denúncias aos órgãos públicos.' },
+        { title: 'Acesso à Informação', description: 'Direito de obter informações públicas, salvo sigilo legal.' },
+        { title: 'Participação', description: 'Direito de participar de audiências, consultas públicas e conselhos.' },
+        { title: 'Transparência', description: 'Direito de acompanhar a execução de políticas públicas e gastos.' },
+        { title: 'Proteção contra Abusos', description: 'Direito de denunciar irregularidades e exigir responsabilização.' },
+    ];
+    // Quiz
+    const quizData = [
+        {
+            question: 'Qual princípio exige que o administrador público só faça o que a lei permite?',
+            options: ['Impessoalidade', 'Legalidade', 'Publicidade', 'Eficiência'],
+            answer: 'Legalidade'
+        },
+        {
+            question: 'Qual entidade integra a Administração Indireta?',
+            options: ['Ministério da Saúde', 'Prefeitura', 'INSS', 'Secretaria Estadual'],
+            answer: 'INSS'
+        },
+        {
+            question: 'O que caracteriza a descentralização?',
+            options: ['Distribuição interna de competências', 'Transferência para outra pessoa jurídica', 'Extinção de órgãos', 'Promoção pessoal'],
+            answer: 'Transferência para outra pessoa jurídica'
+        },
+        {
+            question: 'Qual lei regula o processo administrativo federal?',
+            options: ['Lei 8.112/90', 'Lei 8.666/93', 'Lei 9.784/99', 'Lei de Responsabilidade Fiscal'],
+            answer: 'Lei 9.784/99'
+        },
+        {
+            question: 'O cidadão pode solicitar informações públicas com base em qual lei?',
+            options: ['Lei 8.112/90', 'Lei de Acesso à Informação', 'Lei 8.666/93', 'Lei 9.784/99'],
+            answer: 'Lei de Acesso à Informação'
+        },
+        {
+            question: 'Qual princípio veda o favorecimento pessoal na Administração?',
+            options: ['Moralidade', 'Impessoalidade', 'Publicidade', 'Eficiência'],
+            answer: 'Impessoalidade'
+        }
+    ];
+    // Conceitos
+    const conceptsGrid = document.getElementById('concepts-grid');
+    conceptsData.forEach(concept => {
+        const card = document.createElement('div');
+        card.className = 'concept-card bg-white p-6 rounded-xl shadow-md cursor-pointer';
+        card.innerHTML = `
+            <div class="flex items-center gap-2 mb-2"><i data-feather="info" class="text-amber-500"></i><h3 class="text-xl font-bold text-slate-700">${concept.title}</h3></div>
+            <p class="text-slate-600 hidden mt-2">${concept.description}</p>
         `;
-        checkboxContainer.innerHTML += checkbox;
-    });
-    updateComparisons();
-}
-function updateComparisons() {
-    updateComparisonTable();
-    updateComparisonChart();
-}
-function updateComparisonTable() {
-    const table = document.getElementById('comparison-table');
-    const checkboxes = document.querySelectorAll('#checkbox-container input:checked');
-    const selectedKeys = Array.from(checkboxes).map(cb => cb.dataset.entidade);
-    let headerHtml = '<thead class="bg-slate-50"><tr><th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Critério</th>';
-    selectedKeys.forEach(key => {
-        headerHtml += `<th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">${comparativoData.entidades[key].nome}</th>`;
-    });
-    headerHtml += '</tr></thead>';
-    let bodyHtml = '<tbody class="bg-white divide-y divide-slate-200">';
-    comparativoData.caracteristicas.forEach((caracteristica, i) => {
-        bodyHtml += '<tr>';
-        bodyHtml += `<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">${caracteristica}</td>`;
-        selectedKeys.forEach(key => {
-            bodyHtml += `<td class="px-6 py-4 whitespace-normal text-sm text-slate-600">${comparativoData.entidades[key].valores[i]}</td>`;
+        card.addEventListener('click', () => {
+            card.querySelector('p').classList.toggle('hidden');
         });
-        bodyHtml += '</tr>';
+        conceptsGrid.appendChild(card);
     });
-    bodyHtml += '</tbody>';
-    table.innerHTML = headerHtml + bodyHtml;
-}
-function updateComparisonChart() {
-    const ctx = document.getElementById('comparison-chart').getContext('2d');
-    const checkboxes = document.querySelectorAll('#checkbox-container input:checked');
-    const selectedKeys = Array.from(checkboxes).map(cb => cb.dataset.entidade);
-    const datasets = selectedKeys.map(key => {
-        const entidade = comparativoData.entidades[key];
-        return {
-            label: entidade.nome,
-            data: entidade.valores.map(v => {
-                if (v.includes("Público")) return 3;
-                if (v.includes("Misto") || v.includes("Híbrido") || v.includes("Depende")) return 2;
-                if (v.includes("Privado") || v.includes("CLT") || v.includes("Estadual")) return 1;
-                return 1.5; // for N/A or text values
-            }),
-            backgroundColor: entidade.cor.replace('0.7', '0.2'),
-            borderColor: entidade.cor,
-            pointBackgroundColor: entidade.cor,
-            pointBorderColor: '#fff',
-            pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: entidade.cor
-        };
+    // Bases Legais
+    const basesLegaisGrid = document.getElementById('bases-legais-grid');
+    basesLegaisData.forEach(base => {
+        const card = document.createElement('div');
+        card.className = 'concept-card bg-white p-6 rounded-xl shadow-md cursor-pointer';
+        card.innerHTML = `
+            <div class="flex items-center gap-2 mb-2"><i data-feather="check" class="text-amber-500"></i><h3 class="text-xl font-bold text-slate-700">${base.title}</h3></div>
+            <p class="text-slate-600 hidden mt-2">${base.description}</p>
+        `;
+        card.addEventListener('click', () => {
+            card.querySelector('p').classList.toggle('hidden');
+        });
+        basesLegaisGrid.appendChild(card);
     });
-    if (comparisonChart) {
-        comparisonChart.destroy();
-    }
-    comparisonChart = new Chart(ctx, {
-        type: 'radar',
+    // Princípios
+    const principlesMenu = document.getElementById('principles-menu');
+    const principleTitle = document.getElementById('principle-title');
+    const principleDescription = document.getElementById('principle-description');
+    let activePrincipleButton = null;
+    principlesData.forEach((principle, index) => {
+        const button = document.createElement('button');
+        button.className = 'principle-btn w-full text-left p-4 rounded-lg font-medium transition-colors duration-200 bg-white shadow-sm';
+        button.textContent = principle.title;
+        button.addEventListener('click', () => {
+            principleTitle.textContent = principle.title;
+            principleDescription.textContent = principle.description;
+            if(activePrincipleButton) {
+                activePrincipleButton.classList.remove('active');
+            }
+            button.classList.add('active');
+            activePrincipleButton = button;
+        });
+        principlesMenu.appendChild(button);
+        if (index === 0) {
+            button.click();
+        }
+    });
+    // Direitos Accordion
+    const rightsAccordion = document.getElementById('rights-accordion');
+    rightsData.forEach((right, idx) => {
+        const item = document.createElement('div');
+        item.className = 'bg-white rounded-lg shadow-sm overflow-hidden';
+        item.innerHTML = `
+            <button class="accordion-btn w-full flex justify-between items-center p-5 text-left font-semibold text-slate-700 hover:bg-slate-100" aria-expanded="false">
+                <span>${right.title}</span>
+                <i data-feather="chevron-down" class="w-5 h-5"></i>
+            </button>
+            <div class="px-5 pb-5 text-slate-600 hidden">
+                <p>${right.description}</p>
+            </div>
+        `;
+        const button = item.querySelector('button');
+        const content = item.querySelector('div');
+        button.addEventListener('click', () => {
+            const expanded = button.getAttribute('aria-expanded') === 'true';
+            button.setAttribute('aria-expanded', !expanded);
+            content.classList.toggle('hidden');
+            button.querySelector('i').classList.toggle('rotate-180');
+        });
+        rightsAccordion.appendChild(item);
+    });
+    // Gráfico
+    const ctx = document.getElementById('admPillarsChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'doughnut',
         data: {
-            labels: comparativoData.caracteristicas,
-            datasets: datasets
+            labels: ['Princípios & Bases Legais', 'Direitos & Controle Social', 'Estrutura Administrativa'],
+            datasets: [{
+                label: 'Pilares da Administração',
+                data: [40, 30, 30],
+                backgroundColor: [
+                    'rgba(51, 65, 85, 0.8)',
+                    'rgba(100, 116, 139, 0.8)',
+                    'rgba(245, 158, 11, 0.8)',
+                ],
+                borderColor: ['#FFFFFF'],
+                borderWidth: 3
+            }]
         },
         options: {
+            responsive: true,
             maintainAspectRatio: false,
-            scales: {
-                r: {
-                    angleLines: { display: true },
-                    suggestedMin: 0,
-                    suggestedMax: 3.5,
-                    ticks: {
-                        display: false,
-                        stepSize: 1
-                    },
-                    pointLabels: {
-                        font: { size: 11 }
-                    }
-                }
-            },
             plugins: {
                 legend: {
-                    position: 'top',
+                    position: 'bottom',
+                    labels: {
+                        font: { size: 14, family: 'Inter' }
+                    }
                 },
                 tooltip: {
                     callbacks: {
                         label: function(context) {
-                            let label = context.dataset.label || '';
-                            if (label) {
-                                label += ': ';
-                            }
-                            const originalValue = comparativoData.entidades[selectedKeys[context.datasetIndex]].valores[context.dataIndex];
-                            label += originalValue;
+                            let label = context.label || '';
+                            if (label) { label += ': '; }
+                            if (context.parsed !== null) { label += context.parsed + '%'; }
                             return label;
                         }
                     }
@@ -399,29 +477,93 @@ function updateComparisonChart() {
             }
         }
     });
-}
-function showModal(contentKey) {
-    const modal = document.getElementById('modal');
-    const modalBody = document.getElementById('modal-body');
-    const content = contentData[contentKey];
-    modalBody.innerHTML = `
-        <h2 class="text-2xl font-bold mb-4">${content.title}</h2>
-        ${content.body}
-    `;
+    // Quiz
+    const quizQuestionEl = document.getElementById('quiz-question');
+    const quizOptionsEl = document.getElementById('quiz-options');
+    const quizFeedbackEl = document.getElementById('quiz-feedback');
+    const nextQuestionBtn = document.getElementById('next-question-btn');
+    const restartQuizBtn = document.getElementById('restart-quiz-btn');
+    const quizContainer = document.getElementById('quiz-question-container');
+    let currentQuestionIndex = 0;
+    let score = 0;
+    function loadQuestion() {
+        quizFeedbackEl.classList.add('hidden');
+        nextQuestionBtn.classList.add('hidden');
+        const currentQuestion = quizData[currentQuestionIndex];
+        quizQuestionEl.textContent = currentQuestion.question;
+        quizOptionsEl.innerHTML = '';
+        currentQuestion.options.forEach(option => {
+            const button = document.createElement('button');
+            button.textContent = option;
+            button.className = 'w-full text-left p-4 rounded-lg font-medium transition-colors duration-200 bg-slate-100 hover:bg-slate-200';
+            button.addEventListener('click', () => selectAnswer(button, option, currentQuestion.answer));
+            quizOptionsEl.appendChild(button);
+        });
+    }
+    function selectAnswer(button, selectedOption, correctAnswer) {
+        const buttons = quizOptionsEl.querySelectorAll('button');
+        buttons.forEach(btn => {
+            btn.disabled = true;
+            if (btn.textContent === correctAnswer) {
+                btn.classList.remove('bg-slate-100', 'hover:bg-slate-200');
+                btn.classList.add('bg-green-500', 'text-white');
+            }
+        });
+        if (selectedOption === correctAnswer) {
+            score++;
+            quizFeedbackEl.textContent = 'Resposta Correta!';
+            quizFeedbackEl.className = 'mt-6 text-center font-medium text-green-600';
+        } else {
+            button.classList.remove('bg-slate-100', 'hover:bg-slate-200');
+            button.classList.add('bg-red-500', 'text-white');
+            quizFeedbackEl.textContent = `Incorreto. A resposta certa é "${correctAnswer}".`;
+            quizFeedbackEl.className = 'mt-6 text-center font-medium text-red-600';
+        }
+        quizFeedbackEl.classList.remove('hidden');
+        if (currentQuestionIndex < quizData.length - 1) {
+            nextQuestionBtn.classList.remove('hidden');
+        } else {
+            showFinalScore();
+        }
+    }
+    function showFinalScore() {
+        quizContainer.innerHTML = `<h3 class="text-2xl font-bold text-center text-slate-700">Quiz Finalizado!</h3><p class="text-center text-lg text-slate-600 mt-4">Você acertou ${score} de ${quizData.length} perguntas.</p>`;
+        restartQuizBtn.classList.remove('hidden');
+    }
+    nextQuestionBtn.addEventListener('click', () => {
+        currentQuestionIndex++;
+        loadQuestion();
+    });
+    restartQuizBtn.addEventListener('click', () => {
+        currentQuestionIndex = 0;
+        score = 0;
+        restartQuizBtn.classList.add('hidden');
+        quizContainer.innerHTML = `
+            <h3 id="quiz-question" class="text-xl font-semibold text-slate-700 mb-6"></h3>
+            <div id="quiz-options" class="space-y-4"></div>
+        `;
+        window.quizQuestionEl = document.getElementById('quiz-question');
+        window.quizOptionsEl = document.getElementById('quiz-options');
+        loadQuestion();
+    });
+    loadQuestion();
+    // Mobile menu
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuButton.addEventListener('click', () => {
+        const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+        mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+        mobileMenu.classList.toggle('hidden');
+    });
+    document.querySelectorAll('#nav-menu a, #mobile-menu a').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            if (mobileMenu.classList.contains('hidden') === false) {
+                mobileMenu.classList.add('hidden');
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+            }
+        });
+    });
     feather.replace();
-    modal.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-    setTimeout(() => {
-        document.querySelector('.close-modal-btn').focus();
-    }, 100);
-}
-function closeModal() {
-    const modal = document.getElementById('modal');
-    modal.classList.add('hidden');
-    document.body.style.overflow = '';
-}
-window.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeModal();
 });
 </script>
 </body>
