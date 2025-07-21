@@ -5,80 +5,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guia Interativo de Escrita: Ortografia, Coesão e Coerência</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://unpkg.com/feather-icons"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Warm Neutrals -->
-    <!-- Application Structure Plan: A tab-based SPA is chosen for optimal user experience. This structure logically separates the three core pillars of writing (Orthography, Cohesion, Coherence) into distinct, digestible sections. A 'Home' tab provides an overview, and an 'Interactive Challenge' tab offers a practical quiz to reinforce learning. This non-linear, thematic approach allows users to focus on one concept at a time, preventing overwhelm from dense textual information and promoting self-paced learning. The user flow is: Land on Home -> Select a concept tab to learn -> Test knowledge in the Challenge tab. This is superior to a linear report as it empowers user choice and engagement. -->
-    <!-- Visualization & Content Choices: The report's content is conceptual and text-based, so interactive text blocks are prioritized over charts.
-        - Report Info: Orthography rules. Goal: Compare correct/incorrect usage. Viz/Method: Interactive "click-to-reveal" cards. Interaction: User clicks a problem, the answer and explanation appear. Justification: Encourages active recall over passive reading. Method: HTML/JS.
-        - Report Info: Cohesion mechanisms. Goal: Organize and explain types. Viz/Method: Accordion-style list. Interaction: User clicks a term to expand its definition and example. Justification: Keeps the UI clean and focused. Method: HTML/JS.
-        - Report Info: Coherence principles. Goal: Compare coherent vs. incoherent text. Viz/Method: Toggleable text blocks. Interaction: User clicks a button to switch between examples. Justification: Provides a direct and clear comparison. Method: HTML/JS.
-        - Report Info: Overall concepts. Goal: Test understanding. Viz/Method: A multiple-choice quiz. Interaction: User answers questions and gets immediate feedback. Justification: Gamifies learning and provides tangible assessment. Method: HTML/JS.
-        No charts are necessary as the data is qualitative and conceptual. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .tab-button.active {
-            border-color: #3b82f6;
-            color: #3b82f6;
-            font-weight: 500;
-        }
-        .content-section {
-            display: none;
-        }
-        .content-section.active {
-            display: block;
-        }
-        .quiz-option:hover {
-            background-color: #e5e7eb;
-        }
-        .quiz-option.correct {
-            background-color: #dcfce7;
-            border-color: #22c55e;
-        }
-        .quiz-option.incorrect {
-            background-color: #fee2e2;
-            border-color: #ef4444;
-        }
-        .reveal-card {
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .reveal-card:hover {
-            transform: translateY(-2px);
-        }
-        .answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-out;
-        }
-        .answer.show {
-            max-height: 500px;
-        }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(120deg, #f0f9ff 0%, #fef3c7 100%); }
+        .tab-button.active { border-color: #3b82f6; color: #fff; background: linear-gradient(90deg, #3b82f6 60%, #f59e42 100%); font-weight: 500; }
+        .tab-button:not(.active):hover { background: #e0f2fe; }
+        .content-section { display: none; }
+        .content-section.active { display: block; animation: fadeIn 0.5s; }
+        .quiz-option:hover { background-color: #e5e7eb; }
+        .quiz-option.correct { background-color: #dcfce7; border-color: #22c55e; }
+        .quiz-option.incorrect { background-color: #fee2e2; border-color: #ef4444; }
+        .reveal-card { cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; background: #fcfcfc; border: 1px solid #e0e0e0; }
+        .reveal-card:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 8px 24px #f59e4222; background: #f5f5f5; }
+        .answer { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; }
+        .answer.show { max-height: 500px; }
+        .study-tips { background: linear-gradient(90deg, #fef3c7 60%, #f0f9ff 100%); border-left: 6px solid #f59e42; }
+        .no-js-message { display: block; background: #f59e42; color: #1e3a8a; padding: 1rem; text-align: center; font-weight: bold; border-radius: 0.5rem; margin: 1rem 0; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px);} to { opacity: 1; transform: none; } }
     </style>
 </head>
 <body class="bg-stone-50 text-stone-800">
-
+<noscript>
+    <div class="no-js-message">Este site requer JavaScript para funcionar corretamente. Por favor, ative o JavaScript no seu navegador.</div>
+</noscript>
     <div class="container mx-auto p-4 md:p-8 max-w-5xl">
         <header class="text-center mb-8">
-            <h1 class="text-3xl md:text-4xl font-bold text-stone-900">Guia Interativo de Escrita</h1>
+            <div class="flex justify-center items-center gap-3 mb-2">
+                <span class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-tr from-blue-800 to-amber-400 shadow-lg">
+                    <i data-feather="edit-3" class="text-white" style="width:2.2rem;height:2.2rem;"></i>
+                </span>
+                <h1 class="text-3xl md:text-4xl font-bold text-stone-900">Guia Interativo de Escrita</h1>
+            </div>
             <p class="text-stone-600 mt-2">Explore os pilares da comunicação eficaz: Ortografia, Coesão e Coerência.</p>
         </header>
-
         <nav class="flex flex-wrap justify-center border-b-2 border-stone-200 mb-8">
-            <button class="tab-button active text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition" data-tab="inicio">Início</button>
+            <button class="tab-button active text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition" data-tab="resumo">Resumo</button>
+            <button class="tab-button text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition" data-tab="inicio">Início</button>
             <button class="tab-button text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition" data-tab="ortografia">Ortografia</button>
             <button class="tab-button text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition" data-tab="coesao">Coesão</button>
             <button class="tab-button text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition" data-tab="coerencia">Coerência</button>
             <button class="tab-button text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition" data-tab="desafio">Desafio Interativo</button>
         </nav>
-
         <main>
+            <!-- Resumo Section -->
+            <section id="resumo" class="content-section active">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h2 class="text-2xl font-bold text-blue-500 mb-4 flex items-center gap-2"><i data-feather="book-open" class="text-amber-500"></i>Resumo Didático</h2>
+                    <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2">
+                        <li><b>Ortografia</b>: Escrever corretamente é o primeiro passo para ser compreendido e respeitado.</li>
+                        <li><b>Coesão</b>: Use conectivos, pronomes e elipses para ligar ideias e evitar repetições.</li>
+                        <li><b>Coerência</b>: Mantenha lógica e sentido em todo o texto, evitando contradições.</li>
+                    </ul>
+                    <div class="mb-6">
+                        <h3 class="font-semibold text-lg text-blue-800 mb-2">Mapa Mental (Fluxograma Textual)</h3>
+                        <div class="bg-blue-50 rounded-lg p-4 text-sm text-blue-900">
+                            <b>Ortografia</b> → <b>Coesão</b> (Conectivos, Referências, Elipse) → <b>Coerência</b> (Lógica, Progressão, Sentido Global)
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <h3 class="font-semibold text-lg text-blue-800 mb-2">Dicas Rápidas</h3>
+                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                            <li>Revise sempre seu texto antes de entregar.</li>
+                            <li>Leia em voz alta para perceber incoerências.</li>
+                            <li>Use sinônimos e pronomes para evitar repetições.</li>
+                            <li>Busque exemplos de textos bem escritos.</li>
+                        </ul>
+                    </div>
+                    <div class="mb-6">
+                        <h3 class="font-semibold text-lg text-blue-800 mb-2">Exemplo Prático</h3>
+                        <div class="bg-amber-50 rounded-lg p-4 text-sm text-amber-900">
+                            "O aluno estudou bastante. Por isso, ele foi bem na prova. O resultado foi excelente."<br>
+                            <b>Ortografia</b> correta, <b>coesão</b> com conectivo "por isso" e <b>coerência</b> no sentido global.
+                        </div>
+                    </div>
+                </div>
+            </section>
             <!-- Início Section -->
-            <section id="inicio" class="content-section active">
+            <section id="inicio" class="content-section">
                 <div class="bg-white p-6 rounded-lg shadow-sm">
                     <h2 class="text-2xl font-bold text-blue-500 mb-4">Bem-vindo(a) ao Guia de Escrita!</h2>
                     <p class="mb-4">Dominar a arte de escrever vai além de conhecer palavras. Envolve estruturar ideias de forma clara, conectar frases com lógica e garantir que a sua mensagem seja compreendida sem ambiguidades. Esta aplicação foi desenhada para o ajudar a aprimorar três competências fundamentais que formam a base de um texto de qualidade. Navegue pelas abas para explorar cada conceito.</p>
@@ -98,14 +102,13 @@
                     </div>
                 </div>
             </section>
-
             <!-- Ortografia Section -->
             <section id="ortografia" class="content-section">
                  <div class="bg-white p-6 rounded-lg shadow-sm">
                     <h2 class="text-2xl font-bold text-blue-500 mb-2">Dominando a Ortografia</h2>
                     <p class="mb-6 text-stone-600">A ortografia é o conjunto de regras para a escrita correta das palavras. Erros ortográficos podem comprometer a credibilidade do seu texto. Explore alguns dos casos mais comuns e clique nos cartões para revelar a resposta e a explicação.</p>
                     <div class="space-y-4">
-                        <div class="reveal-card bg-stone-50 p-4 rounded-lg border border-stone-200 shadow-sm" data-card="porques">
+                        <div class="reveal-card p-4 rounded-lg border border-stone-200 shadow-sm" data-card="porques">
                             <p class="font-medium">Os 4 Porquês</p>
                             <p class="text-sm text-stone-500">Quando usar "por que", "porque", "por quê" e "porquê"?</p>
                             <div class="answer mt-3 pt-3 border-t border-stone-200 text-sm">
@@ -115,7 +118,7 @@
                                 <p><strong>Porquê (junto e com acento):</strong> Usado como substantivo (significa "o motivo"). <em>Ex: Não sei o porquê de tanta confusão.</em></p>
                             </div>
                         </div>
-                         <div class="reveal-card bg-stone-50 p-4 rounded-lg border border-stone-200 shadow-sm" data-card="crase">
+                         <div class="reveal-card p-4 rounded-lg border border-stone-200 shadow-sm" data-card="crase">
                             <p class="font-medium">Uso da Crase</p>
                             <p class="text-sm text-stone-500">"Vou a praia" ou "Vou à praia"?</p>
                             <div class="answer mt-3 pt-3 border-t border-stone-200 text-sm">
@@ -125,7 +128,7 @@
                                 <p><em>Ex: "Escrevi a lápis." -> "Escrevi a (o) giz." (Não vira "ao", logo, não tem crase)</em></p>
                             </div>
                         </div>
-                        <div class="reveal-card bg-stone-50 p-4 rounded-lg border border-stone-200 shadow-sm" data-card="mau-mal">
+                        <div class="reveal-card p-4 rounded-lg border border-stone-200 shadow-sm" data-card="mau-mal">
                             <p class="font-medium">Mal vs. Mau</p>
                             <p class="text-sm text-stone-500">Ele é um lobo ___ ou se sentiu ___?</p>
                             <div class="answer mt-3 pt-3 border-t border-stone-200 text-sm">
@@ -133,10 +136,18 @@
                                 <p><strong>Mal:</strong> Pode ser advérbio (antônimo de "bem") ou substantivo. <em>Ex: Ele se sentiu mal. (Se sentiu bem)</em></p>
                             </div>
                         </div>
+                        <div class="reveal-card p-4 rounded-lg border border-stone-200 shadow-sm" data-card="acentuacao">
+                            <p class="font-medium">Acentuação Gráfica</p>
+                            <p class="text-sm text-stone-500">Por que "pôde" tem acento e "pode" não?</p>
+                            <div class="answer mt-3 pt-3 border-t border-stone-200 text-sm">
+                                <p><strong>Pôde:</strong> Verbo poder no passado (pretérito perfeito do indicativo, 3ª pessoa). <em>Ex: Ontem ele pôde sair mais cedo.</em></p>
+                                <p><strong>Pode:</strong> Verbo poder no presente. <em>Ex: Hoje ele pode sair mais cedo.</em></p>
+                                <p>O acento diferencia o tempo verbal.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
-
             <!-- Coesão Section -->
             <section id="coesao" class="content-section">
                 <div class="bg-white p-6 rounded-lg shadow-sm">
@@ -183,10 +194,19 @@
                                 <p class="mt-2 p-2 bg-green-50 border-l-4 border-green-400"><em>Ex: "Eu estudei bastante, <strong>portanto</strong> espero ser aprovado." (Relação de conclusão)</em></p>
                             </div>
                         </div>
+                        <div class="accordion-item border rounded-lg">
+                            <button class="accordion-header w-full text-left p-4 font-medium flex justify-between items-center bg-stone-50 hover:bg-stone-100">
+                                <span>Sinônimos e Reiteração</span>
+                                <span>&#9662;</span>
+                            </button>
+                             <div class="accordion-content p-4 border-t border-stone-200 text-sm" style="display: none;">
+                                <p>Uso de palavras diferentes com o mesmo sentido para evitar repetições e enriquecer o texto.</p>
+                                <p class="mt-2 p-2 bg-green-50 border-l-4 border-green-400"><em>Ex: "O estudante foi dedicado. O <strong>aluno</strong> sempre buscava aprender mais." ("Estudante" e "aluno" são sinônimos)</em></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
-
             <!-- Coerência Section -->
             <section id="coerencia" class="content-section">
                 <div class="bg-white p-6 rounded-lg shadow-sm">
@@ -203,9 +223,17 @@
                         <h4 class="font-bold mb-2">Texto COERENTE</h4>
                         <p>O dia amanheceu frio e chuvoso. Para se proteger, o homem vestiu seu melhor casaco e saiu para comprar pão na padaria da esquina. Como ainda era cedo para a reunião do trabalho, ele decidiu ir a pé para aproveitar o ar fresco da manhã.</p>
                     </div>
+                    <div class="mt-6">
+                        <h3 class="font-semibold text-lg text-amber-700 mb-2">Dicas para Coerência</h3>
+                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                            <li>Evite contradições e informações desconexas.</li>
+                            <li>Garanta progressão lógica das ideias.</li>
+                            <li>Revise o texto para eliminar ambiguidades.</li>
+                            <li>Use conectivos para indicar causa, consequência, oposição, etc.</li>
+                        </ul>
+                    </div>
                 </div>
             </section>
-
             <!-- Desafio Interativo Section -->
             <section id="desafio" class="content-section">
                 <div class="bg-white p-6 rounded-lg shadow-sm">
@@ -225,25 +253,33 @@
                     </div>
                 </div>
             </section>
-
+            <section class="mt-12">
+                <div class="study-tips rounded-lg p-6 shadow-md max-w-3xl mx-auto">
+                    <h3 class="font-bold text-lg mb-2 flex items-center gap-2"><i data-feather="book-open" class="text-amber-500"></i>Dicas de Estudo</h3>
+                    <ul class="list-disc list-inside text-slate-700 space-y-1">
+                        <li>Monte mapas mentais a partir dos exemplos de coesão e coerência.</li>
+                        <li>Pratique o quiz para fixar os pontos-chave.</li>
+                        <li>Releia as dicas rápidas antes de provas.</li>
+                        <li>Use exemplos práticos para memorizar regras ortográficas.</li>
+                        <li>Volte a esta página para revisões rápidas antes da prova!</li>
+                    </ul>
+                </div>
+            </section>
         </main>
     </div>
-
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            feather.replace();
             const tabs = document.querySelectorAll('.tab-button');
             const contents = document.querySelectorAll('.content-section');
-
             tabs.forEach(tab => {
                 tab.addEventListener('click', () => {
                     tabs.forEach(item => item.classList.remove('active'));
                     contents.forEach(item => item.classList.remove('active'));
-
                     tab.classList.add('active');
                     document.getElementById(tab.dataset.tab).classList.add('active');
                 });
             });
-
             const revealCards = document.querySelectorAll('.reveal-card');
             revealCards.forEach(card => {
                 card.addEventListener('click', () => {
@@ -251,7 +287,6 @@
                     answer.classList.toggle('show');
                 });
             });
-
             const accordionItems = document.querySelectorAll('.accordion-item');
             accordionItems.forEach(item => {
                 const header = item.querySelector('.accordion-header');
@@ -263,7 +298,6 @@
                     arrow.innerHTML = isVisible ? '&#9662;' : '&#9652;';
                 });
             });
-
             const coherenceBtn = document.getElementById('coherence-toggle-btn');
             const incoherentText = document.getElementById('incoherent-text');
             const coherentText = document.getElementById('coherent-text');
@@ -279,7 +313,6 @@
                     coherenceBtn.textContent = 'Mostrar Exemplo Coerente';
                 }
             });
-
             const quizData = [
                 {
                     question: "Complete a frase: Não entendi o ___ de sua ausência.",
@@ -311,7 +344,6 @@
                     explanation: "Há uma contradição lógica. Um vegetariano não come carne, como a picanha."
                 }
             ];
-
             const quizContainer = document.getElementById('quiz-container');
             const quizQuestion = document.getElementById('quiz-question');
             const quizOptions = document.getElementById('quiz-options');
@@ -320,18 +352,14 @@
             const quizResults = document.getElementById('quiz-results');
             const quizScore = document.getElementById('quiz-score');
             const quizRestartBtn = document.getElementById('quiz-restart-btn');
-
             let currentQuestionIndex = 0;
             let score = 0;
-
             function loadQuestion() {
                 quizFeedback.innerHTML = '';
                 quizNextBtn.classList.add('hidden');
-
                 const question = quizData[currentQuestionIndex];
                 quizQuestion.textContent = question.question;
                 quizOptions.innerHTML = '';
-
                 question.options.forEach(optionText => {
                     const optionElement = document.createElement('button');
                     optionElement.textContent = optionText;
@@ -340,18 +368,15 @@
                     quizOptions.appendChild(optionElement);
                 });
             }
-
             function selectAnswer(selectedOption, optionElement) {
                 const question = quizData[currentQuestionIndex];
                 const isCorrect = selectedOption === question.answer;
-
                 Array.from(quizOptions.children).forEach(btn => {
                     btn.disabled = true;
                     if(btn.textContent === question.answer) {
                         btn.classList.add('correct');
                     }
                 });
-
                 if (isCorrect) {
                     score++;
                     optionElement.classList.add('correct');
@@ -360,16 +385,13 @@
                     optionElement.classList.add('incorrect');
                     quizFeedback.innerHTML = `<p class="text-red-600 font-bold">Incorreto!</p><p class="text-sm">${question.explanation}</p>`;
                 }
-
                 quizNextBtn.classList.remove('hidden');
             }
-
             function showResults() {
                 quizContainer.classList.add('hidden');
                 quizResults.classList.remove('hidden');
                 quizScore.textContent = `Você acertou ${score} de ${quizData.length} questões.`;
             }
-
             quizNextBtn.addEventListener('click', () => {
                 currentQuestionIndex++;
                 if (currentQuestionIndex < quizData.length) {
@@ -378,7 +400,6 @@
                     showResults();
                 }
             });
-
             quizRestartBtn.addEventListener('click', () => {
                 currentQuestionIndex = 0;
                 score = 0;
@@ -386,10 +407,8 @@
                 quizContainer.classList.remove('hidden');
                 loadQuestion();
             });
-
             loadQuestion();
         });
     </script>
-
 </body>
 </html>
