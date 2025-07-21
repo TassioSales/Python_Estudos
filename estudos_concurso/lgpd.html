@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guia Interativo LGPD: Conceitos e Princípios</title>
+    <title>Guia Visual e Didático da LGPD</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
@@ -20,6 +20,20 @@
         .accordion-btn[aria-expanded="true"] { background: #fef3c7; }
         .study-tips { background: linear-gradient(90deg, #fef3c7 60%, #f0f9ff 100%); border-left: 6px solid #f59e42; }
         .no-js-message { display: block; background: #f59e42; color: #1e3a8a; padding: 1rem; text-align: center; font-weight: bold; border-radius: 0.5rem; margin: 1rem 0; }
+        .highlight { background: linear-gradient(90deg, #f59e42 0%, #fef3c7 100%); padding: 0.5rem 1rem; border-radius: 0.5rem; font-weight: 500; }
+        .analysis-section { background: linear-gradient(90deg, #f0f9ff 60%, #fef3c7 100%); border-left: 6px solid #1e3a8a; }
+        .faq-section { background: linear-gradient(90deg, #f0f9ff 60%, #fef3c7 100%); border-left: 6px solid #f59e42; }
+        .timeline { border-left: 4px solid #f59e42; margin-left: 1rem; padding-left: 1.5rem; }
+        .timeline-event { position: relative; margin-bottom: 2rem; }
+        .timeline-event:before { content: ''; position: absolute; left: -1.7rem; top: 0.5rem; width: 1rem; height: 1rem; background: #f59e42; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 2px #f59e42; }
+        .sidebar-nav { position: fixed; top: 5rem; left: 2rem; z-index: 40; display: none; }
+        @media (min-width: 1280px) { .sidebar-nav { display: block; } }
+        .sidebar-link { display: block; margin-bottom: 1rem; color: #334155; font-weight: 500; transition: color 0.2s; }
+        .sidebar-link:hover { color: #f59e42; }
+        .info-box { background: linear-gradient(90deg, #f0f9ff 60%, #fef3c7 100%); border-left: 6px solid #1e3a8a; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; }
+        .myth-box { background: linear-gradient(90deg, #fef3c7 60%, #f0f9ff 100%); border-left: 6px solid #f59e42; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; }
+        .quick-guide { background: linear-gradient(90deg, #f0f9ff 60%, #fef3c7 100%); border-left: 6px solid #0ea5e9; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; }
+        .cotidiano-card { background: #fffbe6; border-left: 6px solid #f59e42; border-radius: 0.5rem; padding: 1rem; margin-bottom: 1rem; }
     </style>
 </head>
 <body class="bg-stone-50 text-slate-800">
@@ -38,9 +52,17 @@
             <div class="hidden md:block">
                 <div id="nav-menu" class="ml-10 flex items-baseline space-x-4">
                     <a href="#inicio" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Início</a>
+                    <a href="#resumo" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Resumo</a>
+                    <a href="#timeline" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Linha do Tempo</a>
                     <a href="#conceitos" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Conceitos</a>
+                    <a href="#bases-legais" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Bases Legais</a>
                     <a href="#principios" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Princípios</a>
                     <a href="#direitos" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Direitos</a>
+                    <a href="#cotidiano" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">LGPD no Cotidiano</a>
+                    <a href="#guias-rapidos" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Guias Rápidos</a>
+                    <a href="#mitos" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Mitos & Erros</a>
+                    <a href="#faq" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">FAQ</a>
+                    <a href="#analise" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Análise</a>
                     <a href="#quiz" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Quiz</a>
                 </div>
             </div>
@@ -57,9 +79,17 @@
     <div class="hidden md:hidden" id="mobile-menu">
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <a href="#inicio" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Início</a>
+            <a href="#resumo" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Resumo</a>
+            <a href="#timeline" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Linha do Tempo</a>
             <a href="#conceitos" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Conceitos</a>
+            <a href="#bases-legais" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Bases Legais</a>
             <a href="#principios" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Princípios</a>
             <a href="#direitos" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Direitos</a>
+            <a href="#cotidiano" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">LGPD no Cotidiano</a>
+            <a href="#guias-rapidos" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Guias Rápidos</a>
+            <a href="#mitos" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Mitos & Erros</a>
+            <a href="#faq" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">FAQ</a>
+            <a href="#analise" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Análise</a>
             <a href="#quiz" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Quiz</a>
         </div>
     </div>
@@ -67,7 +97,7 @@
 <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
     <section id="inicio" class="text-center mb-16 md:mb-24 scroll-mt-20">
         <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4 flex items-center justify-center gap-2"><i data-feather="lock" class="text-amber-500"></i>Desvendando a LGPD</h1>
-        <p class="max-w-3xl mx-auto text-lg text-slate-600 mb-8">Um guia interativo sobre a Lei Geral de Proteção de Dados, que estabelece regras sobre o tratamento de dados pessoais no Brasil, protegendo sua privacidade e liberdade.</p>
+        <p class="max-w-3xl mx-auto text-lg text-slate-600 mb-8">Um guia visual, didático e interativo sobre a Lei Geral de Proteção de Dados, que estabelece regras sobre o tratamento de dados pessoais no Brasil, protegendo sua privacidade e liberdade.</p>
         <div class="max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow-lg">
             <h2 class="text-2xl font-bold text-slate-700 mb-4 flex items-center gap-2"><i data-feather="pie-chart" class="text-blue-800"></i>Os Pilares da LGPD</h2>
             <p class="text-slate-600 mb-6">A lei se sustenta em três grandes pilares que garantem a proteção de dados. Interaja com o gráfico para ver a composição.</p>
@@ -77,14 +107,62 @@
             <div class="text-xs text-slate-500 text-center mt-2">* O gráfico é ilustrativo: valores percentuais são aproximações didáticas.</div>
         </div>
     </section>
+    <section id="resumo" class="mb-16 md:mb-24 scroll-mt-20">
+        <div class="highlight text-lg md:text-xl max-w-3xl mx-auto mb-6 text-center">
+            <i data-feather="info" class="inline text-blue-800"></i>
+            <strong>Resumo:</strong> A <b>Lei Geral de Proteção de Dados (LGPD)</b> é a legislação brasileira que regula o uso, coleta, armazenamento e compartilhamento de dados pessoais, promovendo a privacidade, a transparência e a segurança das informações dos cidadãos. Inspirada no Regulamento Europeu (GDPR), a LGPD entrou em vigor em 2020 e impacta empresas, órgãos públicos e qualquer entidade que trate dados pessoais no Brasil.
+        </div>
+        <div class="info-box">
+            <b>Por que a LGPD é importante?</b> <br>
+            <ul class="list-disc list-inside text-slate-700 mt-2">
+                <li>Protege a privacidade e a liberdade dos cidadãos.</li>
+                <li>Promove a transparência e a responsabilidade no uso de dados.</li>
+                <li>Incentiva boas práticas e segurança da informação.</li>
+                <li>Alinha o Brasil a padrões internacionais de proteção de dados.</li>
+            </ul>
+        </div>
+    </section>
+    <section id="timeline" class="mb-16 md:mb-24 scroll-mt-20">
+        <h2 class="text-3xl font-bold text-center text-slate-800 mb-2 flex items-center justify-center gap-2"><i data-feather="activity" class="text-blue-800"></i>Linha do Tempo da Proteção de Dados</h2>
+        <div class="timeline max-w-2xl mx-auto mt-8">
+            <div class="timeline-event">
+                <div class="font-bold text-slate-700">1970</div>
+                <div class="text-slate-600">Alemanha aprova a primeira lei de proteção de dados do mundo.</div>
+            </div>
+            <div class="timeline-event">
+                <div class="font-bold text-slate-700">1995</div>
+                <div class="text-slate-600">União Europeia aprova a Diretiva 95/46/CE, base para a GDPR.</div>
+            </div>
+            <div class="timeline-event">
+                <div class="font-bold text-slate-700">2016</div>
+                <div class="text-slate-600">Entra em vigor a GDPR (Regulamento Geral de Proteção de Dados) na Europa.</div>
+            </div>
+            <div class="timeline-event">
+                <div class="font-bold text-slate-700">2018</div>
+                <div class="text-slate-600">Sancionada a LGPD no Brasil.</div>
+            </div>
+            <div class="timeline-event">
+                <div class="font-bold text-slate-700">2020</div>
+                <div class="text-slate-600">LGPD entra em vigor, marcando um novo patamar de proteção de dados no Brasil.</div>
+            </div>
+        </div>
+    </section>
     <section id="conceitos" class="mb-16 md:mb-24 scroll-mt-20">
         <h2 class="text-3xl font-bold text-center text-slate-800 mb-2 flex items-center justify-center gap-2"><i data-feather="book" class="text-blue-800"></i>Conceitos Fundamentais</h2>
         <p class="text-lg text-center text-slate-600 mb-10">Para entender a LGPD, é essencial conhecer seus termos principais. Clique nos cards para saber mais.</p>
         <div id="concepts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        <div class="mt-8 max-w-3xl mx-auto text-slate-700 text-center">
+            <span class="font-semibold">Curiosidade:</span> O conceito de "dado pessoal" é tão amplo que inclui até mesmo dados digitais, como endereços IP e cookies de navegação!
+        </div>
+    </section>
+    <section id="bases-legais" class="mb-16 md:mb-24 scroll-mt-20">
+        <h2 class="text-3xl font-bold text-center text-slate-800 mb-2 flex items-center justify-center gap-2"><i data-feather="check-circle" class="text-amber-500"></i>Bases Legais do Tratamento de Dados</h2>
+        <p class="text-lg text-center text-slate-600 mb-10">A LGPD define 10 bases legais que autorizam o tratamento de dados pessoais. Conheça as principais:</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto" id="bases-legais-grid"></div>
     </section>
     <section id="principios" class="mb-16 md:mb-24 scroll-mt-20">
         <h2 class="text-3xl font-bold text-center text-slate-800 mb-2 flex items-center justify-center gap-2"><i data-feather="list" class="text-blue-800"></i>Os 10 Princípios da LGPD</h2>
-        <p class="text-lg text-center text-slate-600 mb-10">Toda operação de tratamento de dados deve seguir estes princípios. Selecione um para ver os detalhes.</p>
+        <p class="text-lg text-center text-slate-600 mb-10">Toda operação de tratamento de dados deve seguir estes princípios. Selecione um para ver os detalhes e exemplos práticos.</p>
         <div class="flex flex-col md:flex-row gap-8">
             <div id="principles-menu" class="w-full md:w-1/3 flex flex-col space-y-2"></div>
             <div id="principle-display" class="w-full md:w-2/3 bg-white p-8 rounded-2xl shadow-lg min-h-[300px] flex flex-col justify-center">
@@ -97,6 +175,74 @@
         <h2 class="text-3xl font-bold text-center text-slate-800 mb-2 flex items-center justify-center gap-2"><i data-feather="user-check" class="text-blue-800"></i>Direitos do Titular</h2>
         <p class="text-lg text-center text-slate-600 mb-10">A LGPD garante a você, titular dos dados, uma série de direitos. Conheça os principais:</p>
         <div id="rights-accordion" class="space-y-4 max-w-4xl mx-auto"></div>
+        <div class="mt-8 max-w-3xl mx-auto text-slate-700 text-center">
+            <span class="font-semibold">Exemplo prático:</span> Você pode solicitar a uma empresa a exclusão dos seus dados pessoais a qualquer momento, e ela deve atender ao seu pedido, salvo exceções legais.
+        </div>
+    </section>
+    <section id="cotidiano" class="mb-16 md:mb-24 scroll-mt-20">
+        <h2 class="text-3xl font-bold text-center text-slate-800 mb-2 flex items-center justify-center gap-2"><i data-feather="users" class="text-blue-800"></i>LGPD no Cotidiano</h2>
+        <div class="cotidiano-card"><b>Exemplo 1:</b> Você recebe uma ligação de telemarketing sem nunca ter autorizado o uso do seu número. Isso pode ser uma violação da LGPD.</div>
+        <div class="cotidiano-card"><b>Exemplo 2:</b> Uma escola pede autorização dos pais para usar fotos de alunos em redes sociais. Isso é aplicação do consentimento previsto na LGPD.</div>
+        <div class="cotidiano-card"><b>Exemplo 3:</b> Um hospital compartilha dados de pacientes apenas com profissionais autorizados, garantindo a proteção da saúde e a privacidade.</div>
+        <div class="cotidiano-card"><b>Exemplo 4:</b> Você solicita a uma loja online a exclusão dos seus dados após cancelar uma compra. A empresa deve atender ao pedido, salvo obrigações legais.</div>
+    </section>
+    <section id="guias-rapidos" class="mb-16 md:mb-24 scroll-mt-20">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="quick-guide">
+                <h3 class="font-bold text-lg mb-2 flex items-center gap-2"><i data-feather="briefcase" class="text-blue-800"></i>Guia Rápido para Empresas</h3>
+                <ul class="list-disc list-inside text-slate-700 space-y-1">
+                    <li>Mapeie todos os dados pessoais tratados pela empresa.</li>
+                    <li>Implemente políticas de privacidade claras e acessíveis.</li>
+                    <li>Treine funcionários sobre boas práticas de proteção de dados.</li>
+                    <li>Tenha um canal de atendimento ao titular de dados.</li>
+                    <li>Adote medidas técnicas de segurança (criptografia, backups, controle de acesso).</li>
+                    <li>Documente consentimentos e bases legais para o tratamento.</li>
+                </ul>
+            </div>
+            <div class="quick-guide">
+                <h3 class="font-bold text-lg mb-2 flex items-center gap-2"><i data-feather="user" class="text-blue-800"></i>Guia Rápido para Titulares</h3>
+                <ul class="list-disc list-inside text-slate-700 space-y-1">
+                    <li>Leia as políticas de privacidade antes de fornecer dados.</li>
+                    <li>Questione empresas sobre o uso dos seus dados.</li>
+                    <li>Exerça seus direitos: acesso, correção, exclusão, portabilidade.</li>
+                    <li>Desconfie de pedidos de dados excessivos ou sem justificativa.</li>
+                    <li>Denuncie abusos à ANPD ou órgãos de defesa do consumidor.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section id="mitos" class="mb-16 md:mb-24 scroll-mt-20">
+        <h2 class="text-3xl font-bold text-center text-slate-800 mb-2 flex items-center justify-center gap-2"><i data-feather="alert-triangle" class="text-amber-500"></i>Mitos e Erros Comuns sobre LGPD</h2>
+        <div class="myth-box"><b>Mito:</b> "A LGPD só vale para grandes empresas." <br><b>Realidade:</b> A LGPD se aplica a qualquer pessoa ou empresa que trate dados pessoais, independentemente do porte.</div>
+        <div class="myth-box"><b>Mito:</b> "Consentimento é sempre obrigatório." <br><b>Realidade:</b> Existem outras bases legais além do consentimento, como obrigação legal, execução de contrato, proteção da vida, entre outras.</div>
+        <div class="myth-box"><b>Mito:</b> "Dados anonimizados são sempre seguros." <br><b>Realidade:</b> Se for possível reidentificar o titular, a LGPD ainda se aplica.</div>
+        <div class="myth-box"><b>Erro comum:</b> Não informar claramente a finalidade do uso dos dados ao titular.</div>
+        <div class="myth-box"><b>Erro comum:</b> Não atender pedidos de exclusão ou correção de dados em tempo hábil.</div>
+    </section>
+    <section id="faq" class="mb-16 md:mb-24 scroll-mt-20">
+        <div class="faq-section rounded-lg p-6 shadow-md max-w-3xl mx-auto">
+            <h3 class="font-bold text-lg mb-2 flex items-center gap-2"><i data-feather="help-circle" class="text-amber-500"></i>Perguntas Frequentes (FAQ)</h3>
+            <ul class="list-disc list-inside text-slate-700 space-y-2">
+                <li><b>O que é dado pessoal?</b> Qualquer informação relacionada a pessoa natural identificada ou identificável.</li>
+                <li><b>O que é consentimento?</b> Autorização livre, informada e inequívoca dada pelo titular para o tratamento de seus dados.</li>
+                <li><b>Empresas estrangeiras precisam cumprir a LGPD?</b> Sim, se tratarem dados de pessoas localizadas no Brasil.</li>
+                <li><b>Quais são as penalidades para quem descumpre a LGPD?</b> Advertências, multas, bloqueio ou eliminação dos dados, entre outras.</li>
+                <li><b>Como posso exercer meus direitos?</b> Solicitando diretamente à empresa/controlador, que deve responder em prazo razoável.</li>
+            </ul>
+        </div>
+    </section>
+    <section id="analise" class="mb-16 md:mb-24 scroll-mt-20">
+        <div class="analysis-section rounded-lg p-6 shadow-md max-w-3xl mx-auto">
+            <h3 class="font-bold text-lg mb-2 flex items-center gap-2"><i data-feather="bar-chart-2" class="text-blue-800"></i>Análise Crítica</h3>
+            <ul class="list-disc list-inside text-slate-700 space-y-1 mb-2">
+                <li><b>Impacto Social:</b> A LGPD fortalece a cidadania digital, dando mais controle ao indivíduo sobre seus dados.</li>
+                <li><b>Desafios:</b> Pequenas empresas enfrentam dificuldades de adaptação, mas a lei estimula boas práticas e transparência.</li>
+                <li><b>Comparativo Internacional:</b> A LGPD se inspira na GDPR europeia, mas traz adaptações à realidade brasileira.</li>
+                <li><b>Penalidades:</b> O descumprimento pode gerar multas de até 2% do faturamento, limitada a R$ 50 milhões por infração.</li>
+                <li><b>Futuro:</b> A cultura de proteção de dados tende a se consolidar, exigindo atualização constante de empresas e profissionais.</li>
+            </ul>
+            <div class="text-slate-600 text-sm">A LGPD é um marco para a privacidade no Brasil, mas seu sucesso depende da conscientização de todos: empresas, governo e cidadãos.</div>
+        </div>
     </section>
     <section id="quiz" class="scroll-mt-20">
         <h2 class="text-3xl font-bold text-center text-slate-800 mb-2 flex items-center justify-center gap-2"><i data-feather="help-circle" class="text-amber-500"></i>Teste seu Conhecimento</h2>
@@ -134,6 +280,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     feather.replace();
+    // Conceitos
     const conceptsData = [
         { title: 'Dado Pessoal', description: 'Qualquer informação que identifique ou possa identificar uma pessoa natural. Exemplos: nome, CPF, e-mail, endereço IP.' },
         { title: 'Dado Pessoal Sensível', description: 'Informação sobre origem racial ou étnica, convicção religiosa, opinião política, filiação a sindicato, dado referente à saúde ou à vida sexual, dado genético ou biométrico.' },
@@ -144,18 +291,32 @@ document.addEventListener('DOMContentLoaded', () => {
         { title: 'Tratamento de Dados', description: 'Qualquer operação realizada com dados pessoais, como coleta, produção, recepção, classificação, utilização, acesso, reprodução, transmissão, processamento, arquivamento, armazenamento, eliminação, etc.' },
         { title: 'Anonimização', description: 'Processo que remove a possibilidade de associação, direta ou indireta, de um dado a um indivíduo. O dado anonimizado não é considerado dado pessoal.' },
     ];
+    // Bases Legais
+    const basesLegaisData = [
+        { title: 'Consentimento', description: 'O titular autoriza, de forma livre, informada e inequívoca, o tratamento de seus dados.' },
+        { title: 'Cumprimento de obrigação legal ou regulatória', description: 'Quando o tratamento é necessário para cumprir uma obrigação prevista em lei.' },
+        { title: 'Execução de políticas públicas', description: 'Tratamento necessário para a execução de políticas públicas previstas em leis e regulamentos.' },
+        { title: 'Execução de contrato', description: 'Quando o tratamento é necessário para a execução de um contrato do qual o titular faz parte.' },
+        { title: 'Exercício regular de direitos', description: 'Para processos judiciais, administrativos ou arbitrais.' },
+        { title: 'Proteção da vida ou da incolumidade física', description: 'Quando o tratamento é necessário para proteger a vida ou a integridade física do titular ou de terceiros.' },
+        { title: 'Tutela da saúde', description: 'Para procedimentos realizados por profissionais da área da saúde ou por entidades sanitárias.' },
+        { title: 'Legítimo interesse', description: 'Quando o tratamento é necessário para atender interesses legítimos do controlador ou de terceiros, exceto se prevalecerem direitos do titular.' },
+        { title: 'Proteção do crédito', description: 'Para proteção do crédito, nos termos do Código de Defesa do Consumidor.' },
+    ];
+    // Princípios
     const principlesData = [
-        { title: 'Finalidade', description: 'O tratamento de dados deve ser realizado para propósitos legítimos, específicos, explícitos e informados ao titular. Não é permitido tratar dados para fins genéricos ou não informados.' },
-        { title: 'Adequação', description: 'O tratamento dos dados deve ser compatível com as finalidades informadas ao titular. Se uma empresa coleta seu e-mail para enviar a nota fiscal, não pode usá-lo para marketing sem sua permissão.' },
-        { title: 'Necessidade', description: 'O tratamento deve se limitar ao mínimo necessário para a realização de suas finalidades. Apenas os dados estritamente essenciais para atingir o objetivo devem ser coletados.' },
+        { title: 'Finalidade', description: 'O tratamento de dados deve ser realizado para propósitos legítimos, específicos, explícitos e informados ao titular. Exemplo: Coletar e-mail apenas para envio de nota fiscal.' },
+        { title: 'Adequação', description: 'O tratamento dos dados deve ser compatível com as finalidades informadas ao titular. Exemplo: Não usar e-mail coletado para marketing sem consentimento.' },
+        { title: 'Necessidade', description: 'O tratamento deve se limitar ao mínimo necessário para a realização de suas finalidades. Exemplo: Não pedir dados irrelevantes para o serviço.' },
         { title: 'Livre Acesso', description: 'Garante aos titulares a consulta facilitada e gratuita sobre a forma e a duração do tratamento, bem como sobre a integralidade de seus dados pessoais.' },
         { title: 'Qualidade dos Dados', description: 'Garante aos titulares que seus dados sejam exatos, claros, relevantes e atualizados, de acordo com a necessidade e para o cumprimento da finalidade de seu tratamento.' },
         { title: 'Transparência', description: 'Garante aos titulares informações claras, precisas e facilmente acessíveis sobre a realização do tratamento e os respectivos agentes de tratamento.' },
         { title: 'Segurança', description: 'Utilização de medidas técnicas e administrativas aptas a proteger os dados pessoais de acessos não autorizados e de situações acidentais ou ilícitas de destruição, perda, alteração ou difusão.' },
-        { title: 'Prevenção', description: 'Adoção de medidas para prevenir a ocorrência de danos em virtude do tratamento de dados pessoais. É sobre agir antes que um incidente de segurança aconteça.' },
-        { title: 'Não Discriminação', description: 'O tratamento de dados não pode ser realizado para fins discriminatórios, ilícitos ou abusivos. Os dados não podem ser usados para prejudicar ou criar distinções injustas.' },
+        { title: 'Prevenção', description: 'Adoção de medidas para prevenir a ocorrência de danos em virtude do tratamento de dados pessoais. Exemplo: Treinamento de funcionários para evitar vazamentos.' },
+        { title: 'Não Discriminação', description: 'O tratamento de dados não pode ser realizado para fins discriminatórios, ilícitos ou abusivos. Exemplo: Não usar dados para negar emprego injustamente.' },
         { title: 'Responsabilização e Prestação de Contas', description: 'O agente de tratamento (controlador/operador) deve ser capaz de demonstrar a adoção de medidas eficazes e capazes de comprovar a observância e o cumprimento das normas de proteção de dados.' },
     ];
+    // Direitos
     const rightsData = [
         { title: 'Confirmação da existência do tratamento', description: 'Você pode perguntar a qualquer empresa se ela trata seus dados pessoais.' },
         { title: 'Acesso aos dados', description: 'Você tem o direito de saber quais dos seus dados uma empresa possui.' },
@@ -167,6 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { title: 'Informação sobre a possibilidade de não fornecer consentimento', description: 'Você deve ser informado sobre a opção de não consentir com o tratamento e sobre as consequências dessa negativa.' },
         { title: 'Revogação do consentimento', description: 'Você pode retirar seu consentimento a qualquer momento, de forma fácil e gratuita.' },
     ];
+    // Quiz
     const quizData = [
         {
             question: 'Uma loja online pede seu CPF, nome, endereço, tipo sanguíneo e time de futebol para uma simples compra de camiseta. Qual princípio da LGPD está sendo mais claramente violado?',
@@ -187,6 +349,16 @@ document.addEventListener('DOMContentLoaded', () => {
             question: 'A pessoa ou empresa que toma as decisões sobre como seus dados serão tratados é chamada de:',
             options: ['Titular', 'Operador', 'Encarregado (DPO)', 'Controlador'],
             answer: 'Controlador'
+        },
+        {
+            question: 'A LGPD foi inspirada em qual legislação internacional?',
+            options: ['HIPAA', 'GDPR', 'FERPA', 'CCPA'],
+            answer: 'GDPR'
+        },
+        {
+            question: 'Qual órgão é responsável por fiscalizar e aplicar sanções relacionadas à LGPD no Brasil?',
+            options: ['Banco Central', 'ANPD', 'Receita Federal', 'INSS'],
+            answer: 'ANPD'
         }
     ];
     // Conceitos
@@ -202,6 +374,20 @@ document.addEventListener('DOMContentLoaded', () => {
             card.querySelector('p').classList.toggle('hidden');
         });
         conceptsGrid.appendChild(card);
+    });
+    // Bases Legais
+    const basesLegaisGrid = document.getElementById('bases-legais-grid');
+    basesLegaisData.forEach(base => {
+        const card = document.createElement('div');
+        card.className = 'concept-card bg-white p-6 rounded-xl shadow-md cursor-pointer';
+        card.innerHTML = `
+            <div class="flex items-center gap-2 mb-2"><i data-feather="check" class="text-amber-500"></i><h3 class="text-xl font-bold text-slate-700">${base.title}</h3></div>
+            <p class="text-slate-600 hidden mt-2">${base.description}</p>
+        `;
+        card.addEventListener('click', () => {
+            card.querySelector('p').classList.toggle('hidden');
+        });
+        basesLegaisGrid.appendChild(card);
     });
     // Princípios
     const principlesMenu = document.getElementById('principles-menu');
