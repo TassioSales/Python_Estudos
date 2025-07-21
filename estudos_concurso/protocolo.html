@@ -19,6 +19,8 @@
         .tab-panel { display: none; }
         .tab-panel.active { display: block; animation: fadeIn 0.5s; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px);} to { opacity: 1; transform: none; } }
+        .highlight { background: linear-gradient(90deg, #f59e42 0%, #fef3c7 100%); padding: 0.5rem 1rem; border-radius: 0.5rem; font-weight: 500; }
+        .analysis-section { background: linear-gradient(90deg, #f0f9ff 60%, #fef3c7 100%); border-left: 6px solid #1e3a8a; }
     </style>
 </head>
 <body class="antialiased">
@@ -33,12 +35,16 @@
                 </span>
                 <h1 class="text-3xl md:text-4xl font-bold text-teal-800">Guia Interativo de Rotinas de Escritório</h1>
             </div>
-            <p class="text-lg text-gray-600">Explore os conceitos de Protocolo e Arquivo de forma dinâmica e aprofundada.</p>
+            <p class="text-lg text-gray-600">Explore os conceitos de Protocolo e Arquivo de forma dinâmica, aprofundada e interativa.</p>
         </header>
         <main>
             <section id="interactive-content" class="bg-white rounded-xl shadow-sm p-6 md:p-8 border border-gray-200">
                 <div class="mb-8">
-                    <p class="text-center text-gray-600 mb-4">Explore os principais conceitos de rotinas de escritório. Use as abas abaixo para navegar entre o resumo, a visão geral, os processos de protocolo, as técnicas de arquivamento e os aspectos de segurança e tecnologia.</p>
+                    <div class="highlight text-lg md:text-xl max-w-3xl mx-auto mb-6 text-center">
+                        <i data-feather="info" class="inline text-blue-800"></i>
+                        <strong>Resumo:</strong> O <b>protocolo</b> e o <b>arquivo</b> são pilares das rotinas administrativas, garantindo o fluxo, a segurança e a memória institucional. Compreender esses processos é essencial para a eficiência, legalidade e transparência em qualquer organização.
+                    </div>
+                    <p class="text-center text-gray-600 mb-4">Use as abas abaixo para navegar entre o resumo, a visão geral, os processos de protocolo, as técnicas de arquivamento, segurança, tecnologia, análise crítica e o quiz.</p>
                     <div class="border-b border-gray-200">
                         <nav class="-mb-px flex flex-wrap justify-center space-x-2 sm:space-x-4" aria-label="Tabs">
                             <button class="tab-button active" data-tab="resumo">Resumo</button>
@@ -46,6 +52,8 @@
                             <button class="tab-button" data-tab="protocol">Protocolo</button>
                             <button class="tab-button" data-tab="archive">Arquivo</button>
                             <button class="tab-button" data-tab="security-tech">Segurança e Tecnologia</button>
+                            <button class="tab-button" data-tab="analise">Análise</button>
+                            <button class="tab-button" data-tab="quiz">Quiz</button>
                         </nav>
                     </div>
                 </div>
@@ -57,6 +65,12 @@
                         <li><b>Arquivo</b> é a guarda, organização e destinação dos documentos, garantindo memória e legalidade.</li>
                         <li><b>Segurança e Tecnologia</b> são essenciais para proteger dados, garantir conformidade legal e otimizar processos.</li>
                     </ul>
+                    <div class="mb-6">
+                        <h3 class="font-semibold text-lg text-teal-800 mb-2">Contexto Histórico</h3>
+                        <div class="bg-blue-50 rounded-lg p-4 text-sm text-blue-900">
+                            O protocolo e o arquivo existem desde as primeiras civilizações, evoluindo de registros em tabuletas de argila para sistemas digitais avançados. No Brasil, a Lei 8.159/91 regula os arquivos públicos e privados, e a digitalização trouxe novos desafios e oportunidades para a gestão documental.
+                        </div>
+                    </div>
                     <div class="mb-6">
                         <h3 class="font-semibold text-lg text-teal-800 mb-2">Mapa Mental (Fluxograma Textual)</h3>
                         <div class="bg-blue-50 rounded-lg p-4 text-sm text-blue-900">
@@ -159,6 +173,31 @@
                         </ul>
                     </div>
                 </div>
+                <div id="tab-analise" class="tab-panel">
+                    <div class="analysis-section rounded-lg p-6 shadow-md max-w-3xl mx-auto">
+                        <h3 class="font-bold text-lg mb-2 flex items-center gap-2"><i data-feather="bar-chart-2" class="text-blue-800"></i>Análise Crítica</h3>
+                        <ul class="list-disc list-inside text-slate-700 space-y-1 mb-2">
+                            <li><b>Impacto Organizacional:</b> Protocolos e arquivos bem geridos aumentam a eficiência, reduzem custos e previnem litígios.</li>
+                            <li><b>Desafios:</b> Digitalização, segurança da informação e adaptação à legislação são pontos críticos.</li>
+                            <li><b>Futuro:</b> A tendência é a automação, integração de sistemas e uso de inteligência artificial para classificação e busca de documentos.</li>
+                        </ul>
+                        <div class="text-slate-600 text-sm">A gestão documental é estratégica para a competitividade e a transparência, exigindo atualização constante de processos e profissionais.</div>
+                    </div>
+                </div>
+                <div id="tab-quiz" class="tab-panel">
+                    <h2 class="text-2xl font-bold text-teal-700 mb-4 flex items-center gap-2"><i data-feather="help-circle" class="text-amber-500"></i>Quiz: Teste seu Conhecimento</h2>
+                    <div id="quiz-container" class="max-w-2xl mx-auto bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+                        <div id="quiz-question-container">
+                            <h3 id="quiz-question" class="text-xl font-semibold text-slate-700 mb-6"></h3>
+                            <div id="quiz-options" class="space-y-4"></div>
+                        </div>
+                        <div id="quiz-feedback" class="mt-6 text-center font-medium hidden"></div>
+                        <div class="mt-8 text-center">
+                            <button id="next-question-btn" class="bg-teal-700 text-white px-6 py-2 rounded-lg font-semibold hover:bg-teal-800 transition-colors duration-200 hidden">Próxima Pergunta</button>
+                            <button id="restart-quiz-btn" class="bg-amber-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-amber-600 transition-colors duration-200 hidden">Recomeçar Quiz</button>
+                        </div>
+                    </div>
+                </div>
             </section>
             <section class="mt-12">
                 <div class="study-tips rounded-lg p-6 shadow-md max-w-3xl mx-auto">
@@ -194,6 +233,109 @@
                     });
                 });
             });
+
+            // Quiz
+            const quizData = [
+                {
+                    question: 'Qual é a principal função do setor de protocolo em uma organização?',
+                    options: ['Armazenar documentos permanentemente', 'Controlar entrada, registro e tramitação de documentos', 'Destruir documentos antigos', 'Emitir relatórios financeiros'],
+                    answer: 'Controlar entrada, registro e tramitação de documentos'
+                },
+                {
+                    question: 'O que caracteriza o arquivo permanente?',
+                    options: ['Documentos em uso frequente', 'Documentos aguardando destinação final', 'Documentos de valor histórico, cultural ou legal', 'Documentos descartáveis'],
+                    answer: 'Documentos de valor histórico, cultural ou legal'
+                },
+                {
+                    question: 'Qual método de arquivamento é mais indicado para prontuários de pacientes?',
+                    options: ['Alfabético', 'Numérico', 'Geográfico', 'Ideográfico'],
+                    answer: 'Numérico'
+                },
+                {
+                    question: 'Qual legislação regula os arquivos públicos e privados no Brasil?',
+                    options: ['Lei 8.159/91', 'Lei 9.504/97', 'Lei 10.520/02', 'Lei 12.527/11'],
+                    answer: 'Lei 8.159/91'
+                },
+                {
+                    question: 'O que é fundamental para garantir a segurança da informação?',
+                    options: ['Senhas fracas', 'Acesso irrestrito', 'Backups regulares e controle de acesso', 'Descarte aleatório de documentos'],
+                    answer: 'Backups regulares e controle de acesso'
+                },
+                {
+                    question: 'O que significa GED/SIGAD?',
+                    options: ['Gestão Eletrônica de Documentos/Sistema Informatizado de Gestão Arquivística de Documentos', 'Grupo Especial de Documentos/Sistema Integrado de Gestão Administrativa', 'Gestão Estratégica de Dados/Sistema Integrado de Documentos', 'Grupo Eletrônico de Dados/Sistema Integrado de Arquivos Digitais'],
+                    answer: 'Gestão Eletrônica de Documentos/Sistema Informatizado de Gestão Arquivística de Documentos'
+                }
+            ];
+            const quizQuestionEl = document.getElementById('quiz-question');
+            const quizOptionsEl = document.getElementById('quiz-options');
+            const quizFeedbackEl = document.getElementById('quiz-feedback');
+            const nextQuestionBtn = document.getElementById('next-question-btn');
+            const restartQuizBtn = document.getElementById('restart-quiz-btn');
+            const quizContainer = document.getElementById('quiz-question-container');
+            let currentQuestionIndex = 0;
+            let score = 0;
+            function loadQuestion() {
+                quizFeedbackEl.classList.add('hidden');
+                nextQuestionBtn.classList.add('hidden');
+                const currentQuestion = quizData[currentQuestionIndex];
+                quizQuestionEl.textContent = currentQuestion.question;
+                quizOptionsEl.innerHTML = '';
+                currentQuestion.options.forEach(option => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.className = 'w-full text-left p-4 rounded-lg font-medium transition-colors duration-200 bg-slate-100 hover:bg-slate-200';
+                    button.addEventListener('click', () => selectAnswer(button, option, currentQuestion.answer));
+                    quizOptionsEl.appendChild(button);
+                });
+            }
+            function selectAnswer(button, selectedOption, correctAnswer) {
+                const buttons = quizOptionsEl.querySelectorAll('button');
+                buttons.forEach(btn => {
+                    btn.disabled = true;
+                    if (btn.textContent === correctAnswer) {
+                        btn.classList.remove('bg-slate-100', 'hover:bg-slate-200');
+                        btn.classList.add('bg-green-500', 'text-white');
+                    }
+                });
+                if (selectedOption === correctAnswer) {
+                    score++;
+                    quizFeedbackEl.textContent = 'Resposta Correta!';
+                    quizFeedbackEl.className = 'mt-6 text-center font-medium text-green-600';
+                } else {
+                    button.classList.remove('bg-slate-100', 'hover:bg-slate-200');
+                    button.classList.add('bg-red-500', 'text-white');
+                    quizFeedbackEl.textContent = `Incorreto. A resposta certa é "${correctAnswer}".`;
+                    quizFeedbackEl.className = 'mt-6 text-center font-medium text-red-600';
+                }
+                quizFeedbackEl.classList.remove('hidden');
+                if (currentQuestionIndex < quizData.length - 1) {
+                    nextQuestionBtn.classList.remove('hidden');
+                } else {
+                    showFinalScore();
+                }
+            }
+            function showFinalScore() {
+                quizContainer.innerHTML = `<h3 class="text-2xl font-bold text-center text-slate-700">Quiz Finalizado!</h3><p class="text-center text-lg text-slate-600 mt-4">Você acertou ${score} de ${quizData.length} perguntas.</p>`;
+                restartQuizBtn.classList.remove('hidden');
+            }
+            nextQuestionBtn.addEventListener('click', () => {
+                currentQuestionIndex++;
+                loadQuestion();
+            });
+            restartQuizBtn.addEventListener('click', () => {
+                currentQuestionIndex = 0;
+                score = 0;
+                restartQuizBtn.classList.add('hidden');
+                quizContainer.innerHTML = `
+                    <h3 id="quiz-question" class="text-xl font-semibold text-slate-700 mb-6"></h3>
+                    <div id="quiz-options" class="space-y-4"></div>
+                `;
+                window.quizQuestionEl = document.getElementById('quiz-question');
+                window.quizOptionsEl = document.getElementById('quiz-options');
+                loadQuestion();
+            });
+            loadQuestion();
         });
     </script>
 </body>
