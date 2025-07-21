@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Interativo de Escrita: Ortografia, Coesão e Coerência</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: A tab-based SPA is chosen for optimal user experience. This structure logically separates the three core pillars of writing (Orthography, Cohesion, Coherence) into distinct, digestible sections. A 'Home' tab provides an overview, and an 'Interactive Challenge' tab offers a practical quiz to reinforce learning. This non-linear, thematic approach allows users to focus on one concept at a time, preventing overwhelm from dense textual information and promoting self-paced learning. The user flow is: Land on Home -> Select a concept tab to learn -> Test knowledge in the Challenge tab. This is superior to a linear report as it empowers user choice and engagement. -->
+    <!-- Visualization & Content Choices: The report's content is conceptual and text-based, so interactive text blocks are prioritized over charts.
+        - Report Info: Orthography rules. Goal: Compare correct/incorrect usage. Viz/Method: Interactive "click-to-reveal" cards. Interaction: User clicks a problem, the answer and explanation appear. Justification: Encourages active recall over passive reading. Method: HTML/JS.
+        - Report Info: Cohesion mechanisms. Goal: Organize and explain types. Viz/Method: Accordion-style list. Interaction: User clicks a term to expand its definition and example. Justification: Keeps the UI clean and focused. Method: HTML/JS.
+        - Report Info: Coherence principles. Goal: Compare coherent vs. incoherent text. Viz/Method: Toggleable text blocks. Interaction: User clicks a button to switch between examples. Justification: Provides a direct and clear comparison. Method: HTML/JS.
+        - Report Info: Overall concepts. Goal: Test understanding. Viz/Method: A multiple-choice quiz. Interaction: User answers questions and gets immediate feedback. Justification: Gamifies learning and provides tangible assessment. Method: HTML/JS.
+        No charts are necessary as the data is qualitative and conceptual. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .tab-button.active {
+            border-color: #3b82f6;
+            color: #3b82f6;
+            font-weight: 500;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .quiz-option:hover {
+            background-color: #e5e7eb;
+        }
+        .quiz-option.correct {
+            background-color: #dcfce7;
+            border-color: #22c55e;
+        }
+        .quiz-option.incorrect {
+            background-color: #fee2e2;
+            border-color: #ef4444;
+        }
+        .reveal-card {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .reveal-card:hover {
+            transform: translateY(-2px);
+        }
+        .answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        .answer.show {
+            max-height: 500px;
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-5xl">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-stone-900">Guia Interativo de Escrita</h1>
+            <p class="text-stone-600 mt-2">Explore os pilares da comunicação eficaz: Ortografia, Coesão e Coerência.</p>
+        </header>
+
+        <nav class="flex flex-wrap justify-center border-b-2 border-stone-200 mb-8">
+            <button class="tab-button active text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition" data-tab="inicio">Início</button>
+            <button class="tab-button text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition" data-tab="ortografia">Ortografia</button>
+            <button class="tab-button text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition" data-tab="coesao">Coesão</button>
+            <button class="tab-button text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition" data-tab="coerencia">Coerência</button>
+            <button class="tab-button text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition" data-tab="desafio">Desafio Interativo</button>
+        </nav>
+
+        <main>
+            <!-- Início Section -->
+            <section id="inicio" class="content-section active">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h2 class="text-2xl font-bold text-blue-500 mb-4">Bem-vindo(a) ao Guia de Escrita!</h2>
+                    <p class="mb-4">Dominar a arte de escrever vai além de conhecer palavras. Envolve estruturar ideias de forma clara, conectar frases com lógica e garantir que a sua mensagem seja compreendida sem ambiguidades. Esta aplicação foi desenhada para o ajudar a aprimorar três competências fundamentais que formam a base de um texto de qualidade. Navegue pelas abas para explorar cada conceito.</p>
+                    <div class="grid md:grid-cols-3 gap-4 mt-6">
+                        <div class="border-l-4 border-blue-400 p-4 bg-stone-50 rounded">
+                            <h3 class="font-bold text-lg">Ortografia</h3>
+                            <p class="text-sm text-stone-600">A base de tudo. A escrita correta das palavras é o primeiro passo para a clareza e credibilidade.</p>
+                        </div>
+                        <div class="border-l-4 border-green-400 p-4 bg-stone-50 rounded">
+                            <h3 class="font-bold text-lg">Coesão</h3>
+                            <p class="text-sm text-stone-600">A "cola" do texto. Aprenda a usar conectivos e referências para ligar frases e parágrafos de maneira fluida.</p>
+                        </div>
+                        <div class="border-l-4 border-amber-400 p-4 bg-stone-50 rounded">
+                            <h3 class="font-bold text-lg">Coerência</h3>
+                            <p class="text-sm text-stone-600">O sentido do texto. Garanta que suas ideias formem uma unidade lógica, sem contradições ou saltos.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ortografia Section -->
+            <section id="ortografia" class="content-section">
+                 <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h2 class="text-2xl font-bold text-blue-500 mb-2">Dominando a Ortografia</h2>
+                    <p class="mb-6 text-stone-600">A ortografia é o conjunto de regras para a escrita correta das palavras. Erros ortográficos podem comprometer a credibilidade do seu texto. Explore alguns dos casos mais comuns e clique nos cartões para revelar a resposta e a explicação.</p>
+                    <div class="space-y-4">
+                        <div class="reveal-card bg-stone-50 p-4 rounded-lg border border-stone-200 shadow-sm" data-card="porques">
+                            <p class="font-medium">Os 4 Porquês</p>
+                            <p class="text-sm text-stone-500">Quando usar "por que", "porque", "por quê" e "porquê"?</p>
+                            <div class="answer mt-3 pt-3 border-t border-stone-200 text-sm">
+                                <p><strong>Por que (separado e sem acento):</strong> Início de perguntas. <em>Ex: Por que você não veio?</em></p>
+                                <p><strong>Porque (junto e sem acento):</strong> Para respostas e explicações. <em>Ex: Não vim porque estava doente.</em></p>
+                                <p><strong>Por quê (separado e com acento):</strong> Fim de perguntas, antes de um ponto. <em>Ex: Você não veio por quê?</em></p>
+                                <p><strong>Porquê (junto e com acento):</strong> Usado como substantivo (significa "o motivo"). <em>Ex: Não sei o porquê de tanta confusão.</em></p>
+                            </div>
+                        </div>
+                         <div class="reveal-card bg-stone-50 p-4 rounded-lg border border-stone-200 shadow-sm" data-card="crase">
+                            <p class="font-medium">Uso da Crase</p>
+                            <p class="text-sm text-stone-500">"Vou a praia" ou "Vou à praia"?</p>
+                            <div class="answer mt-3 pt-3 border-t border-stone-200 text-sm">
+                                <p><strong>Regra geral:</strong> A crase (à) é a fusão da preposição "a" com o artigo feminino "a(s)".</p>
+                                <p><strong>Dica:</strong> Substitua a palavra feminina por uma masculina. Se o "a" virar "ao", há crase.</p>
+                                <p><em>Ex: "Vou à praia." -> "Vou ao campo." (Logo, tem crase)</em></p>
+                                <p><em>Ex: "Escrevi a lápis." -> "Escrevi a (o) giz." (Não vira "ao", logo, não tem crase)</em></p>
+                            </div>
+                        </div>
+                        <div class="reveal-card bg-stone-50 p-4 rounded-lg border border-stone-200 shadow-sm" data-card="mau-mal">
+                            <p class="font-medium">Mal vs. Mau</p>
+                            <p class="text-sm text-stone-500">Ele é um lobo ___ ou se sentiu ___?</p>
+                            <div class="answer mt-3 pt-3 border-t border-stone-200 text-sm">
+                                <p><strong>Mau:</strong> É um adjetivo, antônimo de "bom". <em>Ex: Ele é um lobo mau. (Lobo bom)</em></p>
+                                <p><strong>Mal:</strong> Pode ser advérbio (antônimo de "bem") ou substantivo. <em>Ex: Ele se sentiu mal. (Se sentiu bem)</em></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Coesão Section -->
+            <section id="coesao" class="content-section">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h2 class="text-2xl font-bold text-green-500 mb-2">Construindo a Coesão Textual</h2>
+                    <p class="mb-6 text-stone-600">Coesão é a conexão gramatical entre as partes de um texto. Ela garante que frases e parágrafos fluam suavemente, evitando repetições e tornando a leitura mais agradável. Os mecanismos de coesão funcionam como "elos" que unem as ideias.</p>
+                     <div id="cohesion-container" class="space-y-2">
+                        <div class="accordion-item border rounded-lg">
+                            <button class="accordion-header w-full text-left p-4 font-medium flex justify-between items-center bg-stone-50 hover:bg-stone-100">
+                                <span>Referência (Anáfora e Catáfora)</span>
+                                <span>&#9662;</span>
+                            </button>
+                            <div class="accordion-content p-4 border-t border-stone-200 text-sm" style="display: none;">
+                                <p>Uso de pronomes ou advérbios para retomar (anáfora) ou antecipar (catáfora) termos no texto.</p>
+                                <p class="mt-2 p-2 bg-green-50 border-l-4 border-green-400"><em>Ex: "João é um ótimo aluno. <strong>Ele</strong> sempre faz as tarefas." (Anáfora: "Ele" retoma "João")</em></p>
+                            </div>
+                        </div>
+                        <div class="accordion-item border rounded-lg">
+                            <button class="accordion-header w-full text-left p-4 font-medium flex justify-between items-center bg-stone-50 hover:bg-stone-100">
+                                <span>Substituição</span>
+                                <span>&#9662;</span>
+                            </button>
+                             <div class="accordion-content p-4 border-t border-stone-200 text-sm" style="display: none;">
+                                <p>Troca de um nome ou verbo por uma palavra ou expressão que tenha o mesmo sentido, evitando repetição.</p>
+                                <p class="mt-2 p-2 bg-green-50 border-l-4 border-green-400"><em>Ex: "Os atletas treinaram muito. O <strong>esforço</strong> valeu a pena." ("Esforço" substitui a ideia de "treinaram muito")</em></p>
+                            </div>
+                        </div>
+                         <div class="accordion-item border rounded-lg">
+                            <button class="accordion-header w-full text-left p-4 font-medium flex justify-between items-center bg-stone-50 hover:bg-stone-100">
+                                <span>Elipse</span>
+                                <span>&#9662;</span>
+                            </button>
+                             <div class="accordion-content p-4 border-t border-stone-200 text-sm" style="display: none;">
+                                <p>Omissão de um termo que pode ser facilmente identificado pelo contexto.</p>
+                                <p class="mt-2 p-2 bg-green-50 border-l-4 border-green-400"><em>Ex: "Na sala, apenas quatro ou cinco pessoas. [Omissão de 'havia']"</em></p>
+                            </div>
+                        </div>
+                        <div class="accordion-item border rounded-lg">
+                            <button class="accordion-header w-full text-left p-4 font-medium flex justify-between items-center bg-stone-50 hover:bg-stone-100">
+                                <span>Conjunção</span>
+                                <span>&#9662;</span>
+                            </button>
+                             <div class="accordion-content p-4 border-t border-stone-200 text-sm" style="display: none;">
+                                <p>Uso de conjunções (mas, e, portanto, pois, etc.) para estabelecer relações lógicas entre orações e parágrafos.</p>
+                                <p class="mt-2 p-2 bg-green-50 border-l-4 border-green-400"><em>Ex: "Eu estudei bastante, <strong>portanto</strong> espero ser aprovado." (Relação de conclusão)</em></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Coerência Section -->
+            <section id="coerencia" class="content-section">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h2 class="text-2xl font-bold text-amber-500 mb-2">Garantindo a Coerência</h2>
+                    <p class="mb-6 text-stone-600">A coerência é a lógica interna do texto. Um texto coerente apresenta ideias que se relacionam harmoniosamente, sem contradições. É o que faz o leitor pensar "isso faz sentido". Veja um exemplo prático da diferença.</p>
+                    <div class="text-center mb-6">
+                        <button id="coherence-toggle-btn" class="bg-amber-500 text-white font-bold py-2 px-4 rounded-lg">Mostrar Exemplo Coerente</button>
+                    </div>
+                    <div id="incoherent-text" class="p-4 border-l-4 border-red-400 bg-red-50 rounded-lg">
+                        <h4 class="font-bold mb-2">Texto INCOERENTE</h4>
+                        <p>O homem vestiu seu melhor casaco para se proteger do frio, pois o dia estava ensolarado e com temperaturas de 40 graus. Ele saiu para comprar pão na padaria, que fica do outro lado da cidade. Por isso, decidiu ir a pé para não se atrasar para a reunião do trabalho, que era no dia seguinte.</p>
+                    </div>
+                    <div id="coherent-text" class="p-4 border-l-4 border-green-400 bg-green-50 rounded-lg hidden">
+                        <h4 class="font-bold mb-2">Texto COERENTE</h4>
+                        <p>O dia amanheceu frio e chuvoso. Para se proteger, o homem vestiu seu melhor casaco e saiu para comprar pão na padaria da esquina. Como ainda era cedo para a reunião do trabalho, ele decidiu ir a pé para aproveitar o ar fresco da manhã.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Desafio Interativo Section -->
+            <section id="desafio" class="content-section">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div id="quiz-container">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Desafio Interativo</h2>
+                        <p id="quiz-question" class="text-lg text-center mb-6"></p>
+                        <div id="quiz-options" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                        <div id="quiz-feedback" class="mt-6 text-center"></div>
+                        <div class="text-center mt-6">
+                            <button id="quiz-next-btn" class="bg-blue-500 text-white font-bold py-2 px-6 rounded-lg hidden">Próxima</button>
+                        </div>
+                    </div>
+                    <div id="quiz-results" class="hidden text-center">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Desafio Concluído!</h2>
+                        <p id="quiz-score" class="text-xl mb-6"></p>
+                        <button id="quiz-restart-btn" class="bg-blue-500 text-white font-bold py-2 px-6 rounded-lg">Tentar Novamente</button>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.querySelectorAll('.tab-button');
+            const contents = document.querySelectorAll('.content-section');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(item => item.classList.remove('active'));
+                    contents.forEach(item => item.classList.remove('active'));
+
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            const revealCards = document.querySelectorAll('.reveal-card');
+            revealCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const answer = card.querySelector('.answer');
+                    answer.classList.toggle('show');
+                });
+            });
+
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                const content = item.querySelector('.accordion-content');
+                const arrow = header.querySelector('span:last-child');
+                header.addEventListener('click', () => {
+                    const isVisible = content.style.display === 'block';
+                    content.style.display = isVisible ? 'none' : 'block';
+                    arrow.innerHTML = isVisible ? '&#9662;' : '&#9652;';
+                });
+            });
+
+            const coherenceBtn = document.getElementById('coherence-toggle-btn');
+            const incoherentText = document.getElementById('incoherent-text');
+            const coherentText = document.getElementById('coherent-text');
+            coherenceBtn.addEventListener('click', () => {
+                const isIncoherentVisible = !incoherentText.classList.contains('hidden');
+                if (isIncoherentVisible) {
+                    incoherentText.classList.add('hidden');
+                    coherentText.classList.remove('hidden');
+                    coherenceBtn.textContent = 'Mostrar Exemplo Incoerente';
+                } else {
+                    incoherentText.classList.remove('hidden');
+                    coherentText.classList.add('hidden');
+                    coherenceBtn.textContent = 'Mostrar Exemplo Coerente';
+                }
+            });
+
+            const quizData = [
+                {
+                    question: "Complete a frase: Não entendi o ___ de sua ausência.",
+                    options: ["por que", "por quê", "porque", "porquê"],
+                    answer: "porquê",
+                    explanation: "'Porquê' (junto e com acento) é usado como substantivo, significando 'o motivo'."
+                },
+                {
+                    question: "Qual frase demonstra coesão por elipse (omissão de um termo)?",
+                    options: ["Ele comprou o livro, mas não o leu.", "Gosto de filmes de ação; minha irmã, de comédia.", "A casa, que era antiga, foi reformada.", "Se chover, não iremos ao parque."],
+                    answer: "Gosto de filmes de ação; minha irmã, de comédia.",
+                    explanation: "Aqui, o verbo 'gosta' está omitido na segunda oração ('minha irmã [gosta] de comédia') para evitar repetição."
+                },
+                {
+                    question: "Qual alternativa preenche corretamente: 'Ele é um ___ aluno, por isso se saiu ___ na prova.'?",
+                    options: ["mau / mal", "mal / mau", "mau / mau", "mal / mal"],
+                    answer: "mau / mal",
+                    explanation: "'Mau' é o oposto de 'bom' (bom aluno). 'Mal' é o oposto de 'bem' (se saiu bem)."
+                },
+                 {
+                    question: "Qual trecho abaixo é INCOERENTE?",
+                    options: [
+                        "O sol nasceu, os pássaros cantaram e as flores desabrocharam. Era uma bela manhã.",
+                        "Ele era vegetariano, por isso seu prato favorito era picanha mal passada.",
+                        "Choveu muito, então as ruas ficaram alagadas.",
+                        "Como estava cansado, decidiu ir para a cama mais cedo."
+                    ],
+                    answer: "Ele era vegetariano, por isso seu prato favorito era picanha mal passada.",
+                    explanation: "Há uma contradição lógica. Um vegetariano não come carne, como a picanha."
+                }
+            ];
+
+            const quizContainer = document.getElementById('quiz-container');
+            const quizQuestion = document.getElementById('quiz-question');
+            const quizOptions = document.getElementById('quiz-options');
+            const quizFeedback = document.getElementById('quiz-feedback');
+            const quizNextBtn = document.getElementById('quiz-next-btn');
+            const quizResults = document.getElementById('quiz-results');
+            const quizScore = document.getElementById('quiz-score');
+            const quizRestartBtn = document.getElementById('quiz-restart-btn');
+
+            let currentQuestionIndex = 0;
+            let score = 0;
+
+            function loadQuestion() {
+                quizFeedback.innerHTML = '';
+                quizNextBtn.classList.add('hidden');
+
+                const question = quizData[currentQuestionIndex];
+                quizQuestion.textContent = question.question;
+                quizOptions.innerHTML = '';
+
+                question.options.forEach(optionText => {
+                    const optionElement = document.createElement('button');
+                    optionElement.textContent = optionText;
+                    optionElement.classList.add('quiz-option', 'p-4', 'border', 'rounded-lg', 'text-left', 'transition', 'w-full');
+                    optionElement.onclick = () => selectAnswer(optionText, optionElement);
+                    quizOptions.appendChild(optionElement);
+                });
+            }
+
+            function selectAnswer(selectedOption, optionElement) {
+                const question = quizData[currentQuestionIndex];
+                const isCorrect = selectedOption === question.answer;
+
+                Array.from(quizOptions.children).forEach(btn => {
+                    btn.disabled = true;
+                    if(btn.textContent === question.answer) {
+                        btn.classList.add('correct');
+                    }
+                });
+
+                if (isCorrect) {
+                    score++;
+                    optionElement.classList.add('correct');
+                    quizFeedback.innerHTML = `<p class="text-green-600 font-bold">Correto!</p><p class="text-sm">${question.explanation}</p>`;
+                } else {
+                    optionElement.classList.add('incorrect');
+                    quizFeedback.innerHTML = `<p class="text-red-600 font-bold">Incorreto!</p><p class="text-sm">${question.explanation}</p>`;
+                }
+
+                quizNextBtn.classList.remove('hidden');
+            }
+
+            function showResults() {
+                quizContainer.classList.add('hidden');
+                quizResults.classList.remove('hidden');
+                quizScore.textContent = `Você acertou ${score} de ${quizData.length} questões.`;
+            }
+
+            quizNextBtn.addEventListener('click', () => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < quizData.length) {
+                    loadQuestion();
+                } else {
+                    showResults();
+                }
+            });
+
+            quizRestartBtn.addEventListener('click', () => {
+                currentQuestionIndex = 0;
+                score = 0;
+                quizResults.classList.add('hidden');
+                quizContainer.classList.remove('hidden');
+                loadQuestion();
+            });
+
+            loadQuestion();
+        });
+    </script>
+
+</body>
+</html>
