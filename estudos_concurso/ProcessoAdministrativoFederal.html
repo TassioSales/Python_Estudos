@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise Interativa da Lei 9.784/99</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals with Professional Blue/Teal Accents -->
+    <!-- Application Structure Plan: A thematic single-page application with a sticky top navigation for easy access to key sections: Overview, Core Principles, Citizen-Admin Relationship, Practical Process, Interpretations, and Future Reforms. This non-linear structure allows users to explore topics based on interest rather than report order, enhancing usability. Key interactions include clickable cards for principles, a comparative chart for deadlines, and a filterable grid for the complex reform proposals, making dense information digestible and engaging. -->
+    <!-- Visualization & Content Choices:
+        - Principles (Table 1): Goal: Organize/Inform. Method: Interactive cards (HTML/JS) to reveal details on click, preventing information overload.
+        - Rights/Duties (Table 2): Goal: Compare. Method: Side-by-side lists with icons to highlight the reciprocal relationship.
+        - Deadlines (Table 3): Goal: Compare/Change. Method: Bar chart (Chart.js) to visually contrast current vs. proposed deadlines, showing the impact of reforms.
+        - Jurisprudence (Table 4): Goal: Inform. Method: Clean, structured cards for key court rulings, prioritizing clarity.
+        - Reforms (Table 5): Goal: Explore/Organize. Method: A filterable grid (HTML/JS) to allow users to navigate the numerous proposals by theme (e.g., Technology, Sanctions), making the most complex part of the report accessible.
+        - All interactions are powered by vanilla JS and visualizations by Chart.js, adhering to the NO SVG/Mermaid constraint. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8;
+            color: #3D4C5A;
+        }
+        .nav-link {
+            transition: color 0.3s ease, border-bottom-color 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link.active, .nav-link:hover {
+            color: #087990;
+            border-bottom-color: #087990;
+        }
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+        .reform-filter-btn {
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .reform-filter-btn.active {
+            background-color: #087990;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <h1 class="text-xl font-bold text-slate-700">Lei 9.784/99</h1>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#visao-geral" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">Visão Geral</a>
+                        <a href="#principios" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">Princípios</a>
+                        <a href="#cidadao" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">Cidadão</a>
+                        <a href="#processo" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">Processo</a>
+                        <a href="#interpretacao" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">Interpretação</a>
+                        <a href="#reforma" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">A Reforma</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="visao-geral" class="py-20 sm:py-28">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-bold tracking-tight text-slate-800 sm:text-5xl">O Pilar do Processo Administrativo Federal</h2>
+                <p class="mt-6 text-lg leading-8 text-slate-600 max-w-3xl mx-auto">
+                    A Lei nº 9.784/99 é um marco no Direito Administrativo brasileiro. Ela estabelece as regras essenciais que equilibram a atuação do Estado e a proteção dos direitos do cidadão, garantindo transparência, segurança jurídica e eficiência nos processos da Administração Pública Federal.
+                </p>
+                <div class="mt-10 flex items-center justify-center gap-x-6">
+                    <a href="#reforma" class="rounded-md bg-[#087990] px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#076a7d] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#087990]">Conheça as Propostas de Reforma</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="principios" class="py-20 bg-slate-50">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mx-auto max-w-2xl lg:text-center">
+                    <h2 class="text-base font-semibold leading-7 text-[#087990]">Artigo 2º</h2>
+                    <p class="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Princípios Fundamentais</p>
+                    <p class="mt-6 text-lg leading-8 text-slate-600">
+                        A Administração Pública não age de forma arbitrária. Sua atuação é guiada por princípios obrigatórios que garantem a justiça, a moralidade e a eficiência. Clique em cada princípio para entender seu significado e sua importância prática.
+                    </p>
+                </div>
+                <div id="principios-grid" class="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                </div>
+            </div>
+        </section>
+
+        <section id="cidadao" class="py-20">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mx-auto max-w-2xl lg:text-center">
+                    <h2 class="text-base font-semibold leading-7 text-[#087990]">Artigos 3º e 4º</h2>
+                    <p class="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">O Cidadão no Processo</p>
+                    <p class="mt-6 text-lg leading-8 text-slate-600">
+                        A lei estabelece uma relação de mão dupla entre a Administração e o cidadão (o "administrado"). De um lado, garante direitos essenciais para a defesa de seus interesses; de outro, estabelece deveres de cooperação e boa-fé.
+                    </p>
+                </div>
+                <div class="mt-16 grid grid-cols-1 gap-y-12 md:grid-cols-2 md:gap-x-16">
+                    <div>
+                        <h3 class="text-2xl font-semibold leading-9 text-slate-800">✅ Direitos do Administrado</h3>
+                        <dl id="direitos-list" class="mt-8 space-y-6 text-base leading-7 text-slate-600">
+                        </dl>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-semibold leading-9 text-slate-800">🤝 Deveres do Administrado</h3>
+                        <dl id="deveres-list" class="mt-8 space-y-6 text-base leading-7 text-slate-600">
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="processo" class="py-20 bg-slate-50">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mx-auto max-w-2xl lg:text-center">
+                     <p class="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">O Processo na Prática</p>
+                    <p class="mt-6 text-lg leading-8 text-slate-600">
+                        A lei detalha aspectos cruciais do andamento processual, como a obrigação de justificar decisões (motivação) e os prazos para a Administração agir. As propostas de reforma buscam modernizar e agilizar esses pontos para combater a inércia.
+                    </p>
+                </div>
+                <div class="mt-16">
+                    <h3 class="text-2xl font-semibold text-center text-slate-800 mb-8">Prazos Processuais: Situação Atual vs. Proposta de Reforma</h3>
+                     <div class="chart-container">
+                        <canvas id="prazosChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="interpretacao" class="py-20">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mx-auto max-w-2xl lg:text-center">
+                    <h2 class="text-base font-semibold leading-7 text-[#087990]">Jurisprudência</h2>
+                    <p class="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">A Lei nos Tribunais</p>
+                    <p class="mt-6 text-lg leading-8 text-slate-600">
+                        A aplicação da Lei 9.784/99 é constantemente moldada pelas decisões dos tribunais superiores (STF e STJ). Suas súmulas (resumos de entendimentos consolidados) são fundamentais para garantir uma interpretação uniforme em todo o país.
+                    </p>
+                </div>
+                <div id="jurisprudencia-grid" class="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2">
+                </div>
+            </div>
+        </section>
+
+        <section id="reforma" class="py-20 bg-slate-50">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mx-auto max-w-3xl lg:text-center">
+                    <p class="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">A Lei do Futuro: A Reforma</p>
+                    <p class="mt-6 text-lg leading-8 text-slate-600">
+                        Um abrangente projeto de reforma busca modernizar a Lei 9.784/99 para os desafios do século XXI. As propostas incluem a digitalização de processos, o uso de inteligência artificial, regras mais claras para sanções e mecanismos para aumentar a eficiência. Filtre por área para explorar as principais mudanças.
+                    </p>
+                </div>
+                <div class="mt-10 flex flex-wrap justify-center gap-2" id="reform-filters">
+                </div>
+                <div id="reforma-grid" class="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-800 text-slate-300">
+        <div class="container mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center">
+            <p>Aplicação interativa gerada para análise da Lei nº 9.784/99.</p>
+            <p class="text-sm text-slate-400 mt-2">Conteúdo baseado no relatório "Análise Abrangente da Lei nº 9.784/99".</p>
+        </div>
+    </footer>
+
+    <script>
+        const data = {
+            principios: [
+                { nome: 'Legalidade', desc: 'A Administração só pode fazer o que a lei autoriza, de forma expressa ou implícita.', relevancia: 'Garante a submissão do poder público à lei, evitando o arbítrio.' },
+                { nome: 'Finalidade', desc: 'O ato administrativo deve sempre buscar o interesse público e a finalidade específica prevista em lei.', relevancia: 'Impede o desvio de poder e assegura que a atuação estatal sirva ao bem comum.' },
+                { nome: 'Motivação', desc: 'Os atos administrativos devem ser justificados, com indicação dos fatos e fundamentos jurídicos.', relevancia: 'Permite o controle da legitimidade e legalidade dos atos, promovendo transparência.' },
+                { nome: 'Razoabilidade', desc: 'As decisões devem ser sensatas, lógicas e coerentes, evitando excessos.', relevancia: 'Assegura que as medidas adotadas sejam proporcionais e adequadas.' },
+                { nome: 'Proporcionalidade', desc: 'A atuação deve ser exercida na extensão e intensidade necessárias para atingir o fim público.', relevancia: 'Evita medidas desproporcionais e abusivas, protegendo os direitos dos administrados.' },
+                { nome: 'Moralidade', desc: 'A conduta da Administração deve pautar-se por padrões éticos, probidade, decoro e boa-fé.', relevancia: 'Promove a integridade e a confiança nas instituições públicas.' },
+                { nome: 'Ampla Defesa', desc: 'Garante aos administrados o direito de se manifestar e produzir provas em processos que os afetem.', relevancia: 'Assegura o devido processo legal, permitindo que o cidadão defenda seus interesses.' },
+                { nome: 'Contraditório', desc: 'Oportunidade de manifestar-se sobre fatos e documentos no processo, confrontando interesses.', relevancia: 'Garante a bilateralidade e a paridade de armas no processo.' },
+                { nome: 'Segurança Jurídica', desc: 'Proporciona estabilidade e previsibilidade nas relações entre o administrado e a Administração.', relevancia: 'Protege a confiança legítima e a estabilidade das relações.' },
+                { nome: 'Interesse Público', desc: 'A Administração deve sempre buscar o interesse da coletividade, que a lei consagra.', relevancia: 'Orienta todas as ações administrativas para o benefício da sociedade.' },
+                { nome: 'Eficiência', desc: 'A atuação administrativa deve ser ágil, produtiva e com a melhor utilização dos recursos.', relevancia: 'Busca a celeridade e a entrega de resultados efetivos à sociedade.' },
+            ],
+            direitos: [
+                { desc: 'Ser tratado com respeito pelas autoridades e servidores.' },
+                { desc: 'Ter ciência da tramitação dos processos, vista dos autos, cópias e conhecimento das decisões.' },
+                { desc: 'Formular alegações e apresentar documentos antes da decisão, que devem ser considerados.' },
+                { desc: 'Fazer-se assistir, facultativamente, por advogado (salvo obrigação legal).' },
+            ],
+            deveres: [
+                { desc: 'Expor os fatos conforme a verdade.' },
+                { desc: 'Proceder com lealdade, urbanidade e boa-fé.' },
+                { desc: 'Não agir de modo temerário (de forma irresponsável ou arriscada).' },
+                { desc: 'Prestar as informações solicitadas e colaborar para o esclarecimento dos fatos.' },
+            ],
+            prazos: {
+                labels: ['Instrução do Processo', 'Decisão do Processo', 'Conclusão Total'],
+                atual: [null, 30, null],
+                proposto: [60, 30, 180]
+            },
+            jurisprudencia: [
+                { sumula: 'Súmula 633', tribunal: 'STJ', conteudo: 'A Lei 9.784/99 pode ser aplicada subsidiariamente a estados e municípios, na ausência de norma local específica.', relevancia: 'Reforça a abrangência da lei no contexto federativo, preenchendo lacunas e uniformizando garantias mínimas.' },
+                { sumula: 'Súmula 473', tribunal: 'STF', conteudo: 'A Administração pode anular seus atos ilegais e revogar os inconvenientes/inoportunos, respeitados os direitos adquiridos.', relevancia: 'Consagra o princípio da autotutela, que a Lei 9.784/99 detalha em seus artigos sobre anulação e revogação.' },
+                { sumula: 'Súmula 346', tribunal: 'STF', conteudo: 'A Administração Pública pode declarar a nulidade dos seus próprios atos.', relevancia: 'Reafirma o poder-dever da Administração de rever e anular atos com vícios de legalidade.' },
+                { sumula: 'Súmula Vinculante 13', tribunal: 'STF', conteudo: 'Veda o nepotismo na Administração Pública.', relevancia: 'Reflete a aplicação dos princípios da moralidade e impessoalidade, basilares da conduta administrativa.' },
+            ],
+            reformas: [
+                { area: 'Escopo', proposta: 'Tornar a lei nacional, aplicável a todos os entes federados e Poderes.', impacto: 'Uniformiza garantias e procedimentos em todo o país.', categoria: 'Geral' },
+                { area: 'Processos Eletrônicos', proposta: 'Priorização e regulamentação detalhada de processos eletrônicos.', impacto: 'Facilita o acesso, a transparência e reduz a duração dos processos.', categoria: 'Tecnologia' },
+                { area: 'Uso de Inteligência Artificial (IA)', proposta: 'Previsão do uso de IA com exigências de transparência, auditabilidade e revisão humana.', impacto: 'Moderniza a Administração, promovendo eficiência com salvaguardas éticas.', categoria: 'Tecnologia' },
+                { area: 'Prazos e Omissão', proposta: 'Fixação de prazo máximo de 6 meses para conclusão do processo e transferência de competência em caso de omissão.', impacto: 'Combate efetivo à inércia administrativa, garantindo celeridade.', categoria: 'Prazos' },
+                { area: 'Contagem de Prazos', proposta: 'Contagem de prazos processuais passa a ser em dias úteis.', impacto: 'Alinha o processo administrativo com a prática judicial (CPC), facilitando a contagem.', categoria: 'Prazos' },
+                { area: 'Participação Pública', proposta: 'Fortalecimento da consulta e audiência pública com publicidade e resposta fundamentada.', impacto: 'Aumenta a legitimidade das decisões e a participação democrática.', categoria: 'Garantias' },
+                { area: 'Procedimento Sancionador', proposta: 'Criação de capítulo específico com princípios garantistas (ex: retroatividade da norma mais benéfica).', impacto: 'Aumenta a proteção dos direitos dos investigados em processos punitivos.', categoria: 'Sanções' },
+                { area: 'Prescrição', proposta: 'Detalhamento da prescrição da ação punitiva (5 anos) e intercorrente (2 anos de paralisação).', impacto: 'Traz maior segurança jurídica, evitando a perpetuação de investigações.', categoria: 'Sanções' },
+                { area: 'Análise de Impacto Regulatório (AIR)', proposta: 'Exigência de AIR para propostas de atos normativos gerais.', impacto: 'Aprimora a qualidade da regulamentação, considerando custos e benefícios.', categoria: 'Geral' },
+            ]
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const principiosGrid = document.getElementById('principios-grid');
+            data.principios.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'card bg-white p-6 rounded-lg shadow-md cursor-pointer';
+                card.innerHTML = `
+                    <div class="flex items-center gap-x-4">
+                        <span class="text-2xl font-bold text-[#087990]">${data.principios.indexOf(p) + 1}</span>
+                        <h3 class="text-xl font-semibold text-slate-800">${p.nome}</h3>
+                    </div>
+                    <div class="mt-4 text-slate-600 hidden">
+                        <p class="font-medium">Significado:</p>
+                        <p>${p.desc}</p>
+                        <p class="mt-2 font-medium">Relevância:</p>
+                        <p>${p.relevancia}</p>
+                    </div>
+                `;
+                card.addEventListener('click', () => {
+                    card.querySelector('div.hidden')?.classList.remove('hidden');
+                    card.classList.add('bg-teal-50');
+                });
+                principiosGrid.appendChild(card);
+            });
+
+            const direitosList = document.getElementById('direitos-list');
+            data.direitos.forEach(d => {
+                const item = document.createElement('div');
+                item.className = 'relative pl-9';
+                item.innerHTML = `
+                    <dt class="inline font-semibold text-slate-900">
+                        <span class="absolute left-1 top-1 h-5 w-5 text-teal-600">✓</span>
+                        ${d.desc}
+                    </dt>
+                `;
+                direitosList.appendChild(item);
+            });
+
+            const deveresList = document.getElementById('deveres-list');
+            data.deveres.forEach(d => {
+                const item = document.createElement('div');
+                item.className = 'relative pl-9';
+                item.innerHTML = `
+                    <dt class="inline font-semibold text-slate-900">
+                        <span class="absolute left-1 top-1 h-5 w-5 text-amber-600">!</span>
+                         ${d.desc}
+                    </dt>
+                `;
+                deveresList.appendChild(item);
+            });
+
+            const jurisprudenciaGrid = document.getElementById('jurisprudencia-grid');
+            data.jurisprudencia.forEach(j => {
+                const card = document.createElement('div');
+                card.className = 'bg-white p-6 rounded-lg shadow-md border-l-4 border-[#087990]';
+                card.innerHTML = `
+                    <p class="text-sm font-semibold text-[#087990]">${j.tribunal}</p>
+                    <h3 class="mt-2 text-xl font-bold text-slate-800">${j.sumula}</h3>
+                    <p class="mt-4 text-slate-600">${j.conteudo}</p>
+                    <p class="mt-4 text-sm font-medium text-slate-500 italic">Relevância: ${j.relevancia}</p>
+                `;
+                jurisprudenciaGrid.appendChild(card);
+            });
+
+            const reformaGrid = document.getElementById('reforma-grid');
+            const reformFiltersContainer = document.getElementById('reform-filters');
+            const categorias = ['Todos', ...new Set(data.reformas.map(r => r.categoria))];
+
+            categorias.forEach(cat => {
+                const button = document.createElement('button');
+                button.textContent = cat;
+                button.className = 'reform-filter-btn px-4 py-2 text-sm font-medium rounded-full border border-slate-300 bg-white text-slate-600';
+                if (cat === 'Todos') {
+                    button.classList.add('active');
+                }
+                button.addEventListener('click', () => {
+                    document.querySelectorAll('.reform-filter-btn').forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    filterReformas(cat);
+                });
+                reformFiltersContainer.appendChild(button);
+            });
+
+            const renderReformas = (reformas) => {
+                reformaGrid.innerHTML = '';
+                reformas.forEach(r => {
+                    const card = document.createElement('div');
+                    card.className = 'card bg-white p-6 rounded-lg shadow-md flex flex-col';
+                    card.innerHTML = `
+                        <p class="text-sm font-semibold text-[#087990]">${r.area}</p>
+                        <h3 class="mt-2 text-lg font-semibold text-slate-800 flex-grow">${r.proposta}</h3>
+                        <p class="mt-4 text-sm text-slate-600"><span class="font-medium">Impacto:</span> ${r.impacto}</p>
+                    `;
+                    reformaGrid.appendChild(card);
+                });
+            };
+
+            const filterReformas = (categoria) => {
+                const filtered = categoria === 'Todos' ? data.reformas : data.reformas.filter(r => r.categoria === categoria);
+                renderReformas(filtered);
+            };
+
+            renderReformas(data.reformas);
+
+            const ctx = document.getElementById('prazosChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.prazos.labels,
+                    datasets: [
+                        {
+                            label: 'Prazo Atual (dias)',
+                            data: data.prazos.atual,
+                            backgroundColor: 'rgba(100, 116, 139, 0.6)',
+                            borderColor: 'rgba(100, 116, 139, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Prazo Proposto (dias)',
+                            data: data.prazos.proposto,
+                            backgroundColor: 'rgba(8, 121, 144, 0.6)',
+                            borderColor: 'rgba(8, 121, 144, 1)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Dias'
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += context.parsed.y + ' dias';
+                                    } else {
+                                        label += 'Não especificado';
+                                    }
+                                    return label;
+                                }
+                            }
+                        },
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Comparativo de Prazos Máximos'
+                        }
+                    }
+                }
+            });
+
+            const sections = document.querySelectorAll('main section');
+            const navLinks = document.querySelectorAll('header nav a');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 80) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
