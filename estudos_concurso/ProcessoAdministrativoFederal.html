@@ -3,424 +3,957 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Análise Interativa da Lei 9.784/99</title>
+    <title>Processo Administrativo Federal - Guia Visual e Didático</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Warm Neutrals with Professional Blue/Teal Accents -->
-    <!-- Application Structure Plan: A thematic single-page application with a sticky top navigation for easy access to key sections: Overview, Core Principles, Citizen-Admin Relationship, Practical Process, Interpretations, and Future Reforms. This non-linear structure allows users to explore topics based on interest rather than report order, enhancing usability. Key interactions include clickable cards for principles, a comparative chart for deadlines, and a filterable grid for the complex reform proposals, making dense information digestible and engaging. -->
-    <!-- Visualization & Content Choices:
-        - Principles (Table 1): Goal: Organize/Inform. Method: Interactive cards (HTML/JS) to reveal details on click, preventing information overload.
-        - Rights/Duties (Table 2): Goal: Compare. Method: Side-by-side lists with icons to highlight the reciprocal relationship.
-        - Deadlines (Table 3): Goal: Compare/Change. Method: Bar chart (Chart.js) to visually contrast current vs. proposed deadlines, showing the impact of reforms.
-        - Jurisprudence (Table 4): Goal: Inform. Method: Clean, structured cards for key court rulings, prioritizing clarity.
-        - Reforms (Table 5): Goal: Explore/Organize. Method: A filterable grid (HTML/JS) to allow users to navigate the numerous proposals by theme (e.g., Technology, Sanctions), making the most complex part of the report accessible.
-        - All interactions are powered by vanilla JS and visualizations by Chart.js, adhering to the NO SVG/Mermaid constraint. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #FDFBF8;
-            color: #3D4C5A;
-        }
-        .nav-link {
-            transition: color 0.3s ease, border-bottom-color 0.3s ease;
-            border-bottom: 2px solid transparent;
-        }
-        .nav-link.active, .nav-link:hover {
-            color: #087990;
-            border-bottom-color: #087990;
-        }
-        .card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-        .chart-container {
+        body { font-family: 'Inter', sans-serif; }
+        .chart-container { position: relative; width: 100%; max-width: 400px; margin-left: auto; margin-right: auto; height: 300px; max-height: 400px; }
+        @media (min-width: 640px) { .chart-container { height: 350px; } }
+        .concept-card, .lei-flashcard { transition: transform 0.3s, box-shadow 0.3s; }
+        .concept-card:hover, .lei-flashcard:hover { transform: translateY(-5px) scale(1.03); box-shadow: 0 6px 24px #08799022; }
+        .principle-btn.active { background: linear-gradient(90deg, #087990 0%, #f59e42 100%); color: white; font-weight: bold; }
+        .principle-btn:not(.active):hover { background-color: #f0fdfa; }
+        .accordion-btn { transition: background 0.2s; }
+        .accordion-btn[aria-expanded="true"] { background: #f0fdfa; }
+        .analysis-section { background: linear-gradient(90deg, #f0fdfa 60%, #fef3c7 100%); border-left: 6px solid #087990; }
+        .faq-section { background: linear-gradient(90deg, #f0fdfa 60%, #fef3c7 100%); border-left: 6px solid #f59e42; }
+        .timeline { border-left: 4px solid #087990; margin-left: 1rem; padding-left: 1.5rem; }
+        .timeline-event { position: relative; margin-bottom: 2rem; }
+        .timeline-event:before { content: ''; position: absolute; left: -1.7rem; top: 0.5rem; width: 1rem; height: 1rem; background: #087990; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 2px #087990; }
+        .info-box { background: linear-gradient(90deg, #f0fdfa 60%, #fef3c7 100%); border-left: 6px solid #087990; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; }
+        .myth-box { background: linear-gradient(90deg, #fef3c7 60%, #f0fdfa 100%); border-left: 6px solid #f59e42; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; }
+        .quick-guide { background: linear-gradient(90deg, #f0fdfa 60%, #fef3c7 100%); border-left: 6px solid #0ea5e9; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; }
+        .cotidiano-card { background: #f0fdfa; border-left: 6px solid #087990; border-radius: 0.5rem; padding: 1rem; margin-bottom: 1rem; }
+        .lei-flashcards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
+        .lei-flashcard {
+            background: linear-gradient(90deg, #f0fdfa 60%, #fef3c7 100%);
+            border-left: 6px solid #087990;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
             position: relative;
-            width: 100%;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 400px;
-            max-height: 50vh;
         }
-        .reform-filter-btn {
-            transition: background-color 0.3s, color 0.3s;
+        .lei-flashcard-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #1e293b;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-        .reform-filter-btn.active {
-            background-color: #087990;
-            color: #ffffff;
+        .lei-flashcard-explicacao {
+            color: #475569;
+            margin-bottom: 0.75rem;
+            display: none;
+            font-size: 1rem;
+            line-height: 1.5;
         }
+        .lei-flashcard-principios {
+            color: #475569;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+        .lei-flashcard.active .lei-flashcard-explicacao { display: block; }
+        .lei-flashcard i { color: #087990; }
     </style>
 </head>
-<body class="antialiased">
-
-    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
-        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex-shrink-0">
-                    <h1 class="text-xl font-bold text-slate-700">Lei 9.784/99</h1>
-                </div>
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="#visao-geral" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">Visão Geral</a>
-                        <a href="#principios" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">Princípios</a>
-                        <a href="#cidadao" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">Cidadão</a>
-                        <a href="#processo" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">Processo</a>
-                        <a href="#interpretacao" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">Interpretação</a>
-                        <a href="#reforma" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">A Reforma</a>
-                    </div>
+<body class="bg-stone-50 text-slate-800">
+<noscript>
+    <div class="no-js-message">Este site requer JavaScript para funcionar corretamente. Por favor, ative o JavaScript no seu navegador.</div>
+</noscript>
+<nav id="navbar" class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <div class="flex-shrink-0 flex items-center gap-2">
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-tr from-teal-700 to-amber-400 shadow-lg">
+                    <i data-feather="file-text" class="text-white"></i>
+                </span>
+                <span class="text-xl font-bold text-slate-700">Processo Administrativo Federal</span>
+            </div>
+            <div class="hidden md:block">
+                <div id="nav-menu" class="ml-10 flex items-baseline space-x-4">
+                    <a href="#inicio" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Início</a>
+                    <a href="#resumo" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Resumo</a>
+                    <a href="#timeline" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Linha do Tempo</a>
+                    <a href="#conceitos" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Conceitos</a>
+                    <a href="#bases-legais" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Bases Legais</a>
+                    <a href="#artigos-lei-9784" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Artigos da Lei</a>
+                    <a href="#principios" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Princípios</a>
+                    <a href="#direitos" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Direitos</a>
+                    <a href="#cotidiano" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">No Cotidiano</a>
+                    <a href="#guias-rapidos" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Guias Rápidos</a>
+                    <a href="#mitos" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Mitos & Erros</a>
+                    <a href="#faq" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">FAQ</a>
+                    <a href="#analise" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Análise</a>
+                    <a href="#quiz" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 px-3 py-2 rounded-md text-sm font-medium">Quiz</a>
                 </div>
             </div>
-        </nav>
-    </header>
-
-    <main>
-        <section id="visao-geral" class="py-20 sm:py-28">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="text-3xl font-bold tracking-tight text-slate-800 sm:text-5xl">O Pilar do Processo Administrativo Federal</h2>
-                <p class="mt-6 text-lg leading-8 text-slate-600 max-w-3xl mx-auto">
-                    A Lei nº 9.784/99 é um marco no Direito Administrativo brasileiro. Ela estabelece as regras essenciais que equilibram a atuação do Estado e a proteção dos direitos do cidadão, garantindo transparência, segurança jurídica e eficiência nos processos da Administração Pública Federal.
-                </p>
-                <div class="mt-10 flex items-center justify-center gap-x-6">
-                    <a href="#reforma" class="rounded-md bg-[#087990] px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#076a7d] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#087990]">Conheça as Propostas de Reforma</a>
-                </div>
+            <div class="-mr-2 flex md:hidden">
+                <button id="mobile-menu-button" type="button" class="bg-slate-100 inline-flex items-center justify-center p-2 rounded-md text-slate-500 hover:text-slate-600 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-100 focus:ring-slate-500" aria-controls="mobile-menu" aria-expanded="false">
+                    <span class="sr-only">Abrir menu</span>
+                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
             </div>
-        </section>
-
-        <section id="principios" class="py-20 bg-slate-50">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="mx-auto max-w-2xl lg:text-center">
-                    <h2 class="text-base font-semibold leading-7 text-[#087990]">Artigo 2º</h2>
-                    <p class="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Princípios Fundamentais</p>
-                    <p class="mt-6 text-lg leading-8 text-slate-600">
-                        A Administração Pública não age de forma arbitrária. Sua atuação é guiada por princípios obrigatórios que garantem a justiça, a moralidade e a eficiência. Clique em cada princípio para entender seu significado e sua importância prática.
-                    </p>
-                </div>
-                <div id="principios-grid" class="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-                </div>
-            </div>
-        </section>
-
-        <section id="cidadao" class="py-20">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="mx-auto max-w-2xl lg:text-center">
-                    <h2 class="text-base font-semibold leading-7 text-[#087990]">Artigos 3º e 4º</h2>
-                    <p class="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">O Cidadão no Processo</p>
-                    <p class="mt-6 text-lg leading-8 text-slate-600">
-                        A lei estabelece uma relação de mão dupla entre a Administração e o cidadão (o "administrado"). De um lado, garante direitos essenciais para a defesa de seus interesses; de outro, estabelece deveres de cooperação e boa-fé.
-                    </p>
-                </div>
-                <div class="mt-16 grid grid-cols-1 gap-y-12 md:grid-cols-2 md:gap-x-16">
-                    <div>
-                        <h3 class="text-2xl font-semibold leading-9 text-slate-800">✅ Direitos do Administrado</h3>
-                        <dl id="direitos-list" class="mt-8 space-y-6 text-base leading-7 text-slate-600">
-                        </dl>
-                    </div>
-                    <div>
-                        <h3 class="text-2xl font-semibold leading-9 text-slate-800">🤝 Deveres do Administrado</h3>
-                        <dl id="deveres-list" class="mt-8 space-y-6 text-base leading-7 text-slate-600">
-                        </dl>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="processo" class="py-20 bg-slate-50">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="mx-auto max-w-2xl lg:text-center">
-                     <p class="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">O Processo na Prática</p>
-                    <p class="mt-6 text-lg leading-8 text-slate-600">
-                        A lei detalha aspectos cruciais do andamento processual, como a obrigação de justificar decisões (motivação) e os prazos para a Administração agir. As propostas de reforma buscam modernizar e agilizar esses pontos para combater a inércia.
-                    </p>
-                </div>
-                <div class="mt-16">
-                    <h3 class="text-2xl font-semibold text-center text-slate-800 mb-8">Prazos Processuais: Situação Atual vs. Proposta de Reforma</h3>
-                     <div class="chart-container">
-                        <canvas id="prazosChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="interpretacao" class="py-20">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="mx-auto max-w-2xl lg:text-center">
-                    <h2 class="text-base font-semibold leading-7 text-[#087990]">Jurisprudência</h2>
-                    <p class="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">A Lei nos Tribunais</p>
-                    <p class="mt-6 text-lg leading-8 text-slate-600">
-                        A aplicação da Lei 9.784/99 é constantemente moldada pelas decisões dos tribunais superiores (STF e STJ). Suas súmulas (resumos de entendimentos consolidados) são fundamentais para garantir uma interpretação uniforme em todo o país.
-                    </p>
-                </div>
-                <div id="jurisprudencia-grid" class="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2">
-                </div>
-            </div>
-        </section>
-
-        <section id="reforma" class="py-20 bg-slate-50">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="mx-auto max-w-3xl lg:text-center">
-                    <p class="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">A Lei do Futuro: A Reforma</p>
-                    <p class="mt-6 text-lg leading-8 text-slate-600">
-                        Um abrangente projeto de reforma busca modernizar a Lei 9.784/99 para os desafios do século XXI. As propostas incluem a digitalização de processos, o uso de inteligência artificial, regras mais claras para sanções e mecanismos para aumentar a eficiência. Filtre por área para explorar as principais mudanças.
-                    </p>
-                </div>
-                <div class="mt-10 flex flex-wrap justify-center gap-2" id="reform-filters">
-                </div>
-                <div id="reforma-grid" class="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="bg-slate-800 text-slate-300">
-        <div class="container mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center">
-            <p>Aplicação interativa gerada para análise da Lei nº 9.784/99.</p>
-            <p class="text-sm text-slate-400 mt-2">Conteúdo baseado no relatório "Análise Abrangente da Lei nº 9.784/99".</p>
         </div>
-    </footer>
-
-    <script>
-        const data = {
-            principios: [
-                { nome: 'Legalidade', desc: 'A Administração só pode fazer o que a lei autoriza, de forma expressa ou implícita.', relevancia: 'Garante a submissão do poder público à lei, evitando o arbítrio.' },
-                { nome: 'Finalidade', desc: 'O ato administrativo deve sempre buscar o interesse público e a finalidade específica prevista em lei.', relevancia: 'Impede o desvio de poder e assegura que a atuação estatal sirva ao bem comum.' },
-                { nome: 'Motivação', desc: 'Os atos administrativos devem ser justificados, com indicação dos fatos e fundamentos jurídicos.', relevancia: 'Permite o controle da legitimidade e legalidade dos atos, promovendo transparência.' },
-                { nome: 'Razoabilidade', desc: 'As decisões devem ser sensatas, lógicas e coerentes, evitando excessos.', relevancia: 'Assegura que as medidas adotadas sejam proporcionais e adequadas.' },
-                { nome: 'Proporcionalidade', desc: 'A atuação deve ser exercida na extensão e intensidade necessárias para atingir o fim público.', relevancia: 'Evita medidas desproporcionais e abusivas, protegendo os direitos dos administrados.' },
-                { nome: 'Moralidade', desc: 'A conduta da Administração deve pautar-se por padrões éticos, probidade, decoro e boa-fé.', relevancia: 'Promove a integridade e a confiança nas instituições públicas.' },
-                { nome: 'Ampla Defesa', desc: 'Garante aos administrados o direito de se manifestar e produzir provas em processos que os afetem.', relevancia: 'Assegura o devido processo legal, permitindo que o cidadão defenda seus interesses.' },
-                { nome: 'Contraditório', desc: 'Oportunidade de manifestar-se sobre fatos e documentos no processo, confrontando interesses.', relevancia: 'Garante a bilateralidade e a paridade de armas no processo.' },
-                { nome: 'Segurança Jurídica', desc: 'Proporciona estabilidade e previsibilidade nas relações entre o administrado e a Administração.', relevancia: 'Protege a confiança legítima e a estabilidade das relações.' },
-                { nome: 'Interesse Público', desc: 'A Administração deve sempre buscar o interesse da coletividade, que a lei consagra.', relevancia: 'Orienta todas as ações administrativas para o benefício da sociedade.' },
-                { nome: 'Eficiência', desc: 'A atuação administrativa deve ser ágil, produtiva e com a melhor utilização dos recursos.', relevancia: 'Busca a celeridade e a entrega de resultados efetivos à sociedade.' },
-            ],
-            direitos: [
-                { desc: 'Ser tratado com respeito pelas autoridades e servidores.' },
-                { desc: 'Ter ciência da tramitação dos processos, vista dos autos, cópias e conhecimento das decisões.' },
-                { desc: 'Formular alegações e apresentar documentos antes da decisão, que devem ser considerados.' },
-                { desc: 'Fazer-se assistir, facultativamente, por advogado (salvo obrigação legal).' },
-            ],
-            deveres: [
-                { desc: 'Expor os fatos conforme a verdade.' },
-                { desc: 'Proceder com lealdade, urbanidade e boa-fé.' },
-                { desc: 'Não agir de modo temerário (de forma irresponsável ou arriscada).' },
-                { desc: 'Prestar as informações solicitadas e colaborar para o esclarecimento dos fatos.' },
-            ],
-            prazos: {
-                labels: ['Instrução do Processo', 'Decisão do Processo', 'Conclusão Total'],
-                atual: [null, 30, null],
-                proposto: [60, 30, 180]
-            },
-            jurisprudencia: [
-                { sumula: 'Súmula 633', tribunal: 'STJ', conteudo: 'A Lei 9.784/99 pode ser aplicada subsidiariamente a estados e municípios, na ausência de norma local específica.', relevancia: 'Reforça a abrangência da lei no contexto federativo, preenchendo lacunas e uniformizando garantias mínimas.' },
-                { sumula: 'Súmula 473', tribunal: 'STF', conteudo: 'A Administração pode anular seus atos ilegais e revogar os inconvenientes/inoportunos, respeitados os direitos adquiridos.', relevancia: 'Consagra o princípio da autotutela, que a Lei 9.784/99 detalha em seus artigos sobre anulação e revogação.' },
-                { sumula: 'Súmula 346', tribunal: 'STF', conteudo: 'A Administração Pública pode declarar a nulidade dos seus próprios atos.', relevancia: 'Reafirma o poder-dever da Administração de rever e anular atos com vícios de legalidade.' },
-                { sumula: 'Súmula Vinculante 13', tribunal: 'STF', conteudo: 'Veda o nepotismo na Administração Pública.', relevancia: 'Reflete a aplicação dos princípios da moralidade e impessoalidade, basilares da conduta administrativa.' },
-            ],
-            reformas: [
-                { area: 'Escopo', proposta: 'Tornar a lei nacional, aplicável a todos os entes federados e Poderes.', impacto: 'Uniformiza garantias e procedimentos em todo o país.', categoria: 'Geral' },
-                { area: 'Processos Eletrônicos', proposta: 'Priorização e regulamentação detalhada de processos eletrônicos.', impacto: 'Facilita o acesso, a transparência e reduz a duração dos processos.', categoria: 'Tecnologia' },
-                { area: 'Uso de Inteligência Artificial (IA)', proposta: 'Previsão do uso de IA com exigências de transparência, auditabilidade e revisão humana.', impacto: 'Moderniza a Administração, promovendo eficiência com salvaguardas éticas.', categoria: 'Tecnologia' },
-                { area: 'Prazos e Omissão', proposta: 'Fixação de prazo máximo de 6 meses para conclusão do processo e transferência de competência em caso de omissão.', impacto: 'Combate efetivo à inércia administrativa, garantindo celeridade.', categoria: 'Prazos' },
-                { area: 'Contagem de Prazos', proposta: 'Contagem de prazos processuais passa a ser em dias úteis.', impacto: 'Alinha o processo administrativo com a prática judicial (CPC), facilitando a contagem.', categoria: 'Prazos' },
-                { area: 'Participação Pública', proposta: 'Fortalecimento da consulta e audiência pública com publicidade e resposta fundamentada.', impacto: 'Aumenta a legitimidade das decisões e a participação democrática.', categoria: 'Garantias' },
-                { area: 'Procedimento Sancionador', proposta: 'Criação de capítulo específico com princípios garantistas (ex: retroatividade da norma mais benéfica).', impacto: 'Aumenta a proteção dos direitos dos investigados em processos punitivos.', categoria: 'Sanções' },
-                { area: 'Prescrição', proposta: 'Detalhamento da prescrição da ação punitiva (5 anos) e intercorrente (2 anos de paralisação).', impacto: 'Traz maior segurança jurídica, evitando a perpetuação de investigações.', categoria: 'Sanções' },
-                { area: 'Análise de Impacto Regulatório (AIR)', proposta: 'Exigência de AIR para propostas de atos normativos gerais.', impacto: 'Aprimora a qualidade da regulamentação, considerando custos e benefícios.', categoria: 'Geral' },
-            ]
-        };
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const principiosGrid = document.getElementById('principios-grid');
-            data.principios.forEach(p => {
-                const card = document.createElement('div');
-                card.className = 'card bg-white p-6 rounded-lg shadow-md cursor-pointer';
-                card.innerHTML = `
-                    <div class="flex items-center gap-x-4">
-                        <span class="text-2xl font-bold text-[#087990]">${data.principios.indexOf(p) + 1}</span>
-                        <h3 class="text-xl font-semibold text-slate-800">${p.nome}</h3>
-                    </div>
-                    <div class="mt-4 text-slate-600 hidden">
-                        <p class="font-medium">Significado:</p>
-                        <p>${p.desc}</p>
-                        <p class="mt-2 font-medium">Relevância:</p>
-                        <p>${p.relevancia}</p>
-                    </div>
-                `;
-                card.addEventListener('click', () => {
-                    card.querySelector('div.hidden')?.classList.remove('hidden');
-                    card.classList.add('bg-teal-50');
-                });
-                principiosGrid.appendChild(card);
-            });
-
-            const direitosList = document.getElementById('direitos-list');
-            data.direitos.forEach(d => {
-                const item = document.createElement('div');
-                item.className = 'relative pl-9';
-                item.innerHTML = `
-                    <dt class="inline font-semibold text-slate-900">
-                        <span class="absolute left-1 top-1 h-5 w-5 text-teal-600">✓</span>
-                        ${d.desc}
-                    </dt>
-                `;
-                direitosList.appendChild(item);
-            });
-
-            const deveresList = document.getElementById('deveres-list');
-            data.deveres.forEach(d => {
-                const item = document.createElement('div');
-                item.className = 'relative pl-9';
-                item.innerHTML = `
-                    <dt class="inline font-semibold text-slate-900">
-                        <span class="absolute left-1 top-1 h-5 w-5 text-amber-600">!</span>
-                         ${d.desc}
-                    </dt>
-                `;
-                deveresList.appendChild(item);
-            });
-
-            const jurisprudenciaGrid = document.getElementById('jurisprudencia-grid');
-            data.jurisprudencia.forEach(j => {
-                const card = document.createElement('div');
-                card.className = 'bg-white p-6 rounded-lg shadow-md border-l-4 border-[#087990]';
-                card.innerHTML = `
-                    <p class="text-sm font-semibold text-[#087990]">${j.tribunal}</p>
-                    <h3 class="mt-2 text-xl font-bold text-slate-800">${j.sumula}</h3>
-                    <p class="mt-4 text-slate-600">${j.conteudo}</p>
-                    <p class="mt-4 text-sm font-medium text-slate-500 italic">Relevância: ${j.relevancia}</p>
-                `;
-                jurisprudenciaGrid.appendChild(card);
-            });
-
-            const reformaGrid = document.getElementById('reforma-grid');
-            const reformFiltersContainer = document.getElementById('reform-filters');
-            const categorias = ['Todos', ...new Set(data.reformas.map(r => r.categoria))];
-
-            categorias.forEach(cat => {
-                const button = document.createElement('button');
-                button.textContent = cat;
-                button.className = 'reform-filter-btn px-4 py-2 text-sm font-medium rounded-full border border-slate-300 bg-white text-slate-600';
-                if (cat === 'Todos') {
-                    button.classList.add('active');
-                }
-                button.addEventListener('click', () => {
-                    document.querySelectorAll('.reform-filter-btn').forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                    filterReformas(cat);
-                });
-                reformFiltersContainer.appendChild(button);
-            });
-
-            const renderReformas = (reformas) => {
-                reformaGrid.innerHTML = '';
-                reformas.forEach(r => {
-                    const card = document.createElement('div');
-                    card.className = 'card bg-white p-6 rounded-lg shadow-md flex flex-col';
-                    card.innerHTML = `
-                        <p class="text-sm font-semibold text-[#087990]">${r.area}</p>
-                        <h3 class="mt-2 text-lg font-semibold text-slate-800 flex-grow">${r.proposta}</h3>
-                        <p class="mt-4 text-sm text-slate-600"><span class="font-medium">Impacto:</span> ${r.impacto}</p>
-                    `;
-                    reformaGrid.appendChild(card);
-                });
-            };
-
-            const filterReformas = (categoria) => {
-                const filtered = categoria === 'Todos' ? data.reformas : data.reformas.filter(r => r.categoria === categoria);
-                renderReformas(filtered);
-            };
-
-            renderReformas(data.reformas);
-
-            const ctx = document.getElementById('prazosChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: data.prazos.labels,
-                    datasets: [
-                        {
-                            label: 'Prazo Atual (dias)',
-                            data: data.prazos.atual,
-                            backgroundColor: 'rgba(100, 116, 139, 0.6)',
-                            borderColor: 'rgba(100, 116, 139, 1)',
-                            borderWidth: 1
-                        },
-                        {
-                            label: 'Prazo Proposto (dias)',
-                            data: data.prazos.proposto,
-                            backgroundColor: 'rgba(8, 121, 144, 0.6)',
-                            borderColor: 'rgba(8, 121, 144, 1)',
-                            borderWidth: 1
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Dias'
-                            }
-                        }
-                    },
-                    plugins: {
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    let label = context.dataset.label || '';
-                                    if (label) {
-                                        label += ': ';
-                                    }
-                                    if (context.parsed.y !== null) {
-                                        label += context.parsed.y + ' dias';
-                                    } else {
-                                        label += 'Não especificado';
-                                    }
-                                    return label;
-                                }
-                            }
-                        },
-                        legend: {
-                            position: 'top',
-                        },
-                        title: {
-                            display: true,
-                            text: 'Comparativo de Prazos Máximos'
-                        }
-                    }
-                }
-            });
-
-            const sections = document.querySelectorAll('main section');
-            const navLinks = document.querySelectorAll('header nav a');
-
-            window.addEventListener('scroll', () => {
-                let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop;
-                    if (pageYOffset >= sectionTop - 80) {
-                        current = section.getAttribute('id');
-                    }
-                });
-
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href').includes(current)) {
-                        link.classList.add('active');
-                    }
-                });
-            });
+    </div>
+    <div class="hidden md:hidden" id="mobile-menu">
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <a href="#inicio" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Início</a>
+            <a href="#resumo" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Resumo</a>
+            <a href="#timeline" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Linha do Tempo</a>
+            <a href="#conceitos" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Conceitos</a>
+            <a href="#bases-legais" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Bases Legais</a>
+            <a href="#artigos-lei-9784" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Artigos da Lei</a>
+            <a href="#principios" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Princípios</a>
+            <a href="#direitos" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Direitos</a>
+            <a href="#cotidiano" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">No Cotidiano</a>
+            <a href="#guias-rapidos" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Guias Rápidos</a>
+            <a href="#mitos" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Mitos & Erros</a>
+            <a href="#faq" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">FAQ</a>
+            <a href="#analise" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Análise</a>
+            <a href="#quiz" class="text-slate-600 hover:bg-slate-200 hover:text-slate-900 block px-3 py-2 rounded-md text-base font-medium">Quiz</a>
+        </div>
+    </div>
+</nav>
+<main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+    <section id="inicio" class="text-center mb-16 md:mb-24 scroll-mt-20">
+        <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4 flex items-center justify-center gap-2"><i data-feather="file-text" class="text-amber-500"></i>Processo Administrativo Federal</h1>
+        <p class="max-w-3xl mx-auto text-lg text-slate-600 mb-8">Guia visual, didático e interativo sobre a Lei nº 9.784/99, que regula o processo administrativo no âmbito da Administração Pública Federal, promovendo transparência, eficiência e proteção dos direitos do cidadão.</p>
+        <div class="max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow-lg">
+            <h2 class="text-2xl font-bold text-slate-700 mb-4 flex items-center gap-2"><i data-feather="layers" class="text-teal-700"></i>Pilares do Processo Administrativo Federal</h2>
+            <p class="text-slate-600 mb-6">A lei se sustenta em princípios, direitos e garantias que equilibram o poder estatal e a proteção do administrado. Interaja com o gráfico para ver a composição.</p>
+            <div class="chart-container">
+                <canvas id="pafPillarsChart"></canvas>
+            </div>
+            <div class="text-xs text-slate-500 text-center mt-2">* O gráfico é ilustrativo: valores percentuais são aproximações didáticas.</div>
+        </div>
+    </section>
+    <section id="resumo" class="mb-16 md:mb-24 scroll-mt-20">
+        <div class="info-box text-lg md:text-xl max-w-3xl mx-auto mb-6 text-center">
+            <i data-feather="info" class="inline text-teal-700"></i>
+            <strong>Resumo:</strong> A <b>Lei nº 9.784/99</b> estabelece normas para o processo administrativo no âmbito da Administração Pública Federal, assegurando direitos, deveres e garantias aos administrados, além de impor limites e obrigações à atuação estatal. Seu objetivo é garantir decisões justas, motivadas e transparentes, promovendo a eficiência e a moralidade administrativa.
+        </div>
+        <div class="info-box">
+            <b>Por que a Lei 9.784/99 é importante?</b> <br>
+            <ul class="list-disc list-inside text-slate-700 mt-2">
+                <li>Protege o cidadão contra abusos e arbitrariedades do Estado.</li>
+                <li>Estabelece prazos, formas e garantias para o trâmite dos processos.</li>
+                <li>Promove a transparência, a motivação e o controle dos atos administrativos.</li>
+                <li>Uniformiza procedimentos e amplia a segurança jurídica.</li>
+            </ul>
+        </div>
+    </section>
+    <section id="timeline" class="mb-16 md:mb-24 scroll-mt-20">
+        <h2 class="text-3xl font-bold text-center text-slate-800 mb-2 flex items-center justify-center gap-2"><i data-feather="activity" class="text-teal-700"></i>Linha do Tempo do Processo Administrativo Federal</h2>
+        <div class="timeline max-w-2xl mx-auto mt-8">
+            <div class="timeline-event">
+                <div class="font-bold text-slate-700">1988</div>
+                <div class="text-slate-600">Constituição Federal consagra o devido processo legal e os direitos do administrado.</div>
+            </div>
+            <div class="timeline-event">
+                <div class="font-bold text-slate-700">1999</div>
+                <div class="text-slate-600">Promulgação da Lei nº 9.784/99, regulamentando o processo administrativo federal.</div>
+            </div>
+            <div class="timeline-event">
+                <div class="font-bold text-slate-700">2000-2020</div>
+                <div class="text-slate-600">Consolidação da lei e surgimento de debates sobre sua modernização.</div>
+            </div>
+            <div class="timeline-event">
+                <div class="font-bold text-slate-700">2023</div>
+                <div class="text-slate-600">Propostas de reforma para digitalização, IA e maior eficiência no processo administrativo.</div>
+            </div>
+        </div>
+    </section>
+    <section id="conceitos" class="mb-16 md:mb-24 scroll-mt-20">
+        <h2 class="text-3xl font-bold text-center text-slate-800 mb-2 flex items-center justify-center gap-2"><i data-feather="book" class="text-teal-700"></i>Conceitos Fundamentais</h2>
+        <p class="text-lg text-center text-slate-600 mb-10">Para entender o processo administrativo federal, é essencial conhecer seus principais conceitos. Clique nos cards para saber mais.</p>
+        <div id="concepts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </section>
+    <section id="bases-legais" class="mb-16 md:mb-24 scroll-mt-20">
+        <h2 class="text-3xl font-bold text-center text-slate-800 mb-2 flex items-center justify-center gap-2"><i data-feather="check-circle" class="text-amber-500"></i>Bases Legais do Processo Administrativo</h2>
+        <p class="text-lg text-center text-slate-600 mb-10">A Lei 9.784/99 se fundamenta em princípios constitucionais e normas específicas. Conheça as principais bases legais:</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto" id="bases-legais-grid"></div>
+    </section>
+    <section id="artigos-lei-9784" class="mb-16 md:mb-24 scroll-mt-20">
+        <h2 class="text-3xl font-bold text-center text-slate-800 mb-8 flex items-center justify-center gap-2"><i data-feather="book" class="text-amber-500"></i>Artigos da Lei nº 9.784/99</h2>
+        <p class="text-lg text-center text-slate-600 mb-10 max-w-3xl mx-auto">Confira abaixo um resumo didático de cada artigo da Lei nº 9.784/99, organizado em flashcards para facilitar seus estudos. Cada card traz explicação simples e os princípios administrativos envolvidos. Ideal para revisão rápida e fixação!</p>
+        <div class="lei-flashcards-grid"></div>
+        <div class="text-center text-slate-500 text-sm mt-8">Seção didática criada para facilitar a compreensão da Lei nº 9.784/99. Use os flashcards para revisar e fixar os principais pontos de cada artigo!</div>
+    </section>
+    <section id="principios" class="mb-16 md:mb-24 scroll-mt-20">
+        <h2 class="text-3xl font-bold text-center text-slate-800 mb-2 flex items-center justify-center gap-2"><i data-feather="list" class="text-teal-700"></i>Princípios do Processo Administrativo</h2>
+        <p class="text-lg text-center text-slate-600 mb-10">A atuação administrativa é guiada por princípios obrigatórios. Selecione um para ver detalhes e exemplos práticos.</p>
+        <div class="flex flex-col md:flex-row gap-8">
+            <div id="principles-menu" class="w-full md:w-1/3 flex flex-col space-y-2"></div>
+            <div id="principle-display" class="w-full md:w-2/3 bg-white p-8 rounded-2xl shadow-lg min-h-[300px] flex flex-col justify-center">
+                <h3 id="principle-title" class="text-2xl font-bold text-slate-700 mb-4">Selecione um princípio</h3>
+                <p id="principle-description" class="text-slate-600">A descrição do princípio selecionado aparecerá aqui.</p>
+            </div>
+        </div>
+    </section>
+    <section id="direitos" class="mb-16 md:mb-24 scroll-mt-20">
+        <h2 class="text-3xl font-bold text-center text-slate-800 mb-2 flex items-center justify-center gap-2"><i data-feather="user-check" class="text-teal-700"></i>Direitos do Administrado</h2>
+        <p class="text-lg text-center text-slate-600 mb-10">A Lei 9.784/99 garante ao cidadão uma série de direitos no processo administrativo. Conheça os principais:</p>
+        <div id="rights-accordion" class="space-y-4 max-w-4xl mx-auto"></div>
+        <div class="mt-8 max-w-3xl mx-auto text-slate-700 text-center">
+            <span class="font-semibold">Exemplo prático:</span> Você pode solicitar vista dos autos, apresentar documentos e ser tratado com respeito em qualquer processo administrativo federal.
+        </div>
+    </section>
+    <section id="cotidiano" class="mb-16 md:mb-24 scroll-mt-20">
+        <h2 class="text-3xl font-bold text-center text-slate-800 mb-2 flex items-center justify-center gap-2"><i data-feather="users" class="text-teal-700"></i>Processo Administrativo Federal no Cotidiano</h2>
+        <div class="cotidiano-card"><b>Exemplo 1:</b> Um servidor público deve justificar por escrito a decisão de negar um pedido do cidadão.</div>
+        <div class="cotidiano-card"><b>Exemplo 2:</b> O cidadão pode recorrer de uma multa de trânsito, exercendo o contraditório e a ampla defesa.</div>
+        <div class="cotidiano-card"><b>Exemplo 3:</b> A Administração deve respeitar prazos para decidir processos, sob pena de responsabilização.</div>
+        <div class="cotidiano-card"><b>Exemplo 4:</b> O uso de processos eletrônicos facilita o acompanhamento e a transparência para o administrado.</div>
+    </section>
+    <section id="guias-rapidos" class="mb-16 md:mb-24 scroll-mt-20">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="quick-guide">
+                <h3 class="font-bold text-lg mb-2 flex items-center gap-2"><i data-feather="briefcase" class="text-teal-700"></i>Guia Rápido para Servidores</h3>
+                <ul class="list-disc list-inside text-slate-700 space-y-1">
+                    <li>Motivar todas as decisões administrativas.</li>
+                    <li>Respeitar prazos e garantir o contraditório.</li>
+                    <li>Facilitar o acesso do cidadão aos autos do processo.</li>
+                    <li>Atuar com ética, transparência e eficiência.</li>
+                    <li>Adotar processos eletrônicos sempre que possível.</li>
+                </ul>
+            </div>
+            <div class="quick-guide">
+                <h3 class="font-bold text-lg mb-2 flex items-center gap-2"><i data-feather="user" class="text-teal-700"></i>Guia Rápido para Cidadãos</h3>
+                <ul class="list-disc list-inside text-slate-700 space-y-1">
+                    <li>Solicite sempre a motivação das decisões que o afetem.</li>
+                    <li>Exerça seu direito de defesa e recurso.</li>
+                    <li>Peça vista dos autos e cópias de documentos.</li>
+                    <li>Denuncie abusos ou omissões à ouvidoria ou ao Ministério Público.</li>
+                    <li>Acompanhe o andamento do processo, inclusive por meios eletrônicos.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section id="mitos" class="mb-16 md:mb-24 scroll-mt-20">
+        <h2 class="text-3xl font-bold text-center text-slate-800 mb-2 flex items-center justify-center gap-2"><i data-feather="alert-triangle" class="text-amber-500"></i>Mitos e Erros Comuns</h2>
+        <div class="myth-box"><b>Mito:</b> "O processo administrativo é sempre lento e burocrático." <br><b>Realidade:</b> A lei prevê prazos e mecanismos para acelerar decisões e punir omissões.</div>
+        <div class="myth-box"><b>Mito:</b> "Só advogados podem atuar em processos administrativos." <br><b>Realidade:</b> O cidadão pode se defender pessoalmente, salvo exceções legais.</div>
+        <div class="myth-box"><b>Erro comum:</b> Não apresentar defesa ou recurso dentro do prazo legal.</div>
+        <div class="myth-box"><b>Erro comum:</b> Não exigir a motivação das decisões administrativas.</div>
+    </section>
+    <section id="faq" class="mb-16 md:mb-24 scroll-mt-20">
+        <div class="faq-section rounded-lg p-6 shadow-md max-w-3xl mx-auto">
+            <h3 class="font-bold text-lg mb-2 flex items-center gap-2"><i data-feather="help-circle" class="text-amber-500"></i>Perguntas Frequentes (FAQ)</h3>
+            <ul class="list-disc list-inside text-slate-700 space-y-2">
+                <li><b>O que é processo administrativo federal?</b> É o procedimento formal pelo qual a Administração Pública decide questões de interesse do cidadão ou do Estado.</li>
+                <li><b>Quais são os principais direitos do administrado?</b> Direito à defesa, contraditório, motivação das decisões, vista dos autos, recurso, entre outros.</li>
+                <li><b>Posso acompanhar o processo pela internet?</b> Sim, muitos órgãos já oferecem acompanhamento eletrônico dos processos.</li>
+                <li><b>O que acontece se a Administração não decidir no prazo?</b> Pode haver responsabilização do agente e direito do cidadão à decisão imediata.</li>
+                <li><b>Preciso de advogado?</b> Não, salvo em casos específicos previstos em lei.</li>
+            </ul>
+        </div>
+    </section>
+    <section id="analise" class="mb-16 md:mb-24 scroll-mt-20">
+        <div class="analysis-section rounded-lg p-6 shadow-md max-w-3xl mx-auto">
+            <h3 class="font-bold text-lg mb-2 flex items-center gap-2"><i data-feather="bar-chart-2" class="text-teal-700"></i>Análise Crítica</h3>
+            <ul class="list-disc list-inside text-slate-700 space-y-1 mb-2">
+                <li><b>Impacto Social:</b> A Lei 9.784/99 democratiza o acesso à Administração Pública e fortalece o controle social.</li>
+                <li><b>Desafios:</b> A morosidade e a resistência à digitalização ainda são obstáculos à plena efetividade da lei.</li>
+                <li><b>Comparativo Internacional:</b> O Brasil se alinha a países que valorizam o devido processo legal e a proteção do administrado.</li>
+                <li><b>Futuro:</b> A tendência é de maior digitalização, uso de IA e participação do cidadão nos processos.</li>
+            </ul>
+            <div class="text-slate-600 text-sm">O sucesso do processo administrativo federal depende da atuação ética dos servidores e da participação ativa do cidadão.</div>
+        </div>
+    </section>
+    <section id="quiz" class="scroll-mt-20">
+        <h2 class="text-3xl font-bold text-center text-slate-800 mb-2 flex items-center justify-center gap-2"><i data-feather="help-circle" class="text-amber-500"></i>Teste seu Conhecimento</h2>
+        <p class="text-lg text-center text-slate-600 mb-10">Vamos ver se você entendeu os conceitos do Processo Administrativo Federal com este quiz rápido!</p>
+        <div id="quiz-container" class="max-w-3xl mx-auto bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+            <div id="quiz-question-container">
+                <h3 id="quiz-question" class="text-xl font-semibold text-slate-700 mb-6"></h3>
+                <div id="quiz-options" class="space-y-4"></div>
+            </div>
+            <div id="quiz-feedback" class="mt-6 text-center font-medium hidden"></div>
+            <div class="mt-8 text-center">
+                <button id="next-question-btn" class="bg-slate-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-slate-700 transition-colors duration-200 hidden">Próxima Pergunta</button>
+                <button id="restart-quiz-btn" class="bg-amber-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-amber-600 transition-colors duration-200 hidden">Recomeçar Quiz</button>
+            </div>
+        </div>
+    </section>
+    <section class="mt-12">
+        <div class="info-box rounded-lg p-6 shadow-md max-w-3xl mx-auto">
+            <h3 class="font-bold text-lg mb-2 flex items-center gap-2"><i data-feather="book-open" class="text-amber-500"></i>Dicas de Estudo</h3>
+            <ul class="list-disc list-inside text-slate-700 space-y-1">
+                <li>Monte mapas mentais a partir dos conceitos e princípios.</li>
+                <li>Pratique o quiz para fixar os pontos-chave da Lei 9.784/99.</li>
+                <li>Releia os direitos do administrado antes de provas.</li>
+                <li>Use exemplos práticos para memorizar os princípios.</li>
+                <li>Volte a esta página para revisões rápidas antes da prova!</li>
+            </ul>
+        </div>
+    </section>
+</main>
+<footer class="bg-slate-800 text-slate-300 mt-20">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center">
+        <p>© 2025 Guia Interativo Processo Administrativo Federal. Conteúdo para fins educacionais.</p>
+    </div>
+</footer>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    feather.replace();
+    // Conceitos
+    const conceptsData = [
+        { title: 'Processo Administrativo', description: 'Procedimento formal pelo qual a Administração Pública decide questões de interesse do cidadão ou do Estado.' },
+        { title: 'Administrado', description: 'Pessoa física ou jurídica que se relaciona com a Administração Pública, sendo titular de direitos e deveres.' },
+        { title: 'Motivação', description: 'Obrigação de justificar as decisões administrativas, indicando fatos e fundamentos jurídicos.' },
+        { title: 'Contraditório', description: 'Direito de o administrado se manifestar e apresentar defesa antes de qualquer decisão que o prejudique.' },
+        { title: 'Ampla Defesa', description: 'Garantia de que o administrado pode utilizar todos os meios legais para defender seus interesses.' },
+        { title: 'Prazos Processuais', description: 'Períodos definidos em lei para a prática de atos administrativos e decisões.' },
+        { title: 'Recurso Administrativo', description: 'Instrumento pelo qual o administrado pode pedir a revisão de uma decisão.' },
+        { title: 'Processo Eletrônico', description: 'Tramitação digital dos processos, ampliando transparência e celeridade.' },
+    ];
+    // Bases Legais
+    const basesLegaisData = [
+        { title: 'Constituição Federal', description: 'Art. 5º, incisos LIV e LV: devido processo legal, contraditório e ampla defesa.' },
+        { title: 'Lei nº 9.784/99', description: 'Normas gerais sobre o processo administrativo no âmbito federal.' },
+        { title: 'Princípios da Administração', description: 'Legalidade, impessoalidade, moralidade, publicidade e eficiência (art. 37 da CF).' },
+        { title: 'Jurisprudência', description: 'Entendimentos dos tribunais superiores sobre o processo administrativo.' },
+        { title: 'Decretos e Regulamentos', description: 'Normas complementares que detalham procedimentos específicos.' },
+    ];
+    // Artigos da Lei
+    const artigosLeiData = [
+        {
+            title: 'Artigo 1º – Disposições Gerais',
+            explicacao: 'Define que a lei organiza os processos administrativos no governo federal, estabelecendo regras para decisões que envolvam cidadãos ou o Estado.',
+            principios: 'Legalidade, finalidade, proteção dos direitos dos administrados'
+        },
+        {
+            title: 'Artigo 2º – Princípios do Processo Administrativo',
+            explicacao: 'Lista os princípios obrigatórios, como agir conforme a lei, buscar o interesse público, transparência, eficiência e respeito aos direitos dos cidadãos.',
+            principios: 'Legalidade, finalidade, motivação, razoabilidade, proporcionalidade, moralidade, ampla defesa, contraditório, segurança jurídica, interesse público, eficiência'
+        },
+        {
+            title: 'Artigo 3º – Âmbito de Aplicação',
+            explicacao: 'Estabelece que a lei se aplica a todos os órgãos e entidades do governo federal, como autarquias e fundações, em decisões administrativas.',
+            principios: 'Legalidade, impessoalidade'
+        },
+        {
+            title: 'Artigo 4º – Atos de Administração',
+            explicacao: 'A lei regula atos administrativos que afetem direitos ou interesses, como autorizações, licenças e permissões.',
+            principios: 'Legalidade, finalidade, publicidade'
+        },
+        {
+            title: 'Artigo 5º – Direitos do Administrado',
+            explicacao: 'Garante ao cidadão direitos como respeito, informação clara, apresentação de documentos, defesa e recurso.',
+            principios: 'Ampla defesa, contraditório, publicidade, eficiência, moralidade'
+        },
+        {
+            title: 'Artigo 6º – Deveres do Administrado',
+            explicacao: 'Determina que o cidadão deve agir com boa-fé, colaborar com a administração e não dificultar o processo.',
+            principios: 'Boa-fé, colaboração, moralidade'
+        },
+        {
+            title: 'Artigo 7º – Início do Processo',
+            explicacao: 'O processo pode ser iniciado pelo órgão público ou por solicitação do cidadão.',
+            principios: 'Legalidade, acesso à administração'
+        },
+        {
+            title: 'Artigo 8º – Forma dos Atos',
+            explicacao: 'Os atos processuais devem ser por escrito, salvo exceção legal, garantindo clareza e registro.',
+            principios: 'Publicidade, segurança jurídica'
+        },
+        {
+            title: 'Artigo 9º – Identificação do Interessado',
+            explicacao: 'O cidadão deve se identificar corretamente para que a administração possa responder adequadamente.',
+            principios: 'Impessoalidade, segurança jurídica'
+        },
+        {
+            title: 'Artigo 10º – Requisitos do Pedido',
+            explicacao: 'O pedido do cidadão deve ser claro e incluir dados e documentos necessários para análise.',
+            principios: 'Eficiência, legalidade'
+        },
+        {
+            title: 'Artigo 11º – Autuação e Registro',
+            explicacao: 'O processo deve ser registrado e numerado para controle e acompanhamento.',
+            principios: 'Publicidade, segurança jurídica, eficiência'
+        },
+        {
+            title: 'Artigo 12º – Comunicação dos Atos',
+            explicacao: 'A administração deve informar o interessado sobre atos, decisões e prazos do processo.',
+            principios: 'Publicidade, contraditório, ampla defesa'
+        },
+        {
+            title: 'Artigo 13º – Intimação',
+            explicacao: 'O interessado deve ser formalmente comunicado sobre atos que afetem seus direitos.',
+            principios: 'Contraditório, ampla defesa, publicidade'
+        },
+        {
+            title: 'Artigo 14º – Prazo para Manifestação',
+            explicacao: 'O cidadão tem prazo para apresentar defesa ou recurso, sob pena de perder direitos.',
+            principios: 'Ampla defesa, contraditório, eficiência'
+        },
+        {
+            title: 'Artigo 15º – Vista dos Autos',
+            explicacao: 'O interessado pode acessar e copiar documentos do processo, garantindo transparência.',
+            principios: 'Publicidade, ampla defesa'
+        },
+        {
+            title: 'Artigo 16º – Competência',
+            explicacao: 'Define quem pode tomar decisões no processo administrativo, deixando claro que só pessoas autorizadas por lei podem agir em nome do órgão.',
+            principios: 'Legalidade, impessoalidade, segurança jurídica'
+        },
+        {
+            title: 'Artigo 17º – Impedimento e Suspeição',
+            explicacao: 'Estabelece que quem tem interesse pessoal ou relação próxima com o caso não pode decidir ou atuar no processo, para garantir imparcialidade.',
+            principios: 'Imparcialidade, moralidade, legalidade'
+        },
+        {
+            title: 'Artigo 18º – Delegação e Avocação',
+            explicacao: 'Permite que certas funções sejam delegadas a outros servidores, desde que a lei permita, para dar mais agilidade ao processo.',
+            principios: 'Eficiência, legalidade, hierarquia'
+        },
+        {
+            title: 'Artigo 19º – Forma dos Atos',
+            explicacao: 'Os atos do processo devem ser feitos de forma clara e acessível, para que todos entendam o que está sendo decidido.',
+            principios: 'Publicidade, eficiência, segurança jurídica'
+        },
+        {
+            title: 'Artigo 20º – Prazos',
+            explicacao: 'Define os prazos para cada etapa do processo, garantindo que tudo aconteça em tempo razoável e sem enrolação.',
+            principios: 'Eficiência, segurança jurídica, razoabilidade'
+        },
+        {
+            title: 'Artigo 21º – Contagem dos Prazos',
+            explicacao: 'Explica como contar os prazos do processo, para não ter dúvida sobre datas e evitar confusões.',
+            principios: 'Segurança jurídica, eficiência'
+        },
+        {
+            title: 'Artigo 22º – Nulidades',
+            explicacao: 'Diz que atos feitos de forma errada ou por pessoa sem competência podem ser anulados, protegendo o direito do cidadão.',
+            principios: 'Legalidade, segurança jurídica, proteção ao administrado'
+        },
+        {
+            title: 'Artigo 23º – Sanções',
+            explicacao: 'Prevê punições para quem descumpre regras do processo, seja servidor ou administrado.',
+            principios: 'Legalidade, moralidade, eficiência'
+        },
+        {
+            title: 'Artigo 24º – Recursos',
+            explicacao: 'Garante que o cidadão pode recorrer de decisões que o prejudiquem, apresentando novos argumentos ou provas.',
+            principios: 'Ampla defesa, contraditório, legalidade'
+        },
+        {
+            title: 'Artigo 25º – Efeitos dos Recursos',
+            explicacao: 'Explica que, ao recorrer, a decisão pode ser suspensa até o recurso ser julgado, dependendo do caso.',
+            principios: 'Segurança jurídica, ampla defesa'
+        },
+        {
+            title: 'Artigo 26º – Reconsideração',
+            explicacao: 'Permite pedir que a própria autoridade reveja sua decisão antes de recorrer para instância superior.',
+            principios: 'Eficiência, razoabilidade, legalidade'
+        },
+        {
+            title: 'Artigo 27º – Instâncias Recursais',
+            explicacao: 'Define a ordem de quem julga os recursos, para que o processo seja organizado e transparente.',
+            principios: 'Segurança jurídica, eficiência'
+        },
+        {
+            title: 'Artigo 28º – Prazo para Julgamento dos Recursos',
+            explicacao: 'Estabelece prazo para que os recursos sejam analisados, evitando demora injustificada.',
+            principios: 'Eficiência, razoabilidade'
+        },
+        {
+            title: 'Artigo 29º – Revisão de Decisões',
+            explicacao: 'Permite rever decisões administrativas quando surgem fatos novos ou erros graves.',
+            principios: 'Legalidade, justiça, segurança jurídica'
+        },
+        {
+            title: 'Artigo 30º – Revisão de Ofício',
+            explicacao: 'A própria administração pode rever decisões erradas, mesmo sem pedido do interessado.',
+            principios: 'Legalidade, eficiência, justiça'
+        },
+        {
+            title: 'Artigo 31º – Contraditório e Ampla Defesa',
+            explicacao: 'Garante que o cidadão sempre poderá se manifestar e apresentar defesa antes de qualquer decisão que o prejudique.',
+            principios: 'Contraditório, ampla defesa, legalidade'
+        },
+        {
+            title: 'Artigo 32º – Provas',
+            explicacao: 'Permite apresentar provas e documentos para defender seu direito no processo.',
+            principios: 'Ampla defesa, contraditório, legalidade'
+        },
+        {
+            title: 'Artigo 33º – Produção de Provas',
+            explicacao: 'A administração pode pedir mais provas se achar necessário para esclarecer os fatos.',
+            principios: 'Busca da verdade, eficiência, legalidade'
+        },
+        {
+            title: 'Artigo 34º – Indeferimento de Provas',
+            explicacao: 'A administração pode recusar provas que sejam desnecessárias ou só sirvam para atrasar o processo.',
+            principios: 'Eficiência, razoabilidade, legalidade'
+        },
+        {
+            title: 'Artigo 35º – Decisão Motivada',
+            explicacao: 'Toda decisão deve ser explicada, mostrando os motivos e fundamentos usados.',
+            principios: 'Motivação, publicidade, legalidade'
+        },
+        {
+            title: 'Artigo 36º – Publicidade das Decisões',
+            explicacao: 'As decisões devem ser divulgadas para que todos saibam o que foi decidido.',
+            principios: 'Publicidade, transparência, legalidade'
+        },
+        {
+            title: 'Artigo 37º – Cumprimento das Decisões',
+            explicacao: 'Depois de decidida, a administração deve cumprir a decisão rapidamente.',
+            principios: 'Eficiência, legalidade'
+        },
+        {
+            title: 'Artigo 38º – Execução das Decisões',
+            explicacao: 'Explica como as decisões administrativas devem ser executadas, garantindo que tenham efeito prático.',
+            principios: 'Eficiência, legalidade, segurança jurídica'
+        },
+        {
+            title: 'Artigo 39º – Revisão Administrativa',
+            explicacao: 'Permite que decisões sejam revistas dentro da própria administração, sem precisar ir à Justiça.',
+            principios: 'Eficiência, legalidade, justiça'
+        },
+        {
+            title: 'Artigo 40º – Processo Eletrônico',
+            explicacao: 'Autoriza o uso de meios eletrônicos para tramitar processos, facilitando o acesso e a transparência.',
+            principios: 'Eficiência, publicidade, inovação'
+        },
+        {
+            title: 'Artigo 41º – Digitalização de Documentos',
+            explicacao: 'Permite digitalizar documentos do processo, tornando tudo mais rápido e acessível.',
+            principios: 'Eficiência, inovação, segurança jurídica'
+        },
+        {
+            title: 'Artigo 42º – Sigilo',
+            explicacao: 'Alguns processos podem ser sigilosos, mas só nos casos previstos em lei, para proteger informações sensíveis.',
+            principios: 'Legalidade, proteção de dados, segurança jurídica'
+        },
+        {
+            title: 'Artigo 43º – Acesso à Informação',
+            explicacao: 'Garante que o cidadão pode acessar informações do processo, salvo exceções legais.',
+            principios: 'Publicidade, transparência, legalidade'
+        },
+        {
+            title: 'Artigo 44º – Notificações',
+            explicacao: 'O interessado deve ser notificado de todos os atos importantes do processo.',
+            principios: 'Publicidade, contraditório, ampla defesa'
+        },
+        {
+            title: 'Artigo 45º – Prazos para Cumprimento',
+            explicacao: 'Define prazos para que as decisões sejam cumpridas, evitando atrasos.',
+            principios: 'Eficiência, segurança jurídica'
+        },
+        {
+            title: 'Artigo 46º – Responsabilidade do Servidor',
+            explicacao: 'O servidor que descumpre prazos ou age de forma errada pode ser responsabilizado.',
+            principios: 'Eficiência, moralidade, legalidade'
+        },
+        {
+            title: 'Artigo 47º – Responsabilidade do Administrado',
+            explicacao: 'O cidadão também pode ser responsabilizado se agir de má-fé ou tentar enganar a administração.',
+            principios: 'Moralidade, boa-fé, legalidade'
+        },
+        {
+            title: 'Artigo 48º – Prescrição',
+            explicacao: 'Estabelece prazos para que a administra��ão possa agir, evitando processos eternos.',
+            principios: 'Segurança jurídica, legalidade'
+        },
+        {
+            title: 'Artigo 49º – Interrupção da Prescrição',
+            explicacao: 'Explica quando o prazo prescricional pode ser interrompido, dando mais tempo para a administração agir.',
+            principios: 'Segurança jurídica, legalidade'
+        },
+        {
+            title: 'Artigo 50º – Motivação das Decisões',
+            explicacao: 'Toda decisão deve ser fundamentada, mostrando os motivos e a base legal.',
+            principios: 'Motivação, legalidade, publicidade'
+        },
+        {
+            title: 'Artigo 51º – Revisão de Sanções',
+            explicacao: 'Permite rever punições aplicadas, caso surjam fatos novos ou erros.',
+            principios: 'Justiça, legalidade, eficiência'
+        },
+        {
+            title: 'Artigo 52º – Recurso Hierárquico',
+            explicacao: 'O recurso pode ser levado para autoridade superior, garantindo nova análise.',
+            principios: 'Ampla defesa, contraditório, legalidade'
+        },
+        {
+            title: 'Artigo 53º – Efeito Suspensivo',
+            explicacao: 'Alguns recursos podem suspender a decisão até o julgamento final.',
+            principios: 'Segurança jurídica, ampla defesa'
+        },
+        {
+            title: 'Artigo 54º – Decadência',
+            explicacao: 'Estabelece prazo para a administração anular atos ilegais, protegendo a estabilidade das relações.',
+            principios: 'Segurança jurídica, legalidade'
+        },
+        {
+            title: 'Artigo 55º – Convalidação',
+            explicacao: 'Permite corrigir atos com pequenos defeitos, desde que não prejudiquem ninguém.',
+            principios: 'Legalidade, eficiência, justiça'
+        },
+        {
+            title: 'Artigo 56º – Decisão Final',
+            explicacao: 'A decisão final deve ser clara e comunicada ao interessado.',
+            principios: 'Publicidade, eficiência, legalidade'
+        },
+        {
+            title: 'Artigo 57º – Cumprimento Voluntário',
+            explicacao: 'O administrado pode cumprir a decisão espontaneamente, sem necessidade de cobrança.',
+            principios: 'Eficiência, boa-fé'
+        },
+        {
+            title: 'Artigo 58º – Execução Forçada',
+            explicacao: 'Se o administrado não cumprir a decisão, a administração pode tomar medidas para garantir o cumprimento.',
+            principios: 'Legalidade, eficiência, segurança jurídica'
+        },
+        {
+            title: 'Artigo 59º – Custas e Despesas',
+            explicacao: 'Regula quem deve pagar as despesas do processo, normalmente quem perde ou quem deu causa.',
+            principios: 'Justiça, legalidade'
+        },
+        {
+            title: 'Artigo 60º – Gratuidade',
+            explicacao: 'Em alguns casos, o processo pode ser gratuito para quem não tem condições de pagar.',
+            principios: 'Acesso à justiça, legalidade'
+        },
+        {
+            title: 'Artigo 61º – Comunicação Eletrônica',
+            explicacao: 'Permite que atos do processo sejam comunicados por meios eletrônicos, facilitando a vida do cidadão.',
+            principios: 'Eficiência, inovação, publicidade'
+        },
+        {
+            title: 'Artigo 62º – Diligências',
+            explicacao: 'A administração pode fazer diligências para esclarecer dúvidas e buscar a verdade dos fatos.',
+            principios: 'Busca da verdade, eficiência, legalidade'
+        },
+        {
+            title: 'Artigo 63º – Desistência do Pedido',
+            explicacao: 'O interessado pode desistir do pedido a qualquer momento, salvo se houver interesse público em continuar.',
+            principios: 'Autonomia da vontade, interesse público, legalidade'
+        },
+        {
+            title: 'Artigo 64º – Extinção do Processo',
+            explicacao: 'O processo pode ser encerrado quando não houver mais interesse ou motivo para continuar.',
+            principios: 'Eficiência, legalidade, interesse público'
+        },
+        {
+            title: 'Artigo 65º – Arquivamento',
+            explicacao: 'Quando o processo termina, ele deve ser arquivado de forma organizada para consulta futura.',
+            principios: 'Segurança jurídica, eficiência'
+        },
+        {
+            title: 'Artigo 66º – Reabertura do Processo',
+            explicacao: 'O processo pode ser reaberto se surgirem fatos novos ou relevantes.',
+            principios: 'Justiça, legalidade, eficiência'
+        },
+        {
+            title: 'Artigo 67º – Responsabilidade Civil',
+            explicacao: 'A administração responde por danos causados a terceiros por seus agentes.',
+            principios: 'Legalidade, justiça, responsabilidade'
+        },
+        {
+            title: 'Artigo 68º – Responsabilidade Penal',
+            explicacao: 'O servidor pode responder criminalmente por atos ilícitos praticados no processo.',
+            principios: 'Legalidade, moralidade, responsabilidade'
+        },
+        {
+            title: 'Artigo 69º – Responsabilidade Administrativa',
+            explicacao: 'O servidor pode ser punido administrativamente por descumprir deveres no processo.',
+            principios: 'Legalidade, moralidade, eficiência'
+        },
+        {
+            title: 'Artigo 70º – Disposições Finais',
+            explicacao: 'Traz regras finais sobre o processo administrativo, reforçando a aplicação da lei e a busca pela justiça.',
+            principios: 'Legalidade, justiça, segurança jurídica'
+        },
+        {
+            title: 'Artigo 71º – Entrada em Vigor',
+            explicacao: 'A lei entra em vigor na data de sua publicação, tornando suas regras obrigatórias.',
+            principios: 'Legalidade, segurança jurídica'
+        },
+    ];
+    // Princípios
+    const principlesData = [
+        { title: 'Legalidade', description: 'A Administração só pode agir conforme a lei.' },
+        { title: 'Finalidade', description: 'O ato administrativo deve buscar o interesse público.' },
+        { title: 'Motivação', description: 'Toda decisão deve ser justificada.' },
+        { title: 'Razoabilidade', description: 'As decisões devem ser sensatas e proporcionais.' },
+        { title: 'Proporcionalidade', description: 'A medida deve ser adequada e necessária ao fim público.' },
+        { title: 'Moralidade', description: 'A atuação deve ser ética e íntegra.' },
+        { title: 'Ampla Defesa', description: 'O administrado pode se defender plenamente.' },
+        { title: 'Contraditório', description: 'O administrado pode se manifestar antes da decisão.' },
+        { title: 'Segurança Jurídica', description: 'Garante estabilidade e previsibilidade.' },
+        { title: 'Eficiência', description: 'Busca a melhor utilização dos recursos públicos.' },
+    ];
+    // Direitos
+    const rightsData = [
+        { title: 'Ser tratado com respeito', description: 'O administrado deve ser atendido com urbanidade e consideração.' },
+        { title: 'Vista dos autos', description: 'Direito de acessar e obter cópias dos documentos do processo.' },
+        { title: 'Apresentar defesa', description: 'Direito de se manifestar antes de qualquer decisão que o prejudique.' },
+        { title: 'Recurso', description: 'Direito de pedir a revisão de decisões administrativas.' },
+        { title: 'Acompanhamento', description: 'Direito de acompanhar o andamento do processo, inclusive por meios eletrônicos.' },
+        { title: 'Assistência de advogado', description: 'Facultativo, salvo obrigação legal.' },
+    ];
+    // Quiz
+    const quizData = [
+        {
+            question: 'Qual princípio obriga a Administração a justificar suas decisões?',
+            options: ['Legalidade', 'Motivação', 'Eficiência', 'Moralidade'],
+            answer: 'Motivação'
+        },
+        {
+            question: 'O que garante o contraditório no processo administrativo?',
+            options: ['Direito de recorrer', 'Direito de ser ouvido antes da decisão', 'Direito à assistência de advogado', 'Direito à vista dos autos'],
+            answer: 'Direito de ser ouvido antes da decisão'
+        },
+        {
+            question: 'Qual é a lei que regula o processo administrativo federal?',
+            options: ['Lei 8.666/93', 'Lei 9.784/99', 'Lei 10.520/02', 'Lei 12.527/11'],
+            answer: 'Lei 9.784/99'
+        },
+        {
+            question: 'O administrado pode acompanhar o processo pela internet?',
+            options: ['Sim, em muitos órgãos', 'Não, só presencialmente', 'Apenas com advogado', 'Só após decisão final'],
+            answer: 'Sim, em muitos órgãos'
+        },
+        {
+            question: 'A ampla defesa permite:',
+            options: ['Apenas apresentar documentos', 'Utilizar todos os meios legais para se defender', 'Recorrer ao Judiciário', 'Acompanhar o processo'],
+            answer: 'Utilizar todos os meios legais para se defender'
+        },
+    ];
+    // Conceitos
+    const conceptsGrid = document.getElementById('concepts-grid');
+    conceptsData.forEach(concept => {
+        const card = document.createElement('div');
+        card.className = 'concept-card bg-white p-6 rounded-xl shadow-md cursor-pointer';
+        card.innerHTML = `
+            <div class="flex items-center gap-2 mb-2"><i data-feather="info" class="text-teal-700"></i><h3 class="text-xl font-bold text-slate-700">${concept.title}</h3></div>
+            <p class="text-slate-600 hidden mt-2">${concept.description}</p>
+        `;
+        card.addEventListener('click', () => {
+            card.querySelector('p').classList.toggle('hidden');
         });
-    </script>
+        conceptsGrid.appendChild(card);
+    });
+    // Bases Legais
+    const basesLegaisGrid = document.getElementById('bases-legais-grid');
+    basesLegaisData.forEach(base => {
+        const card = document.createElement('div');
+        card.className = 'concept-card bg-white p-6 rounded-xl shadow-md cursor-pointer';
+        card.innerHTML = `
+            <div class="flex items-center gap-2 mb-2"><i data-feather="check" class="text-amber-500"></i><h3 class="text-xl font-bold text-slate-700">${base.title}</h3></div>
+            <p class="text-slate-600 hidden mt-2">${base.description}</p>
+        `;
+        card.addEventListener('click', () => {
+            card.querySelector('p').classList.toggle('hidden');
+        });
+        basesLegaisGrid.appendChild(card);
+    });
+    // Artigos da Lei
+    const artigosLeiGrid = document.querySelector('.lei-flashcards-grid');
+    artigosLeiData.forEach(artigo => {
+        const card = document.createElement('div');
+        card.className = 'lei-flashcard';
+        card.setAttribute('role', 'button');
+        card.setAttribute('aria-expanded', 'false');
+        card.innerHTML = `
+            <div class="lei-flashcard-title"><i data-feather="book"></i>${artigo.title}</div>
+            <div class="lei-flashcard-explicacao">${artigo.explicacao}</div>
+            <div class="lei-flashcard-principios">Princípios envolvidos: <b>${artigo.principios}</b>.</div>
+        `;
+        card.addEventListener('click', () => {
+            const isExpanded = card.getAttribute('aria-expanded') === 'true';
+            card.setAttribute('aria-expanded', !isExpanded);
+            card.classList.toggle('active');
+        });
+        artigosLeiGrid.appendChild(card);
+    });
+    // Princípios
+    const principlesMenu = document.getElementById('principles-menu');
+    const principleTitle = document.getElementById('principle-title');
+    const principleDescription = document.getElementById('principle-description');
+    let activePrincipleButton = null;
+    principlesData.forEach((principle, index) => {
+        const button = document.createElement('button');
+        button.className = 'principle-btn w-full text-left p-4 rounded-lg font-medium transition-colors duration-200 bg-white shadow-sm';
+        button.textContent = principle.title;
+        button.addEventListener('click', () => {
+            principleTitle.textContent = principle.title;
+            principleDescription.textContent = principle.description;
+            if(activePrincipleButton) {
+                activePrincipleButton.classList.remove('active');
+            }
+            button.classList.add('active');
+            activePrincipleButton = button;
+        });
+        principlesMenu.appendChild(button);
+        if (index === 0) {
+            button.click();
+        }
+    });
+    // Direitos Accordion
+    const rightsAccordion = document.getElementById('rights-accordion');
+    rightsData.forEach((right, idx) => {
+        const item = document.createElement('div');
+        item.className = 'bg-white rounded-lg shadow-sm overflow-hidden';
+        item.innerHTML = `
+            <button class="accordion-btn w-full flex justify-between items-center p-5 text-left font-semibold text-slate-700 hover:bg-slate-100" aria-expanded="false">
+                <span>${right.title}</span>
+                <i data-feather="chevron-down" class="w-5 h-5"></i>
+            </button>
+            <div class="px-5 pb-5 text-slate-600 hidden">
+                <p>${right.description}</p>
+            </div>
+        `;
+        const button = item.querySelector('button');
+        const content = item.querySelector('div');
+        button.addEventListener('click', () => {
+            const expanded = button.getAttribute('aria-expanded') === 'true';
+            button.setAttribute('aria-expanded', !expanded);
+            content.classList.toggle('hidden');
+            button.querySelector('i').classList.toggle('rotate-180');
+        });
+        rightsAccordion.appendChild(item);
+    });
+    // Gráfico Pilares
+    const ctx = document.getElementById('pafPillarsChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Princípios', 'Direitos do Administrado', 'Garantias e Procedimentos'],
+            datasets: [{
+                label: 'Pilares do Processo Administrativo Federal',
+                data: [40, 35, 25],
+                backgroundColor: [
+                    'rgba(8, 121, 144, 0.8)',
+                    'rgba(245, 158, 11, 0.8)',
+                    'rgba(100, 116, 139, 0.8)',
+                ],
+                borderColor: ['#FFFFFF'],
+                borderWidth: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        font: { size: 14, family: 'Inter' }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.label || '';
+                            if (label) { label += ': '; }
+                            if (context.parsed !== null) { label += context.parsed + '%'; }
+                            return label;
+                        }
+                    }
+                }
+            }
+        }
+    });
+    // Quiz
+    const quizQuestionEl = document.getElementById('quiz-question');
+    const quizOptionsEl = document.getElementById('quiz-options');
+    const quizFeedbackEl = document.getElementById('quiz-feedback');
+    const nextQuestionBtn = document.getElementById('next-question-btn');
+    const restartQuizBtn = document.getElementById('restart-quiz-btn');
+    const quizContainer = document.getElementById('quiz-question-container');
+    let currentQuestionIndex = 0;
+    let score = 0;
+    function loadQuestion() {
+        quizFeedbackEl.classList.add('hidden');
+        nextQuestionBtn.classList.add('hidden');
+        const currentQuestion = quizData[currentQuestionIndex];
+        quizQuestionEl.textContent = currentQuestion.question;
+        quizOptionsEl.innerHTML = '';
+        currentQuestion.options.forEach(option => {
+            const button = document.createElement('button');
+            button.textContent = option;
+            button.className = 'w-full text-left p-4 rounded-lg font-medium transition-colors duration-200 bg-slate-100 hover:bg-slate-200';
+            button.addEventListener('click', () => selectAnswer(button, option, currentQuestion.answer));
+            quizOptionsEl.appendChild(button);
+        });
+    }
+    function selectAnswer(button, selectedOption, correctAnswer) {
+        const buttons = quizOptionsEl.querySelectorAll('button');
+        buttons.forEach(btn => {
+            btn.disabled = true;
+            if (btn.textContent === correctAnswer) {
+                btn.classList.remove('bg-slate-100', 'hover:bg-slate-200');
+                btn.classList.add('bg-green-500', 'text-white');
+            }
+        });
+        if (selectedOption === correctAnswer) {
+            score++;
+            quizFeedbackEl.textContent = 'Resposta Correta!';
+            quizFeedbackEl.className = 'mt-6 text-center font-medium text-green-600';
+        } else {
+            button.classList.remove('bg-slate-100', 'hover:bg-slate-200');
+            button.classList.add('bg-red-500', 'text-white');
+            quizFeedbackEl.textContent = `Incorreto. A resposta certa é "${correctAnswer}".`;
+            quizFeedbackEl.className = 'mt-6 text-center font-medium text-red-600';
+        }
+        quizFeedbackEl.classList.remove('hidden');
+        if (currentQuestionIndex < quizData.length - 1) {
+            nextQuestionBtn.classList.remove('hidden');
+        } else {
+            showFinalScore();
+        }
+    }
+    function showFinalScore() {
+        quizContainer.innerHTML = `<h3 class="text-2xl font-bold text-center text-slate-700">Quiz Finalizado!</h3><p class="text-center text-lg text-slate-600 mt-4">Você acertou ${score} de ${quizData.length} perguntas.</p>`;
+        restartQuizBtn.classList.remove('hidden');
+    }
+    nextQuestionBtn.addEventListener('click', () => {
+        currentQuestionIndex++;
+        loadQuestion();
+    });
+    restartQuizBtn.addEventListener('click', () => {
+        currentQuestionIndex = 0;
+        score = 0;
+        restartQuizBtn.classList.add('hidden');
+        quizContainer.innerHTML = `
+            <h3 id="quiz-question" class="text-xl font-semibold text-slate-700 mb-6"></h3>
+            <div id="quiz-options" class="space-y-4"></div>
+        `;
+        window.quizQuestionEl = document.getElementById('quiz-question');
+        window.quizOptionsEl = document.getElementById('quiz-options');
+        loadQuestion();
+    });
+    loadQuestion();
+    // Mobile menu
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuButton.addEventListener('click', () => {
+        const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+        mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+        mobileMenu.classList.toggle('hidden');
+    });
+    document.querySelectorAll('#nav-menu a, #mobile-menu a').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            if (mobileMenu.classList.contains('hidden') === false) {
+                mobileMenu.classList.add('hidden');
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+            }
+        });
+    });
+    feather.replace();
+});
+</script>
 </body>
 </html>
