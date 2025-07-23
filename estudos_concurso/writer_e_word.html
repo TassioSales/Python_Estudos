@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editores de Texto: Word vs. Writer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .tab-link.active, .tab-link:focus { background: linear-gradient(90deg, #3b82f6 60%, #f59e42 100%); color: #fff !important; font-weight: 500; }
+    .tab-link:not(.active):hover { background: #e0f2fe; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeIn 0.5s; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px);} to { opacity: 1; transform: none; } }
+    .collapsible.active, .collapsible:focus { background: #e2e6ea; }
+    .content-collapsible.show { display: block; }
+    .content-collapsible { display: none; }
+    .quiz-feedback { font-weight: bold; }
+    .fact-box { background: linear-gradient(90deg, #f0f9ff 60%, #fef3c7 100%); border-left: 6px solid #3b82f6; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; }
+    .adv-disadv { background: #f9fafb; border-left: 6px solid #f59e42; border-radius: 0.5rem; padding: 1rem; margin-bottom: 1.5rem; }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-blue-50 via-amber-50 to-white min-h-screen text-stone-800">
+<noscript>
+  <div class="block bg-orange-400 text-blue-900 p-4 text-center font-bold rounded-lg m-4">Este site requer JavaScript para funcionar corretamente. Por favor, ative o JavaScript no seu navegador.</div>
+</noscript>
+<div class="container mx-auto p-4 md:p-8 max-w-5xl">
+  <header class="text-center mb-8">
+    <div class="flex justify-center items-center gap-3 mb-2">
+      <span class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-tr from-blue-800 to-amber-400 shadow-lg">
+        <i data-feather="file-text" class="text-white" style="width:2.2rem;height:2.2rem;"></i>
+      </span>
+      <h1 class="text-3xl md:text-4xl font-bold text-stone-900">Editores de Texto: Word vs. Writer</h1>
+    </div>
+    <p class="text-stone-600 mt-2">Comparação didática, visual e interativa entre Microsoft Word e LibreOffice Writer</p>
+  </header>
+  <nav class="flex flex-wrap justify-center border-b-2 border-stone-200 mb-8" role="tablist">
+    <button class="tab-link active text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition flex items-center gap-2" data-tab="inicio" aria-selected="true" aria-controls="inicio"><i data-feather="home"></i>Início</button>
+    <button class="tab-link text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition flex items-center gap-2" data-tab="resumo" aria-controls="resumo"><i data-feather="info"></i>Resumo</button>
+    <button class="tab-link text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition flex items-center gap-2" data-tab="linha-tempo" aria-controls="linha-tempo"><i data-feather="activity"></i>Linha do Tempo</button>
+    <button class="tab-link text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition flex items-center gap-2" data-tab="conceitos" aria-controls="conceitos"><i data-feather="book"></i>Conceitos</button>
+    <button class="tab-link text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition flex items-center gap-2" data-tab="formatos" aria-controls="formatos"><i data-feather="file"></i>Formatos de Arquivo</button>
+    <button class="tab-link text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition flex items-center gap-2" data-tab="bases-legais" aria-controls="bases-legais"><i data-feather="shield"></i>Bases Legais</button>
+    <button class="tab-link text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition flex items-center gap-2" data-tab="principios" aria-controls="principios"><i data-feather="target"></i>Princípios</button>
+    <button class="tab-link text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition flex items-center gap-2" data-tab="direitos" aria-controls="direitos"><i data-feather="user-check"></i>Direitos</button>
+    <button class="tab-link text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition flex items-center gap-2" data-tab="cotidiano" aria-controls="cotidiano"><i data-feather="briefcase"></i>Cotidiano</button>
+    <button class="tab-link text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition flex items-center gap-2" data-tab="guias" aria-controls="guias"><i data-feather="zap"></i>Guias Rápidos</button>
+    <button class="tab-link text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition flex items-center gap-2" data-tab="mitos" aria-controls="mitos"><i data-feather="alert-triangle"></i>Mitos & Erros</button>
+    <button class="tab-link text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition flex items-center gap-2" data-tab="faq" aria-controls="faq"><i data-feather="help-circle"></i>FAQ</button>
+    <button class="tab-link text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition flex items-center gap-2" data-tab="analise" aria-controls="analise"><i data-feather="bar-chart-2"></i>Análise</button>
+    <button class="tab-link text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition flex items-center gap-2" data-tab="vantagens" aria-controls="vantagens"><i data-feather="thumbs-up"></i>Vantagens & Desvantagens</button>
+    <button class="tab-link text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition flex items-center gap-2" data-tab="quiz" aria-controls="quiz"><i data-feather="edit-3"></i>Quiz</button>
+    <button class="tab-link text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition flex items-center gap-2" data-tab="exemplos" aria-controls="exemplos"><i data-feather="file-text"></i>Exemplos Práticos</button>
+    <button class="tab-link text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition flex items-center gap-2" data-tab="dicas" aria-controls="dicas"><i data-feather="award"></i>Dicas de Prova</button>
+    <button class="tab-link text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition flex items-center gap-2" data-tab="curiosidades" aria-controls="curiosidades"><i data-feather="star"></i>Curiosidades</button>
+    <button class="tab-link text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition flex items-center gap-2" data-tab="glossario" aria-controls="glossario"><i data-feather="book-open"></i>Glossário</button>
+    <button class="tab-link text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition flex items-center gap-2" data-tab="avancados" aria-controls="avancados"><i data-feather="settings"></i>Avançados</button>
+    <button class="tab-link text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition flex items-center gap-2" data-tab="referencias" aria-controls="referencias"><i data-feather="link"></i>Referências</button>
+    <button class="tab-link text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition flex items-center gap-2" data-tab="erros" aria-controls="erros"><i data-feather="x-circle"></i>Erros Comuns</button>
+    <button class="tab-link text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition flex items-center gap-2" data-tab="comparativo-visual" aria-controls="comparativo-visual"><i data-feather="columns"></i>Comparativo Visual</button>
+    <button class="tab-link text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition flex items-center gap-2" data-tab="atalhos" aria-controls="atalhos"><i data-feather="keyboard"></i>Atalhos</button>
+    <button class="tab-link text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition flex items-center gap-2" data-tab="casos-uso" aria-controls="casos-uso"><i data-feather="layers"></i>Casos de Uso</button>
+    <button class="tab-link text-sm md:text-base py-3 px-4 md:px-6 border-b-2 border-transparent transition flex items-center gap-2" data-tab="desafios" aria-controls="desafios"><i data-feather="target"></i>Desafios</button>
+  </nav>
+  <main>
+    <!-- Início -->
+    <section id="inicio" class="tab-content active">
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <h2 class="text-2xl font-bold text-blue-500 mb-4 flex items-center gap-2"><i data-feather="home"></i>Início</h2>
+        <p class="mb-4">Bem-vindo à comparação interativa entre <strong>Microsoft Word</strong> e <strong>LibreOffice Writer</strong>! Navegue pelas abas acima para explorar conceitos, análises, tutoriais, mitos, dicas de prova, exemplos práticos e muito mais sobre os principais editores de texto do mercado.</p>
+        <ul class="list-disc list-inside text-stone-700 space-y-1">
+          <li><strong>Interface moderna e responsiva</strong> para facilitar o aprendizado.</li>
+          <li><strong>Conteúdo didático</strong> e atualizado, com exemplos práticos e comparativos visuais.</li>
+          <li><strong>Navegação por abas</strong> para acesso rápido aos tópicos.</li>
+        </ul>
+        <p class="mt-4 text-stone-600">Use o teclado para navegar entre as abas (Tab/Shift+Tab) e explore cada seção para aprofundar seus conhecimentos!</p>
+      </div>
+    </section>
+    <!-- Resumo -->
+    <section id="resumo" class="tab-content">
+      <div class="bg-gradient-to-r from-blue-100 to-amber-100 p-6 rounded-lg shadow-sm">
+        <h2 class="text-2xl font-bold text-blue-500 mb-4 flex items-center gap-2"><i data-feather="info"></i>Resumo</h2>
+        <p class="mb-4">Esta página tem como objetivo apresentar uma <strong>comparação abrangente</strong> entre o <strong>Microsoft Word</strong> e o <strong>LibreOffice Writer</strong>, abordando desde conceitos básicos até recursos avançados, com foco em organização, estética, usabilidade didática e profundidade de conteúdo. O conteúdo é estruturado em abas temáticas para facilitar a navegação e o aprendizado.</p>
+        <ul class="list-disc list-inside text-stone-700 space-y-1">
+          <li>Histórico e evolução dos editores de texto</li>
+          <li>Conceitos fundamentais e bases legais</li>
+          <li>Princípios de usabilidade, acessibilidade e interoperabilidade</li>
+          <li>Direitos do usuário e exemplos práticos de uso</li>
+          <li>Guias rápidos, mitos, FAQ, análise técnica e quiz interativo</li>
+          <li>Glossário, recursos avançados, referências e dicas de prova</li>
+        </ul>
+      </div>
+    </section>
+    <!-- Linha do Tempo -->
+    <section id="linha-tempo" class="tab-content">
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <h2 class="text-2xl font-bold text-blue-500 mb-4 flex items-center gap-2"><i data-feather="activity"></i>Linha do Tempo</h2>
+        <div class="border-l-4 border-amber-400 pl-6">
+          <div class="mb-4"><span class="font-bold">1983:</span> Lançamento do Microsoft Word para MS-DOS. <span class="text-stone-500">Primeiro editor WYSIWYG (What You See Is What You Get) da Microsoft.</span></div>
+          <div class="mb-4"><span class="font-bold">1990:</span> Word se torna parte do pacote Microsoft Office, integrando-se ao Excel e PowerPoint.</div>
+          <div class="mb-4"><span class="font-bold">2003:</span> Surgimento do OpenOffice.org Writer como alternativa gratuita e aberta, promovendo o formato ODT.</div>
+          <div class="mb-4"><span class="font-bold">2007:</span> Word adota o formato DOCX (Office Open XML), melhorando compatibilidade e compactação.</div>
+          <div class="mb-4"><span class="font-bold">2010:</span> Criação do LibreOffice Writer, focado em comunidade, inovação e formatos abertos.</div>
+          <div class="mb-4"><span class="font-bold">2013:</span> Word Online é lançado, permitindo edição colaborativa na nuvem.</div>
+          <div class="mb-4"><span class="font-bold">Atualidade:</span> Word e Writer evoluem com recursos colaborativos, integração com nuvem, acessibilidade, plugins e exportação para múltiplos formatos.</div>
+        </div>
+        <div class="fact-box mt-6"><b>Curiosidade:</b> O Writer é mantido por uma comunidade global e recebe atualizações frequentes baseadas em sugestões de usuários.</div>
+      </div>
+    </section>
+    <!-- Conceitos -->
+    <section id="conceitos" class="tab-content">
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <h2 class="text-2xl font-bold text-blue-500 mb-4 flex items-center gap-2"><i data-feather="book"></i>Conceitos</h2>
+        <ul class="list-disc list-inside text-stone-700 space-y-1">
+          <li><strong>Processador de texto:</strong> Software para criar, editar e formatar documentos.</li>
+          <li><strong>Formatos de arquivo:</strong> <code>.docx</code> (Word), <code>.odt</code> (Writer), <code>.rtf</code>, <code>.pdf</code>, <code>.txt</code>, <code>.epub</code>.</li>
+          <li><strong>Menus e interface:</strong> Word usa a interface Ribbon; Writer menus clássicos e barras personalizáveis.</li>
+          <li><strong>Barra de ferramentas:</strong> Ícones para acesso rápido a comandos.</li>
+          <li><strong>Estilos:</strong> Conjunto de formatações aplicáveis a textos e parágrafos, essenciais para sumários automáticos.</li>
+          <li><strong>Sumário automático:</strong> Geração automática de índices a partir de estilos de títulos.</li>
+          <li><strong>Macros:</strong> Sequências automatizadas de comandos para agilizar tarefas (VBA no Word, Basic no Writer).</li>
+          <li><strong>Mala direta:</strong> Envio de documentos personalizados em massa, integrando com planilhas de dados.</li>
+          <li><strong>Controle de alterações:</strong> Permite revisar, aceitar ou rejeitar edições feitas por diferentes usuários.</li>
+          <li><strong>Colaboração:</strong> Edição simultânea de documentos (Word Online, Nextcloud/Collabora para Writer).</li>
+          <li><strong>Plugins e extensões:</strong> Adicionam funcionalidades extras, como dicionários, exportação e automação.</li>
+        </ul>
+      </div>
+    </section>
+    <!-- Formatos de Arquivo -->
+    <section id="formatos" class="tab-content">
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <h2 class="text-2xl font-bold text-blue-500 mb-4 flex items-center gap-2"><i data-feather="file"></i>Formatos de Arquivo</h2>
+        <ul class="list-disc list-inside text-stone-700 space-y-1">
+          <li><strong>DOCX:</strong> Padrão do Word, amplamente aceito, suporta recursos avançados, mas pode perder formatação em outros editores.</li>
+          <li><strong>ODT:</strong> Padrão aberto do Writer, recomendado para interoperabilidade e transparência.</li>
+          <li><strong>PDF:</strong> Ideal para distribuição e impressão, preserva layout e fontes.</li>
+          <li><strong>RTF/TXT:</strong> Formatos simples, úteis para compatibilidade máxima, mas sem recursos avançados.</li>
+          <li><strong>EPUB:</strong> Exportação para livros digitais.</li>
+        </ul>
+        <div class="fact-box mt-4">
+          <b>Dica:</b> Para garantir máxima compatibilidade, salve versões em DOCX e ODT, e exporte para PDF ao compartilhar documentos finais.
+        </div>
+        <div class="fact-box">
+          <b>Limitações:</b> Recursos avançados (macros, campos automáticos, objetos OLE) podem não ser totalmente compatíveis entre Word e Writer.
+        </div>
+      </div>
+    </section>
+    <!-- Bases Legais -->
+    <section id="bases-legais" class="tab-content">
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <h2 class="text-2xl font-bold text-blue-500 mb-4 flex items-center gap-2"><i data-feather="shield"></i>Bases Legais</h2>
+        <ul class="list-disc list-inside text-stone-700 space-y-1">
+          <li><strong>Lei de Acesso à Informação (Lei 12.527/2011):</strong> Incentiva o uso de formatos abertos para garantir transparência.</li>
+          <li><strong>Padrões abertos:</strong> ODT (Open Document Text) é um formato aberto, recomendado por órgãos públicos.</li>
+          <li><strong>Normas técnicas:</strong> ABNT NBR ISO/IEC 26300 (ODF) e ABNT NBR ISO/IEC 29500 (OOXML - DOCX).</li>
+          <li><strong>LGPD:</strong> Privacidade e proteção de dados em documentos digitais.</li>
+        </ul>
+      </div>
+    </section>
+    <!-- Princípios -->
+    <section id="principios" class="tab-content">
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <h2 class="text-2xl font-bold text-blue-500 mb-4 flex items-center gap-2"><i data-feather="target"></i>Princípios</h2>
+        <ul class="list-disc list-inside text-stone-700 space-y-1">
+          <li><strong>Usabilidade:</strong> Facilidade de uso, menus intuitivos e atalhos acessíveis.</li>
+          <li><strong>Acessibilidade:</strong> Compatibilidade com leitores de tela, alto contraste, navegação por teclado.</li>
+          <li><strong>Interoperabilidade:</strong> Capacidade de abrir, editar e salvar arquivos em diferentes formatos e sistemas.</li>
+          <li><strong>Portabilidade:</strong> Possibilidade de usar em diferentes sistemas operacionais (Windows, Linux, macOS).</li>
+        </ul>
+      </div>
+    </section>
+    <!-- Direitos -->
+    <section id="direitos" class="tab-content">
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <h2 class="text-2xl font-bold text-blue-500 mb-4 flex items-center gap-2"><i data-feather="user-check"></i>Direitos</h2>
+        <ul class="list-disc list-inside text-stone-700 space-y-1">
+          <li><strong>Liberdade de escolha:</strong> Usuário pode optar pelo software que melhor atende suas necessidades.</li>
+          <li><strong>Privacidade:</strong> Proteção dos dados pessoais e documentos.</li>
+          <li><strong>Compatibilidade:</strong> Direito de acessar e compartilhar documentos em formatos abertos.</li>
+          <li><strong>Transparência:</strong> Softwares open source permitem auditoria do código.</li>
+        </ul>
+      </div>
+    </section>
+    <!-- Cotidiano -->
+    <section id="cotidiano" class="tab-content">
+      <div class="bg-gradient-to-r from-amber-100 to-blue-100 p-6 rounded-lg shadow-sm">
+        <h2 class="text-2xl font-bold text-blue-500 mb-4 flex items-center gap-2"><i data-feather="briefcase"></i>Cotidiano</h2>
+        <div class="mb-2 p-4 bg-white rounded-lg border-l-4 border-blue-400"> <b>Casa:</b> Redação de cartas, currículos, listas e documentos pessoais.</div>
+        <div class="mb-2 p-4 bg-white rounded-lg border-l-4 border-green-400"> <b>Escola:</b> Trabalhos acadêmicos, projetos, relatórios e apresentações.</div>
+        <div class="mb-2 p-4 bg-white rounded-lg border-l-4 border-amber-400"> <b>Trabalho:</b> Elaboração de contratos, atas, propostas e documentos corporativos.</div>
+        <div class="mb-2 p-4 bg-white rounded-lg border-l-4 border-pink-400"> <b>Empresas:</b> Padronização de documentos, automação de relatórios e integração com sistemas.</div>
+        <div class="fact-box mt-4"><b>Dica:</b> Use modelos prontos (templates) para agilizar a criação de documentos profissionais.</div>
+      </div>
+    </section>
+    <!-- Guias Rápidos -->
+    <section id="guias" class="tab-content">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-white rounded-lg p-6 shadow-sm border-l-4 border-blue-400">
+          <h3 class="font-bold text-lg mb-2 flex items-center gap-2"><i data-feather="zap"></i>Word: Formatar Título</h3>
+          <ol class="list-decimal list-inside text-stone-700 space-y-1">
+            <li>Selecione o texto desejado.</li>
+            <li>Vá até a aba <strong>Início</strong> &gt; <strong>Estilos</strong>.</li>
+            <li>Clique em <strong>Título 1</strong> ou outro estilo desejado.</li>
+          </ol>
+        </div>
+        <div class="bg-white rounded-lg p-6 shadow-sm border-l-4 border-green-400">
+          <h3 class="font-bold text-lg mb-2 flex items-center gap-2"><i data-feather="zap"></i>Writer: Inserir Sumário</h3>
+          <ol class="list-decimal list-inside text-stone-700 space-y-1">
+            <li>Formate os títulos com os estilos apropriados.</li>
+            <li>Vá em <strong>Inserir</strong> &gt; <strong>Sumário e Índice</strong> &gt; <strong>Sumário, Índice ou Bibliografia...</strong></li>
+            <li>Configure e insira o sumário.</li>
+          </ol>
+        </div>
+        <div class="bg-white rounded-lg p-6 shadow-sm border-l-4 border-amber-400">
+          <h3 class="font-bold text-lg mb-2 flex items-center gap-2"><i data-feather="zap"></i>Dicas de Produtividade</h3>
+          <ul class="list-disc list-inside text-stone-700 space-y-1">
+            <li>Use atalhos de teclado para agilizar tarefas (ex.: Ctrl+B para negrito).</li>
+            <li>Salve documentos em formatos compatíveis para evitar problemas de abertura.</li>
+            <li>Utilize estilos para facilitar a formatação e a criação de sumários automáticos.</li>
+            <li>Ative o controle de alterações ao revisar documentos em grupo.</li>
+            <li>Explore plugins/extensões para adicionar funcionalidades extras.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- Mitos & Erros -->
+    <section id="mitos" class="tab-content">
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <h2 class="text-2xl font-bold text-amber-500 mb-4 flex items-center gap-2"><i data-feather="alert-triangle"></i>Mitos & Erros</h2>
+        <div class="mb-2 p-4 bg-gradient-to-r from-amber-100 to-blue-100 rounded-lg border-l-4 border-amber-400"><b>Mito:</b> "Word é sempre melhor que Writer"<br><b>Realidade:</b> Ambos têm pontos fortes e limitações. O Writer é gratuito, aberto e compatível com múltiplos sistemas, enquanto o Word possui integração avançada com o ecossistema Microsoft.</div>
+        <div class="mb-2 p-4 bg-gradient-to-r from-blue-100 to-amber-100 rounded-lg border-l-4 border-blue-400"><b>Mito:</b> "Writer não abre arquivos do Word"<br><b>Realidade:</b> O Writer abre e salva arquivos <code>.docx</code>, embora possa haver pequenas diferenças de formatação em casos complexos.</div>
+        <div class="mb-2 p-4 bg-gradient-to-r from-amber-100 to-blue-100 rounded-lg border-l-4 border-amber-400"><b>Erro comum:</b> Perder formatação ao migrar documentos.<br><b>Dica:</b> Para minimizar perdas, utilize estilos e salve em formatos abertos sempre que possível.</div>
+        <div class="mb-2 p-4 bg-gradient-to-r from-blue-100 to-amber-100 rounded-lg border-l-4 border-blue-400"><b>Mito:</b> "Word é obrigatório para concursos"<br><b>Realidade:</b> Muitos concursos aceitam documentos em ODT e PDF, e cobram conhecimentos de ambos os editores.</div>
+      </div>
+    </section>
+    <!-- FAQ -->
+    <section id="faq" class="tab-content">
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <h2 class="text-2xl font-bold text-blue-500 mb-4 flex items-center gap-2"><i data-feather="help-circle"></i>FAQ</h2>
+        <div class="mb-2 p-4 bg-gradient-to-r from-blue-100 to-amber-100 rounded-lg border-l-4 border-blue-400"><b>O Writer é compatível com arquivos do Word?</b><br>Sim, o Writer abre e salva arquivos <code>.docx</code>, mas pode haver pequenas diferenças em recursos avançados.</div>
+        <div class="mb-2 p-4 bg-gradient-to-r from-amber-100 to-blue-100 rounded-lg border-l-4 border-amber-400"><b>O Word pode abrir arquivos ODT?</b><br>Sim, o Word abre arquivos <code>.odt</code>, mas a compatibilidade pode não ser total em documentos complexos.</div>
+        <div class="mb-2 p-4 bg-gradient-to-r from-blue-100 to-amber-100 rounded-lg border-l-4 border-blue-400"><b>Qual é mais seguro?</b><br>Ambos oferecem recursos de segurança, mas o Writer, por ser open source, permite maior auditoria de código.</div>
+        <div class="mb-2 p-4 bg-gradient-to-r from-amber-100 to-blue-100 rounded-lg border-l-4 border-amber-400"><b>Posso usar plugins/extensões?</b><br>Sim, ambos suportam plugins para expandir funcionalidades, como dicionários, exportação e automação.</div>
+        <div class="mb-2 p-4 bg-gradient-to-r from-blue-100 to-amber-100 rounded-lg border-l-4 border-blue-400"><b>Como migrar documentos entre Word e Writer?</b><br>Salve em formatos abertos (ODT, DOCX) e revise a formatação após a conversão.</div>
+      </div>
+    </section>
+    <!-- Análise -->
+    <section id="analise" class="tab-content">
+      <div class="bg-gradient-to-r from-blue-100 to-amber-100 p-6 rounded-lg shadow-sm">
+        <h2 class="text-2xl font-bold text-blue-500 mb-4 flex items-center gap-2"><i data-feather="bar-chart-2"></i>Análise</h2>
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-sm text-left border border-stone-200 rounded-lg">
+            <thead class="bg-blue-200">
+              <tr>
+                <th class="py-2 px-4">Critério</th>
+                <th class="py-2 px-4">Microsoft Word</th>
+                <th class="py-2 px-4">LibreOffice Writer</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b">
+                <td class="py-2 px-4">Organização</td>
+                <td class="py-2 px-4">Interface em abas (Ribbon), menus intuitivos</td>
+                <td class="py-2 px-4">Menus clássicos e personalizáveis</td>
+              </tr>
+              <tr class="border-b">
+                <td class="py-2 px-4">Estética</td>
+                <td class="py-2 px-4">Design moderno, integração com Office 365</td>
+                <td class="py-2 px-4">Visual limpo, personalizável por temas</td>
+              </tr>
+              <tr class="border-b">
+                <td class="py-2 px-4">Usabilidade Didática</td>
+                <td class="py-2 px-4">Tutoriais integrados, dicas contextuais</td>
+                <td class="py-2 px-4">Ajuda detalhada, comunidade ativa</td>
+              </tr>
+              <tr class="border-b">
+                <td class="py-2 px-4">Profundidade de Conteúdo</td>
+                <td class="py-2 px-4">Recursos avançados (macros, colaboração online)</td>
+                <td class="py-2 px-4">Recursos avançados (estilos, sumários, macros)</td>
+              </tr>
+              <tr class="border-b">
+                <td class="py-2 px-4">Compatibilidade</td>
+                <td class="py-2 px-4">DOCX, ODT, PDF, entre outros</td>
+                <td class="py-2 px-4">ODT, DOCX, PDF, entre outros</td>
+              </tr>
+              <tr>
+                <td class="py-2 px-4">Licença</td>
+                <td class="py-2 px-4">Proprietária (paga)</td>
+                <td class="py-2 px-4">Gratuita e open source</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="mt-4 text-stone-700">Ambos os editores atendem a diferentes perfis de usuários, sendo o Word mais difundido em ambientes corporativos e o Writer preferido por quem busca liberdade e formatos abertos.</p>
+      </div>
+    </section>
+    <!-- Vantagens & Desvantagens -->
+    <section id="vantagens" class="tab-content">
+      <div class="adv-disadv">
+        <h3 class="font-bold text-lg mb-2 flex items-center gap-2"><i data-feather="thumbs-up"></i>Microsoft Word</h3>
+        <ul class="list-disc list-inside text-stone-700 space-y-1">
+          <li><b>Vantagens:</b> Ampla aceitação no mercado, integração com Office 365, recursos avançados de revisão e colaboração, suporte técnico profissional, interface moderna.</li>
+          <li><b>Desvantagens:</b> Licença paga, dependência de atualizações da Microsoft, menor transparência no código, menos flexível para personalização.</li>
+        </ul>
+      </div>
+      <div class="adv-disadv">
+        <h3 class="font-bold text-lg mb-2 flex items-center gap-2"><i data-feather="thumbs-up"></i>LibreOffice Writer</h3>
+        <ul class="list-disc list-inside text-stone-700 space-y-1">
+          <li><b>Vantagens:</b> Gratuito e open source, multiplataforma, foco em formatos abertos, personalização avançada, comunidade ativa, atualizações frequentes.</li>
+          <li><b>Desvantagens:</b> Interface menos moderna, compatibilidade parcial com recursos avançados do Word, suporte técnico comunitário, integração limitada com serviços Microsoft.</li>
+        </ul>
+      </div>
+    </section>
+    <!-- Quiz -->
+    <section id="quiz" class="tab-content">
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <form id="quiz-form">
+          <h2 class="text-2xl font-bold text-blue-500 mb-4 flex items-center gap-2"><i data-feather="edit-3"></i>Quiz</h2>
+          <div class="mb-4">
+            <strong>1. Qual formato é padrão do LibreOffice Writer?</strong>
+            <div class="quiz-options ml-4">
+              <label class="block"><input type="radio" name="q1" value="a"> DOCX</label>
+              <label class="block"><input type="radio" name="q1" value="b"> ODT</label>
+              <label class="block"><input type="radio" name="q1" value="c"> PDF</label>
+            </div>
+          </div>
+          <div class="mb-4">
+            <strong>2. O Word é software livre?</strong>
+            <div class="quiz-options ml-4">
+              <label class="block"><input type="radio" name="q2" value="a"> Sim</label>
+              <label class="block"><input type="radio" name="q2" value="b"> Não</label>
+            </div>
+          </div>
+          <div class="mb-4">
+            <strong>3. Qual editor permite auditoria de código por ser open source?</strong>
+            <div class="quiz-options ml-4">
+              <label class="block"><input type="radio" name="q3" value="a"> Word</label>
+              <label class="block"><input type="radio" name="q3" value="b"> Writer</label>
+            </div>
+          </div>
+          <div class="mb-4">
+            <strong>4. Qual recurso permite revisar e aceitar/rejeitar edições em grupo?</strong>
+            <div class="quiz-options ml-4">
+              <label class="block"><input type="radio" name="q4" value="a"> Mala direta</label>
+              <label class="block"><input type="radio" name="q4" value="b"> Controle de alterações</label>
+              <label class="block"><input type="radio" name="q4" value="c"> Sumário automático</label>
+            </div>
+          </div>
+          <div class="mb-4">
+            <strong>5. Qual formato é recomendado para garantir máxima compatibilidade entre editores?</strong>
+            <div class="quiz-options ml-4">
+              <label class="block"><input type="radio" name="q5" value="a"> PDF</label>
+              <label class="block"><input type="radio" name="q5" value="b"> ODT</label>
+              <label class="block"><input type="radio" name="q5" value="c"> DOCX</label>
+            </div>
+          </div>
+          <button type="submit" class="bg-blue-500 text-white font-bold py-2 px-6 rounded-lg mt-2">Verificar respostas</button>
+          <div id="quiz-feedback" class="quiz-feedback mt-4"></div>
+        </form>
+      </div>
+    </section>
+    <!-- Exemplos Práticos -->
+    <section id="exemplos" class="tab-content">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-white rounded-lg p-6 shadow-sm border-l-4 border-blue-400">
+          <h3 class="font-bold text-lg mb-2 flex items-center gap-2"><i data-feather="file-text"></i>Formatar um currículo no Word</h3>
+          <ol class="list-decimal list-inside text-stone-700 space-y-1">
+            <li>Abra um novo documento.</li>
+            <li>Use estilos para títulos e seções.</li>
+            <li>Insira tabelas para organizar informações.</li>
+            <li>Salve em <code>.docx</code> ou <code>.pdf</code>.</li>
+          </ol>
+        </div>
+        <div class="bg-white rounded-lg p-6 shadow-sm border-l-4 border-green-400">
+          <h3 class="font-bold text-lg mb-2 flex items-center gap-2"><i data-feather="file-text"></i>Criar carta formal no Writer</h3>
+          <ol class="list-decimal list-inside text-stone-700 space-y-1">
+            <li>Abra um novo documento.</li>
+            <li>Utilize modelos prontos ou formate manualmente.</li>
+            <li>Adicione cabeçalho, corpo e assinatura.</li>
+            <li>Salve em <code>.odt</code> ou <code>.pdf</code>.</li>
+          </ol>
+        </div>
+        <div class="bg-white rounded-lg p-6 shadow-sm border-l-4 border-amber-400">
+          <h3 class="font-bold text-lg mb-2 flex items-center gap-2"><i data-feather="file-text"></i>Exportar para ePub</h3>
+          <ol class="list-decimal list-inside text-stone-700 space-y-1">
+            <li>No Writer, vá em <strong>Arquivo &gt; Exportar</strong> e escolha <strong>ePub</strong>.</li>
+            <li>No Word, salve como PDF e use um conversor online para ePub.</li>
+          </ol>
+        </div>
+        <div class="bg-white rounded-lg p-6 shadow-sm border-l-4 border-pink-400">
+          <h3 class="font-bold text-lg mb-2 flex items-center gap-2"><i data-feather="file-text"></i>Automatizar tarefas com macros</h3>
+          <ol class="list-decimal list-inside text-stone-700 space-y-1">
+            <li>No Word, use VBA para gravar e editar macros.</li>
+            <li>No Writer, use LibreOffice Basic ou Python para scripts.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+    <!-- Dicas de Prova -->
+    <section id="dicas" class="tab-content">
+      <div class="bg-gradient-to-r from-blue-100 to-amber-100 p-6 rounded-lg shadow-sm">
+        <h2 class="text-2xl font-bold text-blue-500 mb-4 flex items-center gap-2"><i data-feather="award"></i>Dicas de Prova</h2>
+        <ul class="list-disc list-inside text-stone-700 space-y-1">
+          <li>Conheça os principais atalhos de teclado dos dois editores.</li>
+          <li>Saiba identificar ícones e funções básicas (salvar, imprimir, formatar texto).</li>
+          <li>Entenda as diferenças entre DOCX e ODT.</li>
+          <li>Pratique a criação de sumários automáticos e uso de estilos.</li>
+          <li>Leia editais: muitos concursos cobram ambos os editores.</li>
+          <li>Fique atento a questões sobre interoperabilidade e formatos abertos.</li>
+        </ul>
+      </div>
+    </section>
+    <!-- Curiosidades -->
+    <section id="curiosidades" class="tab-content">
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <h2 class="text-2xl font-bold text-amber-500 mb-4 flex items-center gap-2"><i data-feather="star"></i>Curiosidades e Fatos Rápidos</h2>
+        <ul class="list-disc list-inside text-stone-700 space-y-1">
+          <li>O Word foi o primeiro editor de texto popular a permitir visualização WYSIWYG.</li>
+          <li>O Writer pode ser executado em pendrives (versão portátil), útil para uso em laboratórios e escolas.</li>
+          <li>O formato ODT é recomendado por órgãos públicos no Brasil e União Europeia.</li>
+          <li>O Word possui integração nativa com o OneDrive, facilitando backup e colaboração.</li>
+          <li>O Writer permite exportação direta para ePub, facilitando a criação de livros digitais.</li>
+          <li>Ambos os editores possuem fóruns e comunidades ativas para suporte e dicas.</li>
+        </ul>
+      </div>
+    </section>
+    <!-- Glossário -->
+    <section id="glossario" class="tab-content">
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <h2 class="text-2xl font-bold text-blue-500 mb-4 flex items-center gap-2"><i data-feather="book-open"></i>Glossário</h2>
+        <ul class="list-disc list-inside text-stone-700 space-y-1">
+          <li><strong>DOCX:</strong> Formato padrão do Word (Office Open XML).</li>
+          <li><strong>ODT:</strong> Formato padrão do Writer (Open Document Text).</li>
+          <li><strong>Mala direta:</strong> Recurso para envio de documentos personalizados em massa.</li>
+          <li><strong>Estilos:</strong> Conjunto de formatações aplicáveis a textos e parágrafos.</li>
+          <li><strong>Margens:</strong> Espaço entre o conteúdo e as bordas da página.</li>
+          <li><strong>Ribbon:</strong> Interface gráfica em abas do Word.</li>
+          <li><strong>Controle de alterações:</strong> Ferramenta para revisar e aprovar edições.</li>
+          <li><strong>Macros:</strong> Scripts para automatizar tarefas repetitivas.</li>
+          <li><strong>PDF:</strong> Formato portátil de documento, preserva layout.</li>
+          <li><strong>Interoperabilidade:</strong> Capacidade de diferentes sistemas trabalharem juntos.</li>
+          <li><strong>Plugin/Extensão:</strong> Complemento que adiciona funções extras ao editor.</li>
+        </ul>
+      </div>
+    </section>
+    <!-- Avançados -->
+    <section id="avancados" class="tab-content">
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <h2 class="text-2xl font-bold text-blue-500 mb-4 flex items-center gap-2"><i data-feather="settings"></i>Recursos Avançados</h2>
+        <ul class="list-disc list-inside text-stone-700 space-y-1">
+          <li><strong>Estilos automáticos:</strong> Aplicação rápida de formatação padronizada.</li>
+          <li><strong>Sumários:</strong> Geração automática de índices.</li>
+          <li><strong>Macros:</strong> Automatização de tarefas repetitivas (VBA no Word, Basic no Writer).</li>
+          <li><strong>Colaboração:</strong> Edição simultânea de documentos (Word Online, Nextcloud para Writer).</li>
+          <li><strong>Exportação para ePub:</strong> Criação de livros digitais diretamente do Writer.</li>
+          <li><strong>Integração com nuvem:</strong> Word (OneDrive), Writer (Nextcloud, Google Drive via plugins).</li>
+        </ul>
+        <div class="mt-4">
+          <p class="font-bold">Exemplo de macro VBA (Word):</p>
+          <pre class="bg-stone-100 rounded p-2 text-sm"><code>Sub Saudacao()
+  MsgBox "Olá, mundo!"
+End Sub</code></pre>
+          <p class="font-bold mt-2">Exemplo de macro Basic (Writer):</p>
+          <pre class="bg-stone-100 rounded p-2 text-sm"><code>Sub Saudacao
+  MsgBox "Olá, mundo!"
+End Sub</code></pre>
+        </div>
+      </div>
+    </section>
+    <!-- Referências -->
+    <section id="referencias" class="tab-content">
+      <div class="bg-gradient-to-r from-blue-100 to-amber-100 p-6 rounded-lg shadow-sm">
+        <h2 class="text-2xl font-bold text-blue-500 mb-4 flex items-center gap-2"><i data-feather="link"></i>Referências e Comunidades</h2>
+        <ul class="list-disc list-inside text-stone-700 space-y-1">
+          <li><a href="https://docs.microsoft.com/pt-br/office/" target="_blank" rel="noopener" class="text-blue-700 underline">Microsoft Docs</a></li>
+          <li><a href="https://pt.libreoffice.org/ajuda/documentacao/" target="_blank" rel="noopener" class="text-blue-700 underline">Documentação LibreOffice</a></li>
+          <li><a href="https://wiki.documentfoundation.org/Documentation/pt-br" target="_blank" rel="noopener" class="text-blue-700 underline">Wiki LibreOffice</a></li>
+          <li><a href="https://www.abnt.org.br/" target="_blank" rel="noopener" class="text-blue-700 underline">ABNT</a></li>
+          <li><a href="https://www.gov.br/governodigital/pt-br/formatos-abertos" target="_blank" rel="noopener" class="text-blue-700 underline">Formatos Abertos - Governo Digital</a></li>
+          <li><a href="https://ask.libreoffice.org/pt-br/" target="_blank" rel="noopener" class="text-blue-700 underline">Fórum Ask LibreOffice</a></li>
+          <li><a href="https://answers.microsoft.com/pt-br/office/forum/" target="_blank" rel="noopener" class="text-blue-700 underline">Fórum Microsoft Office</a></li>
+          <li><a href="https://www.youtube.com/c/LibreOfficeBrasil" target="_blank" rel="noopener" class="text-blue-700 underline">YouTube LibreOffice Brasil</a></li>
+          <li><a href="https://www.youtube.com/c/MicrosoftBrasil" target="_blank" rel="noopener" class="text-blue-700 underline">YouTube Microsoft Brasil</a></li>
+        </ul>
+      </div>
+    </section>
+    <!-- Erros Comuns -->
+    <section id="erros" class="tab-content">
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <h2 class="text-2xl font-bold text-amber-500 mb-4 flex items-center gap-2"><i data-feather="x-circle"></i>Erros Comuns</h2>
+        <div class="mb-2 p-4 bg-gradient-to-r from-amber-100 to-blue-100 rounded-lg border-l-4 border-amber-400"><b>Quebras de formatação ao migrar arquivos:</b> Evite usar recursos muito específicos de um editor ao criar documentos para serem abertos em outro.</div>
+        <div class="mb-2 p-4 bg-gradient-to-r from-blue-100 to-amber-100 rounded-lg border-l-4 border-blue-400"><b>Arquivos corrompidos:</b> Sempre faça backup e salve em formatos abertos para maior segurança.</div>
+        <div class="mb-2 p-4 bg-gradient-to-r from-amber-100 to-blue-100 rounded-lg border-l-4 border-amber-400"><b>Problemas de impressão:</b> Verifique as configurações de página e margens antes de imprimir.</div>
+        <div class="mb-2 p-4 bg-gradient-to-r from-blue-100 to-amber-100 rounded-lg border-l-4 border-blue-400"><b>Macros incompatíveis:</b> Macros criadas no Word (VBA) não funcionam no Writer e vice-versa.</div>
+      </div>
+    </section>
+    <!-- Comparativo Visual -->
+    <section id="comparativo-visual" class="tab-content">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-white rounded-lg p-6 shadow-sm border-l-4 border-blue-400">
+          <h3 class="font-bold text-lg mb-2 flex items-center gap-2"><i data-feather="file"></i>Microsoft Word</h3>
+          <ul class="list-disc list-inside text-stone-700 space-y-1">
+            <li>Interface Ribbon</li>
+            <li>Integração com Office 365</li>
+            <li>Colaboração em tempo real</li>
+            <li>Recursos avançados de revisão</li>
+            <li>Exportação para PDF</li>
+            <li>Plugins para automação e produtividade</li>
+          </ul>
+        </div>
+        <div class="bg-white rounded-lg p-6 shadow-sm border-l-4 border-green-400">
+          <h3 class="font-bold text-lg mb-2 flex items-center gap-2"><i data-feather="file"></i>LibreOffice Writer</h3>
+          <ul class="list-disc list-inside text-stone-700 space-y-1">
+            <li>Gratuito e open source</li>
+            <li>Compatível com múltiplos sistemas</li>
+            <li>Foco em formatos abertos</li>
+            <li>Personalização avançada</li>
+            <li>Exportação para PDF e ePub</li>
+            <li>Extensões para dicionários e automação</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- Atalhos -->
+    <section id="atalhos" class="tab-content">
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <h2 class="text-2xl font-bold text-blue-500 mb-4 flex items-center gap-2"><i data-feather="keyboard"></i>Comparativo de Atalhos</h2>
+        <div class="mb-4 flex flex-wrap gap-2 items-center">
+          <label class="font-semibold">Filtrar:</label>
+          <button class="atalho-filter bg-blue-100 hover:bg-blue-200 text-blue-800 font-bold py-1 px-3 rounded" data-filter="todos">Todos</button>
+          <button class="atalho-filter bg-green-100 hover:bg-green-200 text-green-800 font-bold py-1 px-3 rounded" data-filter="iguais">Iguais</button>
+          <button class="atalho-filter bg-amber-100 hover:bg-amber-200 text-amber-800 font-bold py-1 px-3 rounded" data-filter="diferentes">Diferentes</button>
+        </div>
+        <div class="overflow-x-auto">
+          <table id="atalhos-tabela" class="min-w-full text-sm text-left border border-stone-200 rounded-lg">
+            <thead class="bg-blue-200">
+              <tr>
+                <th class="py-2 px-4">Comando</th>
+                <th class="py-2 px-4">Word</th>
+                <th class="py-2 px-4">Writer</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Atalhos serão inseridos via JS -->
+            </tbody>
+          </table>
+        </div>
+        <div class="mt-4 text-stone-600 text-xs">Fonte: Documentação oficial Microsoft, LibreOffice e testes práticos. Alguns atalhos podem variar conforme idioma e sistema operacional.</div>
+      </div>
+    </section>
+    <!-- Casos de Uso -->
+    <section id="casos-uso" class="tab-content">
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <h2 class="text-2xl font-bold text-blue-500 mb-4 flex items-center gap-2"><i data-feather="layers"></i>Casos de Uso</h2>
+        <div class="mb-2 p-4 bg-gradient-to-r from-amber-100 to-blue-100 rounded-lg border-l-4 border-amber-400"><b>Word:</b> Documentos com macros e integração corporativa. Ideal para empresas que utilizam automação avançada, integração com SharePoint e colaboração em nuvem.</div>
+        <div class="mb-2 p-4 bg-gradient-to-r from-blue-100 to-amber-100 rounded-lg border-l-4 border-blue-400"><b>Writer:</b> Documentos em formatos abertos e multiplataforma. Recomendado para órgãos públicos, escolas e usuários que priorizam liberdade e compatibilidade.</div>
+        <div class="mb-2 p-4 bg-gradient-to-r from-amber-100 to-blue-100 rounded-lg border-l-4 border-amber-400"><b>Word:</b> Elaboração de relatórios com gráficos dinâmicos e mala direta integrada ao Excel.</div>
+        <div class="mb-2 p-4 bg-gradient-to-r from-blue-100 to-amber-100 rounded-lg border-l-4 border-blue-400"><b>Writer:</b> Criação de livros digitais e exportação direta para ePub.</div>
+      </div>
+    </section>
+    <!-- Desafios -->
+    <section id="desafios" class="tab-content">
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <h2 class="text-2xl font-bold text-blue-500 mb-4 flex items-center gap-2"><i data-feather="target"></i>Desafios</h2>
+        <div class="mb-2 p-4 bg-gradient-to-r from-amber-100 to-blue-100 rounded-lg border-l-4 border-amber-400"><b>Criar um documento com sumário automático:</b>
+          <ol class="list-decimal list-inside text-stone-700 mt-2">
+            <li>Abra o Word ou Writer.</li>
+            <li>Formate títulos com estilos apropriados.</li>
+            <li>Insira o sumário automático pelo menu correspondente.</li>
+          </ol>
+        </div>
+        <div class="mb-2 p-4 bg-gradient-to-r from-blue-100 to-amber-100 rounded-lg border-l-4 border-blue-400"><b>Converter um arquivo DOCX em ODT:</b>
+          <ol class="list-decimal list-inside text-stone-700 mt-2">
+            <li>Abra o arquivo DOCX no Writer.</li>
+            <li>Salve como <code>.odt</code> pelo menu <strong>Arquivo &gt; Salvar como</strong>.</li>
+          </ol>
+        </div>
+        <div class="mb-2 p-4 bg-gradient-to-r from-amber-100 to-blue-100 rounded-lg border-l-4 border-amber-400"><b>Automatizar uma tarefa repetitiva:</b>
+          <ol class="list-decimal list-inside text-stone-700 mt-2">
+            <li>Grave uma macro simples (Word: VBA, Writer: Basic).</li>
+            <li>Execute a macro para aplicar formatação ou inserir texto automaticamente.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    feather.replace();
+    const tabs = document.querySelectorAll('.tab-link');
+    const contents = document.querySelectorAll('.tab-content');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(item => item.classList.remove('active'));
+        contents.forEach(item => item.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.tab).classList.add('active');
+      });
+    });
+    // Atalhos comparativo
+    const atalhos = [
+      {comando: 'Novo documento', word: 'Ctrl + N', writer: 'Ctrl + N'},
+      {comando: 'Abrir documento', word: 'Ctrl + O', writer: 'Ctrl + O'},
+      {comando: 'Salvar', word: 'Ctrl + S', writer: 'Ctrl + S'},
+      {comando: 'Salvar como', word: 'F12', writer: 'Ctrl + Shift + S'},
+      {comando: 'Imprimir', word: 'Ctrl + P', writer: 'Ctrl + P'},
+      {comando: 'Fechar documento', word: 'Ctrl + W', writer: 'Ctrl + W'},
+      {comando: 'Desfazer', word: 'Ctrl + Z', writer: 'Ctrl + Z'},
+      {comando: 'Refazer', word: 'Ctrl + Y', writer: 'Ctrl + Y'},
+      {comando: 'Copiar', word: 'Ctrl + C', writer: 'Ctrl + C'},
+      {comando: 'Colar', word: 'Ctrl + V', writer: 'Ctrl + V'},
+      {comando: 'Recortar', word: 'Ctrl + X', writer: 'Ctrl + X'},
+      {comando: 'Selecionar tudo', word: 'Ctrl + A', writer: 'Ctrl + A'},
+      {comando: 'Negrito', word: 'Ctrl + B', writer: 'Ctrl + B'},
+      {comando: 'Itálico', word: 'Ctrl + I', writer: 'Ctrl + I'},
+      {comando: 'Sublinhado', word: 'Ctrl + U', writer: 'Ctrl + U'},
+      {comando: 'Alinhar à esquerda', word: 'Ctrl + Q', writer: 'Ctrl + L'},
+      {comando: 'Centralizar', word: 'Ctrl + E', writer: 'Ctrl + E'},
+      {comando: 'Alinhar à direita', word: 'Ctrl + G', writer: 'Ctrl + R'},
+      {comando: 'Justificar', word: 'Ctrl + J', writer: 'Ctrl + J'},
+      {comando: 'Aumentar fonte', word: 'Ctrl + ]', writer: 'Ctrl + Shift + >'},
+      {comando: 'Diminuir fonte', word: 'Ctrl + [', writer: 'Ctrl + Shift + <'},
+      {comando: 'Novo parágrafo', word: 'Enter', writer: 'Enter'},
+      {comando: 'Nova linha (quebra)', word: 'Shift + Enter', writer: 'Shift + Enter'},
+      {comando: 'Inserir hiperlink', word: 'Ctrl + K', writer: 'Ctrl + K'},
+      {comando: 'Localizar', word: 'Ctrl + F', writer: 'Ctrl + F'},
+      {comando: 'Substituir', word: 'Ctrl + H', writer: 'Ctrl + H'},
+      {comando: 'Ir para', word: 'Ctrl + G', writer: 'Ctrl + Shift + F5'},
+      {comando: 'Salvar como PDF', word: 'Alt + F, depois A', writer: 'Ctrl + Shift + S, depois PDF'},
+      {comando: 'Inserir tabela', word: 'Alt + N, T', writer: 'Ctrl + F12'},
+      {comando: 'Inserir comentário', word: 'Ctrl + Alt + M', writer: 'Ctrl + Alt + C'},
+      {comando: 'Mostrar/ocultar régua', word: 'Alt + W, R', writer: 'Ctrl + Shift + R'},
+      {comando: 'Aumentar recuo', word: 'Ctrl + M', writer: 'Ctrl + F7'},
+      {comando: 'Diminuir recuo', word: 'Ctrl + Shift + M', writer: 'Ctrl + Shift + F7'},
+      {comando: 'Selecionar palavra', word: 'Ctrl + Shift + →', writer: 'Ctrl + Shift + →'},
+      {comando: 'Selecionar parágrafo', word: 'Ctrl + Shift + ↓', writer: 'Ctrl + Shift + ↓'},
+      {comando: 'Mover para início do documento', word: 'Ctrl + Home', writer: 'Ctrl + Home'},
+      {comando: 'Mover para fim do documento', word: 'Ctrl + End', writer: 'Ctrl + End'},
+      {comando: 'Zoom', word: 'Ctrl + Scroll', writer: 'Ctrl + Scroll'},
+      {comando: 'Ajuda', word: 'F1', writer: 'F1'},
+      {comando: 'Salvar tudo', word: 'Ctrl + Shift + S', writer: 'Ctrl + Shift + S'},
+      {comando: 'Inserir quebra de página', word: 'Ctrl + Enter', writer: 'Ctrl + Enter'},
+      {comando: 'Inserir símbolo', word: 'Alt + I, S', writer: 'Ctrl + Shift + S'},
+      {comando: 'Mostrar/ocultar marcas de parágrafo', word: 'Ctrl + Shift + 8', writer: 'Ctrl + F10'},
+      {comando: 'Verificação ortográfica', word: 'F7', writer: 'F7'},
+      {comando: 'Inserir nota de rodapé', word: 'Alt + Ctrl + F', writer: 'Ctrl + Alt + F'},
+      {comando: 'Inserir sumário', word: 'Alt + S, T', writer: 'Ctrl + F2'},
+      {comando: 'Navegador/estrutura', word: 'Ctrl + F6', writer: 'F5'},
+      {comando: 'Modo tela cheia', word: 'Alt + V, U', writer: 'Ctrl + Shift + J'},
+      {comando: 'Fechar programa', word: 'Alt + F4', writer: 'Alt + F4'},
+    ];
+    const tabela = document.querySelector('#atalhos-tabela tbody');
+    function renderAtalhos(filtro) {
+      tabela.innerHTML = '';
+      atalhos.forEach(at => {
+        const iguais = at.word === at.writer;
+        if (
+          filtro === 'iguais' && !iguais
+          || filtro === 'diferentes' && iguais
+        ) return;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td class="py-2 px-4">${at.comando}</td><td class="py-2 px-4">${at.word}</td><td class="py-2 px-4">${at.writer}</td>`;
+        if (iguais) tr.classList.add('bg-green-50');
+        else tr.classList.add('bg-amber-50');
+        tabela.appendChild(tr);
+      });
+    }
+    renderAtalhos('todos');
+    document.querySelectorAll('.atalho-filter').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.atalho-filter').forEach(b => b.classList.remove('ring', 'ring-2', 'ring-blue-400'));
+        this.classList.add('ring', 'ring-2', 'ring-blue-400');
+        renderAtalhos(this.dataset.filter);
+      });
+    });
+    // Quiz interativo
+    const quizForm = document.getElementById('quiz-form');
+    if (quizForm) {
+      quizForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        let score = 0;
+        if (quizForm.q1.value === 'b') score++;
+        if (quizForm.q2.value === 'b') score++;
+        if (quizForm.q3.value === 'b') score++;
+        if (quizForm.q4.value === 'b') score++;
+        if (quizForm.q5.value === 'b' || quizForm.q5.value === 'c') score++; // Aceita ODT e DOCX como compatíveis
+        const feedback = document.getElementById('quiz-feedback');
+        feedback.textContent = `Você acertou ${score} de 5 perguntas!`;
+        feedback.style.color = score === 5 ? '#22c55e' : '#ef4444';
+      });
+    }
+  });
+</script>
+</body>
+</html>
