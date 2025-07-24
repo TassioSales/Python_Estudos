@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cidadania: Assédio e Discriminação no Trabalho</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f8f9fa;
+      color: #212529;
+    }
+    header {
+      background: #dc3545;
+      color: #fff;
+      padding: 24px 16px 16px 16px;
+      text-align: center;
+      border-bottom-left-radius: 24px;
+      border-bottom-right-radius: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.2rem;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 auto 20px auto;
+      max-width: 1200px;
+      justify-content: center;
+      background: #fff;
+      border-radius: 12px;
+      padding: 10px 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+    .tab-link {
+      padding: 10px 14px;
+      cursor: pointer;
+      background: #f0f0f0;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      color: #212529;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s, color 0.2s;
+      outline: none;
+    }
+    .tab-link.active, .tab-link:focus {
+      background: #dc3545;
+      color: #fff;
+    }
+    .tab-link:focus-visible {
+      outline: 2px solid #343a40;
+    }
+    .tab-content {
+      display: none;
+      padding: 24px 16px;
+      border-radius: 12px;
+      background: #fff;
+      max-width: 1100px;
+      margin: 0 auto 28px auto;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      min-height: 180px;
+    }
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.4s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    h2 {
+      color: #dc3545;
+      margin-top: 0;
+    }
+    .icon {
+      min-width: 20px;
+      text-align: center;
+    }
+    .card {
+      background: #f5f5f5;
+      border-radius: 8px;
+      padding: 12px 18px;
+      margin: 12px 0;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+    }
+    .faq-item {
+      margin-bottom: 12px;
+    }
+    .faq-question {
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .faq-answer {
+      display: none;
+      margin-top: 6px;
+    }
+    .faq-answer.active {
+      display: block;
+    }
+    .timeline {
+      border-left: 4px solid #dc3545;
+      margin: 16px 0 16px 20px;
+      padding-left: 18px;
+    }
+    .timeline-event {
+      margin-bottom: 18px;
+    }
+    .timeline-event h4 {
+      margin: 0 0 2px 0;
+      color: #212529;
+      font-size: 1.1rem;
+    }
+    .timeline-event p {
+      margin: 0 0 0 0;
+      color: #555;
+    }
+    .quiz {
+      margin: 12px 0;
+    }
+    .quiz-question {
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+    .quiz-options label {
+      display: block;
+      margin-bottom: 4px;
+      cursor: pointer;
+    }
+    .quiz-feedback {
+      margin-top: 8px;
+      font-weight: bold;
+    }
+    @media (max-width: 700px) {
+      .tab-content { padding: 16px 4px; }
+      .tabs { flex-direction: column; gap: 4px; }
+    }
+    @media (max-width: 500px) {
+      header h1 { font-size: 1.2rem; }
+      .tab-link { font-size: 0.95rem; padding: 7px 8px; }
+    }
+    a { color: #dc3545; text-decoration: underline; }
+    a:focus { outline: 2px solid #343a40; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><i class="fas fa-balance-scale icon" aria-hidden="true"></i> Assédio e Discriminação no Ambiente de Trabalho</h1>
+  </header>
+  <nav class="tabs" role="tablist" aria-label="Abas Temáticas">
+    <button class="tab-link active" data-tab="inicio" role="tab" aria-selected="true" aria-controls="inicio"><i class="fas fa-home icon"></i> Início</button>
+    <button class="tab-link" data-tab="resumo" role="tab" aria-selected="false" aria-controls="resumo"><i class="fas fa-info-circle icon"></i> Resumo</button>
+    <button class="tab-link" data-tab="linha-tempo" role="tab" aria-selected="false" aria-controls="linha-tempo"><i class="fas fa-history icon"></i> Linha do Tempo</button>
+    <button class="tab-link" data-tab="conceitos" role="tab" aria-selected="false" aria-controls="conceitos"><i class="fas fa-lightbulb icon"></i> Conceitos</button>
+    <button class="tab-link" data-tab="bases-legais" role="tab" aria-selected="false" aria-controls="bases-legais"><i class="fas fa-gavel icon"></i> Bases Legais</button>
+    <button class="tab-link" data-tab="principios" role="tab" aria-selected="false" aria-controls="principios"><i class="fas fa-handshake icon"></i> Princípios</button>
+    <button class="tab-link" data-tab="direitos" role="tab" aria-selected="false" aria-controls="direitos"><i class="fas fa-shield-alt icon"></i> Direitos</button>
+    <button class="tab-link" data-tab="formas-assedio" role="tab" aria-selected="false" aria-controls="formas-assedio"><i class="fas fa-exclamation-triangle icon"></i> Formas de Assédio</button>
+    <button class="tab-link" data-tab="discriminacao" role="tab" aria-selected="false" aria-controls="discriminacao"><i class="fas fa-users icon"></i> Discriminação no Trabalho</button>
+    <button class="tab-link" data-tab="canais-denuncia" role="tab" aria-selected="false" aria-controls="canais-denuncia"><i class="fas fa-bullhorn icon"></i> Canais de Denúncia</button>
+    <button class="tab-link" data-tab="prevencao" role="tab" aria-selected="false" aria-controls="prevencao"><i class="fas fa-shield-virus icon"></i> Prevenção</button>
+    <button class="tab-link" data-tab="casos-reais" role="tab" aria-selected="false" aria-controls="casos-reais"><i class="fas fa-newspaper icon"></i> Casos Reais</button>
+    <button class="tab-link" data-tab="mitos-verdades" role="tab" aria-selected="false" aria-controls="mitos-verdades"><i class="fas fa-question-circle icon"></i> Mitos & Verdades</button>
+    <button class="tab-link" data-tab="faq" role="tab" aria-selected="false" aria-controls="faq"><i class="fas fa-comments icon"></i> FAQ</button>
+    <button class="tab-link" data-tab="cartilhas" role="tab" aria-selected="false" aria-controls="cartilhas"><i class="fas fa-book-open icon"></i> Cartilhas e Guias</button>
+    <button class="tab-link" data-tab="exemplos" role="tab" aria-selected="false" aria-controls="exemplos"><i class="fas fa-chalkboard-teacher icon"></i> Exemplos Práticos</button>
+    <button class="tab-link" data-tab="glossario" role="tab" aria-selected="false" aria-controls="glossario"><i class="fas fa-spell-check icon"></i> Glossário</button>
+    <button class="tab-link" data-tab="quiz" role="tab" aria-selected="false" aria-controls="quiz"><i class="fas fa-pen-alt icon"></i> Quiz</button>
+    <button class="tab-link" data-tab="desafios" role="tab" aria-selected="false" aria-controls="desafios"><i class="fas fa-brain icon"></i> Desafios de Reflexão</button>
+    <button class="tab-link" data-tab="referencias" role="tab" aria-selected="false" aria-controls="referencias"><i class="fas fa-link icon"></i> Referências</button>
+  </nav>
+  <main>
+    <section id="inicio" class="tab-content active" role="tabpanel" tabindex="0">
+      <h2>Bem-vindo!</h2>
+<p>Esta página tem como objetivo informar, conscientizar e orientar sobre o assédio e a discriminação no ambiente de trabalho, promovendo cidadania, dignidade e respeito nas relações profissionais.</p>
+<div class="card"><b>Importância Social:</b> O combate ao assédio e à discriminação é fundamental para garantir ambientes de trabalho saudáveis, produtivos e justos para todos.</div>
+
+<div class="card" style="background:#fff3cd; color:#856404; margin-top:16px;">
+  <b>Definições:</b><br>
+  <b>Assédio Moral:</b> Conduta abusiva, repetitiva, que expõe a pessoa a situações humilhantes e constrangedoras no ambiente de trabalho.<br>
+  <b>Assédio Sexual:</b> Conduta de natureza sexual indesejada, que pode gerar constrangimento e ameaça à dignidade da vítima.<br>
+  <b>Discriminação:</b> Toda distinção, exclusão ou restrição baseada em raça, gênero, orientação sexual, religião, deficiência, idade ou qualquer outro fator, que prejudique direitos ou oportunidades.
+</div>
+
+<div class="card" style="background:#e2f0d9; color:#27632a; margin-top:16px;">
+  <b>Legislação Atualizada:</b><br>
+  O <b>Decreto nº 12.122/2024</b> instituiu o Programa Federal de Prevenção e Enfrentamento do Assédio e da Discriminação (PFPEAD) no âmbito da administração pública federal direta, autárquica e fundacional. O objetivo é combater todas as formas de violência nas relações de trabalho, especialmente o assédio moral, o assédio sexual e a discriminação.<br>
+  <b>Referência Oficial:</b> O <b>Guia Lilás</b> (Controladoria-Geral da União) traz orientações para prevenção e tratamento de casos de assédio e discriminação no serviço público.
+</div>
+    </section>
+    <section id="linha-tempo" class="tab-content" role="tabpanel" tabindex="0">
+      <h2>Linha do Tempo: Marcos do Combate ao Assédio e Discriminação</h2>
+      <div class="timeline" style="margin-bottom:24px;">
+        <div class="timeline-event" style="margin-bottom:12px;">
+          <h4>1988</h4>
+          <p><b>Constituição Federal:</b> Estabelece direitos fundamentais, igualdade e proibição de discriminação (arts. 5º e 7º).</p>
+        </div>
+        <div class="timeline-event" style="margin-bottom:12px;">
+          <h4>1995</h4>
+          <p><b>Lei nº 9.029/1995:</b> Proíbe práticas discriminatórias na relação de emprego.</p>
+        </div>
+        <div class="timeline-event" style="margin-bottom:12px;">
+          <h4>2001</h4>
+          <p><b>Lei nº 10.224/2001:</b> Inclui o crime de assédio sexual no Código Penal (art. 216-A).</p>
+        </div>
+        <div class="timeline-event" style="margin-bottom:12px;">
+          <h4>2006</h4>
+          <p><b>Primeiros reconhecimentos do TST:</b> Assédio moral passa a ser causa de indenização por danos morais.</p>
+        </div>
+        <div class="timeline-event" style="margin-bottom:12px;">
+          <h4>2015</h4>
+          <p><b>Lei nº 13.185/2015:</b> Institui o Programa de Combate à Intimidação Sistemática (Bullying).</p>
+        </div>
+        <div class="timeline-event" style="margin-bottom:12px;">
+          <h4>2022</h4>
+          <p><b>Lei nº 14.457/2022:</b> Reforça políticas de prevenção e combate ao assédio no trabalho.</p>
+        </div>
+        <div class="timeline-event" style="margin-bottom:12px;">
+          <h4>2023</h4>
+          <p><b>Lei nº 14.540/2023:</b> Programa de Integridade nas instituições federais de ensino, com foco em prevenção ao assédio.</p>
+        </div>
+        <div class="timeline-event" style="margin-bottom:12px;">
+          <h4>2024</h4>
+          <p><b>Decreto nº 12.122/2024:</b> Institui o Programa Federal de Prevenção e Enfrentamento do Assédio e da Discriminação (PFPEAD) na administração pública federal.</p>
+        </div>
+      </div>
+      <div class="card" style="background:#e2f0d9; color:#27632a;">
+        <b>Observação:</b> O combate ao assédio e à discriminação é resultado de avanços legais, sociais e institucionais contínuos. Fique atento(a) às atualizações e participe da construção de ambientes mais justos!
+      </div>
+    </section>
+    <section id="canais-denuncia" class="tab-content" role="tabpanel" tabindex="0">
+      <h2>Canais de Denúncia Oficiais</h2>
+      <ul>
+        <li><b>RH</b> ou setor de gestão de pessoas da instituição.</li>
+        <li><b>Ouvidoria interna</b> (pode ser anônima, inclusive online).</li>
+        <li><b>Ministério Público do Trabalho (MPT):</b> <a href="https://www.mpt.mp.br/servicos/denuncias" target="_blank">Denúncia online</a>.</li>
+        <li><b>Sindicatos e associações de classe:</b> Apoio e orientação jurídica.</li>
+        <li><b>Polícia Civil</b> e <b>Delegacias Especializadas</b> (em casos de crime).</li>
+        <li><b>Disque 100</b> (Direitos Humanos): Serviço nacional e gratuito para denúncias de violações de direitos.</li>
+        <li><b>Ouvidoria-Geral da União (OGU):</b> <a href="https://falabr.cgu.gov.br/publico/Manifestacao/SelecionarTipoManifestacao.aspx" target="_blank">Fala.BR</a></li>
+      </ul>
+      <div class="card" style="background:#fff3cd; color:#856404;">
+        <b>Importante:</b> Denúncias podem ser feitas por vítimas ou testemunhas, inclusive de forma anônima. O sigilo é garantido por lei e a vítima não pode sofrer retaliação.
+      </div>
+      <div class="card" style="background:#e2f0d9; color:#27632a;">
+        <b>Dica:</b> Guarde todos os registros e provas do ocorrido. Procure apoio psicológico e jurídico se necessário.
+      </div>
+    </section>
+    <section id="casos-reais" class="tab-content" role="tabpanel" tabindex="0">
+      <h2>Casos Reais e Jurisprudência</h2>
+      <div class="card" style="background:#e2f0d9; color:#27632a; margin-bottom:16px;">
+        <b>Assédio Moral Reconhecido pelo TST:</b><br>
+        Uma trabalhadora foi indenizada após sofrer humilhações públicas e isolamento por parte da chefia. O Tribunal Superior do Trabalho reconheceu o dano moral e fixou indenização.<br>
+        <a href="https://www.tst.jus.br/web/guest/noticias/-/asset_publisher/89Dk/content/id/32425229" target="_blank">Leia o caso no site do TST</a>
+      </div>
+      <div class="card" style="background:#f8d7da; color:#721c24; margin-bottom:16px;">
+        <b>Assédio Sexual em Ambiente Corporativo:</b><br>
+        Um gerente foi condenado por repetidas investidas de cunho sexual contra uma subordinada, resultando em demissão por justa causa e condenação judicial.<br>
+        <a href="https://www.tst.jus.br/web/guest/noticias/-/asset_publisher/89Dk/content/id/24946018" target="_blank">Veja decisão do TST</a>
+      </div>
+      <div class="card" style="background:#d1ecf1; color:#0c5460; margin-bottom:16px;">
+        <b>Discriminação por Deficiência:</b><br>
+        Empresa foi condenada a reintegrar e indenizar trabalhador dispensado por ser pessoa com deficiência, caracterizando discriminação.<br>
+        <a href="https://www.tst.jus.br/web/guest/noticias/-/asset_publisher/89Dk/content/id/28750810" target="_blank">Leia notícia do TST</a>
+      </div>
+      <div class="card" style="background:#fff3cd; color:#856404;">
+        <b>Na Mídia:</b><br>
+        Casos amplamente divulgados na imprensa ajudaram a fortalecer políticas internas de prevenção e canais de denúncia em grandes empresas.<br>
+        <a href="https://g1.globo.com/economia/concursos-e-emprego/noticia/2023/03/08/assedio-moral-e-sexual-no-trabalho.ghtml" target="_blank">Reportagem G1</a>
+      </div>
+    </section>
+    <section id="mitos-verdades" class="tab-content" role="tabpanel" tabindex="0">
+      <h2>Mitos & Verdades</h2>
+      <div class="card" style="background:#fff3cd; color:#856404; margin-bottom:12px;">
+        <b>Mito:</b> "Assédio só existe se for repetido."
+        <br><b>Esclarecimento:</b> Uma única conduta grave pode configurar assédio, especialmente no caso de assédio sexual.
+      </div>
+      <div class="card" style="background:#e2f0d9; color:#27632a; margin-bottom:12px;">
+        <b>Verdade:</b> "A vítima pode denunciar mesmo sem testemunhas."
+        <br><b>Explicação:</b> Provas podem ser documentais, eletrônicas ou testemunhais. O relato da vítima tem valor.
+      </div>
+      <div class="card" style="background:#fff3cd; color:#856404; margin-bottom:12px;">
+        <b>Mito:</b> "Brincadeiras não são assédio."
+        <br><b>Esclarecimento:</b> Brincadeiras ofensivas, constrangedoras ou reiteradas podem sim ser consideradas assédio.
+      </div>
+      <div class="card" style="background:#e2f0d9; color:#27632a; margin-bottom:12px;">
+        <b>Verdade:</b> "Homens também podem ser vítimas."
+        <br><b>Explicação:</b> O assédio e a discriminação podem atingir qualquer pessoa, independentemente de gênero.
+      </div>
+      <div class="card" style="background:#fff3cd; color:#856404; margin-bottom:12px;">
+        <b>Mito:</b> "Só chefes cometem assédio."
+        <br><b>Esclarecimento:</b> O assédio pode ocorrer entre colegas (horizontal) ou até de subordinados para chefes (ascendente).
+      </div>
+      <div class="card" style="background:#e2f0d9; color:#27632a;">
+        <b>Verdade:</b> "Assédio pode ser denunciado anonimamente."
+        <br><b>Explicação:</b> Diversos canais oficiais garantem o anonimato e a proteção do denunciante.
+      </div>
+    </section>
+    <section id="formas-assedio" class="tab-content" role="tabpanel" tabindex="0">
+      <h2>Formas de Assédio</h2>
+      <ul>
+        <li><b>Assédio Vertical:</b> De superior para subordinado (mais comum), mas também pode ocorrer de subordinado para chefe (ascendente).</li>
+        <li><b>Assédio Horizontal:</b> Entre colegas de mesmo nível hierárquico.</li>
+        <li><b>Assédio Institucional:</b> Práticas abusivas promovidas ou toleradas pela própria organização.</li>
+        <li><b>Assédio Virtual (Cyberbullying):</b> Ocorre por e-mails, mensagens, redes sociais e aplicativos corporativos.</li>
+        <li><b>Assédio Presencial:</b> Acontece no ambiente físico de trabalho, por meio de palavras, gestos ou atitudes.</li>
+        <li><b>Assédio Individual ou Coletivo:</b> Pode ser direcionado a uma pessoa ou a um grupo.</li>
+      </ul>
+      <h3>Exemplos Práticos</h3>
+      <ul>
+        <li>Humilhações públicas, gritos e xingamentos.</li>
+        <li>Isolamento social ou exclusão de reuniões.</li>
+        <li>Exigência de metas inatingíveis para provocar desgaste.</li>
+        <li>Boatos, fofocas e ataques à reputação.</li>
+        <li>Mensagens ofensivas ou ameaçadoras por meios digitais.</li>
+        <li>Retirada injustificada de funções ou tarefas importantes.</li>
+      </ul>
+      <div class="card" style="background:#fff3cd; color:#856404;">
+        <b>Dica:</b> O assédio pode ser sutil ou explícito. Fique atento(a) a mudanças no ambiente e procure ajuda ao identificar sinais.
+      </div>
+    </section>
+    <section id="direitos" class="tab-content" role="tabpanel" tabindex="0">
+      <h2>Direitos das Vítimas</h2>
+      <ul>
+        <li><b>Proteção contra retaliação:</b> É proibido punir, demitir ou prejudicar quem denuncia assédio ou discriminação.</li>
+        <li><b>Sigilo e confidencialidade:</b> As denúncias devem ser tratadas com absoluto sigilo para proteger a vítima.</li>
+        <li><b>Acesso a canais de denúncia:</b> Toda vítima tem direito a utilizar ouvidorias, RH, sindicatos, MPT e outros canais oficiais.</li>
+        <li><b>Reparação de danos:</b> Possibilidade de indenização por danos morais, reintegração ao emprego e outras medidas judiciais.</li>
+        <li><b>Apoio psicológico e social:</b> Direito a atendimento especializado, quando disponível, para recuperação da saúde física e mental.</li>
+        <li><b>Ampla defesa e contraditório:</b> Direito de ser ouvida e apresentar provas em processos administrativos e judiciais.</li>
+        <li><b>Reintegração ao emprego:</b> Em caso de dispensa discriminatória, a vítima pode ser reintegrada judicialmente.</li>
+      </ul>
+      <div class="card" style="background:#d1ecf1; color:#0c5460;">
+        <b>Dica:</b> Conheça e exerça seus direitos! Busque apoio e orientação sempre que necessário.
+      </div>
+    </section>
+    <section id="principios" class="tab-content" role="tabpanel" tabindex="0">
+      <h2>Princípios Fundamentais</h2>
+      <ul>
+        <li><b>Dignidade da Pessoa Humana:</b> Toda pessoa tem direito ao respeito, à honra e à integridade física e moral. <span style="color:#888;">Base do ordenamento jurídico brasileiro.</span></li>
+        <li><b>Igualdade e Não Discriminação:</b> Todos(as) devem ser tratados(as) de forma igual, sem distinção de raça, gênero, idade, deficiência, religião, orientação sexual etc.</li>
+        <li><b>Respeito e Diversidade:</b> Valorizar as diferenças e promover um ambiente inclusivo e plural.</li>
+        <li><b>Ambiente de Trabalho Saudável:</b> Garantia de condições dignas, seguras e livres de assédio ou discriminação.</li>
+        <li><b>Motivação dos Atos Administrativos:</b> Toda decisão deve ser fundamentada, transparente e justificável, prevenindo arbitrariedades.</li>
+        <li><b>Ampla Defesa e Contraditório:</b> Direito de toda pessoa de se defender e ser ouvida em processos administrativos e judiciais.</li>
+      </ul>
+      <div class="card" style="background:#e2f0d9; color:#27632a;">
+        <b>Dica:</b> Os princípios são a base para interpretação e aplicação das leis e políticas de prevenção ao assédio e à discriminação.
+      </div>
+    </section>
+    <section id="bases-legais" class="tab-content" role="tabpanel" tabindex="0">
+      <h2>Bases Legais Essenciais</h2>
+      <ul>
+        <li><b>Constituição Federal (CF/88):</b> 
+          <ul>
+            <li><b>Art. 5º:</b> Todos são iguais perante a lei, sem distinção de qualquer natureza.</li>
+            <li><b>Art. 7º:</b> Proibição de diferença de salários e critérios de admissão por motivo de sexo, idade, cor ou estado civil.</li>
+          </ul>
+        </li>
+        <li><b>CLT (Consolidação das Leis do Trabalho):</b>
+          <ul>
+            <li><b>Art. 373-A:</b> Veda práticas discriminatórias no ambiente de trabalho.</li>
+            <li><b>Art. 483:</b> Permite rescisão indireta do contrato por assédio.</li>
+          </ul>
+        </li>
+        <li><b>Lei nº 9.029/1995:</b> Proíbe práticas discriminatórias na relação de emprego (<a href="https://www.planalto.gov.br/ccivil_03/leis/l9029.htm" target="_blank">texto oficial</a>).</li>
+        <li><b>Lei nº 10.224/2001:</b> Inclui o crime de assédio sexual no Código Penal (Art. 216-A).</li>
+        <li><b>Lei nº 13.185/2015:</b> Programa de Combate à Intimidação Sistemática (Bullying).</li>
+        <li><b>Lei nº 14.457/2022:</b> Reforça políticas de prevenção ao assédio no trabalho.</li>
+        <li><b>Lei nº 14.540/2023:</b> Programa de Integridade nas instituições federais de ensino.</li>
+        <li><b>Decreto nº 12.122/2024:</b> Institui o Programa Federal de Prevenção e Enfrentamento do Assédio e da Discriminação (PFPEAD).</li>
+        <li><b>Convenções da OIT:</b> Tratados internacionais sobre igualdade e combate à discriminação (Convenção 111, por exemplo).</li>
+      </ul>
+      <div class="card" style="background:#d1ecf1; color:#0c5460;">
+        <b>Dica:</b> Consulte sempre a legislação atualizada e utilize os canais oficiais para tirar dúvidas jurídicas.
+      </div>
+    </section>
+    <section id="conceitos" class="tab-content" role="tabpanel" tabindex="0">
+      <h2>Conceitos Fundamentais</h2>
+      <ul>
+        <li><b>Assédio Moral:</b> Conduta abusiva, repetitiva e prolongada, que humilha, constrange, inferioriza ou ameaça a dignidade do trabalhador(a), causando danos emocionais e à saúde.<br><span style="color:#888;font-size:0.95em;">Exemplo: Isolamento, críticas públicas, sobrecarga de tarefas injustificada.</span></li>
+        <li><b>Assédio Sexual:</b> Conduta de conotação sexual, não desejada, que constrange a vítima, podendo ocorrer de superiores ou colegas. Pode ser explícito (propostas diretas) ou sutil (insinuações, chantagens).<br><span style="color:#888;font-size:0.95em;">Exemplo: Piadas, convites insistentes, toques indesejados.</span></li>
+        <li><b>Assédio Institucional:</b> Práticas abusivas promovidas ou toleradas por instituições, que perpetuam ambientes hostis, discriminatórios ou de perseguição sistemática.<br><span style="color:#888;font-size:0.95em;">Exemplo: Cultura organizacional que ignora denúncias ou pune vítimas.</span></li>
+        <li><b>Discriminação Direta:</b> Tratamento diferenciado explícito e injustificado, baseado em características pessoais (gênero, raça, idade, deficiência etc.).<br><span style="color:#888;font-size:0.95em;">Exemplo: Negar promoção a uma mulher por ser mulher.</span></li>
+        <li><b>Discriminação Indireta:</b> Práticas aparentemente neutras, mas que resultam em desvantagem para determinado grupo.<br><span style="color:#888;font-size:0.95em;">Exemplo: Exigir requisitos desnecessários para excluir pessoas com deficiência.</span></li>
+        <li><b>Preconceito:</b> Opinião ou sentimento desfavorável formado sem conhecimento, razão ou experiência.<br><span style="color:#888;font-size:0.95em;">Exemplo: Supor que alguém é incapaz devido à sua origem.</span></li>
+        <li><b>Ambiente Hostil:</b> Situação em que o ambiente de trabalho se torna insuportável devido a práticas abusivas, discriminatórias ou de assédio.<br><span style="color:#888;font-size:0.95em;">Exemplo: Piadas recorrentes, exclusão, ameaças veladas.</span></li>
+      </ul>
+      <div class="card" style="background:#e2f0d9; color:#27632a;">
+        <b>Dica:</b> Reconhecer os conceitos é o primeiro passo para prevenir e combater o assédio e a discriminação!
+      </div>
+    </section>
+    <section id="resumo" class="tab-content" role="tabpanel" tabindex="0">
+      <h2>Resumo</h2>
+      <div class="card" style="background:#fff3cd; color:#856404; margin-bottom:16px;">
+        <b>Atualização 2024:</b> O combate ao assédio e à discriminação ganhou reforço com o <b>Decreto nº 12.122/2024</b>, que institui o Programa Federal de Prevenção e Enfrentamento do Assédio e da Discriminação (PFPEAD) em toda a administração pública federal.<br>
+        <b>Referência:</b> <a href="https://www.gov.br/cgu/pt-br/assuntos/auditoria-e-fiscalizacao/guia-lilas" target="_blank" rel="noopener noreferrer">Guia Lilás – CGU (site oficial)</a>
+      </div>
+      <p><b>Assédio</b> e <b>discriminação</b> são práticas que violam direitos fundamentais e afetam milhões de trabalhadores(as) no Brasil. O assédio pode ser <b>moral</b>, <b>sexual</b> ou <b>institucional</b>, enquanto a discriminação ocorre por motivos como gênero, raça, idade, religião, deficiência, orientação sexual, entre outros.<br>
+      O enfrentamento dessas práticas exige informação, prevenção, canais de denúncia e ação coletiva.</p>
+      <ul>
+        <li><b>Assédio Moral:</b> Conduta abusiva, repetitiva e prolongada, que humilha, constrange, inferioriza ou ameaça a dignidade do trabalhador(a), podendo causar danos emocionais e à saúde.</li>
+        <li><b>Assédio Sexual:</b> Conduta de conotação sexual, não desejada, que constrange a vítima, podendo ocorrer de superiores ou colegas. Pode ser explícito (propostas diretas) ou sutil (insinuações, chantagens).</li>
+        <li><b>Assédio Institucional:</b> Práticas abusivas promovidas ou toleradas por instituições, que perpetuam ambientes hostis, discriminatórios ou de perseguição sistemática.</li>
+      </ul>
+      <h3>Exemplos de Assédio Moral</h3>
+      <ul>
+        <li>Isolamento do(a) trabalhador(a) do grupo ou das atividades.</li>
+        <li>Críticas constantes, gritos, humilhações públicas.</li>
+        <li>Atribuição de tarefas degradantes ou incompatíveis com o cargo.</li>
+        <li>Ameaças de demissão sem motivo.</li>
+      </ul>
+      <h3>Exemplos de Assédio Sexual</h3>
+      <ul>
+        <li>Convites insistentes, piadas ou comentários de cunho sexual.</li>
+        <li>Toques indesejados, olhares invasivos, exposição a imagens impróprias.</li>
+        <li>Chantagem para obtenção de favores sexuais em troca de vantagens profissionais.</li>
+      </ul>
+      <div class="card" style="background:#f8d7da; color:#721c24;">
+        <b>Importante:</b> O assédio pode ocorrer entre colegas, de chefia para subordinado, ou até de subordinado para chefia (assédio vertical e horizontal).
+      </div>
+      <h3>Consequências para o agressor:</h3>
+      <ul>
+        <li>Advertência, suspensão ou demissão (servidores públicos e CLT).</li>
+        <li>Processo judicial (cível e penal).</li>
+        <li>Indenização por danos morais.</li>
+      </ul>
+      <h3>Consequências para a vítima:</h3>
+      <ul>
+        <li>Transtornos psicológicos (ansiedade, depressão, síndrome do pânico).</li>
+        <li>Queda de produtividade, absenteísmo, afastamento por doença.</li>
+        <li>Prejuízos à autoestima e à vida social.</li>
+      </ul>
+      <div class="card" style="background:#e2f0d9; color:#27632a;">
+        <b>Dica:</b> Registre tudo! Anote datas, horários, testemunhas e guarde provas (e-mails, mensagens, prints).
+      </div>
+    </section>
+    <section id="discriminacao" class="tab-content" role="tabpanel" tabindex="0">
+      <h2>Discriminação no Trabalho</h2>
+      <p>A discriminação ocorre quando uma pessoa é tratada de forma desigual, restritiva ou excludente por motivos pessoais. É proibida pela Constituição Federal, CLT e leis específicas.</p>
+      <h3>Principais tipos de discriminação:</h3>
+      <ul>
+        <li><b>Gênero e identidade de gênero</b></li>
+        <li><b>Raça e etnia</b></li>
+        <li><b>Idade</b></li>
+        <li><b>Deficiência</b></li>
+        <li><b>Religião</b></li>
+        <li><b>Orientação sexual</b></li>
+        <li><b>Condição social ou econômica</b></li>
+        <li><b>Gravidez e maternidade</b></li>
+      </ul>
+      <h3>Exemplos práticos:</h3>
+      <ul>
+        <li>Recusa de promoção por motivo de raça ou gênero.</li>
+        <li>Desigualdade salarial para funções idênticas.</li>
+        <li>Despedida de gestante ou pessoa com deficiência.</li>
+        <li>Piadas, apelidos pejorativos, exclusão de reuniões ou eventos.</li>
+      </ul>
+      <div class="card" style="background:#f8d7da; color:#721c24;">
+        <b>Alerta:</b> Discriminação pode ocorrer de forma sutil, institucional ou estrutural. Toda denúncia deve ser apurada e combatida.
+      </div>
+      <h3>Consequências legais:</h3>
+      <ul>
+        <li>Multas, reintegração ao emprego, indenização por danos morais.</li>
+        <li>Sanções administrativas e criminais.</li>
+      </ul>
+      <div class="card" style="background:#e2f0d9; color:#27632a;">
+        <b>Dica:</b> Conheça seus direitos e busque apoio em entidades e órgãos oficiais.
+      </div>
+    </section>
+    <section id="legislacao" class="tab-content" role="tabpanel" tabindex="0">
+      <h2>Legislação e Referências Oficiais</h2>
+      <ul>
+        <li><b>Decreto nº 12.122/2024</b> – Institui o Programa Federal de Prevenção e Enfrentamento do Assédio e da Discriminação (PFPEAD).</li>
+        <li><b>Lei nº 14.540/2023</b> – Programa de Integridade nas instituições federais de ensino.</li>
+        <li><b>Constituição Federal (CF/88)</b> – Art. 5º: igualdade de todos perante a lei; Art. 7º: proibição de diferença de salários por motivo de sexo, idade, cor ou estado civil.</li>
+        <li><b>CLT</b> – Art. 373-A: veda práticas discriminatórias; Art. 483: rescisão indireta por assédio.</li>
+        <li><b>Lei nº 9.029/1995</b> – Proíbe práticas discriminatórias na relação de emprego.</li>
+        <li><b>Lei nº 10.224/2001</b> – Inclui o crime de assédio sexual no Código Penal (Art. 216-A).</li>
+        <li><b>Guia Lilás (CGU)</b> – <a href="https://www.gov.br/cgu/pt-br/assuntos/auditoria-e-fiscalizacao/guia-lilas" target="_blank">Orientações para prevenção e tratamento de assédio e discriminação no serviço público</a>.</li>
+      </ul>
+      <div class="card" style="background:#d1ecf1; color:#0c5460;">
+        <b>Referências Adicionais:</b><br>
+        <a href="https://www.tst.jus.br/web/guest/assuntos/assedio" target="_blank">TST – Assédio Moral e Sexual</a><br>
+        <a href="https://www.mpt.mp.br/assuntos/igualdade-e-discriminacao" target="_blank">MPT – Igualdade e Discriminação</a><br>
+        <a href="https://www.gov.br/cgu/pt-br/assuntos/auditoria-e-fiscalizacao/guia-lilas" target="_blank">Guia Lilás – CGU</a>
+      </div>
+    </section>
+    <section id="canais-denuncia" class="tab-content" role="tabpanel" tabindex="0">
+      <h2>Canais de Denúncia Oficiais</h2>
+      <ul>
+        <li><b>RH</b> ou setor de gestão de pessoas da instituição.</li>
+        <li><b>Ouvidoria interna</b> (pode ser anônima).</li>
+        <li><b>Ministério Público do Trabalho (MPT):</b> <a href="https://www.mpt.mp.br/servicos/denuncias" target="_blank">Denúncia online</a>.</li>
+        <li><b>Sindicatos e associações de classe.</b></li>
+        <li><b>Polícia Civil</b> (em casos de crime).</li>
+        <li><b>Disque 100</b> (violação de direitos humanos).</li>
+        <li><b>Ouvidoria-Geral da União (OGU):</b> <a href="https://falabr.cgu.gov.br/publico/Manifestacao/SelecionarTipoManifestacao.aspx" target="_blank">Fala.BR</a></li>
+      </ul>
+      <div class="card" style="background:#fff3cd; color:#856404;">
+        <b>Importante:</b> Denúncias podem ser feitas por testemunhas e podem ser anônimas. O sigilo é garantido.
+      </div>
+    </section>
+    <section id="prevencao" class="tab-content" role="tabpanel" tabindex="0">
+      <h2>Prevenção e Combate</h2>
+      <ul>
+        <li>Promover ambiente de respeito, inclusão e diversidade.</li>
+        <li>Capacitar gestores(as) e equipes sobre assédio e discriminação.</li>
+        <li>Divulgar e facilitar o acesso a canais de denúncia.</li>
+        <li>Adotar políticas institucionais claras e efetivas.</li>
+        <li>Garantir proteção contra retaliação a denunciantes.</li>
+        <li>Realizar campanhas educativas e rodas de conversa.</li>
+        <li>Monitorar e avaliar o ambiente organizacional periodicamente.</li>
+      </ul>
+      <div class="card" style="background:#e2f0d9; color:#27632a;">
+        <b>Dica:</b> O compromisso deve ser coletivo! Todos(as) são responsáveis pela prevenção e combate ao assédio e à discriminação.
+      </div>
+    </section>
+    <section id="faq" class="tab-content" role="tabpanel" tabindex="0">
+      <h2>Perguntas Frequentes (FAQ)</h2>
+      <ul>
+        <li><b>O que caracteriza assédio moral?</b> Repetição de condutas abusivas que humilham, constrangem ou desestabilizam o trabalhador(a), de modo prolongado.</li>
+        <li><b>Assédio sexual é crime?</b> Sim. Está previsto no Código Penal (Art. 216-A) e pode gerar demissão por justa causa e processo penal.</li>
+        <li><b>Como denunciar?</b> RH, ouvidorias, canais internos, sindicatos, Ministério Público do Trabalho (<a href="https://www.mpt.mp.br/servicos/denuncias" target="_blank">denúncia online</a>), Polícia Civil.</li>
+        <li><b>Quais provas são válidas?</b> E-mails, mensagens, prints, testemunhas, gravações (respeitando a legislação).</li>
+        <li><b>O que fazer ao presenciar assédio?</b> Apoie a vítima, oriente a buscar ajuda e denuncie.</li>
+        <li><b>Assédio pode acontecer fora do ambiente físico de trabalho?</b> Sim, inclusive em home office, redes sociais e aplicativos corporativos.</li>
+      </ul>
+      <div class="card" style="background:#fff3cd; color:#856404;">
+        <b>Dica:</b> Denúncias podem ser anônimas. Não se cale!
+      </div>
+    </section>
+    <section id="glossario" class="tab-content" role="tabpanel" tabindex="0">
+      <h2>Glossário</h2>
+      <ul>
+        <li><b>Assédio:</b> Ato de perturbar, perseguir, constranger ou humilhar alguém repetidamente.</li>
+        <li><b>Assédio Moral:</b> Conduta abusiva, repetitiva, que atinge a dignidade do trabalhador(a).</li>
+        <li><b>Assédio Sexual:</b> Conduta de conotação sexual, não desejada, que constrange a vítima.</li>
+        <li><b>Discriminação:</b> Tratamento desigual baseado em características pessoais.</li>
+        <li><b>Institucional:</b> Relativo à organização, instituição ou empresa.</li>
+        <li><b>PFPEAD:</b> Programa Federal de Prevenção e Enfrentamento do Assédio e da Discriminação.</li>
+        <li><b>Guia Lilás:</b> Manual da CGU com orientações sobre prevenção e combate ao assédio e discriminação.</li>
+        <li><b>Ouvidoria:</b> Canal oficial de recebimento de denúncias e reclamações.</li>
+        <li><b>CLT:</b> Consolidação das Leis do Trabalho.</li>
+      </ul>
+        <li><b>Compliance:</b> Conjunto de práticas para garantir o cumprimento de normas e leis.</li>
+        <li><b>Jurisprudência:</b> Decisões reiteradas dos tribunais sobre determinado tema.</li>
+      </ul>
+    </section>
+    <section id="quiz" class="tab-content" role="tabpanel" tabindex="0">
+      <h2>Quiz</h2>
+      <div class="quiz">
+        <div class="quiz-question">Assédio moral pode ocorrer entre colegas de mesmo nível hierárquico?</div>
+        <div class="quiz-options">
+          <label><input type="radio" name="quiz1" value="sim"> Sim</label>
+          <label><input type="radio" name="quiz1" value="nao"> Não</label>
+        </div>
+        <div class="quiz-feedback" id="quiz1-feedback"></div>
+      </div>
+      <div class="quiz">
+        <div class="quiz-question">Apenas mulheres podem ser vítimas de assédio sexual no trabalho?</div>
+        <div class="quiz-options">
+          <label><input type="radio" name="quiz2" value="sim"> Sim</label>
+          <label><input type="radio" name="quiz2" value="nao"> Não</label>
+        </div>
+        <div class="quiz-feedback" id="quiz2-feedback"></div>
+      </div>
+    </section>
+    <section id="desafios" class="tab-content" role="tabpanel" tabindex="0">
+      <h2>Desafios de Reflexão</h2>
+      <div class="card" style="background:#e2f0d9; color:#27632a; margin-bottom:14px;">
+        <b>Desafio 1 – Empatia no Ambiente de Trabalho</b><br>
+        Imagine que um(a) colega está sendo isolado(a) e ridicularizado(a) por outros membros da equipe. <br>
+        <b>Pergunta:</b> Como você se sentiria nessa situação? O que faria para apoiar essa pessoa e promover respeito no grupo?
+      </div>
+      <div class="card" style="background:#fff3cd; color:#856404; margin-bottom:14px;">
+        <b>Desafio 2 – Tomada de Decisão Ética</b><br>
+        Você presencia um comentário preconceituoso durante uma reunião virtual. <br>
+        <b>Pergunta:</b> Qual seria sua reação imediata? De que forma poderia agir para combater a discriminação sem expor a vítima?
+      </div>
+      <div class="card" style="background:#d1ecf1; color:#0c5460; margin-bottom:14px;">
+        <b>Desafio 3 – Proposta de Mudança</b><br>
+        Reflita sobre práticas e regras na sua escola, empresa ou órgão público. <br>
+        <b>Pergunta:</b> Que ação concreta você sugeriria para prevenir o assédio e promover a inclusão?
+      </div>
+      <div class="card" style="background:#f8d7da; color:#721c24; margin-bottom:14px;">
+        <b>Desafio 4 – Coragem e Responsabilidade</b><br>
+        Caso você fosse vítima de assédio ou discriminação, a quem recorreria? <br>
+        <b>Pergunta:</b> Quais barreiras você imagina que enfrentaria para denunciar? Como superá-las?
+      </div>
+      <div class="card" style="background:#e2f0d9; color:#27632a;">
+        <b>Desafio 5 – Debate em Grupo</b><br>
+        Em grupo, debata: "Por que muitas pessoas silenciam diante do assédio? O que pode mudar essa cultura?"<br>
+        <b>Sugestão:</b> Registre ideias e proponha uma campanha de conscientização.
+      </div>
+    </section>
+    <section id="referencias" class="tab-content" role="tabpanel" tabindex="0">
+      <h2>Referências e Links Úteis</h2>
+      <div class="card" style="background:#e2f0d9; color:#27632a; margin-bottom:18px;">
+        <h3 style="margin-top:0"><i class="fas fa-landmark icon"></i> Órgãos Oficiais e Instituições</h3>
+        <ul style="margin-bottom:0;">
+          <li><a href="https://www.tst.jus.br/" target="_blank" rel="noopener noreferrer"><b>TST</b> – Tribunal Superior do Trabalho (site oficial)</a><br><small>Jurisprudência, notícias e decisões sobre assédio e discriminação.</small></li>
+          <li><a href="https://mpt.mp.br/" target="_blank" rel="noopener noreferrer"><b>MPT</b> – Ministério Público do Trabalho (site oficial)</a><br><small>Denúncias, cartilhas e campanhas educativas.</small></li>
+          <li><a href="https://www.cnj.jus.br/" target="_blank" rel="noopener noreferrer"><b>CNJ</b> – Conselho Nacional de Justiça (site oficial)</a><br><small>Cartilhas, orientações e ações institucionais.</small></li>
+          <li><a href="https://repositorio.cgu.gov.br/handle/1/93176" target="_blank" rel="noopener noreferrer"><b>Guia Lilás – CGU (2024, repositório oficial)</b></a><br><small>Manual oficial de prevenção ao assédio e discriminação (repositório CGU).</small></li>
+          <li><a href="https://www.onumulheres.org.br/" target="_blank" rel="noopener noreferrer"><b>ONU Mulheres</b> (site oficial)</a><br><small>Materiais sobre igualdade de gênero e combate ao assédio.</small></li>
+          <li><a href="https://www.ilo.org/brasilia/lang--pt/index.htm" target="_blank" rel="noopener noreferrer"><b>OIT</b> – Organização Internacional do Trabalho (site oficial)</a><br><small>Convenções e tratados internacionais.</small></li>
+        </ul>
+      </div>
+      <div class="card" style="background:#fff3cd; color:#856404; margin-bottom:18px;">
+        <h3 style="margin-top:0"><i class="fas fa-file-alt icon"></i> Legislação e Documentos</h3>
+        <ul style="margin-bottom:0;">
+          <li><a href="https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm" target="_blank" rel="noopener noreferrer">Constituição Federal de 1988 (texto integral)</a> <small>(arts. 5º, 7º, 37, 39, 227)</small></li>
+          <li><a href="https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm" target="_blank" rel="noopener noreferrer">CLT – Consolidação das Leis do Trabalho (texto integral)</a></li>
+          <li><a href="https://www.planalto.gov.br/ccivil_03/leis/l9029.htm" target="_blank" rel="noopener noreferrer">Lei nº 9.029/1995 (texto integral)</a> <small>– Proíbe práticas discriminatórias no emprego</small></li>
+          <li><a href="https://www.planalto.gov.br/ccivil_03/leis/leis_2001/l10224.htm" target="_blank" rel="noopener noreferrer">Lei nº 10.224/2001 (texto integral)</a> <small>– Crime de assédio sexual (art. 216-A do CP)</small></li>
+          <li><a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13185.htm" target="_blank" rel="noopener noreferrer">Lei nº 13.185/2015 (texto integral)</a> <small>– Programa de Combate ao Bullying</small></li>
+          <li><a href="https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2022/lei/l14457.htm" target="_blank" rel="noopener noreferrer">Lei nº 14.457/2022 (texto integral)</a> <small>– Prevenção ao assédio no trabalho</small></li>
+          <li><a href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/L14540.htm" target="_blank" rel="noopener noreferrer">Lei nº 14.540/2023 (texto integral)</a> <small>– Programa de Integridade nas IFEs</small></li>
+          <li><a href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2024/decreto/d12122.htm" target="_blank" rel="noopener noreferrer">Decreto nº 12.122/2024 (texto integral)</a> <small>– PFPEAD</small></li>
+          <li><a href="https://normlex.ilo.org/dyn/normlex/pt/f?p=NORMLEXPUB:12100:0::NO::P12100_ILO_CODE:C111" target="_blank" rel="noopener noreferrer">Convenção 111 da OIT (texto oficial)</a> <small>– Discriminação em matéria de emprego e profissão</small></li>
+        </ul>
+      </div>
+      <div class="card" style="background:#d1ecf1; color:#0c5460; margin-bottom:18px;">
+        <h3 style="margin-top:0"><i class="fas fa-book-open icon"></i> Materiais Didáticos e Cartilhas</h3>
+        <ul style="margin-bottom:0;">
+          <li><a href="https://repositorio.cgu.gov.br/bitstream/1/93176/1/Guia%20Lilas%202024.pdf" target="_blank" rel="noopener noreferrer">Guia Lilás (CGU) – PDF 2024</a></li>
+          <li><a href="https://mpt.mp.br/pgt/publicacoes/cartilhas/assedio-moral-no-trabalho-perguntas-e-respostas/@@display-file/arquivo_pdf" target="_blank" rel="noopener noreferrer">Cartilha Assédio Moral (MPT) – PDF</a></li>
+      </div>
+      <div class="card" style="background:#f8d7da; color:#721c24;">
+        <h3 style="margin-top:0"><i class="fas fa-bullhorn icon"></i> Canais de Apoio e Denúncia</h3>
+        <ul style="margin-bottom:0;">
+          <li><a href="https://www.mpt.mp.br/servicos/denuncias" target="_blank" rel="noopener noreferrer">Faça sua denúncia online no Ministério Público do Trabalho (MPT)</a></li>
+          <li><a href="https://falabr.cgu.gov.br/publico/Manifestacao/SelecionarTipoManifestacao.aspx" target="_blank" rel="noopener noreferrer">Acesse a Ouvidoria-Geral da União – Fala.BR</a></li>
+          <li><b>Disque 100</b> – Direitos Humanos (telefone nacional, gratuito e sigiloso)</li>
+          <li>Ouvidoria interna, RH, sindicatos e associações de classe</li>
+        </ul>
+      </div>
+    <section id="cartilhas" class="tab-content" role="tabpanel" tabindex="0">
+</section>
+<section id="cartilhas" class="tab-content" role="tabpanel" tabindex="0">
+      <h2>Cartilhas e Guias Oficiais</h2>
+      <div class="card" style="background:#e2f0d9; color:#27632a; margin-bottom:14px;">
+        <b>Guia Lilás – CGU</b><br>
+        Manual de prevenção e enfrentamento ao assédio moral e sexual no serviço público federal.<br>
+        <a href="https://www.gov.br/cgu/pt-br/assuntos/auditoria-e-fiscalizacao/guia-lilas" target="_blank">Acesse o Guia Lilás (CGU)</a>
+      </div>
+      <div class="card" style="background:#d1ecf1; color:#0c5460; margin-bottom:14px;">
+        <b>Cartilha Assédio Moral – MPT</b><br>
+        Orientações práticas para identificar, prevenir e denunciar o assédio moral no trabalho.<br>
+        <a href="https://www.mpt.mp.br/acoes-tematicas/assediomoral/cartilha" target="_blank" rel="noopener noreferrer">Baixar Cartilha do MPT (site oficial)</a>
+      </div>
+      <div class="card" style="background:#fff3cd; color:#856404; margin-bottom:14px;">
+        <b>Manual de Combate ao Assédio – TST</b><br>
+        Explica conceitos, legislação e práticas recomendadas para ambientes de trabalho mais seguros.<br>
+        <a href="https://www.tst.jus.br/documents/10157/0/Manual+de+Combate+ao+Ass%C3%A9dio.pdf" target="_blank" rel="noopener noreferrer">Acesse o Manual do TST (PDF oficial)</a>
+      </div>
+      <div class="card" style="background:#f8d7da; color:#721c24; margin-bottom:14px;">
+        <b>Guia Prático da ONU Mulheres</b><br>
+        Ferramentas e orientações para prevenção do assédio e promoção da igualdade de gênero.<br>
+        <a href="https://www.onumulheres.org.br/wp-content/uploads/2021/03/Guia-Pratico-Assedio-Sexual-ONU-Mulheres.pdf" target="_blank" rel="noopener noreferrer">Guia ONU Mulheres (PDF)</a>
+      </div>
+      <div class="card" style="background:#e2f0d9; color:#27632a;">
+        <b>Cartilha de Prevenção – CNJ</b><br>
+        Material do Conselho Nacional de Justiça com orientações para órgãos públicos e privados.<br>
+        <a href="https://www.cnj.jus.br/wp-content/uploads/2022/03/Cartilha_Preventiva_Assedio.pdf" target="_blank" rel="noopener noreferrer">Cartilha CNJ (PDF)</a>
+      </div>
+    </section>
+    <section id="exemplos" class="tab-content" role="tabpanel" tabindex="0">
+      <h2>Exemplos Práticos</h2>
+      <div class="card" style="background:#e2f0d9; color:#27632a; margin-bottom:14px;">
+        <b>Assédio Moral – Humilhação Pública</b><br>
+        <b>Contexto:</b> Chefe expõe um funcionário a gritos e críticas diante dos colegas por um erro simples.<br>
+        <b>Consequências:</b> Abalo emocional, queda de produtividade, direito a indenização.<br>
+        <b>Dica:</b> Registre o ocorrido, busque testemunhas e denuncie ao RH ou ouvidoria.
+      </div>
+      <div class="card" style="background:#fff3cd; color:#856404; margin-bottom:14px;">
+        <b>Assédio Sexual – Propostas Inconvenientes</b><br>
+        <b>Contexto:</b> Superior hierárquico faz convites insistentes para sair, com insinuações e promessas de benefícios profissionais.<br>
+        <b>Consequências:</b> Ambiente hostil, constrangimento, possibilidade de demissão por justa causa do agressor.<br>
+        <b>Dica:</b> Guarde mensagens, recuse claramente e denuncie nos canais oficiais.
+      </div>
+      <div class="card" style="background:#f8d7da; color:#721c24; margin-bottom:14px;">
+        <b>Discriminação – Raça e Gênero</b><br>
+        <b>Contexto:</b> Mulher negra é preterida em promoção, mesmo sendo a mais qualificada, enquanto colegas homens brancos são promovidos.<br>
+        <b>Consequências:</b> Violação de direitos, possibilidade de ação judicial e indenização.<br>
+        <b>Dica:</b> Solicite justificativas formais, registre e procure apoio do sindicato ou MPT.
+      </div>
+      <div class="card" style="background:#d1ecf1; color:#0c5460; margin-bottom:14px;">
+        <b>Assédio Institucional – Tolerância ao Abuso</b><br>
+        <b>Contexto:</b> Empresa ignora denúncias recorrentes de assédio, não apura casos e pune vítimas por "falta de adaptação".<br>
+        <b>Consequências:</b> Cultura tóxica, processos judiciais, danos à imagem institucional.<br>
+        <b>Dica:</b> Documente tentativas de denúncia e procure órgãos externos como MPT ou OGU.
+      </div>
+      <div class="card" style="background:#fff3cd; color:#856404; margin-bottom:14px;">
+        <b>Discriminação – Deficiência</b><br>
+        <b>Contexto:</b> Trabalhador com deficiência é demitido sem justificativa plausível, enquanto colegas sem deficiência permanecem.<br>
+        <b>Consequências:</b> Reintegração e indenização por danos morais.<br>
+        <b>Dica:</b> Exija laudo de dispensa, busque apoio jurídico e denuncie ao MPT.
+      </div>
+      <div class="card" style="background:#f8d7da; color:#721c24;">
+        <b>Retaliação após Denúncia</b><br>
+        <b>Contexto:</b> Funcionário sofre transferência injustificada e isolamento após denunciar assédio.<br>
+        <b>Consequências:</b> Direito à proteção, reversão da medida e possível indenização.<br>
+        <b>Dica:</b> Registre as mudanças, procure apoio psicológico e denuncie a retaliação.
+      </div>
+    </section>
+    </main>
+  <script>
+    // Tabs functionality
+    const tabLinks = document.querySelectorAll('.tab-link');
+    const tabContents = document.querySelectorAll('.tab-content');
+    tabLinks.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabLinks.forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        tabContents.forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+        document.getElementById(btn.dataset.tab).classList.add('active');
+        document.getElementById(btn.dataset.tab).focus();
+      });
+      btn.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          btn.click();
+        }
+      });
+    });
+    // FAQ collapsible
+    document.querySelectorAll('.faq-question').forEach(q => {
+      q.addEventListener('click', () => {
+        const ans = q.nextElementSibling;
+        ans.classList.toggle('active');
+      });
+      q.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          q.click();
+        }
+      });
+      q.setAttribute('tabindex', '0');
+      q.setAttribute('role', 'button');
+      q.setAttribute('aria-expanded', 'false');
+    });
+    // Quiz feedback
+    document.querySelectorAll('.quiz-options input[type="radio"]').forEach(input => {
+      input.addEventListener('change', function() {
+        const name = input.name;
+        let feedback = '';
+        if (name === 'quiz1') {
+          feedback = input.value === 'sim' ? 'Correto! Assédio moral pode ocorrer entre colegas.' : 'Incorreto. Pode sim ocorrer entre colegas.';
+          document.getElementById('quiz1-feedback').textContent = feedback;
+        } else if (name === 'quiz2') {
+          feedback = input.value === 'nao' ? 'Correto! Qualquer pessoa pode ser vítima de assédio sexual.' : 'Incorreto. Homens e mulheres podem ser vítimas.';
+          document.getElementById('quiz2-feedback').textContent = feedback;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
