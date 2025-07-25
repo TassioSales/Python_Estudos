@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LGPD – Direitos do Titular (Art. 18 da Lei nº 13.709/2018)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+        }
+
+        header h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+        }
+
+        .tabs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .tab-link {
+            padding: 15px 20px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .tab-link.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .tab-link i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+
+        .content-area {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 40px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-content h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .tab-content h3 {
+            color: #34495e;
+            margin: 25px 0 15px 0;
+            font-size: 1.4rem;
+        }
+
+        .tab-content h4 {
+            color: #5a6c7d;
+            margin: 20px 0 10px 0;
+        }
+
+        .card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #667eea;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .card-highlight {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border-left-color: #764ba2;
+        }
+
+        .direito-item {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s ease;
+        }
+
+        .direito-item:hover {
+            transform: translateX(5px);
+        }
+
+        .direito-item h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .direito-item h4 i {
+            margin-right: 10px;
+            color: #667eea;
+        }
+
+        .exemplo {
+            background: #e8f5e8;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #27ae60;
+        }
+
+        .exemplo strong {
+            color: #27ae60;
+        }
+
+        .alerta {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            color: #856404;
+        }
+
+        .alerta i {
+            color: #f39c12;
+            margin-right: 8px;
+        }
+
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .quiz-question {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+        }
+
+        .quiz-options {
+            margin: 15px 0;
+        }
+
+        .quiz-option {
+            display: block;
+            padding: 12px;
+            margin: 8px 0;
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .quiz-option.correct {
+            background: #d4edda;
+            border-color: #27ae60;
+        }
+
+        .quiz-option.incorrect {
+            background: #f8d7da;
+            border-color: #e74c3c;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .glossario-term {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-left: 4px solid #3498db;
+        }
+
+        .glossario-term strong {
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+
+        ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        .reference-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .reference-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .tabs {
+                grid-template-columns: 1fr;
+            }
+
+            .tab-content {
+                padding: 25px;
+            }
+
+            .tab-content h2 {
+                font-size: 1.6rem;
+            }
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: #e9ecef;
+            border-radius: 2px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-user-shield"></i> LGPD – Direitos do Titular</h1>
+            <p>Lei nº 13.709/2018 - Artigo 18 - Proteção de Dados Pessoais</p>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-link active" data-tab="inicio">
+                <i class="fas fa-home"></i> Início
+            </button>
+            <button class="tab-link" data-tab="resumo">
+                <i class="fas fa-info-circle"></i> Resumo
+            </button>
+            <button class="tab-link" data-tab="fundamentos">
+                <i class="fas fa-book"></i> Fundamentos
+            </button>
+            <button class="tab-link" data-tab="titular">
+                <i class="fas fa-user"></i> Quem é o Titular
+            </button>
+            <button class="tab-link" data-tab="artigo18">
+                <i class="fas fa-gavel"></i> Art. 18 Explicado
+            </button>
+            <button class="tab-link" data-tab="direitos">
+                <i class="fas fa-list-check"></i> Direitos em Detalhes
+            </button>
+            <button class="tab-link" data-tab="exercer">
+                <i class="fas fa-clipboard-check"></i> Como Exercer
+            </button>
+            <button class="tab-link" data-tab="controlador">
+                <i class="fas fa-building"></i> Controlador/Operador
+            </button>
+            <button class="tab-link" data-tab="casos">
+                <i class="fas fa-lightbulb"></i> Casos Práticos
+            </button>
+            <button class="tab-link" data-tab="jurisprudencia">
+                <i class="fas fa-balance-scale"></i> Jurisprudência
+            </button>
+            <button class="tab-link" data-tab="faq">
+                <i class="fas fa-question-circle"></i> FAQ
+            </button>
+            <button class="tab-link" data-tab="glossario">
+                <i class="fas fa-spell-check"></i> Glossário
+            </button>
+            <button class="tab-link" data-tab="quiz">
+                <i class="fas fa-brain"></i> Quiz
+            </button>
+            <button class="tab-link" data-tab="materiais">
+                <i class="fas fa-download"></i> Materiais
+            </button>
+            <button class="tab-link" data-tab="referencias">
+                <i class="fas fa-link"></i> Referências
+            </button>
+        </nav>
+
+        <div class="content-area">
+            <!-- INÍCIO -->
+            <div id="inicio" class="tab-content active">
+                <h2><i class="fas fa-home"></i> Bem-vindo aos Direitos do Titular da LGPD</h2>
+
+                <div class="card card-highlight">
+                    <p><strong>Esta página tem como objetivo informar e conscientizar sobre os direitos fundamentais que todo cidadão possui em relação ao uso de seus dados pessoais</strong>, conforme estabelecido pela Lei Geral de Proteção de Dados (LGPD) - Lei nº 13.709/2018.</p>
+                </div>
+
+                <h3>📍 O que você encontrará aqui:</h3>
+                <ul>
+                    <li><strong>Explicações didáticas</strong> sobre cada direito do titular de dados</li>
+                    <li><strong>Exemplos práticos</strong> de como exercer seus direitos</li>
+                    <li><strong>Procedimentos claros</strong> para fazer solicitações às empresas</li>
+                    <li><strong>Casos reais</strong> e jurisprudência atualizada</li>
+                    <li><strong>Quiz interativo</strong> para testar seu conhecimento</li>
+                    <li><strong>Material complementar</strong> para aprofundamento</li>
+                </ul>
+
+                <div class="card">
+                    <h4><i class="fas fa-shield-alt"></i> Por que isso é importante?</h4>
+                    <p>Na era digital, nossos dados pessoais são constantemente coletados, processados e compartilhados. A LGPD garante que você tenha controle sobre essas informações, protegendo sua privacidade e dignidade humana.</p>
+                </div>
+
+                <div class="alerta">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <strong>Importante:</strong> Este conteúdo tem fins educacionais e é especialmente útil para concursos públicos, estudantes de direito e profissionais que trabalham com proteção de dados.
+                </div>
+            </div>
+
+            <!-- RESUMO -->
+            <div id="resumo" class="tab-content">
+                <h2><i class="fas fa-info-circle"></i> Resumo da LGPD e Direitos do Titular</h2>
+
+                <div class="card">
+                    <h3>🎯 O que é a LGPD?</h3>
+                    <p>A <strong>Lei Geral de Proteção de Dados (Lei nº 13.709/2018)</strong> é a legislação brasileira que regulamenta o tratamento de dados pessoais, garantindo direitos fundamentais de liberdade, privacidade e livre desenvolvimento da personalidade da pessoa natural.</p>
+                </div>
+
+                <h3>📋 Principais Direitos do Titular (Art. 18)</h3>
+                <div class="direito-item">
+                    <h4><i class="fas fa-check-circle"></i> I - Confirmação e Acesso</h4>
+                    <p>Saber se seus dados estão sendo tratados e ter acesso a eles</p>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-edit"></i> II - Correção</h4>
+                    <p>Corrigir dados incompletos, inexatos ou desatualizados</p>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-user-secret"></i> III - Anonimização</h4>
+                    <p>Solicitar a anonimização de dados desnecessários ou excessivos</p>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-trash"></i> IV - Eliminação</h4>
+                    <p>Excluir dados tratados com base no consentimento ou desnecessários</p>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-exchange-alt"></i> V - Portabilidade</h4>
+                    <p>Transferir dados para outro fornecedor de produto ou serviço</p>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-ban"></i> VI - Eliminação do Consentimento</h4>
+                    <p>Revogar o consentimento para o tratamento de dados</p>
+                </div>
+
+                <div class="card card-highlight">
+                    <h4><i class="fas fa-calendar-alt"></i> Vigência e Aplicação</h4>
+                    <p>A LGPD entrou em vigor em <strong>18 de setembro de 2020</strong> e se aplica a qualquer operação de tratamento de dados pessoais realizadas no Brasil ou que envolvam dados de pessoas localizadas no território brasileiro.</p>
+                </div>
+            </div>
+
+            <!-- FUNDAMENTOS -->
+            <div id="fundamentos" class="tab-content">
+                <h2><i class="fas fa-book"></i> Fundamentos da LGPD</h2>
+
+                <h3>🏛️ Princípios da Proteção de Dados (Art. 6º)</h3>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-eye"></i> Finalidade</h4>
+                    <p>Os dados devem ser tratados para propósitos legítimos, específicos, explícitos e informados ao titular</p>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-balance-scale"></i> Adequação</h4>
+                    <p>O tratamento deve ser compatível com as finalidades informadas</p>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-compress-alt"></i> Necessidade</h4>
+                    <p>Limitação ao mínimo necessário para a realização de suas finalidades</p>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-lock"></i> Livre Acesso</h4>
+                    <p>Garantia de consulta facilitada e gratuita sobre forma e duração do tratamento</p>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-check-double"></i> Qualidade dos Dados</h4>
+                    <p>Garantia de exatidão, clareza, relevância e atualização dos dados</p>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-lightbulb"></i> Transparência</h4>
+                    <p>Informações claras, precisas e facilmente acessíveis sobre o tratamento</p>
+                </div>
+
+                <div class="card">
+                    <h3>⚖️ Base Legal para o Tratamento</h3>
+                    <p>O tratamento de dados pessoais somente poderá ser realizado nas seguintes hipóteses:</p>
+                    <ul>
+                        <li>Mediante consentimento do titular</li>
+                        <li>Para cumprimento de obrigação legal ou regulatória</li>
+                        <li>Para execução de políticas públicas</li>
+                        <li>Para realização de estudos por órgão de pesquisa</li>
+                        <li>Para execução de contrato</li>
+                        <li>Para exercício regular de direitos</li>
+                        <li>Para proteção da vida ou integridade física</li>
+                        <li>Para tutela da saúde</li>
+                        <li>Para atender aos interesses legítimos do controlador</li>
+                        <li>Para proteção do crédito</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- TITULAR -->
+            <div id="titular" class="tab-content">
+                <h2><i class="fas fa-user"></i> Quem é o Titular de Dados</h2>
+
+                <div class="card card-highlight">
+                    <h3>👤 Definição Legal</h3>
+                    <p><strong>Titular:</strong> pessoa natural a quem se referem os dados pessoais que são objeto de tratamento (Art. 5º, V, LGPD)</p>
+                </div>
+
+                <h3>📊 Tipos de Dados Pessoais</h3>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-id-card"></i> Dados Pessoais</h4>
+                    <p>Informação relacionada à pessoa natural identificada ou identificável</p>
+                    <div class="exemplo">
+                        <strong>Exemplos:</strong> Nome, CPF, RG, endereço, telefone, e-mail, IP do computador, localização, características físicas, etc.
+                    </div>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-shield-alt"></i> Dados Pessoais Sensíveis</h4>
+                    <p>Dados sobre origem racial ou étnica, convicção religiosa, opinião política, filiação sindical, saúde, vida sexual, dado genético ou biométrico</p>
+                    <div class="exemplo">
+                        <strong>Exemplos:</strong> Informações médicas, orientação sexual, crenças religiosas, dados biométricos (impressão digital, reconhecimento facial)
+                    </div>
+                </div>
+
+                <h3>🔍 Como Identificar se você é Titular</h3>
+                <div class="card">
+                    <p>Você é titular de dados pessoais sempre que:</p>
+                    <ul>
+                        <li>Uma empresa coleta suas informações pessoais</li>
+                        <li>Seus dados são utilizados para algum propósito comercial</li>
+                        <li>Suas informações são armazenadas em bancos de dados</li>
+                        <li>Há qualquer forma de processamento de seus dados</li>
+                    </ul>
+                </div>
+
+                <div class="alerta">
+                    <i class="fas fa-info-circle"></i>
+                    <strong>Importante:</strong> A LGPD não se aplica a dados de pessoas jurídicas, apenas pessoas físicas (naturais).
+                </div>
+
+                <h3>🌍 Abrangência Territorial</h3>
+                <div class="card">
+                    <p>Você está protegido pela LGPD se:</p>
+                    <ul>
+                        <li>O tratamento é realizado no território brasileiro</li>
+                        <li>A atividade de tratamento tem por objetivo a oferta de bens ou serviços no Brasil</li>
+                        <li>Os dados pessoais foram coletados no território brasileiro</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ARTIGO 18 -->
+            <div id="artigo18" class="tab-content">
+                <h2><i class="fas fa-gavel"></i> Artigo 18 da LGPD Explicado</h2>
+
+                <div class="card card-highlight">
+                    <h3>📜 Texto Legal Completo</h3>
+                    <p><strong>Art. 18.</strong> O titular dos dados pessoais tem direito a obter do controlador, em relação aos dados do titular por ele tratados, a qualquer momento e mediante requisição:</p>
+                </div>
+
+                <h3>🔍 Análise Detalhada dos Incisos</h3>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-search"></i> Inciso I - Confirmação da Existência de Tratamento</h4>
+                    <p><strong>Texto:</strong> "confirmação da existência de tratamento"</p>
+                    <p><strong>Significado:</strong> Direito de saber se uma empresa possui seus dados pessoais</p>
+                    <div class="exemplo">
+                        <strong>Exemplo prático:</strong> Você pode perguntar ao banco se eles possuem seus dados pessoais cadastrados, mesmo que nunca tenha sido cliente.
+                    </div>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-unlock"></i> Inciso II - Acesso aos Dados</h4>
+                    <p><strong>Texto:</strong> "acesso aos dados"</p>
+                    <p><strong>Significado:</strong> Direito de ver quais dados pessoais a empresa possui sobre você</p>
+                    <div class="exemplo">
+                        <strong>Exemplo prático:</strong> Solicitar ao seu plano de saúde uma cópia de todos os dados que eles possuem sobre você.
+                    </div>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-edit"></i> Inciso III - Correção de Dados</h4>
+                    <p><strong>Texto:</strong> "correção de dados incompletos, inexatos ou desatualizados"</p>
+                    <p><strong>Significado:</strong> Direito de corrigir informações erradas ou desatualizadas</p>
+                    <div class="exemplo">
+                        <strong>Exemplo prático:</strong> Atualizar seu endereço no e-commerce onde você compra.
+                    </div>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-user-secret"></i> Inciso IV - Anonimização, Bloqueio ou Eliminação</h4>
+                    <p><strong>Texto:</strong> "anonimização, bloqueio ou eliminação de dados desnecessários, excessivos ou tratados em desconformidade com esta Lei"</p>
+                    <p><strong>Significado:</strong> Direito de solicitar que dados inadequados sejam anonimizados ou excluídos</p>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-share"></i> Inciso V - Portabilidade</h4>
+                    <p><strong>Texto:</strong> "portabilidade dos dados a outro fornecedor de serviço ou produto, mediante requisição expressa, de acordo com a regulamentação da autoridade nacional, observados os segredos comercial e industrial"</p>
+                    <p><strong>Significado:</strong> Direito de transferir seus dados para outro prestador de serviço</p>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-times-circle"></i> Inciso VI - Eliminação do Consentimento</h4>
+                    <p><strong>Texto:</strong> "eliminação dos dados pessoais tratados com o consentimento do titular, exceto nas hipóteses previstas no art. 16 desta Lei"</p>
+                    <p><strong>Significado:</strong> Direito de revogar o consentimento e solicitar a exclusão dos dados</p>
+                </div>
+
+                <div class="card">
+                    <h3>⏰ Características Importantes do Art. 18</h3>
+                    <ul>
+                        <li><strong>A qualquer momento:</strong> Você pode exercer esses direitos quando quiser</li>
+                        <li><strong>Mediante requisição:</strong> É necessário fazer uma solicitação formal</li>
+                        <li><strong>Direito do titular:</strong> São direitos seus, não favores das empresas</li>
+                        <li><strong>Em relação ao controlador:</strong> A empresa que decide sobre o tratamento dos dados</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- DIREITOS EM DETALHES -->
+            <div id="direitos" class="tab-content">
+                <h2><i class="fas fa-list-check"></i> Direitos do Titular em Detalhes</h2>
+
+                <div class="card">
+                    <h3>🎯 Como Usar Esta Seção</h3>
+                    <p>Clique em cada direito abaixo para ver explicações detalhadas, exemplos práticos e modelos de solicitação.</p>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-search"></i> 1. Direito de Confirmação e Acesso</h4>
+                    <p><strong>O que é:</strong> Direito de saber se seus dados estão sendo tratados e ter acesso a eles.</p>
+
+                    <h5>📋 Informações que devem ser fornecidas:</h5>
+                    <ul>
+                        <li>Quais dados pessoais são tratados</li>
+                        <li>Finalidade do tratamento</li>
+                        <li>Forma e duração do tratamento</li>
+                        <li>Identificação e contato do controlador</li>
+                        <li>Informações sobre compartilhamento</li>
+                        <li>Responsabilidades dos agentes que tratam os dados</li>
+                    </ul>
+
+                    <div class="exemplo">
+                        <strong>Exemplo de solicitação:</strong><br>
+                        "Solicito confirmação sobre a existência de tratamento de meus dados pessoais e, em caso positivo, acesso integral às informações conforme Art. 18 da LGPD."
+                    </div>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-edit"></i> 2. Direito de Correção</h4>
+                    <p><strong>O que é:</strong> Direito de corrigir dados incompletos, inexatos ou desatualizados.</p>
+
+                    <h5>📝 Quando usar:</h5>
+                    <ul>
+                        <li>Dados com grafia incorreta</li>
+                        <li>Informações desatualizadas</li>
+                        <li>Dados incompletos</li>
+                        <li>Informações imprecisas</li>
+                    </ul>
+
+                    <div class="exemplo">
+                        <strong>Exemplo prático:</strong> Seu nome está grafado incorretamente como "João Silva" quando deveria ser "João da Silva" no cadastro de uma loja online.
+                    </div>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-user-secret"></i> 3. Direito de Anonimização</h4>
+                    <p><strong>O que é:</strong> Direito de solicitar que dados desnecessários, excessivos ou tratados irregularmente sejam anonimizados.</p>
+
+                    <h5>🔒 Anonimização significa:</h5>
+                    <ul>
+                        <li>Remoção da possibilidade de identificação</li>
+                        <li>Impossibilidade de associar os dados à pessoa</li>
+                        <li>Preservação da utilidade dos dados para análises estatísticas</li>
+                    </ul>
+
+                    <div class="exemplo">
+                        <strong>Exemplo prático:</strong> Uma pesquisa de mercado que coletou mais dados do que necessário pode anonimizar informações como nome e CPF, mantendo apenas dados demográficos gerais.
+                    </div>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-trash"></i> 4. Direito de Eliminação</h4>
+                    <p><strong>O que é:</strong> Direito de solicitar a exclusão de dados pessoais tratados com base no consentimento ou que se tornaram desnecessários.</p>
+
+                    <h5>⚖️ Limitações legais:</h5>
+                    <ul>
+                        <li>Cumprimento de obrigação legal</li>
+                        <li>Execução de políticas públicas</li>
+                        <li>Realização de estudos por órgão de pesquisa</li>
+                        <li>Exercício regular de direitos em processo</li>
+                        <li>Proteção da vida ou integridade física</li>
+                    </ul>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-exchange-alt"></i> 5. Direito de Portabilidade</h4>
+                    <p><strong>O que é:</strong> Direito de receber seus dados e transferi-los para outro fornecedor de produto ou serviço.</p>
+
+                    <h5>📦 Características da portabilidade:</h5>
+                    <ul>
+                        <li>Formato estruturado e comumente utilizado</li>
+                        <li>Formato legível por máquina</li>
+                        <li>Dados devem estar em formato interoperável</li>
+                        <li>Observados os segredos comercial e industrial</li>
+                    </ul>
+
+                    <div class="exemplo">
+                        <strong>Exemplo prático:</strong> Transferir seu histórico de compras e preferências de uma plataforma de streaming para outra concorrente.
+                    </div>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-ban"></i> 6. Direito de Revogação do Consentimento</h4>
+                    <p><strong>O que é:</strong> Direito de retirar o consentimento dado anteriormente para o tratamento de dados.</p>
+
+                    <h5>⚠️ Importantes observações:</h5>
+                    <ul>
+                        <li>A revogação não afeta a licitude do tratamento realizado antes da retirada</li>
+                        <li>Só se aplica quando o consentimento foi a base legal para o tratamento</li>
+                        <li>Deve ser tão fácil de retirar quanto foi de conceder</li>
+                    </ul>
+
+                    <div class="exemplo">
+                        <strong>Exemplo prático:</strong> Cancelar sua inscrição em newsletters de marketing e solicitar que parem de usar seus dados para essa finalidade.
+                    </div>
+                </div>
+            </div>
+
+            <!-- COMO EXERCER -->
+            <div id="exercer" class="tab-content">
+                <h2><i class="fas fa-clipboard-check"></i> Como Exercer seus Direitos</h2>
+
+                <div class="card card-highlight">
+                    <h3>📞 Canais de Atendimento</h3>
+                    <p>As empresas devem disponibilizar <strong>canais gratuitos e de fácil acesso</strong> para que você possa exercer seus direitos.</p>
+                </div>
+
+                <h3>📋 Passo a Passo para Exercer seus Direitos</h3>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-step-forward"></i> 1º Passo: Identificar o Controlador</h4>
+                    <p>Identifique quem é o controlador dos seus dados (empresa que decidiu coletá-los e tratá-los).</p>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-step-forward"></i> 2º Passo: Localizar os Canais</h4>
+                    <p>Procure pelos canais oficiais: site da empresa, política de privacidade, SAC, DPO (Encarregado de Dados).</p>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-step-forward"></i> 3º Passo: Fazer a Solicitação</h4>
+                    <p>Faça sua solicitação por escrito, de forma clara e específica sobre qual direito deseja exercer.</p>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-step-forward"></i> 4º Passo: Aguardar Resposta</h4>
+                    <p>A empresa tem até <strong>15 dias</strong> para responder, podendo prorrogar por mais 15 dias (totalizando 30 dias).</p>
+                </div>
+
+                <h3>📝 Modelo de Solicitação</h3>
+                <div class="card">
+                    <h4>Modelo Geral:</h4>
+                    <p>
+                        <strong>Para:</strong> [Nome da Empresa/DPO]<br>
+                        <strong>De:</strong> [Seu Nome Completo]<br>
+                        <strong>CPF:</strong> [Seu CPF]<br>
+                        <strong>Data:</strong> [Data da solicitação]<br><br>
+
+                        <strong>Assunto:</strong> Exercício de Direito do Titular - LGPD<br><br>
+
+                        Eu, [Nome Completo], CPF [número], com base no Art. 18 da Lei nº 13.709/2018 (LGPD), solicito:<br><br>
+
+                        [ ] Confirmação da existência de tratamento dos meus dados pessoais<br>
+                        [ ] Acesso aos meus dados pessoais<br>
+                        [ ] Correção de dados incompletos, inexatos ou desatualizados<br>
+                        [ ] Anonimização, bloqueio ou eliminação de dados desnecessários<br>
+                        [ ] Portabilidade dos dados<br>
+                        [ ] Eliminação dos dados tratados com base no consentimento<br><br>
+
+                        Justificativa: [Descreva brevemente o motivo da solicitação]<br><br>
+
+                        Aguardo resposta no prazo legal de 15 dias.<br><br>
+
+                        Atenciosamente,<br>
+                        [Seu Nome e Assinatura]
+                    </p>
+                </div>
+
+                <h3>⏰ Prazos Importantes</h3>
+                <div class="card">
+                    <ul>
+                        <li><strong>15 dias:</strong> Prazo inicial para resposta da empresa</li>
+                        <li><strong>+15 dias:</strong> Prorrogação possível (total: 30 dias)</li>
+                        <li><strong>Imediato:</strong> Resposta deve ser imediata em casos de urgência</li>
+                    </ul>
+                </div>
+
+                <div class="alerta">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <strong>E se a empresa não responder?</strong> Você pode fazer uma reclamação na ANPD (Agência Nacional de Proteção de Dados) através do site: <a href="#" class="reference-link">www.gov.br/anpd</a>
+                </div>
+            </div>
+
+            <!-- CONTROLADOR/OPERADOR -->
+            <div id="controlador" class="tab-content">
+                <h2><i class="fas fa-building"></i> Controlador e Operador de Dados</h2>
+
+                <h3>🏢 Definições Legais</h3>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-user-tie"></i> Controlador</h4>
+                    <p><strong>Definição:</strong> Pessoa natural ou jurídica, de direito público ou privado, a quem competem as decisões referentes ao tratamento de dados pessoais.</p>
+
+                    <h5>📋 Responsabilidades do Controlador:</h5>
+                    <ul>
+                        <li>Decidir sobre as finalidades e meios do tratamento</li>
+                        <li>Garantir o cumprimento da LGPD</li>
+                        <li>Responder às solicitações dos titulares</li>
+                        <li>Manter registro das operações de tratamento</li>
+                        <li>Implementar medidas de segurança</li>
+                        <li>Comunicar incidentes de segurança</li>
+                    </ul>
+
+                    <div class="exemplo">
+                        <strong>Exemplos de Controladores:</strong> Bancos, lojas online, hospitais, escolas, redes sociais, aplicativos de transporte.
+                    </div>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-cogs"></i> Operador</h4>
+                    <p><strong>Definição:</strong> Pessoa natural ou jurídica, de direito público ou privado, que realiza o tratamento de dados pessoais em nome do controlador.</p>
+
+                    <h5>⚙️ Características do Operador:</h5>
+                    <ul>
+                        <li>Age em nome e por conta do controlador</li>
+                        <li>Segue instruções específicas do controlador</li>
+                        <li>Não toma decisões sobre finalidades do tratamento</li>
+                        <li>Pode ser responsabilizado por danos causados</li>
+                    </ul>
+
+                    <div class="exemplo">
+                        <strong>Exemplos de Operadores:</strong> Empresas de cloud computing, agências de marketing digital, call centers terceirizados.
+                    </div>
+                </div>
+
+                <h3>🛡️ Encarregado de Dados (DPO)</h3>
+                <div class="card">
+                    <p><strong>Função:</strong> Profissional responsável por fazer a ponte entre a empresa, os titulares de dados e a ANPD.</p>
+
+                    <h4>📞 Como encontrar o DPO:</h4>
+                    <ul>
+                        <li>Site oficial da empresa</li>
+                        <li>Política de privacidade</li>
+                        <li>Canais de atendimento ao cliente</li>
+                        <li>Contato específico: dpo@empresa.com</li>
+                    </ul>
+                </div>
+
+                <h3>⚖️ Responsabilidades Compartilhadas</h3>
+                <div class="card">
+                    <h4>Ambos (Controlador e Operador) devem:</h4>
+                    <ul>
+                        <li>Manter registros das operações de tratamento</li>
+                        <li>Implementar medidas técnicas e organizacionais</li>
+                        <li>Realizar avaliação de impacto à proteção de dados (quando necessário)</li>
+                        <li>Comunicar à ANPD e ao titular incidentes de segurança</li>
+                        <li>Demonstrar conformidade com a LGPD</li>
+                    </ul>
+                </div>
+
+                <div class="alerta">
+                    <i class="fas fa-balance-scale"></i>
+                    <strong>Importante:</strong> Tanto controladores quanto operadores podem ser responsabilizados civil, administrativa e penalmente pelos danos causados em decorrência do descumprimento da LGPD.
+                </div>
+            </div>
+
+            <!-- CASOS PRÁTICOS -->
+            <div id="casos" class="tab-content">
+                <h2><i class="fas fa-lightbulb"></i> Casos Práticos</h2>
+
+                <div class="card card-highlight">
+                    <h3>🎯 Como Usar Esta Seção</h3>
+                    <p>Aqui você encontrará situações reais ou simuladas que mostram como os direitos do titular podem ser aplicados no dia a dia.</p>
+                </div>
+
+                <h3>📱 Caso 1: Aplicativo de Delivery</h3>
+                <div class="direito-item">
+                    <h4><i class="fas fa-mobile-alt"></i> Situação</h4>
+                    <p>Maria descobriu que o aplicativo de delivery que ela usa compartilha seus dados de localização com empresas de marketing, mesmo após ela ter cancelado o serviços premium.</p>
+
+                    <h5>🎯 Direitos Aplicáveis:</h5>
+                    <ul>
+                        <li><strong>Confirmação e Acesso:</strong> Verificar quais dados estão sendo compartilhados</li>
+                        <li><strong>Revogação do Consentimento:</strong> Retirar autorização para compartilhamento</li>
+                        <li><strong>Eliminação:</strong> Solicitar exclusão dos dados de localização desnecessários</li>
+                    </ul>
+
+                    <div class="exemplo">
+                        <strong>Solução:</strong> Maria contatou o DPO do aplicativo solicitando acesso aos dados compartilhados e revogou o consentimento para marketing. A empresa tinha 15 dias para responder e parar o compartilhamento.
+                    </div>
+                </div>
+
+                <h3>🏥 Caso 2: Clínica Médica</h3>
+                <div class="direito-item">
+                    <h4><i class="fas fa-hospital"></i> Situação</h4>
+                    <p>João mudou de cidade e precisa transferir seu histórico médico para uma nova clínica, mas a clínica anterior está dificultando o processo.</p>
+
+                    <h5>🎯 Direitos Aplicáveis:</h5>
+                    <ul>
+                        <li><strong>Portabilidade:</strong> Receber dados em formato estruturado</li>
+                        <li><strong>Acesso:</strong> Obter cópia completa do prontuário</li>
+                    </ul>
+
+                    <div class="exemplo">
+                        <strong>Solução:</strong> João formalizou pedido de portabilidade dos dados médicos. A clínica deve fornecer os dados em formato estruturado e legível por máquina para facilitar a transferência.
+                    </div>
+                </div>
+
+                <h3>🛒 Caso 3: E-commerce</h3>
+                <div class="direito-item">
+                    <h4><i class="fas fa-shopping-cart"></i> Situação</h4>
+                    <p>Ana notou que uma loja online possui dados incorretos (endereço antigo) e continua enviando ofertas mesmo após ela ter cancelado a newsletter.</p>
+
+                    <h5>🎯 Direitos Aplicáveis:</h5>
+                    <ul>
+                        <li><strong>Correção:</strong> Atualizar endereço correto</li>
+                        <li><strong>Revogação do Consentimento:</strong> Parar envio de marketing</li>
+                        <li><strong>Eliminação:</strong> Excluir dados de marketing (se baseados em consentimento)</li>
+                    </ul>
+                </div>
+
+                <h3>🏦 Caso 4: Instituição Financeira</h3>
+                <div class="direito-item">
+                    <h4><i class="fas fa-university"></i> Situação</h4>
+                    <p>Carlos quer saber quais informações o banco coletou sobre ele para análise de crédito e questiona se todos os dados são realmente necessários.</p>
+
+                    <h5>🎯 Direitos Aplicáveis:</h5>
+                    <ul>
+                        <li><strong>Confirmação e Acesso:</strong> Saber quais dados são tratados</li>
+                        <li><strong>Finalidade:</strong> Entender para que os dados são usados</li>
+                        <li><strong>Anonimização:</strong> Solicitar anonimização de dados excessivos</li>
+                    </ul>
+
+                    <div class="exemplo">
+                        <strong>Importante:</strong> Dados financeiros podem ter base legal diferente do consentimento (como obrigação legal ou interesse legítimo), limitando alguns direitos como a eliminação.
+                    </div>
+                </div>
+
+                <h3>📚 Caso 5: Escola/Universidade</h3>
+                <div class="direito-item">
+                    <h4><i class="fas fa-graduation-cap"></i> Situação</h4>
+                    <p>Fernanda se formou há 5 anos e descobriu que a universidade ainda envia seus dados acadêmicos para empresas parceiras para ofertas de emprego.</p>
+
+                    <h5>🎯 Direitos Aplicáveis:</h5>
+                    <ul>
+                        <li><strong>Confirmação:</strong> Verificar quais dados ainda são tratados</li>
+                        <li><strong>Revogação:</strong> Retirar consentimento para compartilhamento com parceiros</li>
+                        <li><strong>Eliminação:</strong> Excluir dados não mais necessários</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>💡 Dicas Importantes</h3>
+                    <ul>
+                        <li>Sempre documente suas solicitações</li>
+                        <li>Guarde comprovantes de envio e resposta</li>
+                        <li>Seja específico sobre qual direito quer exercer</li>
+                        <li>Em caso de negativa, peça justificativa por escrito</li>
+                        <li>Se necessário, procure a ANPD ou um advogado especializado</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- FAQ -->
+            <div id="faq" class="tab-content">
+                <h2><i class="fas fa-question-circle"></i> Perguntas Frequentes (FAQ)</h2>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-question"></i> 1. Posso exercer meus direitos gratuitamente?</h4>
+                    <p><strong>Resposta:</strong> Sim! O exercício dos direitos do titular é <strong>gratuito</strong>. As empresas não podem cobrar pelo atendimento às suas solicitações, exceto em casos de pedidos manifestamente excessivos ou repetitivos.</p>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-question"></i> 2. Quanto tempo a empresa tem para responder?</h4>
+                    <p><strong>Resposta:</strong> A empresa tem <strong>15 dias</strong> para responder, podendo prorrogar por mais 15 dias (total de 30 dias). Em casos urgentes, a resposta deve ser imediata.</p>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-question"></i> 3. A empresa pode negar minha solicitação?</h4>
+                    <p><strong>Resposta:</strong> Sim, mas deve apresentar <strong>justificativa fundamentada</strong>. Casos comuns de negativa incluem: dados necessários por obrigação legal, interesse legítimo do controlador, ou proteção da vida.</p>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-question"></i> 4. Posso solicitar eliminação de todos os meus dados?</h4>
+                    <p><strong>Resposta:</strong> Nem sempre. A eliminação só é obrigatória para dados tratados com base no <strong>consentimento</strong> ou que sejam desnecessários. Dados com outras bases legais podem ser mantidos.</p>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-question"></i> 5. Como sei se meus dados estão sendo tratados irregularmente?</h4>
+                    <p><strong>Resposta:</strong> Sinais de irregularidade incluem: uso para finalidades não informadas, compartilhamento sem consentimento, dados excessivos para a finalidade, falta de medidas de segurança adequadas.</p>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-question"></i> 6. Posso exercer direitos em nome de terceiros?</h4>
+                    <p><strong>Resposta:</strong> Sim, com <strong>procuração específica</strong> ou nos casos de representação legal (pais por filhos menores, tutores, curadores). Empresas podem exigir documentação comprobatória.</p>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-question"></i> 7. E se a empresa não responder ou negar sem justificativa?</h4>
+                    <p><strong>Resposta:</strong> Você pode fazer uma <strong>reclamação na ANPD</strong> através do site oficial. A agência pode aplicar sanções como advertência, multa ou suspensão das atividades.</p>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-question"></i> 8. Dados de redes sociais também são protegidos pela LGPD?</h4>
+                    <p><strong>Resposta:</strong> <strong>Sim!</strong> Redes sociais são controladoras de dados e devem cumprir a LGPD. Você pode exercer seus direitos sobre dados coletados por essas plataformas.</p>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-question"></i> 9. Posso pedir indenização por uso indevido dos meus dados?</h4>
+                    <p><strong>Resposta:</strong> Sim. A LGPD prevê <strong>responsabilidade civil</strong> por danos causados pelo tratamento irregular de dados pessoais, incluindo danos morais e materiais.</p>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-question"></i> 10. A LGPD se aplica a pequenas empresas?</h4>
+                    <p><strong>Resposta:</strong> <strong>Sim!</strong> A LGPD se aplica a qualquer operação de tratamento de dados pessoais, independentemente do porte da empresa. Pequenos negócios também devem cumprir a lei.</p>
+                </div>
+
+                <div class="card card-highlight">
+                    <h3>📞 Ainda tem dúvidas?</h3>
+                    <p>Para dúvidas específicas sobre seus direitos ou situações particulares, recomendamos:</p>
+                    <ul>
+                        <li>Consultar um advogado especializado em proteção de dados</li>
+                        <li>Entrar em contato com a ANPD</li>
+                        <li>Procurar órgãos de defesa do consumidor</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- JURISPRUDÊNCIA -->
+            <div id="jurisprudencia" class="tab-content">
+                <h2><i class="fas fa-balance-scale"></i> Jurisprudência e Decisões Relevantes</h2>
+
+                <div class="card card-highlight">
+                    <h3>⚖️ O que é Jurisprudência na LGPD?</h3>
+                    <p>Jurisprudência são decisões de tribunais e da ANPD que interpretam e aplicam a LGPD em casos concretos. Essas decisões ajudam a entender como os direitos do titular são protegidos na prática.</p>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-gavel"></i> Caso Real: Multa por Não Atender Titular</h4>
+                    <p><strong>Situação:</strong> Uma empresa foi multada pela ANPD por não responder, no prazo legal, à solicitação de um titular que pediu acesso aos seus dados pessoais.</p>
+                    <div class="exemplo">
+                        <strong>Exemplo prático:</strong> João solicitou à empresa X uma cópia dos seus dados pessoais. A empresa não respondeu em 15 dias e foi autuada pela ANPD.<br>
+                        <strong>Direitos aplicados:</strong> Acesso aos dados, resposta em prazo legal, responsabilização do controlador.
+                    </div>
+                </div>
+
+                <div class="direito-item">
+                    <h4><i class="fas fa-scale-balanced"></i> Caso Real: Indenização por Compartilhamento Indevido</h4>
+                    <p><strong>Situação:</strong> Uma instituição financeira foi condenada judicialmente a indenizar um cliente por compartilhar seus dados com terceiros sem consentimento.</p>
+                    <div class="exemplo">
+                        <strong>Exemplo prático:</strong> Maria percebeu que seus dados bancários foram enviados para empresas de marketing sem autorização. Ela processou o banco e ganhou indenização por dano moral.<br>
+                        <strong>Direitos aplicados:</strong> Consentimento, informação, eliminação e responsabilização.
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>🔗 Consulte Jurisprudência Oficial</h3>
+                    <p>Para ver decisões atualizadas da ANPD e do Judiciário sobre proteção de dados, acesse:
+                        <a href="https://www.gov.br/anpd/pt-br/assuntos/jurisprudencia" class="reference-link" target="_blank">
+                            Jurisprudência ANPD
+                        </a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- GLOSSÁRIO -->
+            <div id="glossario" class="tab-content">
+                <h2><i class="fas fa-spell-check"></i> Glossário da LGPD</h2>
+
+                <div class="glossario-term">
+                    <strong>Anonimização</strong><br>
+                    Utilização de meios técnicos razoáveis e disponíveis no momento do tratamento, por meio dos quais um dado perde a possibilidade de associação, direta ou indireta, a um indivíduo.
+                </div>
+
+                <div class="glossario-term">
+                    <strong>ANPD (Agência Nacional de Proteção de Dados)</strong><br>
+                    Órgão da administração pública responsável por zelar, implementar e fiscalizar o cumprimento da LGPD em todo o território nacional.
+                </div>
+
+                <div class="glossario-term">
+                    <strong>Base Legal</strong><br>
+                    Fundamento jurídico que legitima o tratamento de dados pessoais, como consentimento, cumprimento de obrigação legal, interesse legítimo, entre outros.
+                </div>
+
+                <div class="glossario-term">
+                    <strong>Consentimento</strong><br>
+                    Manifestação livre, informada e inequívoca pela qual o titular concorda com o tratamento de seus dados pessoais para uma finalidade determinada.
+                </div>
+
+                <div class="glossario-term">
+                    <strong>Controlador</strong><br>
+                    Pessoa natural ou jurídica, de direito público ou privado, a quem competem as decisões referentes ao tratamento de dados pessoais.
+                </div>
+
+                <div class="glossario-term">
+                    <strong>Dados Pessoais</strong><br>
+                    Informação relacionada à pessoa natural identificada ou identificável.
+                </div>
+
+                <div class="glossario-term">
+                    <strong>Dados Pessoais Sensíveis</strong><br>
+                    Dados sobre origem racial ou étnica, convicção religiosa, opinião política, filiação sindical, dados referentes à saúde ou à vida sexual, dado genético ou biométrico.
+                </div>
+
+                <div class="glossario-term">
+                    <strong>DPO (Data Protection Officer) / Encarregado</strong><br>
+                    Pessoa indicada pelo controlador e operador para atuar como canal de comunicação entre o controlador, os titulares dos dados e a ANPD.
+                </div>
+
+                <div class="glossario-term">
+                    <strong>Eliminação</strong><br>
+                    Exclusão de dado ou de conjunto de dados armazenados em banco de dados, independentemente do procedimento empregado.
+                </div>
+
+                <div class="glossario-term">
+                    <strong>Incidente de Segurança</strong><br>
+                    Qualquer evento adverso confirmado, relacionado à violação na segurança de dados pessoais ou ao acesso não autorizado aos mesmos.
+                </div>
+
+                <div class="glossario-term">
+                    <strong>Operador</strong><br>
+                    Pessoa natural ou jurídica, de direito público ou privado, que realiza o tratamento de dados pessoais em nome do controlador.
+                </div>
+
+                <div class="glossario-term">
+                    <strong>Portabilidade</strong><br>
+                    Transferência de dados pessoais a outro fornecedor de serviço ou produto, mediante requisição expressa e observados os segredos comercial e industrial.
+                </div>
+
+                <div class="glossario-term">
+                    <strong>Pseudonimização</strong><br>
+                    Tratamento por meio do qual um dado perde a possibilidade de associação, direta ou indireta, a um indivíduo, senão pelo uso de informação adicional mantida separadamente.
+                </div>
+
+                <div class="glossario-term">
+                    <strong>Relatório de Impacto à Proteção de Dados (RIPD)</strong><br>
+                    Documentação do controlador que contém a descrição dos processos de tratamento de dados pessoais que podem gerar riscos às liberdades civis e aos direitos fundamentais.
+                </div>
+
+                <div class="glossario-term">
+                    <strong>Titular</strong><br>
+                    Pessoa natural a quem se referem os dados pessoais que são objeto de tratamento.
+                </div>
+
+                <div class="glossario-term">
+                    <strong>Tratamento</strong><br>
+                    Toda operação realizada com dados pessoais, como: coleta, produção, recepção, classificação, utilização, acesso, reprodução, transmissão, distribuição, processamento, arquivamento, armazenamento, eliminação, avaliação ou controle da informação, modificação, comunicação, transferência, difusão ou extração.
+                </div>
+
+                <div class="glossario-term">
+                    <strong>Uso Compartilhado de Dados</strong><br>
+                    Comunicação, difusão, transferência internacional, interconexão de dados pessoais ou tratamento compartilhado de bancos de dados pessoais por órgãos e entidades públicos no cumprimento de suas competências legais.
+                </div>
+            </div>
+
+            <!-- QUIZ -->
+            <div id="quiz" class="tab-content">
+
+            --
+                <h2><i class="fas fa-question-circle"></i> Quiz: Teste seus conhecimentos sobre a LGPD</h2>
+                <div class="quiz-container">
+                    <form id="quiz-form">
+                        <div class="quiz-question">
+                            <p><strong>1. O que significa a sigla LGPD?</strong></p>
+                            <label><input type="radio" name="q1" value="a"> Lei Geral de Proteção de Dados</label><br>
+                            <label><input type="radio" name="q1" value="b"> Lei Global de Privacidade Digital</label><br>
+                            <label><input type="radio" name="q1" value="c"> Lei de Garantia de Privacidade de Dados</label>
+                        </div>
+                        <div class="quiz-question">
+                            <p><strong>2. Quem é considerado titular de dados pessoais segundo a LGPD?</strong></p>
+                            <label><input type="radio" name="q2" value="a"> Qualquer pessoa jurídica</label><br>
+                            <label><input type="radio" name="q2" value="b"> Qualquer pessoa natural</label><br>
+                            <label><input type="radio" name="q2" value="c"> Apenas empresas de tecnologia</label>
+                        </div>
+                        <div class="quiz-question">
+                            <p><strong>3. Qual órgão é responsável por fiscalizar o cumprimento da LGPD?</strong></p>
+                            <label><input type="radio" name="q3" value="a"> Banco Central</label><br>
+                            <label><input type="radio" name="q3" value="b"> ANPD</label><br>
+                            <label><input type="radio" name="q3" value="c"> Receita Federal</label>
+                        </div>
+                        <div class="quiz-question">
+                            <p><strong>4. O consentimento é sempre obrigatório para o tratamento de dados?</strong></p>
+                            <label><input type="radio" name="q4" value="a"> Sim, em todos os casos</label><br>
+                            <label><input type="radio" name="q4" value="b"> Não, existem outras bases legais</label><br>
+                            <label><input type="radio" name="q4" value="c"> Apenas para dados sensíveis</label>
+                        </div>
+                        <div class="quiz-question">
+                            <p><strong>5. Qual é o prazo máximo para o controlador responder à solicitação do titular?</strong></p>
+                            <label><input type="radio" name="q5" value="a"> 30 dias</label><br>
+                            <label><input type="radio" name="q5" value="b"> 15 dias</label><br>
+                            <label><input type="radio" name="q5" value="c"> 60 dias</label>
+                        </div>
+                        <div class="quiz-question">
+                            <p><strong>6. O que é considerado dado pessoal sensível?</strong></p>
+                            <label><input type="radio" name="q6" value="a"> Nome completo</label><br>
+                            <label><input type="radio" name="q6" value="b"> Dados sobre saúde, religião, opinião política</label><br>
+                            <label><input type="radio" name="q6" value="c"> Endereço residencial</label>
+                        </div>
+                        <div class="quiz-question">
+                            <p><strong>7. O que é portabilidade de dados?</strong></p>
+                            <label><input type="radio" name="q7" value="a"> Transferência de dados entre empresas, a pedido do titular</label><br>
+                            <label><input type="radio" name="q7" value="b"> Exclusão definitiva dos dados</label><br>
+                            <label><input type="radio" name="q7" value="c"> Compartilhamento internacional obrigatório</label>
+                        </div>
+                        <div class="quiz-question">
+                            <p><strong>8. Quem pode ser responsabilizado por infrações à LGPD?</strong></p>
+                            <label><input type="radio" name="q8" value="a"> Apenas o controlador</label><br>
+                            <label><input type="radio" name="q8" value="b"> Controlador e operador</label><br>
+                            <label><input type="radio" name="q8" value="c"> Apenas a ANPD</label>
+                        </div>
+                        <div class="quiz-question">
+                            <p><strong>9. O que é anonimização de dados?</strong></p>
+                            <label><input type="radio" name="q9" value="a"> Processo de apagar todos os dados</label><br>
+                            <label><input type="radio" name="q9" value="b"> Processo de tornar os dados impossíveis de associar a uma pessoa</label><br>
+                            <label><input type="radio" name="q9" value="c"> Compartilhar dados com terceiros</label>
+                        </div>
+                        <div class="quiz-question">
+                            <p><strong>10. O titular pode pedir indenização pelo uso indevido de seus dados?</strong></p>
+                            <label><input type="radio" name="q10" value="a"> Não, apenas advertência</label><br>
+                            <label><input type="radio" name="q10" value="b"> Sim, inclusive por dano moral</label><br>
+                            <label><input type="radio" name="q10" value="c"> Apenas se for empresa pública</label>
+                        </div>
+                        <button type="button" onclick="corrigirQuiz()" class="tab-link">Corrigir Quiz</button>
+                    </form>
+                    <div id="quiz-resultado" style="margin-top:20px;"></div>
+                </div>
+                <script>
+                function corrigirQuiz() {
+                    const respostas = ['a','b','b','b','b','b','a','b','b','b'];
+                    const explicacoes = [
+                        'LGPD significa Lei Geral de Proteção de Dados.',
+                        'O titular é sempre a pessoa natural, nunca pessoa jurídica.',
+                        'A ANPD é a autoridade nacional responsável.',
+                        'Existem outras bases legais além do consentimento.',
+                        'O prazo legal é de 15 dias.',
+                        'Dados sensíveis incluem saúde, religião, opinião política etc.',
+                        'Portabilidade é a transferência de dados a pedido do titular.',
+                        'Controlador e operador podem ser responsabilizados.',
+                        'Anonimização é tornar impossível associar o dado a uma pessoa.',
+                        'A LGPD prevê indenização, inclusive por dano moral.'
+                    ];
+                    let acertos = 0;
+                    let resultado = '<h3>Resultado do Quiz:</h3><ol>';
+                    for(let i=1;i<=10;i++){
+                        const user = document.querySelector('input[name=q'+i+']:checked');
+                        if(user && user.value === respostas[i-1]){
+                            acertos++;
+                            resultado += '<li><span style="color:green;font-weight:bold;">Correta</span> - '+explicacoes[i-1]+'</li>';
+                        } else {
+                            resultado += '<li><span style="color:red;font-weight:bold;">Errada</span> - '+explicacoes[i-1]+'</li>';
+                        }
+                    }
+                    resultado += '</ol>';
+                    resultado += '<h4>Total de acertos: '+acertos+'/10</h4>';
+                    document.getElementById('quiz-resultado').innerHTML = resultado;
+                }
+                </script>
+            </div>
+
+            <!-- MATERIAIS -->
+            <div id="materiais" class="tab-content">
+                <h2><i class="fas fa-book"></i> Materiais de Estudo</h2>
+                <div class="card">
+                    <h3>📚 Apostilas e Guias</h3>
+                    <ul>
+                        <li><a href="https://www.gov.br/anpd/pt-br" target="_blank">Publicações e Guias Oficiais da ANPD</a></li>
+                        <li><a href="https://www.cge.pr.gov.br/Pagina/Cartilhas-da-Lei-Geral-de-Protecao-de-Dados-LGPD" target="_blank">Cartilhas da Lei Geral de Proteção de Dados - Controladoria PR</a></li>
+                        <li><a href="https://www.cnj.jus.br/atos_normativos/" target="_blank">Resoluções e Atos Normativos do CNJ</a></li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>🎥 Vídeos e Aulas</h3>
+                    <ul>
+                        <li><a href="https://www.youtube.com/watch?v=D-yK96DHkiM" target="_blank">Aula 09: Lei Geral de Proteção de Dados (LGPD) - 2024</a></li>
+                        <li><a href="https://www.youtube.com/watch?v=BN_8cWtFb9I" target="_blank">LGPD para Concursos - Explicação Completa</a></li>
+                        <li><a href="https://www.youtube.com/watch?v=rhF2uq4I4v8" target="_blank">Curso Lei Geral De Proteção de Dados Pessoais - Teoria e Prática</a></li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>🔗 Sites Oficiais e Ferramentas</h3>
+                    <ul>
+                        <li><a href="https://www.gov.br/anpd/pt-br" target="_blank">Site Oficial da ANPD</a></li>
+                        <li><a href="https://www.gov.br/cidadania/pt-br" target="_blank">Portal da Cidadania</a></li>
+                    </ul>
+                </div>
+                <div class="alerta"><i class="fas fa-info-circle"></i> Sempre confira se o material está atualizado conforme a legislação vigente!</div>
+            </div>
+
+            <!-- REFERÊNCIAS -->
+            <div id="referencias" class="tab-content">
+                <h2><i class="fas fa-link"></i> Referências e Bibliografia</h2>
+                <ul>
+                    <li><a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/L13709compilado.htm" target="_blank">Lei nº 13.709/2018 (LGPD) - Texto Compilado</a></li>
+                    <li><a href="https://www.gov.br/anpd/pt-br" target="_blank">Agência Nacional de Proteção de Dados (ANPD)</a></li>
+                    <li><a href="https://portal.stf.jus.br/lgpd/" target="_blank">Portal LGPD - Supremo Tribunal Federal (STF)</a></li>
+                    <li><a href="https://www.cnj.jus.br/lgpd-norma-define-criterios-minimos-para-adequacao-pelos-tribunais/" target="_blank">LGPD no CNJ - Critérios e Normas</a></li>
+                    <li>DONEDA, Danilo. <i>Da Privacidade à Proteção de Dados Pessoais</i>. 2ª ed. Rio de Janeiro: Forense, 2022.</li>
+                    <li>PINHEIRO, Patrícia. <i>LGPD Esquematizada</i>. São Paulo: Saraiva, 2023.</li>
+                </ul>
+                <div class="alerta"><i class="fas fa-exclamation-triangle"></i> Consulte sempre fontes oficiais e bibliografia recomendada para aprofundar seus estudos.</div>
+            </div>
+        <!-- SCRIPT DE NAVEGAÇÃO ENTRE ABAS -->
+        <script>
+        document.querySelectorAll('.tab-link').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                // Remove 'active' de todas as abas e botões
+                document.querySelectorAll('.tab-link').forEach(function(b){ b.classList.remove('active'); });
+                document.querySelectorAll('.tab-content').forEach(function(tc){ tc.classList.remove('active'); });
+                // Adiciona 'active' ao botão clicado e à aba correspondente
+                btn.classList.add('active');
+                var tabId = btn.getAttribute('data-tab');
+                var tabContent = document.getElementById(tabId);
+                if(tabContent) tabContent.classList.add('active');
+            });
+        });
+        </script>
