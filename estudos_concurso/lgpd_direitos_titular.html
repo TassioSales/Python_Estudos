@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LGPD – Direitos do Titular (Art. 18)</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0 0 40px 0; background: #f7fafc; color: #222; }
+    header { background: #00796b; color: #fff; padding: 24px 10px 14px 10px; text-align: center; }
+    header h1 { margin: 0; font-size: 2.1rem; }
+    .tabs { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; background: #e0f7fa; padding: 10px 0; position: sticky; top: 0; z-index: 10; }
+    .tab-link { padding: 10px 16px; cursor: pointer; background: #b2dfdb; border: none; border-radius: 6px; font-size: 1rem; display: flex; align-items: center; gap: 7px; transition: background 0.2s, color 0.2s; outline: none; }
+    .tab-link:focus { box-shadow: 0 0 0 2px #00796b55; }
+    .tab-link.active, .tab-link:hover { background: #00796b; color: #fff; }
+    .tab-content { display: none; padding: 24px 16px; border-radius: 8px; background: #fff; margin: 18px auto 0 auto; max-width: 900px; box-shadow: 0 2px 10px #00796b11; }
+    .tab-content.active { display: block; }
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+    .card { background: #e0f7fa; border-radius: 8px; padding: 18px; box-shadow: 0 1px 6px #00796b22; margin-bottom: 10px; }
+    .card h4 { margin-top: 0; }
+    .faq-item { margin-bottom: 18px; }
+    .faq-q { font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+    .faq-a { display: none; margin-top: 6px; }
+    .faq-item.active .faq-a { display: block; }
+    .glossario-lista { columns: 2 250px; gap: 32px; }
+    .glossario-termo { font-weight: bold; }
+    .quiz-q { margin: 14px 0 8px 0; font-weight: bold; }
+    .quiz-opts label { display: block; margin-bottom: 4px; }
+    .quiz-feedback { margin-top: 6px; font-weight: bold; }
+    @media (max-width: 700px) { .card-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 600px) {
+      .tabs { flex-direction: column; gap: 3px; }
+      .tab-content { padding: 14px 4px; }
+      header { font-size: 1.1rem; }
+    }
+    a { color: #00796b; text-decoration: underline; }
+    a:hover { text-decoration: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><i class="fas fa-user-shield"></i> LGPD – Direitos do Titular</h1>
+    <p style="margin-top: 8px; font-size: 1.15rem;">Entenda seus direitos sobre seus dados pessoais segundo a Lei nº 13.709/2018</p>
+  </header>
+  <nav class="tabs" role="tablist">
+    <button class="tab-link active" data-tab="inicio" tabindex="0" aria-selected="true"><i class="fas fa-home"></i> Início</button>
+    <button class="tab-link" data-tab="resumo" tabindex="0"><i class="fas fa-book-open"></i> Resumo</button>
+    <button class="tab-link" data-tab="fundamentos" tabindex="0"><i class="fas fa-gavel"></i> Fundamentos da LGPD</button>
+    <button class="tab-link" data-tab="titular" tabindex="0"><i class="fas fa-user"></i> Quem é o Titular</button>
+    <button class="tab-link" data-tab="art18" tabindex="0"><i class="fas fa-balance-scale"></i> Art. 18 Explicado</button>
+    <button class="tab-link" data-tab="direitos" tabindex="0"><i class="fas fa-list-check"></i> Direitos em Detalhes</button>
+    <button class="tab-link" data-tab="exercicio" tabindex="0"><i class="fas fa-envelope-open-text"></i> Como Exercer os Direitos</button>
+    <button class="tab-link" data-tab="agentes" tabindex="0"><i class="fas fa-people-carry"></i> Controlador e Operador</button>
+    <button class="tab-link" data-tab="casos" tabindex="0"><i class="fas fa-lightbulb"></i> Casos Práticos</button>
+    <button class="tab-link" data-tab="juris" tabindex="0"><i class="fas fa-scale-balanced"></i> Jurisprudência e Decisões</button>
+    <button class="tab-link" data-tab="faq" tabindex="0"><i class="fas fa-question-circle"></i> Dúvidas Frequentes</button>
+    <button class="tab-link" data-tab="glossario" tabindex="0"><i class="fas fa-book"></i> Glossário</button>
+    <button class="tab-link" data-tab="quiz" tabindex="0"><i class="fas fa-pen-to-square"></i> Quiz</button>
+    <button class="tab-link" data-tab="materiais" tabindex="0"><i class="fas fa-folder-open"></i> Materiais Complementares</button>
+    <button class="tab-link" data-tab="referencias" tabindex="0"><i class="fas fa-link"></i> Referências Legais</button>
+  </nav>
+  <main>
+    <!-- Início -->
+    <section id="inicio" class="tab-content active">
+      <h2><i class="fas fa-user-shield"></i> Bem-vindo!</h2>
+      <p>Esta página foi criada para informar e conscientizar sobre os direitos que todo cidadão possui em relação ao uso de seus dados pessoais, conforme a LGPD. Explore as abas para conhecer seus direitos, exemplos práticos e como exercê-los.</p>
+      <div class="card-grid">
+        <div class="card"><i class="fas fa-shield-alt fa-2x"></i>
+          <h4>Proteção de Dados</h4>
+          <p>A proteção de dados é um direito fundamental e essencial para a cidadania digital.</p>
+        </div>
+        <div class="card"><i class="fas fa-balance-scale fa-2x"></i>
+          <h4>Direitos Garantidos</h4>
+          <p>A LGPD assegura direitos para que você tenha controle sobre suas informações pessoais.</p>
+        </div>
+        <div class="card"><i class="fas fa-lightbulb fa-2x"></i>
+          <h4>Educação Digital</h4>
+          <p>Conhecer seus direitos é o primeiro passo para proteger sua privacidade online.</p>
+        </div>
+      </div>
+    </section>
+    <!-- Resumo -->
+    <section id="resumo" class="tab-content">
+      <h2><i class="fas fa-book-open"></i> Resumo Geral</h2>
+      <p>A Lei Geral de Proteção de Dados (LGPD) regula o tratamento de dados pessoais no Brasil, garantindo ao titular o direito à privacidade, à autodeterminação informativa e ao controle sobre suas informações. O Art. 18 da LGPD detalha os direitos dos titulares, como acesso, correção, portabilidade e eliminação dos dados.</p>
+      <ul>
+        <li><b>Objetivo:</b> Proteger os direitos fundamentais de liberdade e privacidade.</li>
+        <li><b>Aplicação:</b> Todos que tratam dados pessoais no Brasil, em meios físicos ou digitais.</li>
+        <li><b>Direitos:</b> Confirmação, acesso, correção, anonimização, portabilidade, eliminação, informação e revogação de consentimento.</li>
+      </ul>
+    </section>
+    <!-- Fundamentos da LGPD -->
+    <section id="fundamentos" class="tab-content">
+      <h2><i class="fas fa-gavel"></i> Fundamentos da LGPD</h2>
+      <ul>
+        <li><b>Finalidade:</b> Tratamento para propósitos legítimos e específicos.</li>
+        <li><b>Adequação:</b> Compatibilidade do tratamento com as finalidades informadas ao titular.</li>
+        <li><b>Necessidade:</b> Limitação do tratamento ao mínimo necessário.</li>
+        <li><b>Transparência:</b> Clareza nas informações ao titular.</li>
+        <li><b>Segurança:</b> Proteção contra acessos não autorizados e situações acidentais.</li>
+        <li><b>Prevenção:</b> Adoção de medidas para evitar danos.</li>
+        <li><b>Não Discriminação:</b> Proibição de tratamento para fins discriminatórios.</li>
+        <li><b>Responsabilização:</b> Demonstração de adoção de medidas eficazes para o cumprimento da lei.</li>
+      </ul>
+    </section>
+    <!-- Quem é o Titular -->
+    <section id="titular" class="tab-content">
+      <h2><i class="fas fa-user"></i> Quem é o Titular?</h2>
+      <p>O titular é a pessoa natural a quem se referem os dados pessoais que são objeto de tratamento. Ou seja, você, cidadão, é o titular dos seus próprios dados.</p>
+      <div class="card-grid">
+        <div class="card">
+          <h4>Exemplo Prático</h4>
+          <p>Ao cadastrar seu CPF em uma farmácia, você é o titular dos dados fornecidos.</p>
+        </div>
+        <div class="card">
+          <h4>Dados Pessoais</h4>
+          <p>Informações como nome, RG, e-mail, endereço, dados de saúde, localização e outros que possam identificar você.</p>
+        </div>
+      </div>
+    </section>
+    <!-- Art. 18 Explicado -->
+    <section id="art18" class="tab-content">
+      <h2><i class="fas fa-balance-scale"></i> Art. 18 Explicado</h2>
+      <ol>
+        <li><b>Confirmação da existência de tratamento</b></li>
+        <li><b>Acesso aos dados</b></li>
+        <li><b>Correção de dados incompletos, inexatos ou desatualizados</b></li>
+        <li><b>Anonimização, bloqueio ou eliminação de dados desnecessários, excessivos ou tratados em desconformidade</b></li>
+        <li><b>Portabilidade dos dados a outro fornecedor de serviço ou produto</b></li>
+        <li><b>Eliminação dos dados pessoais tratados com consentimento do titular</b></li>
+        <li><b>Informação das entidades públicas e privadas com as quais o controlador realizou uso compartilhado de dados</b></li>
+        <li><b>Informação sobre a possibilidade de não fornecer consentimento e sobre as consequências da negativa</b></li>
+        <li><b>Revogação do consentimento</b></li>
+      </ol>
+      <p>Cada um desses direitos será detalhado na próxima aba.</p>
+    </section>
+    <!-- Direitos em Detalhes -->
+    <section id="direitos" class="tab-content">
+      <h2><i class="fas fa-list-check"></i> Direitos em Detalhes</h2>
+      <div class="tabs" style="justify-content:left; flex-wrap:wrap; gap:5px; background:none; padding:0;">
+        <button class="tab-link subtab-link active" data-tab="confirma"><i class="fas fa-check-circle"></i> Confirmação</button>
+        <button class="tab-link subtab-link" data-tab="acesso"><i class="fas fa-eye"></i> Acesso</button>
+        <button class="tab-link subtab-link" data-tab="correcao"><i class="fas fa-edit"></i> Correção</button>
+        <button class="tab-link subtab-link" data-tab="anonimizacao"><i class="fas fa-user-secret"></i> Anonimização</button>
+        <button class="tab-link subtab-link" data-tab="portabilidade"><i class="fas fa-exchange-alt"></i> Portabilidade</button>
+        <button class="tab-link subtab-link" data-tab="eliminacao"><i class="fas fa-trash-alt"></i> Eliminação</button>
+        <button class="tab-link subtab-link" data-tab="compartilhamento"><i class="fas fa-share-alt"></i> Compartilhamento</button>
+        <button class="tab-link subtab-link" data-tab="consentimento"><i class="fas fa-user-lock"></i> Consentimento</button>
+        <button class="tab-link subtab-link" data-tab="revogacao"><i class="fas fa-undo"></i> Revogação</button>
+      </div>
+      <div id="confirma" class="tab-content subtab-content active">
+        <h3>Confirmação da Existência de Tratamento</h3>
+        <p>Você pode solicitar que empresas/instituições confirmem se tratam ou não seus dados pessoais.</p>
+        <div class="card"><b>Exemplo:</b> "Meu nome está cadastrado nesta empresa?"</div>
+      </div>
+      <div id="acesso" class="tab-content subtab-content">
+        <h3>Acesso aos Dados</h3>
+        <p>Direito de saber quais dados pessoais a empresa possui sobre você e como são utilizados.</p>
+        <div class="card"><b>Exemplo:</b> Solicitar cópia dos seus dados em um banco digital.</div>
+      </div>
+      <div id="correcao" class="tab-content subtab-content">
+        <h3>Correção de Dados</h3>
+        <p>Solicitar a correção de dados pessoais incompletos, inexatos ou desatualizados.</p>
+        <div class="card"><b>Exemplo:</b> Corrigir endereço ou telefone errado em um cadastro.</div>
+      </div>
+      <div id="anonimizacao" class="tab-content subtab-content">
+        <h3>Anonimização, Bloqueio ou Eliminação</h3>
+        <p>Você pode pedir para anonimizar, bloquear ou eliminar dados desnecessários, excessivos ou tratados em desconformidade.</p>
+        <div class="card"><b>Exemplo:</b> Solicitar exclusão de dados após o cancelamento de um serviço.</div>
+      </div>
+      <div id="portabilidade" class="tab-content subtab-content">
+        <h3>Portabilidade dos Dados</h3>
+        <p>Pedir a transferência dos seus dados para outro fornecedor de serviço ou produto.</p>
+        <div class="card"><b>Exemplo:</b> Migrar dados de uma operadora de telefonia para outra.</div>
+      </div>
+      <div id="eliminacao" class="tab-content subtab-content">
+        <h3>Eliminação dos Dados</h3>
+        <p>Solicitar a exclusão dos dados pessoais tratados com seu consentimento.</p>
+        <div class="card"><b>Exemplo:</b> Pedir para apagar dados de um cadastro em newsletter.</div>
+      </div>
+      <div id="compartilhamento" class="tab-content subtab-content">
+        <h3>Informação sobre Compartilhamento</h3>
+        <p>Ser informado sobre as entidades públicas e privadas com as quais seus dados foram compartilhados.</p>
+        <div class="card"><b>Exemplo:</b> Saber com quais empresas seus dados bancários foram compartilhados.</div>
+      </div>
+      <div id="consentimento" class="tab-content subtab-content">
+        <h3>Informação sobre Consentimento</h3>
+        <p>Direito de ser informado sobre a possibilidade de não fornecer consentimento e as consequências da negativa.</p>
+        <div class="card"><b>Exemplo:</b> Saber se recusar consentimento impede o acesso a determinado serviço.</div>
+      </div>
+      <div id="revogacao" class="tab-content subtab-content">
+        <h3>Revogação do Consentimento</h3>
+        <p>Você pode revogar seu consentimento a qualquer momento, mediante manifestação expressa.</p>
+        <div class="card"><b>Exemplo:</b> Cancelar autorização para uso dos seus dados em um aplicativo.</div>
+      </div>
+    </section>
+    <!-- Como Exercer os Direitos -->
+    <section id="exercicio" class="tab-content">
+      <h2><i class="fas fa-envelope-open-text"></i> Como Exercer os Direitos</h2>
+      <ul>
+        <li>Entre em contato com o controlador dos dados (empresa, órgão público, etc.) por canais oficiais (e-mail, SAC, formulário online).</li>
+        <li>Solicite de forma clara e objetiva, indicando o direito que deseja exercer.</li>
+        <li>O controlador deve responder em até 15 dias.</li>
+        <li>Se não houver resposta, procure a <a href="https://www.gov.br/anpd/pt-br" target="_blank">ANPD</a> ou órgãos de defesa do consumidor.</li>
+      </ul>
+      <div class="card"><b>Modelo de Solicitação:</b><br>
+        "Solicito, com base na LGPD, o exercício do direito de [acesso/correção/eliminação/etc.] referente aos meus dados pessoais sob o CPF [seu CPF]."
+      </div>
+    </section>
+    <!-- Controlador e Operador -->
+    <section id="agentes" class="tab-content">
+      <h2><i class="fas fa-people-carry"></i> Controlador e Operador</h2>
+      <ul>
+        <li><b>Controlador:</b> Pessoa ou empresa responsável pelas decisões sobre o tratamento dos dados.</li>
+        <li><b>Operador:</b> Quem realiza o tratamento de dados em nome do controlador.</li>
+        <li><b>Deveres:</b> Garantir a segurança, transparência e respeito aos direitos do titular.</li>
+      </ul>
+      <div class="card-grid">
+        <div class="card"><b>Exemplo:</b> Uma escola (controlador) contrata uma empresa de software (operador) para gerenciar dados dos alunos.</div>
+      </div>
+    </section>
+    <!-- Casos Práticos -->
+    <section id="casos" class="tab-content">
+      <h2><i class="fas fa-lightbulb"></i> Casos Práticos</h2>
+      <div class="card-grid">
+        <div class="card"><b>Exemplo 1:</b> Um consumidor solicita a exclusão de seus dados após cancelar um serviço de streaming.</div>
+        <div class="card"><b>Exemplo 2:</b> Um titular pede acesso ao histórico de compras em uma loja online.</div>
+        <div class="card"><b>Exemplo 3:</b> Um funcionário solicita correção de dados pessoais no RH da empresa.</div>
+      </div>
+    </section>
+    <!-- Jurisprudência e Decisões -->
+    <section id="juris" class="tab-content">
+      <h2><i class="fas fa-scale-balanced"></i> Jurisprudência e Decisões</h2>
+      <ul>
+        <li><b>Decisão ANPD:</b> Aplicação de multa a empresa que não respondeu solicitação de titular.</li>
+        <li><b>Decisão Judicial:</b> Empresa condenada a indenizar titular por compartilhamento indevido de dados.</li>
+        <li><b>Referências:</b> Consulte <a href="https://www.gov.br/anpd/pt-br/assuntos/jurisprudencia" target="_blank">jurisprudência da ANPD</a>.</li>
+      </ul>
+    </section>
+    <!-- Dúvidas Frequentes -->
+    <section id="faq" class="tab-content">
+      <h2><i class="fas fa-question-circle"></i> Dúvidas Frequentes (FAQ)</h2>
+      <div class="faq-item"><div class="faq-q"><i class="fas fa-plus-circle"></i> O que é dado pessoal?</div><div class="faq-a">Qualquer informação que identifique ou possa identificar uma pessoa natural.</div></div>
+      <div class="faq-item"><div class="faq-q"><i class="fas fa-plus-circle"></i> Como posso saber se meus dados estão sendo tratados?</div><div class="faq-a">Você pode solicitar a confirmação ao controlador dos dados, conforme a LGPD.</div></div>
+      <div class="faq-item"><div class="faq-q"><i class="fas fa-plus-circle"></i> O que fazer se meus direitos não forem respeitados?</div><div class="faq-a">Procure a ANPD ou órgãos de defesa do consumidor.</div></div>
+      <div class="faq-item"><div class="faq-q"><i class="fas fa-plus-circle"></i> Quais dados podem ser solicitados?</div><div class="faq-a">Apenas os dados pessoais sob tratamento pelo controlador.</div></div>
+    </section>
+    <!-- Glossário -->
+    <section id="glossario" class="tab-content">
+      <h2><i class="fas fa-book"></i> Glossário</h2>
+      <div class="glossario-lista">
+        <div><span class="glossario-termo">Titular:</span> Pessoa a quem se referem os dados pessoais.</div>
+        <div><span class="glossario-termo">Controlador:</span> Quem decide sobre o tratamento dos dados.</div>
+        <div><span class="glossario-termo">Operador:</span> Quem realiza o tratamento em nome do controlador.</div>
+        <div><span class="glossario-termo">Anonimização:</span> Processo de tornar impossível a identificação do titular.</div>
+        <div><span class="glossario-termo">Consentimento:</span> Autorização do titular para tratar seus dados.</div>
+        <div><span class="glossario-termo">Portabilidade:</span> Transferência dos dados a outro fornecedor.</div>
+        <div><span class="glossario-termo">Dado pessoal sensível:</span> Informações sobre origem racial, saúde, orientação sexual etc.</div>
+      </div>
+    </section>
+    <!-- Quiz -->
+    <section id="quiz" class="tab-content">
+      <h2><i class="fas fa-pen-to-square"></i> Quiz</h2>
+      <form id="quiz-form">
+        <div class="quiz-q">1. Qual órgão fiscaliza a aplicação da LGPD?</div>
+        <div class="quiz-opts">
+          <label><input type="radio" name="q1" value="ANPD"> ANPD</label>
+          <label><input type="radio" name="q1" value="BACEN"> BACEN</label>
+          <label><input type="radio" name="q1" value="INSS"> INSS</label>
+        </div>
+        <div class="quiz-q">2. Qual direito permite solicitar a exclusão dos dados?</div>
+        <div class="quiz-opts">
+          <label><input type="radio" name="q2" value="Eliminação"> Eliminação</label>
+          <label><input type="radio" name="q2" value="Portabilidade"> Portabilidade</label>
+          <label><input type="radio" name="q2" value="Compartilhamento"> Compartilhamento</label>
+        </div>
+        <button type="submit" style="margin-top:12px; background:#00796b; color:#fff; border:none; border-radius:5px; padding:8px 20px; cursor:pointer;"><i class="fas fa-check"></i> Conferir</button>
+        <div id="quiz-feedback" class="quiz-feedback"></div>
+      </form>
+    </section>
+    <!-- Materiais Complementares -->
+    <section id="materiais" class="tab-content">
+      <h2><i class="fas fa-folder-open"></i> Materiais Complementares</h2>
+      <ul>
+        <li><a href="https://www.gov.br/anpd/pt-br/documentos-e-publicacoes" target="_blank">Guias e Manuais da ANPD</a></li>
+        <li><a href="https://www.gov.br/governodigital/pt-br/seguranca-e-protecao-de-dados/lgpd" target="_blank">Cartilhas e materiais do Governo Federal</a></li>
+        <li><a href="https://www.cnj.jus.br/programas-e-acoes/lgpd/" target="_blank">Cartilha LGPD do CNJ</a></li>
+      </ul>
+    </section>
+    <!-- Referências Legais -->
+    <section id="referencias" class="tab-content">
+      <h2><i class="fas fa-link"></i> Referências Legais</h2>
+      <ul>
+        <li><a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm" target="_blank">Lei nº 13.709/2018 (LGPD)</a></li>
+        <li><a href="https://www.gov.br/anpd/pt-br" target="_blank">Agência Nacional de Proteção de Dados (ANPD)</a></li>
+        <li><a href="https://www.gov.br/governodigital/pt-br/seguranca-e-protecao-de-dados/lgpd" target="_blank">Guia LGPD Governo Federal</a></li>
+        <li><a href="https://www.cnj.jus.br/programas-e-acoes/lgpd/" target="_blank">LGPD no CNJ</a></li>
+      </ul>
+    </section>
+  </main>
+  <script>
+    // Tabs principais
+    document.querySelectorAll('.tab-link:not(.subtab-link)').forEach(button => {
+      button.addEventListener('click', () => {
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.tab-link:not(.subtab-link)').forEach(b => b.classList.remove('active'));
+        document.getElementById(button.dataset.tab).classList.add('active');
+        button.classList.add('active');
+      });
+    });
+    // Subtabs (Direitos em Detalhes)
+    document.querySelectorAll('.subtab-link').forEach(button => {
+      button.addEventListener('click', () => {
+        document.querySelectorAll('.subtab-content').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.subtab-link').forEach(b => b.classList.remove('active'));
+        document.getElementById(button.dataset.tab).classList.add('active');
+        button.classList.add('active');
+      });
+    });
+    // FAQ interativo
+    document.querySelectorAll('.faq-q').forEach(q => {
+      q.addEventListener('click', () => {
+        const item = q.parentElement;
+        item.classList.toggle('active');
+      });
+    });
+    // Quiz
+    document.getElementById('quiz-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      let score = 0;
+      const q1 = this.q1.value;
+      const q2 = this.q2.value;
+      if(q1 === 'ANPD') score++;
+      if(q2 === 'Eliminação') score++;
+      let feedback = '';
+      if(score === 2) feedback = 'Parabéns! Você acertou todas.';
+      else if(score === 1) feedback = 'Quase lá! Você acertou uma.';
+      else feedback = 'Tente novamente!';
+      document.getElementById('quiz-feedback').textContent = feedback;
+    });
+  </script>
+</body>
+</html>
