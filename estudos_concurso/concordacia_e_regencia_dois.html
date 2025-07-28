@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Definitivo de Concordância e Regência</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(to bottom, #f7fafc, #e2e8f0);
+            color: #2d3748;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            font-family: 'Poppins', sans-serif;
+            color: #2a4365;
+        }
+        .navbar {
+            background: #2a4365;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .nav-tabs .nav-link {
+            color: #2a4365;
+            font-weight: 600;
+            border-radius: 8px 8px 0 0;
+            margin: 0 2px;
+            transition: all 0.3s ease;
+        }
+        .nav-tabs .nav-link.active {
+            background: #fff;
+            color: #ed8936;
+            border-bottom: none;
+            box-shadow: inset 0 -3px #ed8936;
+        }
+        .nav-tabs .nav-link:hover {
+            background: #edf2f7;
+            color: #2a4365;
+        }
+        .tab-content {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 0 8px 8px 8px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+        .card {
+            border: none;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        .card-header {
+            background: linear-gradient(to right, #e9f1f8, #dfe9f3);
+            color: #2a4365;
+            font-weight: 600;
+            border-bottom: none;
+            padding: 15px;
+        }
+        .alert {
+            border-radius: 8px;
+            border-left: 6px solid;
+            margin-bottom: 15px;
+            padding: 15px;
+        }
+        .alert-success { border-color: #38a169; background: #f0fff4; }
+        .alert-danger { border-color: #e53e3e; background: #fff5f5; }
+        .alert-info { border-color: #3182ce; background: #ebf8ff; }
+        .alert-warning { border-color: #ed8936; background: #fffaf0; }
+        .quiz-container label {
+            cursor: pointer;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background 0.2s;
+        }
+        .quiz-container label:hover {
+            background: #edf2f7;
+        }
+        .quiz-container input[type="radio"] {
+            margin-right: 10px;
+        }
+        .btn-primary {
+            background: #ed8936;
+            border: none;
+            transition: background 0.3s;
+        }
+        .btn-primary:hover {
+            background: #dd6b20;
+        }
+        .table {
+            background: #f7fafc;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .table th {
+            background: #2a4365;
+            color: #fff;
+        }
+        .blockquote {
+            border-left: 5px solid #ed8936;
+            padding-left: 20px;
+            font-style: italic;
+            color: #4a5568;
+        }
+        .collapse-toggle {
+            cursor: pointer;
+            color: #ed8936;
+            font-weight: 600;
+        }
+        @media (max-width: 768px) {
+            .tab-content {
+                padding: 20px;
+            }
+            .nav-tabs .nav-link {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+            .card {
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-5">
+        <h1 class="text-center mb-4"><i class="fas fa-book-open me-2"></i> Guia Definitivo de Concordância e Regência</h1>
+        <p class="lead text-center mb-5">Domine as regras essenciais para gabaritar concursos, vestibulares e ENEM com este guia interativo e visualmente incrível!</p>
+
+        <!-- Sistema de Abas -->
+        <ul class="nav nav-tabs justify-content-center" id="studyTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="inicio-tab" data-bs-toggle="tab" href="#inicio" role="tab">Início</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="resumo-tab" data-bs-toggle="tab" href="#resumo" role="tab">Resumo</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="concordancia-verbal-tab" data-bs-toggle="tab" href="#concordancia-verbal" role="tab">Concordância Verbal</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="concordancia-nominal-tab" data-bs-toggle="tab" href="#concordancia-nominal" role="tab">Concordância Nominal</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="regencia-verbal-tab" data-bs-toggle="tab" href="#regencia-verbal" role="tab">Regência Verbal</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="regencia-nominal-tab" data-bs-toggle="tab" href="#regencia-nominal" role="tab">Regência Nominal</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="casos-especiais-tab" data-bs-toggle="tab" href="#casos-especiais" role="tab">Casos Especiais</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="dicas-provas-tab" data-bs-toggle="tab" href="#dicas-provas" role="tab">Dicas de Provas</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="quiz-tab" data-bs-toggle="tab" href="#quiz" role="tab">Quiz Interativo</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="exercicios-tab" data-bs-toggle="tab" href="#exercicios" role="tab">Exercícios Resolvidos</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="glossario-tab" data-bs-toggle="tab" href="#glossario" role="tab">Glossário</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="materiais-tab" data-bs-toggle="tab" href="#materiais" role="tab">Materiais</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="referencias-tab" data-bs-toggle="tab" href="#referencias" role="tab">Referências</a>
+            </li>
+        </ul>
+
+        <!-- Conteúdo das Abas -->
+        <div class="tab-content" id="studyTabsContent">
+            <!-- Início -->
+            <div class="tab-pane fade show active" id="inicio" role="tabpanel">
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-star me-2"></i> Bem-vindo ao seu Guia de Estudos!</div>
+                    <div class="card-body">
+                        <p class="lead">Este guia foi projetado para transformar suas dúvidas em pontos na prova! Perfeito para concursos públicos, vestibulares e ENEM, com explicações claras, exemplos práticos e exercícios interativos.</p>
+                        <h3><i class="fas fa-graduation-cap me-2"></i> Por que estudar Concordância e Regência?</h3>
+                        <ul>
+                            <li><strong>Clareza na comunicação:</strong> Evita ambiguidades em textos e falas.</li>
+                            <li><strong>Norma-padrão:</strong> Essencial para redações e questões objetivas.</li>
+                            <li><strong>Critério de desempate:</strong> Domínio dessas regras pode ser decisivo em concursos.</li>
+                            <li><strong>Confiança na escrita:</strong> Garante textos corretos e profissionais.</li>
+                        </ul>
+                        <h3><i class="fas fa-compass me-2"></i> Como aproveitar ao máximo?</h3>
+                        <ol>
+                            <li>Comece pelo <a href="#resumo">Resumo</a> para uma visão geral.</li>
+                            <li>Explore as regras detalhadas em cada aba (ex.: <a href="#concordancia-verbal">Concordância Verbal</a>).</li>
+                            <li>Teste seus conhecimentos no <a href="#quiz">Quiz Interativo</a>.</li>
+                            <li>Revise os <a href="#exercicios">Exercícios Resolvidos</a> de provas reais.</li>
+                            <li>Consulte o <a href="#glossario">Glossário</a> para esclarecer termos técnicos.</li>
+                        </ol>
+                        <blockquote class="blockquote">
+                            <p>"A disciplina nos estudos é o caminho mais curto entre o sonho e a aprovação!"</p>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resumo -->
+            <div class="tab-pane fade" id="resumo" role="tabpanel">
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-list me-2"></i> Visão Geral: Harmonia vs. Dependência</div>
+                    <div class="card-body">
+                        <p><strong>Concordância</strong>: Garante a harmonia entre palavras em gênero, número e pessoa. <em>(Fonte: Brasil Escola)</em></p>
+                        <ul>
+                            <li><strong>Concordância Verbal:</strong> Verbo concorda com o sujeito. Ex: <em>As alunas estudam muito.</em></li>
+                            <li><strong>Concordância Nominal:</strong> Adjetivos, pronomes e artigos concordam com o substantivo. Ex: <em>Os livros novos são caros.</em></li>
+                        </ul>
+                        <p><strong>Regência</strong>: Define a relação lógica entre palavras, com ou sem preposições. <em>(Fonte: Bechara)</em></p>
+                        <ul>
+                            <li><strong>Regência Verbal:</strong> Verbo exige ou não preposição. Ex: <em>Preciso de ajuda.</em></li>
+                            <li><strong>Regência Nominal:</strong> Nomes exigem preposição. Ex: <em>Amor por livros.</em></li>
+                        </ul>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Critério</th>
+                                        <th>Concordância</th>
+                                        <th>Regência</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>O que afeta?</strong></td>
+                                        <td>Flexão das palavras (gênero, número, pessoa).</td>
+                                        <td>Conexão entre palavras (preposições).</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Pergunta-chave</strong></td>
+                                        <td>Esta palavra combina com aquela?</td>
+                                        <td>Este verbo/nome pede qual preposição?</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Erro típico</strong></td>
+                                        <td><em>Nós foi</em> (erro de número/pessoa).</td>
+                                        <td><em>Assisti o filme</em> (erro de preposição).</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="alert alert-info"><strong>Macete de Revisão:</strong> Pense em concordância como “uniforme” (tudo combinando) e regência como “mapa” (quem manda e quem obedece). <em>(Fonte: Descomplica)</em></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Concordância Verbal -->
+            <div class="tab-pane fade" id="concordancia-verbal" role="tabpanel">
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-check-circle me-2"></i> Regra Geral: Sujeito Simples</div>
+                    <div class="card-body">
+                        <p>O verbo concorda com o núcleo do sujeito em número e pessoa. <em>(Fonte: Estratégia Concursos)</em></p>
+                        <div class="alert alert-success"><strong>Correto:</strong> O grupo de alunos apresentou o trabalho.</div>
+                        <div class="alert alert-danger"><strong>Errado:</strong> O grupo de alunos apresentaram o trabalho. <em>(Erro: verbo no plural, mas o núcleo é "grupo", singular.)</em></div>
+                        <div class="alert alert-info"><strong>Dica:</strong> Sempre localize o núcleo do sujeito antes de conjugar o verbo!</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-users me-2"></i> Sujeito Composto</div>
+                    <div class="card-body">
+                        <p>Antes do verbo: verbo no plural. Depois do verbo: plural (lógico) ou com o mais próximo (atrativa). <em>(Fonte: Toda Matéria)</em></p>
+                        <div class="alert alert-success"><strong>Antes:</strong> Pai e filho conversaram.</div>
+                        <div class="alert alert-success"><strong>Depois (Lógica):</strong> Chegaram o pai e o filho.</div>
+                        <div class="alert alert-success"><strong>Depois (Atrativa):</strong> Chegou o pai e o filho.</div>
+                        <div class="alert alert-warning"><strong>Macete de Prova:</strong> Em concursos, prefira a concordância lógica (plural) para sujeito composto após o verbo.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-exclamation-circle me-2"></i> Exceções e Pegadinhas</div>
+                    <div class="card-body">
+                        <ul>
+                            <li><strong>Verbo “fazer” (tempo):</strong> Sempre singular. Ex: <em>Faz dois anos que estudo.</em></li>
+                            <li><strong>Verbo “haver” (existir):</strong> Sempre singular. Ex: <em>Havia muitos motivos.</em></li>
+                            <li><strong>Pronome “quem”:</strong> 3ª pessoa singular ou concorda com o antecedente. Ex: <em>Fui eu quem fiz/fizemos.</em></li>
+                            <li><strong>Coletivos:</strong> Verbo concorda com o coletivo. Ex: <em>A maioria dos alunos passou.</em></li>
+                            <li><strong>Silepse:</strong> Concordância pelo sentido. Ex: <em>A gente somos felizes.</em> (Correto em contextos informais, mas errado na norma-padrão.)</li>
+                        </ul>
+                        <div class="alert alert-warning"><strong>Macete de Prova:</strong> Para “um dos que”, verbo no plural é preferido. Ex: <em>Ele é um dos alunos que mais se destacaram.</em> <em>(Fonte: Descomplica)</em></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-file-alt me-2"></i> Exemplo de Concurso (Cebraspe 2022)</div>
+                    <div class="card-body">
+                        <p><strong>Pergunta:</strong> Assinale a alternativa correta:</p>
+                        <ol type="a">
+                            <li>Fazem cinco anos que ele estuda.</li>
+                            <li>Havia muitas pessoas na reunião.</li>
+                            <li>A maioria dos candidatos aprovaram.</li>
+                            <li>Vende-se carros na loja.</li>
+                        </ol>
+                        <p><strong>Resposta:</strong> b — O verbo “haver” (existir) fica no singular. <em>(Fonte: Cebraspe 2022, adaptado)</em></p>
+                        <p class="collapse-toggle" data-bs-toggle="collapse" href="#cebraspe2022" role="button">Ver Resolução</p>
+                        <div class="collapse" id="cebraspe2022">
+                            <p><strong>Explicação:</strong> O verbo “haver” no sentido de “existir” é impessoal e sempre fica no singular. Alternativa b está correta. As demais têm erros: a) “Fazem” deveria ser “Faz”; c) “Aprovaram” deveria ser “Aprovou” (concorda com “maioria”); d) “Vende-se carros” deveria ser “Vendem-se carros” (voz passiva sintética).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Concordância Nominal -->
+            <div class="tab-pane fade" id="concordancia-nominal" role="tabpanel">
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-check-circle me-2"></i> Regra Geral</div>
+                    <div class="card-body">
+                        <p>Adjetivos, pronomes, artigos e numerais concordam com o substantivo em gênero e número. <em>(Fonte: Kumon)</em></p>
+                        <div class="alert alert-success"><strong>Correto:</strong> As alunas inteligentes estudaram.</div>
+                        <div class="alert alert-danger"><strong>Errado:</strong> As aluno inteligente estudaram. <em>(Erro: falta de concordância em gênero e número.)</em></div>
+                        <div class="alert alert-info"><strong>Dica:</strong> Faça o “casamento” de gênero e número entre substantivo e seus determinantes!</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-exclamation-circle me-2"></i> Exceções e Pegadinhas</div>
+                    <div class="card-body">
+                        <ul>
+                            <li><strong>“É proibido/permitido”:</strong> Invariável sem artigo. Ex: <em>É proibido entrada.</em> / Varia com artigo: <em>É proibida a entrada.</em></li>
+                            <li><strong>Adjetivo posposto:</strong> Concorda com o mais próximo ou plural masculino. Ex: <em>Alunos e professora dedicados/dedicada.</em></li>
+                            <li><strong>“Bastante”:</strong> Variável como adjetivo. Ex: <em>Bastantes livros.</em> / Invariável como advérbio: <em>Correram bastante.</em></li>
+                            <li><strong>“Meio”:</strong> Variável como adjetivo. Ex: <em>Meia laranja.</em> / Invariável como advérbio: <em>Estou meio cansado.</em></li>
+                        </ul>
+                        <div class="alert alert-warning"><strong>Macete de Prova:</strong> Substitua por outro adjetivo para verificar a concordância. Ex: <em>É proibida a entrada</em> → <em>É permitida a entrada.</em> <em>(Fonte: QConcursos)</em></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-file-alt me-2"></i> Exemplo de Concurso (FGV 2023)</div>
+                    <div class="card-body">
+                        <p><strong>Pergunta:</strong> Assinale a alternativa correta:</p>
+                        <ol type="a">
+                            <li>Segue anexo as propostas.</li>
+                            <li>Seguem anexas as propostas.</li>
+                            <li>Segue anexa as propostas.</li>
+                            <li>Seguem anexo as propostas.</li>
+                        </ol>
+                        <p><strong>Resposta:</strong> b — “Anexas” concorda com “propostas” em gênero e número. <em>(Fonte: Adaptado de FGV/2023)</em></p>
+                        <p class="collapse-toggle" data-bs-toggle="collapse" href="#fgv2023" role="button">Ver Resolução</p>
+                        <div class="collapse" id="fgv2023">
+                            <p><strong>Explicação:</strong> O adjetivo “anexas” deve concordar com “propostas” (feminino, plural). Alternativa b está correta. As demais têm erros de concordância em número ou gênero.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Regência Verbal -->
+            <div class="tab-pane fade" id="regencia-verbal" role="tabpanel">
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-link me-2"></i> Regra Geral</div>
+                    <div class="card-body">
+                        <p>Determina se o verbo exige ou não preposição para seu complemento. <em>(Fonte: Brasil Escola)</em></p>
+                        <div class="alert alert-success"><strong>Correto:</strong> Assisti ao filme. <em>(Verbo “assistir” no sentido de “ver” exige preposição “a”.)</em></div>
+                        <div class="alert alert-danger"><strong>Errado:</strong> Assisti o filme. <em>(Erro: falta a preposição “a”.)</em></div>
+                        <div class="alert alert-info"><strong>Dica:</strong> Memorize verbos com dupla regência: <em>assistir</em> (ao filme = ver; o paciente = ajudar), <em>aspirar</em> (a cargos = pretender; perfumes = cheirar), <em>visar</em> (ao alvo = mirar; o documento = rubricar).</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-exclamation-circle me-2"></i> Verbos Comuns em Provas</div>
+                    <div class="card-body">
+                        <ul>
+                            <li><strong>Implicar:</strong> Transitivo direto (acarretar). Ex: <em>A decisão implicará mudanças.</em> / Transitivo indireto (ter implicância). Ex: <em>Implicou com o colega.</em></li>
+                            <li><strong>Preferir:</strong> Exige “a”. Ex: <em>Prefiro café a chá.</em></li>
+                            <li><strong>Esquecer/Lembrar:</strong> Com pronome, exige “de”. Ex: <em>Lembrei-me de você.</em> / Sem pronome, direto. Ex: <em>Lembrei o nome.</em></li>
+                        </ul>
+                        <div class="alert alert-warning"><strong>Cuidado:</strong> Verbos com dupla regência mudam de sentido dependendo da preposição. <em>(Fonte: Nova Concursos)</em></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-file-alt me-2"></i> Exemplo de Concurso (Cesgranrio 2021)</div>
+                    <div class="card-body">
+                        <p><strong>Pergunta:</strong> Assinale a alternativa correta:</p>
+                        <ol type="a">
+                            <li>Implicará em mudanças drásticas.</li>
+                            <li>Implicará mudanças drásticas.</li>
+                            <li>Implicará com mudanças drásticas.</li>
+                            <li>Implicará a mudanças drásticas.</li>
+                        </ol>
+                        <p><strong>Resposta:</strong> b — “Implicar” (acarretar) é transitivo direto, sem preposição. <em>(Fonte: Adaptado de Cesgranrio/2021)</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Regência Nominal -->
+            <div class="tab-pane fade" id="regencia-nominal" role="tabpanel">
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-link me-2"></i> Regra Geral</div>
+                    <div class="card-body">
+                        <p>Nomes (substantivos, adjetivos, advérbios) exigem preposições específicas. <em>(Fonte: Bechara)</em></p>
+                        <div class="alert alert-success"><strong>Correto:</strong> Ele é favorável a mudanças.</div>
+                        <div class="alert alert-danger"><strong>Errado:</strong> Ele é favorável mudanças. <em>(Erro: falta a preposição “a”.)</em></div>
+                        <div class="alert alert-info"><strong>Dica:</strong> Nomes cognatos seguem a regência do verbo correspondente. Ex: <em>Obedecer às regras</em> → <em>Obediente às regras.</em></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-list-alt me-2"></i> Nomes Comuns em Provas</div>
+                    <div class="card-body">
+                        <ul>
+                            <li><strong>Amor:</strong> Exige “a” ou “por”. Ex: <em>Amor à pátria.</em> / <em>Amor por livros.</em></li>
+                            <li><strong>Respeito:</strong> Exige “a” ou “por”. Ex: <em>Respeito às leis.</em></li>
+                            <li><strong>Ansioso:</strong> Exige “por” (aguardar) ou “com” (nervosismo). Ex: <em>Ansioso por notícias.</em> / <em>Ansioso com a prova.</em></li>
+                        </ul>
+                        <div class="alert alert-warning"><strong>Macete de Prova:</strong> Crie fichas com palavras-chave + preposição (ex.: favorável a, contrário a, ansioso por). <em>(Fonte: Nova Concursos)</em></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-file-alt me-2"></i> Exemplo de Concurso (Colégio Naval 2016)</div>
+                    <div class="card-body">
+                        <p><strong>Frase:</strong> “Propenso de” (errado).</p>
+                        <p><strong>Correto:</strong> Propenso a. <em>(O adjetivo “propenso” exige preposição “a”.)</em></p>
+                        <p><em>Fonte: Nova Concursos</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Casos Especiais -->
+            <div class="tab-pane fade" id="casos-especiais" role="tabpanel">
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-exclamation-triangle me-2"></i> Crase</div>
+                    <div class="card-body">
+                        <p>Fusão da preposição “a” com o artigo “a(s)” ou pronomes. <em>(Fonte: Toda Matéria)</em></p>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Tipo</th>
+                                        <th>Quando Usar</th>
+                                        <th>Exemplo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Obrigatória</td>
+                                        <td>Locuções adverbiais femininas, nomes femininos com artigo.</td>
+                                        <td>Vou à escola. / Cheguei à tarde.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Proibida</td>
+                                        <td>Antes de palavras masculinas, verbos, pronomes pessoais.</td>
+                                        <td>Vou a pé. / Entreguei a ele.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Facultativa</td>
+                                        <td>Antes de nomes próprios femininos ou pronomes possessivos.</td>
+                                        <td>Refiro-me a/à Maria.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="alert alert-warning"><strong>Macete:</strong> Troque por masculino. Se virar “ao”, use crase. Ex: <em>Vou à feira</em> → <em>Vou ao mercado.</em></div>
+                        <div class="alert alert-info"><strong>NÃO CONFUNDA:</strong> “À medida que” (correto) vs. “A medida que” (errado). <em>(Fonte: Manual de Redação da Presidência)</em></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-exclamation-circle me-2"></i> Pleonasma Vicioso</div>
+                    <div class="card-body">
+                        <p>Redundâncias a evitar na escrita formal. <em>(Fonte: Bechara)</em></p>
+                        <ul>
+                            <li><em>Subir para cima</em>, <em>descer para baixo</em>.</li>
+                            <li><em>Entrar para dentro</em>, <em>sair para fora</em>.</li>
+                            <li><em>Hemorragia de sangue</em>, <em>elo de ligação</em>.</li>
+                        </ul>
+                        <div class="alert alert-info"><strong>Dica:</strong> Em redações, prefira sinônimos ou construções mais concisas.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-exclamation-circle me-2"></i> Verbos com Dupla Regência</div>
+                    <div class="card-body">
+                        <p>Alguns verbos mudam de sentido dependendo da preposição. <em>(Fonte: Brasil Escola)</em></p>
+                        <ul>
+                            <li><strong>Assistir:</strong> <em>Ao filme</em> (ver) vs. <em>O paciente</em> (ajudar).</li>
+                            <li><strong>Aspirar:</strong> <em>A cargos</em> (pretender) vs. <em>Perfumes</em> (cheirar).</li>
+                            <li><strong>Visar:</strong> <em>Ao alvo</em> (mirar) vs. <em>O documento</em> (rubricar).</li>
+                        </ul>
+                        <div class="alert alert-warning"><strong>Cuidado:</strong> Em provas, preste atenção ao contexto para identificar o sentido do verbo!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dicas de Provas -->
+            <div class="tab-pane fade" id="dicas-provas" role="tabpanel">
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-lightbulb me-2"></i> Estratégias para Gabaritar</div>
+                    <div class="card-body">
+                        <ul>
+                            <li><strong>Identifique o sujeito:</strong> Localize o núcleo do sujeito antes de conjugar o verbo. Ex: <em>A multidão dos torcedores aplaudiu/aplaudiram.</em> (Correto: aplaudiu, núcleo é “multidão”). <em>(Fonte: Estratégia Concursos)</em></li>
+                            <li><strong>Dupla regência:</strong> Memorize verbos como <em>assistir</em>, <em>aspirar</em>, <em>implicar</em>. Ex: <em>Implicará mudanças</em> (sem preposição). <em>(Fonte: Nova Concursos)</em></li>
+                            <li><strong>Teste a crase:</strong> Troque por masculino (a → ao = crase). Ex: <em>Vou à feira</em> → <em>Vou ao mercado.</em> <em>(Fonte: Toda Matéria)</em></li>
+                            <li><strong>Partícula “se”:</strong> Se for voz passiva, verbo concorda. Ex: <em>Vendem-se casas</em> → <em>Casas são vendidas.</em> / Índice de indeterminação: singular. Ex: <em>Precisa-se de funcionários.</em> <em>(Fonte: Descomplica)</em></li>
+                            <li><strong>Porcentagens e coletivos:</strong> Verbo concorda com o núcleo. Ex: <em>50% dos alunos foi aprovado.</em> (Núcleo: “50%”, singular.) <em>(Fonte: Brasil Escola)</em></li>
+                        </ul>
+                        <div class="alert alert-info"><strong>Macete de Revisão:</strong> Crie uma lista de verbos e nomes com preposições exigidas para revisar antes da prova!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Interativo -->
+            <div class="tab-pane fade" id="quiz" role="tabpanel">
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-question-circle me-2"></i> Teste seus Conhecimentos</div>
+                    <div class="card-body quiz-container">
+                        <p><strong>Pergunta 1: Concordância Verbal</strong></p>
+                        <form id="quiz1">
+                            <label><input type="radio" name="q1" value="a"> a) Fazem dois meses que não chove.</label>
+                            <label><input type="radio" name="q1" value="b"> b) Havia muitas pessoas no local.</label>
+                            <label><input type="radio" name="q1" value="c"> c) A maioria dos alunos passaram.</label>
+                            <label><input type="radio" name="q1" value="d"> d) Vende-se carros nesta rua.</label>
+                            <button type="button" class="btn btn-primary mt-3" onclick="checkAnswer('q1', 'b', 'Resposta correta: b — O verbo “haver” (existir) fica no singular.', 'quiz1')">Verificar</button>
+                        </form>
+                        <p id="result-q1" class="mt-3"></p>
+
+                        <p><strong>Pergunta 2: Regência Verbal</strong></p>
+                        <form id="quiz2">
+                            <label><input type="radio" name="q2" value="a"> a) Implicará em mudanças drásticas.</label>
+                            <label><input type="radio" name="q2" value="b"> b) Implicará mudanças drásticas.</label>
+                            <label><input type="radio" name="q2" value="c"> c) Implicará com mudanças drásticas.</label>
+                            <label><input type="radio" name="q2" value="d"> d) Implicará a mudanças drásticas.</label>
+                            <button type="button" class="btn btn-primary mt-3" onclick="checkAnswer('q2', 'b', 'Resposta correta: b — “Implicar” (acarretar) é transitivo direto.', 'quiz2')">Verificar</button>
+                        </form>
+                        <p id="result-q2" class="mt-3"></p>
+
+                        <button type="button" class="btn btn-secondary mt-4" onclick="resetQuiz()">Recomeçar Quiz</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercícios Resolvidos -->
+            <div class="tab-pane fade" id="exercicios" role="tabpanel">
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-pen me-2"></i> Questão 1 (VUNESP 2024)</div>
+                    <div class="card-body">
+                        <p><strong>Pergunta:</strong> Assinale a alternativa correta quanto à concordância nominal:</p>
+                        <ol type="a">
+                            <li>Segue anexo as propostas.</li>
+                            <li>Seguem anexas as propostas.</li>
+                            <li>Segue anexa as propostas.</li>
+                            <li>Seguem anexo as propostas.</li>
+                        </ol>
+                        <p><strong>Resposta:</strong> b — “Anexas” concorda com “propostas” em gênero e número. <em>(Fonte: Adaptado de FCC/2023)</em></p>
+                        <p class="collapse-toggle" data-bs-toggle="collapse" href="#vunesp2024" role="button">Ver Resolução</p>
+                        <div class="collapse" id="vunesp2024">
+                            <p><strong>Explicação:</strong> O adjetivo “anexas” deve concordar com “propostas” (feminino, plural). Alternativa b está correta. As demais têm erros de concordância em número ou gênero.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-pen me-2"></i> Questão 2 (Cebraspe 2023)</div>
+                    <div class="card-body">
+                        <p><strong>Pergunta:</strong> Assinale a alternativa correta quanto à crase:</p>
+                        <ol type="a">
+                            <li>Entreguei o presente à ele.</li>
+                            <li>Fui à festa ontem.</li>
+                            <li>Começou à chover forte.</li>
+                            <li>Vou à trabalho hoje.</li>
+                        </ol>
+                        <p><strong>Resposta:</strong> b — Crase obrigatória antes de “festa” (substantivo feminino com artigo). <em>(Fonte: Adaptado de Cebraspe/2023)</em></p>
+                        <p class="collapse-toggle" data-bs-toggle="collapse" href="#cebraspe2023" role="button">Ver Resolução</p>
+                        <div class="collapse" id="cebraspe2023">
+                            <p><strong>Explicação:</strong> A crase é obrigatória antes de substantivos femininos com artigo (ex.: “à festa”). Alternativa b está correta. As demais têm erros: a) crase proibida antes de pronome pessoal; c) crase proibida antes de verbo; d) crase proibida antes de palavra masculina.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Glossário -->
+            <div class="tab-pane fade" id="glossario" role="tabpanel">
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-book-open me-2"></i> Termos Essenciais</div>
+                    <div class="card-body">
+                        <ul>
+                            <li><strong>Sujeito:</strong> Termo sobre o qual se declara algo. Ex: <em>Os alunos estudam.</em> <em>(Fonte: Estratégia Concursos)</em></li>
+                            <li><strong>Verbo:</strong> Indica ação, estado ou fenômeno. Ex: <em>Correr, ser, chover.</em></li>
+                            <li><strong>Termo Regente:</strong> Palavra que exige complemento. Ex: <em>Preciso (verbo) de ajuda.</em></li>
+                            <li><strong>Termo Regido:</strong> Complemento exigido. Ex: <em>Ajuda</em> em <em>preciso de ajuda.</em></li>
+                            <li><strong>Crase:</strong> Fusão de “a” (preposição) com “a(s)” (artigo/pronome). Ex: <em>Vou à escola.</em> <em>(Fonte: Toda Matéria)</em></li>
+                            <li><strong>Pleonasma:</strong> Repetição desnecessária (vício) ou estilística. Ex: <em>Subir para cima</em> (vício). <em>(Fonte: Bechara)</em></li>
+                            <li><strong>Silepse:</strong> Concordância pelo sentido, não pela forma. Ex: <em>A gente somos felizes.</em> (Informal, mas errado na norma-padrão.)</li>
+                            <li><strong>Voz Passiva:</strong> Sujeito sofre a ação. Ex: <em>As casas foram vendidas.</em></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Materiais -->
+            <div class="tab-pane fade" id="materiais" role="tabpanel">
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-file-alt me-2"></i> Recursos Complementares</div>
+                    <div class="card-body">
+                        <ul>
+                            <li><a href="https://brasilescola.uol.com.br/gramatica/regencia.htm" target="_blank">Guia de Regência (Brasil Escola)</a> — Explicações detalhadas com exemplos.</li>
+                            <li><a href="https://www.youtube.com/@ProfessorNoslen" target="_blank">Playlist de Regência (Prof. Noslen)</a> — Aulas dinâmicas sobre gramática.</li>
+                            <li><a href="https://www.qconcursos.com/" target="_blank">Simulados Online (Qconcursos)</a> — Milhares de questões de concursos reais.</li>
+                            <li><a href="https://www.planalto.gov.br/ccivil_03/manual/manual.htm" target="_blank">Manual de Redação da Presidência (PDF)</a> — Norma-padrão para textos oficiais.</li>
+                            <li><a href="https://www.novaconcursos.com.br/portal/artigos/regencia-verbal-e-nominal" target="_blank">Regência Verbal e Nominal (Nova Concursos)</a> — Artigo com dicas práticas.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Referências -->
+            <div class="tab-pane fade" id="referencias" role="tabpanel">
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-bookmark me-2"></i> Fontes Confiáveis</div>
+                    <div class="card-body">
+                        <ul>
+                            <li>CUNHA, Celso; CINTRA, Lindley. <em>Nova Gramática do Português Contemporâneo</em>. Rio de Janeiro: Lexikon, 2017.</li>
+                            <li>BECHARA, Evanildo. <em>Moderna Gramática Portuguesa</em>. Rio de Janeiro: Nova Fronteira, 2009.</li>
+                            <li><em>Manual de Redação da Presidência da República</em>. Brasília: Planalto, 2018.</li>
+                            <li>Questões de concursos: Cesgranrio, Cebraspe, FGV, VUNESP, FCC (2016–2024).</li>
+                            <li>Portais educacionais: <a href="https://brasilescola.uol.com.br" target="_blank">Brasil Escola</a>, <a href="https://www.novaconcursos.com.br" target="_blank">Nova Concursos</a>, <a href="https://www.descomplica.com.br" target="_blank">Descomplica</a>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Função para verificar respostas do quiz
+        function checkAnswer(question, correct, feedback, formId) {
+            const selected = document.querySelector(`#${formId} input[name="${question}"]:checked`);
+            const resultDiv = document.getElementById(`result-${question}`);
+            if (selected && selected.value === correct) {
+                resultDiv.innerHTML = `<div class="alert alert-success">${feedback}</div>`;
+            } else {
+                resultDiv.innerHTML = `<div class="alert alert-danger">Resposta incorreta. Tente novamente!</div>`;
+            }
+        }
+
+        // Função para recomeçar o quiz
+        function resetQuiz() {
+            document.querySelectorAll('.quiz-container form').forEach(form => form.reset());
+            document.querySelectorAll('.quiz-container p[id^="result-"]').forEach(result => result.innerHTML = '');
+        }
+    </script>
+</body>
+</html>
