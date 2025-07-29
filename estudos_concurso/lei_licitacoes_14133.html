@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Completo da Lei de Licitações 14.133/21</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Professional Blue, Neutral Grays, and Accent Colors for Educational Highlights -->
+    <!-- Application Structure Plan: A comprehensive, multi-tab single-page application designed as a definitive educational guide. The structure is thematically organized into 16 distinct tabs to facilitate deep, focused learning. This modular approach allows users (students, public servants, legal professionals) to navigate complex information efficiently, moving from foundational concepts (Principles) to specific applications (Contracts, Sanctions) and practical tools (Quiz, Exam Tips, Comparison Tables). This structure is superior for managing high information density and supports both linear study and quick reference. -->
+    <!-- Visualization & Content Choices: 1) Bidding Phases -> Goal: Organize -> Viz: Interactive HTML/CSS Flowchart with detailed pop-ups/modals on click -> Justification: Provides a clear visual sequence and allows for in-depth exploration of each phase without cluttering the main view. 2) Law Comparison -> Goal: Compare -> Viz: Detailed, multi-column HTML table -> Justification: The most effective way to present a direct, feature-by-feature comparison of old vs. new laws. 3) Quiz & Exercises -> Goal: Engage/Test -> Viz: Interactive forms with instant feedback and detailed explanations -> Justification: Active recall and application are crucial for learning retention. 4) Thematic Content -> Goal: Inform/Explain -> Viz: Richly formatted text with colored cards, alert boxes (dica-box, atencao-box, jurisprudencia-box), icons, and practical examples -> Justification: Breaks down dense legal text into digestible, visually organized, and context-rich segments, enhancing comprehension and engagement. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        h1, h2, h3, h4 { font-family: 'Roboto Slab', serif; }
+        .tab-button { transition: all 0.3s ease; border-left: 4px solid transparent; }
+        .tab-button.active { border-left-color: #3b82f6; color: #2563eb; background-color: #f0f9ff; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .dica-box { background-color: #e0f2fe; border-left: 4px solid #0ea5e9; color: #0369a1; }
+        .atencao-box { background-color: #fffbeb; border-left: 4px solid #f59e0b; color: #b45309; }
+        .jurisprudencia-box { background-color: #f0fdf4; border-left: 4px solid #22c55e; color: #15803d; }
+        .card { background-color: #ffffff; border: 1px solid #e5e7eb; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px -5px rgba(0,0,0,0.1); }
+        .quiz-option { transition: all 0.2s ease; }
+        .quiz-option:hover { background-color: #f0f9ff; }
+        .quiz-option.selected { background-color: #dbeafe; border-color: #60a5fa; }
+        .quiz-option.correct { background-color: #dcfce7 !important; border-color: #4ade80 !important; color: #166534; }
+        .quiz-option.incorrect { background-color: #fee2e2 !important; border-color: #f87171 !important; color: #991b1b; }
+        .quiz-feedback { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; }
+        .quiz-feedback.visible { max-height: 200px; }
+        /* Scrollbar styles for sidebar navigation */
+        .sidebar-nav::-webkit-scrollbar { width: 6px; }
+        .sidebar-nav::-webkit-scrollbar-track { background: #f1f5f9; }
+        .sidebar-nav::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .sidebar-nav::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        @keyframes animate-modal-in { from { opacity: 0; transform: scale(0.95) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+        .animate-modal-in { animation: animate-modal-in 0.3s ease-out forwards; }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="min-h-screen md:flex">
+        <!-- Sidebar Navigation -->
+        <aside class="w-full md:w-72 bg-white shadow-lg md:min-h-screen flex flex-col">
+            <div class="p-6 border-b">
+                <h2 class="text-2xl font-bold text-blue-800 text-center">Lei 14.133/21</h2>
+                <p class="text-xs text-gray-500 text-center mt-1">Guia Definitivo para Concursos</p>
+            </div>
+            <nav id="tabs" class="p-4 space-y-1 overflow-y-auto sidebar-nav flex-grow">
+                <button class="tab-button active w-full text-left flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-md" data-tab="inicio"><i class="fas fa-home fa-fw"></i> Início</button>
+                <button class="tab-button w-full text-left flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-md" data-tab="principios"><i class="fas fa-gavel fa-fw"></i> Princípios</button>
+                <button class="tab-button w-full text-left flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-md" data-tab="fases"><i class="fas fa-tasks fa-fw"></i> Fases da Licitação</button>
+                <button class="tab-button w-full text-left flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-md" data-tab="modalidades"><i class="fas fa-sitemap fa-fw"></i> Modalidades</button>
+                <button class="tab-button w-full text-left flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-md" data-tab="instrumentos"><i class="fas fa-tools fa-fw"></i> Instrumentos Auxiliares</button>
+                <button class="tab-button w-full text-left flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-md" data-tab="dispensa"><i class="fas fa-ban fa-fw"></i> Dispensa e Inexigibilidade</button>
+                <button class="tab-button w-full text-left flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-md" data-tab="contratos"><i class="fas fa-file-signature fa-fw"></i> Contratos</button>
+                <button class="tab-button w-full text-left flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-md" data-tab="sancoes"><i class="fas fa-shield-halved fa-fw"></i> Sanções e Crimes</button>
+                <button class="tab-button w-full text-left flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-md" data-tab="comparativo"><i class="fas fa-exchange-alt fa-fw"></i> Comparativo</button>
+                <button class="tab-button w-full text-left flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-md" data-tab="dicas"><i class="fas fa-lightbulb fa-fw"></i> Dicas de Prova</button>
+                <button class="tab-button w-full text-left flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-md" data-tab="quiz"><i class="fas fa-question-circle fa-fw"></i> Quiz Interativo</button>
+                <button class="tab-button w-full text-left flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-md" data-tab="exercicios"><i class="fas fa-pen-to-square fa-fw"></i> Exercícios Resolvidos</button>
+                <button class="tab-button w-full text-left flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-md" data-tab="glossario"><i class="fas fa-book fa-fw"></i> Glossário</button>
+                <button class="tab-button w-full text-left flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-md" data-tab="materiais"><i class="fas fa-folder-open fa-fw"></i> Materiais Complementares</button>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6 md:p-10 bg-slate-50 overflow-y-auto">
+            <div id="tab-content-inicio" class="tab-content active">
+                <h1 class="text-4xl font-bold text-gray-800 mb-4">A Revolução nas Contratações Públicas</h1>
+                <p class="text-lg text-gray-600 mb-6">Bem-vindo(a) ao guia definitivo da Lei nº 14.133/21. Este portal foi desenhado para ser sua ferramenta mais completa de estudo e consulta, seja para concursos, capacitações ou para a prática diária na Administração Pública.</p>
+                <div class="card p-6 mb-6">
+                    <h3 class="text-xl font-bold mb-3">O Propósito Deste Guia</h3>
+                    <p>Nosso objetivo é traduzir a complexidade da nova lei em um formato didático, visual e interativo. Abandonamos o "juridiquês" para focar em exemplos práticos, esquemas visuais e dicas estratégicas que farão a diferença na sua aprovação e atuação profissional.</p>
+                </div>
+                <div class="dica-box p-6 rounded-lg">
+                    <h4 class="font-bold text-lg mb-2"><i class="fas fa-compass mr-2"></i>Como Navegar e Aprender</h4>
+                    <p>Utilize o menu lateral para explorar as abas temáticas. Sugerimos uma trilha de aprendizado:</p>
+                    <ol class="list-decimal list-inside mt-2 space-y-1">
+                        <li>Comece pelos <strong>Princípios</strong> para entender a nova filosofia da lei.</li>
+                        <li>Avance pelas <strong>Fases</strong> e <strong>Modalidades</strong> para dominar o processo.</li>
+                        <li>Use o <strong>Comparativo</strong> para fixar as diferenças cruciais em relação ao regime anterior.</li>
+                        <li>Teste seu conhecimento no <strong>Quiz</strong> e resolva os <strong>Exercícios</strong>.</li>
+                        <li>Consulte as <strong>Dicas de Prova</strong> e o <strong>Glossário</strong> sempre que precisar.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div id="tab-content-principios" class="tab-content">
+                <h2 class="text-3xl font-bold mb-6">Princípios Fundamentais: A Alma da Lei (Art. 5º)</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="card p-6">
+                        <h3 class="font-bold text-xl text-blue-700 mb-2"><i class="fas fa-calendar-alt mr-2"></i>Planejamento</h3>
+                        <p>A contratação deixa de ser um ato reativo. Agora, é um dever legal planejar, o que se materializa no Plano de Contratações Anual (PCA) e no Estudo Técnico Preliminar (ETP).</p>
+                        <div class="dica-box p-3 mt-4 rounded"><strong>Exemplo Prático:</strong> Antes de licitar a reforma de uma escola, o ETP deve justificar a necessidade (ex: laudo de risco estrutural), comparar com a opção de construir uma nova, e estimar os custos detalhadamente.</div>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="font-bold text-xl text-blue-700 mb-2"><i class="fas fa-users-slash mr-2"></i>Segregação de Funções</h3>
+                        <p>Veda que o mesmo agente público atue em fases distintas e conflitantes do processo para reduzir riscos de fraude. Quem planeja não fiscaliza; quem fiscaliza não julga.</p>
+                         <div class="atencao-box p-3 mt-4 rounded"><strong>Pegadinha de Prova:</strong> A segregação não é absoluta. Em municípios pequenos, com poucos servidores, a lei permite uma aplicação atenuada, desde que justificada.</div>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="font-bold text-xl text-blue-700 mb-2"><i class="fas fa-bullseye mr-2"></i>Eficácia e Resultado</h3>
+                        <p>O foco muda da conformidade cega com o procedimento para a entrega efetiva de valor. A licitação deve resolver um problema público, não apenas seguir um rito.</p>
+                        <div class="dica-box p-3 mt-4 rounded"><strong>Exemplo Prático:</strong> Não basta comprar o computador mais barato. É preciso avaliar se ele tem a configuração necessária para rodar os sistemas do órgão (eficácia) e se o custo-benefício ao longo de sua vida útil é o melhor (resultado).</div>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="font-bold text-xl text-blue-700 mb-2"><i class="fas fa-search-dollar mr-2"></i>Transparência</h3>
+                        <p>Potencializada pelo Portal Nacional de Contratações Públicas (PNCP), que deve centralizar todos os atos, desde o edital até o relatório final de execução do contrato.</p>
+                         <div class="atencao-box p-3 mt-4 rounded"><strong>Dica de Prova:</strong> A publicidade no PNCP é condição indispensável para a eficácia do contrato e de seus aditamentos. Sem publicar no PNCP, o ato é como se não existisse para fins de produção de efeitos.</div>
+                    </div>
+                </div>
+                 <div class="jurisprudencia-box p-6 rounded-lg mt-6">
+                    <h4 class="font-bold text-lg mb-2"><i class="fas fa-gavel mr-2"></i>Jurisprudência Relevante: Formalismo Moderado</h4>
+                    <p>O TCU (Acórdão 2.443/2021-Plenário) consolidou o entendimento de que o gestor deve permitir o saneamento de falhas formais (ex: um erro de digitação na proposta) e a juntada de documentos que comprovem uma condição pré-existente do licitante. O objetivo é aproveitar a proposta mais vantajosa, não punir por um erro sanável.</p>
+                </div>
+            </div>
+
+            <div id="tab-content-fases" class="tab-content">
+                <h2 class="text-3xl font-bold mb-6">As 7 Fases do Processo Licitatório (Art. 17)</h2>
+                <p class="mb-8">A lei estabelece um fluxo sequencial claro, adotando a inversão de fases (julgamento antes da habilitação) como regra geral para maior celeridade. Clique em uma fase para detalhes.</p>
+                <div class="flex flex-wrap gap-4 items-center justify-center">
+                    <div class="card text-center p-4 w-40 cursor-pointer" onclick="showPhaseDetail(0)">1. Preparatória</div>
+                    <div class="text-gray-400 text-2xl">&rarr;</div>
+                    <div class="card text-center p-4 w-40 cursor-pointer" onclick="showPhaseDetail(1)">2. Divulgação</div>
+                    <div class="text-gray-400 text-2xl">&rarr;</div>
+                    <div class="card text-center p-4 w-40 cursor-pointer" onclick="showPhaseDetail(2)">3. Propostas</div>
+                    <div class="text-gray-400 text-2xl">&rarr;</div>
+                    <div class="card text-center p-4 w-40 cursor-pointer bg-green-50 border-green-200" onclick="showPhaseDetail(3)">4. Julgamento</div>
+                    <div class="text-gray-400 text-2xl">&rarr;</div>
+                    <div class="card text-center p-4 w-40 cursor-pointer bg-yellow-50 border-yellow-200" onclick="showPhaseDetail(4)">5. Habilitação</div>
+                    <div class="text-gray-400 text-2xl">&rarr;</div>
+                    <div class="card text-center p-4 w-40 cursor-pointer" onclick="showPhaseDetail(5)">6. Recursal</div>
+                    <div class="text-gray-400 text-2xl">&rarr;</div>
+                    <div class="card text-center p-4 w-40 cursor-pointer bg-purple-50 border-purple-200" onclick="showPhaseDetail(6)">7. Homologação</div>
+                </div>
+                 <div class="dica-box p-6 rounded-lg mt-8">
+                    <h4 class="font-bold text-lg mb-2"><i class="fas fa-star mr-2"></i>A Fase Mais Importante: Preparatória</h4>
+                    <p>Nenhuma outra fase é tão crucial. É aqui que se elabora o Estudo Técnico Preliminar (ETP), a Análise de Riscos e o Termo de Referência. Um erro no planejamento contamina todo o processo e é a principal causa de anulações e contratos fracassados. Para concursos, é a fase com maior chance de ser cobrada em detalhes.</p>
+                </div>
+            </div>
+
+            <div id="tab-content-modalidades" class="tab-content">
+                <h2 class="text-3xl font-bold mb-6">Modalidades e Critérios de Julgamento</h2>
+                <p class="mb-8">A escolha da modalidade agora depende da <strong>natureza do objeto</strong>, não mais do seu valor. Isso traz mais racionalidade ao processo.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="card p-5 flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-xl text-blue-700 mb-2">Pregão</h3>
+                            <p><strong>Quando usar:</strong> Obrigatório para bens e serviços comuns. "Comum" é aquilo que pode ser descrito objetivamente no edital.</p>
+                        </div>
+                        <div class="dica-box p-3 mt-4 rounded text-sm"><strong>Exemplo:</strong> Compra de canetas, papel, serviços de limpeza, serviços comuns de engenharia (como reparo de calçada).</div>
+                    </div>
+                    <div class="card p-5 flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-xl text-blue-700 mb-2">Concorrência</h3>
+                            <p><strong>Quando usar:</strong> Para bens e serviços especiais (ex: software customizado) e obras/serviços de engenharia especiais.</p>
+                        </div>
+                         <div class="dica-box p-3 mt-4 rounded text-sm"><strong>Exemplo:</strong> Construção de um hospital, contratação de um sistema de TI complexo com desenvolvimento específico.</div>
+                    </div>
+                    <div class="card p-5 flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-xl text-blue-700 mb-2">Diálogo Competitivo</h3>
+                            <p class="text-red-600 font-bold">NOVIDADE!</p>
+                            <p><strong>Quando usar:</strong> Para soluções inovadoras e complexas que a Administração não sabe como especificar.</p>
+                        </div>
+                         <div class="atencao-box p-3 mt-4 rounded text-sm"><strong>Exemplo:</strong> Implementar um sistema de "cidade inteligente" (smart city) ou uma nova tecnologia para tratamento de resíduos.</div>
+                    </div>
+                    <div class="card p-5 flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-xl text-blue-700 mb-2">Concurso</h3>
+                            <p><strong>Quando usar:</strong> Para escolher trabalho técnico, científico ou artístico, com prêmio ou remuneração.</p>
+                        </div>
+                         <div class="dica-box p-3 mt-4 rounded text-sm"><strong>Exemplo:</strong> Escolha do projeto arquitetônico de um novo museu ou da melhor solução de restauração para um monumento histórico.</div>
+                    </div>
+                    <div class="card p-5 flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-xl text-blue-700 mb-2">Leilão</h3>
+                            <p><strong>Quando usar:</strong> Para vender bens móveis ou imóveis da Administração. Quem der o maior lance, leva.</p>
+                        </div>
+                         <div class="dica-box p-3 mt-4 rounded text-sm"><strong>Exemplo:</strong> Venda de veículos usados da frota oficial ou de um terreno público que não tem mais utilidade para a Administração.</div>
+                    </div>
+                    <div class="card p-5 bg-gray-100 border-dashed">
+                        <h3 class="font-bold text-xl text-gray-500 mb-2">Extintas</h3>
+                        <p>Tomada de Preços e Convite não existem mais. Suas hipóteses foram absorvidas pelas outras modalidades e pela contratação direta.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="tab-content-instrumentos" class="tab-content">
+                <h2 class="text-3xl font-bold mb-6">Instrumentos Auxiliares (Art. 78)</h2>
+                <p class="mb-8">Não são modalidades, mas ferramentas estratégicas para otimizar as contratações. As bancas adoram confundi-los!</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="card p-6">
+                        <h3 class="font-bold text-xl text-blue-700 mb-2">Credenciamento</h3>
+                        <p><strong>Objetivo:</strong> Contratar TODOS os que atenderem aos requisitos. <strong>Situação:</strong> Competição inviável. <strong>Exemplo:</strong> Credenciar todos os laboratórios da cidade para realizar um tipo de exame para o SUS. Não há disputa de preço, ele é fixado no edital.</p>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="font-bold text-xl text-blue-700 mb-2">Pré-qualificação</h3>
+                        <p><strong>Objetivo:</strong> Criar um "banco de fornecedores/produtos" já qualificados. <strong>Situação:</strong> Contratações futuras, complexas e recorrentes. <strong>Exemplo:</strong> Pré-qualificar empresas para construir viadutos, agilizando futuras licitações.</p>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="font-bold text-xl text-blue-700 mb-2">Sistema de Registro de Preços (SRP)</h3>
+                        <p><strong>Objetivo:</strong> Criar um "catálogo" de itens com preços registrados. <strong>Situação:</strong> Compras frequentes e parceladas. <strong>Exemplo:</strong> Registrar o preço de café e açúcar para comprar ao longo do ano, conforme a necessidade.</p>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="font-bold text-xl text-blue-700 mb-2">Procedimento de Manifestação de Interesse (PMI)</h3>
+                        <p><strong>Objetivo:</strong> Receber estudos e projetos da iniciativa privada. <strong>Situação:</strong> Grandes projetos (ex: concessões). <strong>Exemplo:</strong> Uma empresa propõe e detalha um projeto de VLT para a cidade. Se a prefeitura licitar, o vencedor ressarce a empresa pelos estudos.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-content-dispensa" class="tab-content">
+                 <h2 class="text-3xl font-bold mb-6">Dispensa e Inexigibilidade: Contratação Direta</h2>
+                 <div class="atencao-box p-6 rounded-lg mb-8">
+                    <h4 class="font-bold text-lg mb-2"><i class="fas fa-key mr-2"></i>A Diferença Crucial</h4>
+                    <p>Na <strong>dispensa</strong>, a competição é viável, mas a lei autoriza não fazê-la (rol taxativo no Art. 75). Na <strong>inexigibilidade</strong>, a competição é inviável por natureza (rol exemplificativo no Art. 74).</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">Dispensa de Licitação (Art. 75)</h3>
+                        <div class="space-y-4">
+                            <div class="card p-4">
+                                <p><strong>Por Valor (a decorar!):</strong><br>
+                                I - Obras e serviços de engenharia: até R$ 125.451,15 (valor para 2025).<br>
+                                II - Outros serviços e compras: até R$ 62.725,59 (valor para 2025).</p>
+                            </div>
+                            <div class="card p-4">
+                                <p><strong>Por Situação Emergencial:</strong><br>
+                                VIII - Para atender a situações de emergência ou calamidade pública. Prazo máximo do contrato: 1 ano, vedada a prorrogação.</p>
+                            </div>
+                        </div>
+                    </div>
+                     <div>
+                        <h3 class="text-2xl font-bold mb-4">Inexigibilidade de Licitação (Art. 74)</h3>
+                        <div class="space-y-4">
+                            <div class="card p-4">
+                                <p><strong>Fornecedor Exclusivo:</strong><br>
+                                I - Aquisição de material ou equipamento que só possa ser fornecido por produtor ou empresa exclusiva.</p>
+                            </div>
+                            <div class="card p-4">
+                                <p><strong>Notória Especialização:</strong><br>
+                                III - Contratação de serviços técnicos de natureza predominantemente intelectual (ex: parecer jurídico complexo, auditoria) com profissional de notória especialização.</p>
+                            </div>
+                             <div class="card p-4">
+                                <p><strong>Artista Consagrado:</strong><br>
+                                II - Contratação de profissional do setor artístico, consagrado pela crítica ou opinião pública.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-content-contratos" class="tab-content">
+                <h2 class="text-3xl font-bold mb-6">Contratos Administrativos: Gestão e Riscos</h2>
+                <div class="space-y-6">
+                    <div class="card p-6">
+                        <h3 class="font-bold text-xl text-blue-700 mb-2"><i class="fas fa-project-diagram mr-2"></i>Matriz de Alocação de Riscos</h3>
+                        <p>A maior inovação contratual. Cláusula <strong>obrigatória</strong> em grandes obras que define de quem é a responsabilidade por cada risco (ex: variação cambial, atraso na licença ambiental). Isso "congela" o equilíbrio do contrato e reduz disputas futuras.</p>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="font-bold text-xl text-blue-700 mb-2"><i class="fas fa-shield-alt mr-2"></i>Garantias Robustecidas</h3>
+                        <p>Em obras de grande vulto, a garantia pode chegar a 30% do valor e incluir a "cláusula de retomada" (*step-in*), onde a seguradora é obrigada a terminar a obra se o contratado falhar.</p>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="font-bold text-xl text-blue-700 mb-2"><i class="fas fa-hourglass-half mr-2"></i>Prazos de Duração</h3>
+                        <p>Mais flexíveis. Contratos de serviço contínuo podem durar até 10 anos, e os de eficiência, até 35 anos, permitindo amortizar investimentos.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-content-sancoes" class="tab-content">
+                <h2 class="text-3xl font-bold mb-6">Sanções e Crimes</h2>
+                 <div class="jurisprudencia-box p-6 rounded-lg mb-8">
+                    <h4 class="font-bold text-lg mb-2"><i class="fas fa-gavel mr-2"></i>Crimes em Licitação: Continuidade Normativo-Típica</h4>
+                    <p>A Lei 14.133/21 revogou os crimes da Lei 8.666/93, mas os inseriu no <strong>Código Penal</strong> (arts. 337-E a 337-P). Não houve *abolitio criminis* (extinção do crime), mas sim o princípio da continuidade normativo-típica. A conduta continua sendo crime, só mudou de "endereço" na lei.</p>
+                </div>
+                <h3 class="text-2xl font-bold mb-4">Sanções Administrativas</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="card p-4"><strong>Advertência:</strong> Para faltas leves.</div>
+                    <div class="card p-4"><strong>Multa:</strong> De 0,5% a 30% do valor do contrato.</div>
+                    <div class="card p-4 bg-red-50 border-l-4 border-red-400"><strong>Impedimento de Licitar e Contratar:</strong> Proíbe a empresa de licitar com o <strong>ente federativo</strong> que aplicou a sanção por até 3 anos.</div>
+                    <div class="card p-4 bg-red-100 border-l-4 border-red-600"><strong>Declaração de Inidoneidade:</strong> A mais grave. Proíbe de licitar com <strong>TODA</strong> a Administração Pública por 3 a 6 anos.</div>
+                </div>
+            </div>
+
+            <div id="tab-content-comparativo" class="tab-content">
+                <h2 class="text-3xl font-bold mb-6">Comparativo: Lei 14.133/21 vs. Leis Anteriores</h2>
+                <div class="overflow-x-auto card rounded-lg">
+                    <table class="w-full text-sm text-left">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th class="px-6 py-3 font-bold text-gray-700">Tema</th>
+                                <th class="px-6 py-3 font-bold text-blue-700">Lei 14.133/21 (Nova Lei)</th>
+                                <th class="px-6 py-3 font-bold text-gray-500">Lei 8.666/93 e Outras</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-t"><td class="px-6 py-4 font-semibold">Modalidades</td><td class="px-6 py-4">5 modalidades (inclui Diálogo Competitivo). Extingue Tomada de Preços e Convite.</td><td class="px-6 py-4">5 modalidades (incluía Tomada de Preços e Convite). Pregão em lei separada.</td></tr>
+                            <tr class="border-t bg-gray-50"><td class="px-6 py-4 font-semibold">Critério de Escolha</td><td class="px-6 py-4">Natureza do objeto.</td><td class="px-6 py-4">Valor estimado da contratação.</td></tr>
+                            <tr class="border-t"><td class="px-6 py-4 font-semibold">Planejamento</td><td class="px-6 py-4">Robusto e obrigatório (ETP, PCA).</td><td class="px-6 py-4">Implícito e superficial (Projeto Básico).</td></tr>
+                            <tr class="border-t bg-gray-50"><td class="px-6 py-4 font-semibold">Publicidade</td><td class="px-6 py-4">Centralizada no PNCP.</td><td class="px-6 py-4">Dispersa em Diários Oficiais e jornais.</td></tr>
+                            <tr class="border-t"><td class="px-6 py-4 font-semibold">Orçamento</td><td class="px-6 py-4">Regra: sigiloso até o fim dos lances.</td><td class="px-6 py-4">Regra: público, anexo ao edital.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="tab-content-dicas" class="tab-content">
+                <h2 class="text-3xl font-bold mb-6">Dicas de Prova e Pegadinhas</h2>
+                <div class="space-y-6">
+                    <div class="dica-box p-6 rounded-lg">
+                        <h4 class="font-bold text-lg mb-2"><i class="fas fa-check-circle mr-2"></i>Dispensa por Valor (Art. 75, I e II)</h4>
+                        <p>Os valores são atualizados anualmente por Decreto. A banca pode usar valores desatualizados para te confundir. Sempre verifique o valor vigente no ano do seu concurso! Os valores para 2025 são R$ 125.451,15 (obras) e R$ 62.725,59 (compras).</p>
+                    </div>
+                    <div class="atencao-box p-6 rounded-lg">
+                        <h4 class="font-bold text-lg mb-2"><i class="fas fa-exclamation-triangle mr-2"></i>Pregão é Obrigatório, mas não Absoluto</h4>
+                        <p>A regra é usar Pregão para bens e serviços comuns. Contudo, a lei permite, de forma justificada, usar Concorrência se o objeto, mesmo comum, tiver peculiaridades. A obrigatoriedade não é absoluta.</p>
+                    </div>
+                    <div class="jurisprudencia-box p-6 rounded-lg">
+                        <h4 class="font-bold text-lg mb-2"><i class="fas fa-gavel mr-2"></i>Saneamento de Falhas (TCU)</h4>
+                        <p>O TCU tem um entendimento consolidado (Acórdão 2.443/2021-Plenário) que permite ao gestor solicitar a correção de erros formais na proposta ou a juntada de documentos que o licitante já possuía na época. O objetivo é aproveitar a melhor proposta, não punir por um erro sanável.</p>
+                    </div>
+                    <div class="dica-box p-6 rounded-lg">
+                        <h4 class="font-bold text-lg mb-2"><i class="fas fa-dollar-sign mr-2"></i>Orçamento Sigiloso</h4>
+                        <p>A regra na nova lei é o orçamento ser sigiloso até o final da fase de lances (Art. 24). Isso estimula os licitantes a oferecerem seus melhores preços, sem se basearem no valor de referência da Administração. A publicidade do orçamento é a exceção e precisa ser justificada.</p>
+                    </div>
+                     <div class="atencao-box p-6 rounded-lg">
+                        <h4 class="font-bold text-lg mb-2"><i class="fas fa-edit mr-2"></i>Alterações Contratuais</h4>
+                        <p>As alterações unilaterais pela Administração são prerrogativas, mas têm limites. Acréscimos e supressões são limitados a 25% do valor inicial do contrato para obras, serviços e compras, e a 50% para reformas de edifícios ou equipamentos (Art. 125). As bancas adoram trocar esses percentuais.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-content-quiz" class="tab-content">
+                <h2 class="text-3xl font-bold mb-6">Quiz Interativo: Teste seu Conhecimento!</h2>
+                <div id="quiz-container" class="space-y-8"></div>
+            </div>
+
+            <div id="tab-content-exercicios" class="tab-content">
+                <h2 class="text-3xl font-bold mb-6">Exercícios Resolvidos de Concursos</h2>
+                <div class="space-y-6">
+                    <div class="card p-6">
+                        <h3 class="font-bold text-xl mb-2">(FGV - 2023 - Analista)</h3>
+                        <p class="mb-4">"De acordo com a Lei nº 14.133/2021, a modalidade de licitação para contratação de bens e serviços especiais e de obras e serviços comuns e especiais de engenharia, cujo critério de julgamento poderá ser o de menor preço ou o de melhor técnica ou conteúdo artístico, é a..."</p>
+                        <div class="jurisprudencia-box p-4 rounded">
+                            <p><strong>Resposta Comentada:</strong> A resposta correta é <strong>Concorrência</strong>. O Pregão é para bens e serviços comuns. O Diálogo Competitivo para soluções inovadoras. A Concorrência se tornou a modalidade residual para os objetos "especiais", que são aqueles que não se enquadram como comuns.</p>
+                        </div>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="font-bold text-xl mb-2">(CEBRASPE - 2024 - Advogado da União)</h3>
+                        <p class="mb-4">"A respeito dos instrumentos auxiliares previstos na Lei nº 14.133/2021, assinale a opção correta."<br>a) O credenciamento é a modalidade de licitação utilizada para contratar o maior número possível de interessados.<br>b) O sistema de registro de preços pode ser utilizado para a contratação de obras de grande complexidade técnica.<br>c) A pré-qualificação é um procedimento que sempre antecede as licitações na modalidade pregão.<br>d) O credenciamento é uma hipótese de inexigibilidade de licitação, aplicável quando a competição entre os interessados é inviável.</p>
+                        <div class="jurisprudencia-box p-4 rounded">
+                            <p><strong>Resposta Comentada:</strong> A resposta correta é a <strong>letra d</strong>. O credenciamento não é uma modalidade, mas sim um procedimento auxiliar que formaliza uma hipótese de inexigibilidade (competição inviável). A letra 'a' erra ao chamá-lo de modalidade. A 'b' erra pois o SRP para obras só se aplica a projetos padronizados e sem complexidade. A 'c' erra pois a pré-qualificação é facultativa e mais comum em concorrências complexas.</p>
+                        </div>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="font-bold text-xl mb-2">(FCC - 2023 - Auditor)</h3>
+                        <p class="mb-4">"No que tange aos agentes públicos que atuam no processo de licitação sob a égide da Lei nº 14.133/2021, é correto afirmar que:"<br>a) O fiscal do contrato, obrigatoriamente, deve ser um servidor efetivo do quadro permanente da Administração.<br>b) A comissão de contratação será composta por, no mínimo, 5 membros, todos servidores efetivos.<br>c) O agente de contratação responde solidariamente com o pregoeiro por todos os atos praticados na fase externa.<br>d) O agente de contratação será auxiliado por equipe de apoio e responderá individualmente pelos atos que praticar, salvo quando induzido a erro pela sua equipe.</p>
+                        <div class="jurisprudencia-box p-4 rounded">
+                            <p><strong>Resposta Comentada:</strong> A resposta correta é a <strong>letra d</strong>. O Art. 8º, § 1º, estabelece exatamente essa regra de responsabilidade individual do agente de contratação, com a ressalva da indução a erro. A letra 'a' está errada, pois o fiscal do contrato será, preferencialmente, servidor efetivo (Art. 7º, § 1º). A 'b' está errada, pois a comissão tem no mínimo 3 membros (Art. 8º, § 2º). A 'c' está errada, pois pregoeiro é o agente de contratação no pregão; não há essa solidariedade automática.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="tab-content-glossario" class="tab-content">
+                <h2 class="text-3xl font-bold mb-6">Glossário Jurídico Simplificado</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="card p-4"><strong>ETP (Estudo Técnico Preliminar):</strong> O "DNA" da licitação. Documento que justifica a necessidade da contratação.</div>
+                    <div class="card p-4"><strong>Termo de Referência:</strong> O "manual de instruções" da licitação. Descreve em detalhes o objeto a ser contratado.</div>
+                    <div class="card p-4"><strong>PNCP (Portal Nacional de Contratações Públicas):</strong> O "Diário Oficial" das licitações. Site que centraliza todas as informações.</div>
+                    <div class="card p-4"><strong>Adjudicação:</strong> Ato que "atribui" o objeto da licitação ao vencedor.</div>
+                    <div class="card p-4"><strong>Homologação:</strong> Ato final que "confirma" a validade de todo o processo e autoriza a contratação.</div>
+                    <div class="card p-4"><strong>Sobrepreço:</strong> Preço orçado para a licitação ou contratado em valor expressivamente superior aos de referência de mercado.</div>
+                     <div class="card p-4"><strong>Contratação Integrada:</strong> Regime em que o contratado é responsável por elaborar o projeto básico, o projeto executivo e executar a obra.</div>
+                </div>
+            </div>
+
+            <div id="tab-content-materiais" class="tab-content">
+                <h2 class="text-3xl font-bold mb-6">Materiais Complementares</h2>
+                <p class="mb-4">Aprofunde seus estudos com estes recursos (links externos):</p>
+                <ul class="list-disc list-inside space-y-2">
+                    <li><a href="https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2021/lei/l14133.htm" target="_blank" class="text-blue-600 hover:underline">Texto integral da Lei 14.133/21</a></li>
+                    <li><a href="https://portal.tcu.gov.br/licitacoes-e-contratos/manuais-orientacoes-e-normas/" target="_blank" class="text-blue-600 hover:underline">Manuais e Orientações do TCU</a></li>
+                    <li><a href="https://www.gov.br/pncp/pt-br" target="_blank" class="text-blue-600 hover:underline">Portal Nacional de Contratações Públicas (PNCP)</a></li>
+                     <li><a href="https://www.in.gov.br/en/web/dou/-/decreto-n-12.343-de-28-de-maio-de-2025-562345678" target="_blank" class="text-blue-600 hover:underline">Decreto de Atualização de Valores (Exemplo Fictício para 2025)</a></li>
+                </ul>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Modal for Phase Details -->
+    <div id="phase-modal" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full p-6 relative animate-modal-in">
+            <button onclick="closePhaseModal()" class="absolute top-3 right-4 text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
+            <h3 id="modal-title" class="text-2xl font-bold mb-4"></h3>
+            <p id="modal-description" class="text-gray-700 mb-4"></p>
+            <div id="modal-dica" class="dica-box p-4 rounded"></div>
+        </div>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const tabs = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const targetTab = tab.dataset.tab;
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+                if (content.id === `tab-content-${targetTab}`) {
+                    content.classList.add('active');
+                }
+            });
+        });
+    });
+
+    const quizData = [
+        { question: "Qual das seguintes modalidades de licitação foi EXTINTA pela Lei 14.133/21?", options: ["Pregão", "Concorrência", "Convite", "Diálogo Competitivo"], answer: "Convite", explanation: "A Lei 14.133/21 extinguiu as modalidades Tomada de Preços e Convite, simplificando o processo." },
+        { question: "De acordo com a Lei 14.133/21, a fase de habilitação, como regra geral, ocorre:", options: ["Antes do julgamento das propostas.", "Depois do julgamento das propostas.", "Concomitantemente ao julgamento.", "Apenas após a fase recursal."], answer: "Depois do julgamento das propostas.", explanation: "A inversão de fases (julgamento antes da habilitação) é a regra, visando maior celeridade." },
+        { question: "A 'Matriz de Alocação de Riscos' é uma cláusula obrigatória em qual tipo de contratação?", options: ["Qualquer compra de material de escritório.", "Serviços de limpeza e conservação.", "Obras e serviços de engenharia de grande vulto.", "Todas as contratações por Pregão."], answer: "Obras e serviços de engenharia de grande vulto.", explanation: "A Matriz de Riscos é uma ferramenta de governança para projetos complexos, sendo obrigatória para os de grande vulto." },
+        { question: "O Portal Nacional de Contratações Públicas (PNCP) materializa qual princípio fundamental da nova lei?", options: ["Segregação de Funções", "Planejamento", "Transparência", "Eficácia"], answer: "Transparência", explanation: "O PNCP é a plataforma centralizadora de informações, promovendo a máxima transparência nas contratações públicas." },
+        { question: "Qual o prazo máximo de duração, incluídas as prorrogações, para um contrato de prestação de serviços de natureza contínua?", options: ["1 ano", "5 anos", "10 anos", "Prazo indeterminado"], answer: "10 anos", explanation: "Conforme o Art. 106, o prazo pode ser de até 5 anos, prorrogáveis sucessivamente até o limite máximo de 10 anos." },
+        { question: "A contratação de um artista consagrado para um show em uma festa municipal é um caso de:", options: ["Dispensa de licitação", "Inexigibilidade de licitação", "Licitação por Concurso", "Licitação por Pregão"], answer: "Inexigibilidade de licitação", explanation: "É um caso clássico de inexigibilidade (Art. 74, II), pois a competição é inviável pela singularidade do 'serviço' e notoriedade do artista." }
+    ];
+
+    const quizContainer = document.getElementById('quiz-container');
+    function buildQuiz() {
+        quizData.forEach((q, index) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'card p-6 rounded-lg';
+            questionDiv.innerHTML = `<p class="font-semibold mb-4">${index + 1}. ${q.question}</p>`;
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'space-y-3';
+            optionsDiv.id = `options-q${index}`;
+            q.options.forEach(option => {
+                const optionId = `q${index}-opt${option.replace(/\s/g, '')}`;
+                optionsDiv.innerHTML += `
+                    <label for="${optionId}" class="flex items-center p-3 border rounded-lg cursor-pointer quiz-option">
+                        <input type="radio" id="${optionId}" name="question${index}" value="${option}" class="mr-3">
+                        <span>${option}</span>
+                    </label>`;
+            });
+            questionDiv.appendChild(optionsDiv);
+            const feedbackDiv = document.createElement('div');
+            feedbackDiv.id = `feedback${index}`;
+            feedbackDiv.className = 'mt-4 p-3 rounded-md text-sm quiz-feedback';
+            questionDiv.appendChild(feedbackDiv);
+            quizContainer.appendChild(questionDiv);
+
+            const radioButtons = questionDiv.querySelectorAll(`input[name="question${index}"]`);
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    checkAnswer(index, q);
+                });
+            });
+        });
+    }
+
+    function checkAnswer(index, questionData) {
+        const selected = document.querySelector(`input[name="question${index}"]:checked`);
+        const feedbackDiv = document.getElementById(`feedback${index}`);
+        const options = document.querySelectorAll(`#options-q${index} .quiz-option`);
+
+        options.forEach(opt => {
+            const input = opt.querySelector('input');
+            if (!input.checked) {
+               opt.classList.add('opacity-50');
+            }
+            input.disabled = true; // Disable all options after one is selected
+        });
+
+        if (selected) {
+            const isCorrect = selected.value === questionData.answer;
+            feedbackDiv.innerHTML = `<strong>${isCorrect ? 'Correto!' : 'Incorreto.'}</strong> ${questionData.explanation}`;
+            feedbackDiv.className = `mt-4 p-3 rounded-md text-sm quiz-feedback visible ${isCorrect ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`;
+            selected.parentElement.classList.add(isCorrect ? 'correct' : 'incorrect');
+        }
+    }
+    
+    buildQuiz();
+});
+
+const phaseDetails = [
+    { title: "Fase 1: Preparatória", description: "É o alicerce da contratação. Envolve a elaboração do Estudo Técnico Preliminar (ETP), Análise de Riscos e Termo de Referência. Define-se o que, por que e como contratar.", dica: "<strong>Dica de Concurso:</strong> Esta é a fase mais importante e cobrada. Um planejamento falho é a principal causa de anulação de licitações." },
+    { title: "Fase 2: Divulgação do Edital", description: "É o momento em que a licitação se torna pública. O edital é o instrumento convocatório, publicado obrigatoriamente no PNCP.", dica: "<strong>Dica de Concurso:</strong> Os prazos de publicidade variam conforme o critério de julgamento e o modo de disputa. Menor preço tem prazos menores." },
+    { title: "Fase 3: Apresentação de Propostas e Lances", description: "Os licitantes enviam suas propostas. Nas modalidades Pregão e Concorrência, geralmente há uma fase de disputa aberta com lances sucessivos.", dica: "<strong>Dica de Concurso:</strong> A lei permite o orçamento sigiloso, que só é revelado após a fase de lances, aumentando a competitividade." },
+    { title: "Fase 4: Julgamento", description: "A Administração analisa as propostas de acordo com o critério de julgamento definido no edital (ex: menor preço, maior desconto, técnica e preço).", dica: "<strong>Dica de Concurso:</strong> A regra é julgar primeiro, para só depois verificar os documentos do vencedor. Isso é a 'inversão de fases'." },
+    { title: "Fase 5: Habilitação", description: "Verificação dos documentos de qualificação (jurídica, fiscal, técnica, etc.) apenas do licitante que apresentou a melhor proposta.", dica: "<strong>Dica de Concurso:</strong> Se o primeiro colocado for inabilitado, a Administração convoca o segundo e analisa seus documentos, e assim por diante." },
+    { title: "Fase 6: Recursal", description: "Após a declaração do vencedor, abre-se um prazo único para que os demais licitantes possam interpor recursos contra as decisões tomadas.", dica: "<strong>Dica de Concurso:</strong> A intenção de recorrer deve ser manifestada imediatamente ao final da sessão, sob pena de preclusão (perda do direito)." },
+    { title: "Fase 7: Homologação", description: "A autoridade superior competente analisa todo o processo, confirma sua legalidade e 'adjudica' (atribui) o objeto ao vencedor, autorizando a contratação.", dica: "<strong>Dica de Concurso:</strong> A homologação encerra a fase externa da licitação e dá início à fase contratual." }
+];
+
+function showPhaseDetail(index) {
+    const detail = phaseDetails[index];
+    const modal = document.getElementById('phase-modal');
+    document.getElementById('modal-title').innerText = detail.title;
+    document.getElementById('modal-description').innerText = detail.description;
+    document.getElementById('modal-dica').innerHTML = detail.dica;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+}
+
+function closePhaseModal() {
+    const modal = document.getElementById('phase-modal');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+}
+</script>
+
+</body>
+</html>
