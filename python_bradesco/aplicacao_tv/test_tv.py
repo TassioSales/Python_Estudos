@@ -10,35 +10,43 @@ def testar_televisor():
     print("\n=== Sintonizando canais ===")
     canais = ["Globo", "SBT", "Record", "Band", "RedeTV"]
     for canal in canais:
-        if controle.sintoniza_canal(canal):
+        if controle.sintonizaCanal(canal):
             print(f"✓ Canal {canal} sintonizado")
     
     # Mostra informações iniciais
     print("\n=== Informações da TV ===")
-    print(minha_tv)
+    print(f"TV {minha_tv.fabricante} {minha_tv.modelo}")
+    print(f"Canal atual: {controle.getCanalAtual() or 'Nenhum'}")
+    print(f"Volume: {controle.getVolume()}")
+    print(f"Canais disponíveis: {', '.join(controle.getListaCanais()) or 'Nenhum'}")
     
     # Testa troca de canais
     print("\n=== Testando troca de canais ===")
     for canal in ["SBT", "Globo", "Canal Inexistente"]:
-        if controle.troca_canal(canal):
+        controle.trocaCanal(canal)
+        canal_atual = controle.getCanalAtual()
+        if canal_atual == canal:
             print(f"✓ Mudou para o canal {canal}")
         else:
             print(f"✗ Não foi possível mudar para o canal {canal}")
     
     # Testa controle de volume
     print("\n=== Testando controle de volume ===")
-    print(f"Volume atual: {minha_tv.volume}")
+    print(f"Volume atual: {controle.getVolume()}")
     
-    print("Aumentando volume em 5...")
-    novo_volume = controle.aumenta_volume(5)
-    print(f"Novo volume: {novo_volume}")
+    print("Aumentando volume...")
+    controle.aumentaVolume()
+    print(f"Novo volume: {controle.getVolume()}")
     
-    print("Diminuindo volume em 3...")
-    novo_volume = controle.diminui_volume(3)
-    print(f"Novo volume: {novo_volume}")
+    print("Diminuindo volume...")
+    controle.diminuiVolume()
+    print(f"Novo volume: {controle.getVolume()}")
     
     print("\n=== Estado final da TV ===")
-    print(minha_tv)
+    print(f"TV {minha_tv.fabricante} {minha_tv.modelo}")
+    print(f"Canal atual: {controle.getCanalAtual() or 'Nenhum'}")
+    print(f"Volume: {controle.getVolume()}")
+    print(f"Canais disponíveis: {', '.join(controle.getListaCanais()) or 'Nenhum'}")
 
 if __name__ == "__main__":
     testar_televisor()
