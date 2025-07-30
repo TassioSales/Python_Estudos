@@ -5,33 +5,30 @@ class Televisor:
         self.canal_atual = None
         self.lista_de_canais = []
         self.volume = 20
-        self.volume_min = 0
-        self.volume_max = 100
 
-    def aumenta_volume(self, valor=1):
-        """Aumenta o volume em 'valor' unidades, sem ultrapassar o volume máximo."""
-        novo_volume = self.volume + valor
-        self.volume = min(novo_volume, self.volume_max)
+    def aumentaVolume(self, valor):
+        if self.volume + valor <= 100:
+            self.volume += valor
+        else:
+            self.volume = 100
         return self.volume
 
-    def diminui_volume(self, valor=1):
-        """Diminui o volume em 'valor' unidades, sem ficar abaixo do volume mínimo."""
-        novo_volume = self.volume - valor
-        self.volume = max(novo_volume, self.volume_min)
+    def diminuiVolume(self, valor):
+        if self.volume - valor >= 0:
+            self.volume -= valor
+        else:
+            self.volume = 0
         return self.volume
 
-    def troca_canal(self, canal):
-        """Troca para o canal especificado, se estiver na lista de canais."""
+    def trocaCanal(self, canal):
         if canal in self.lista_de_canais:
             self.canal_atual = canal
             return True
         return False
 
-    def sintoniza_canal(self, canal):
-        """Adiciona um novo canal à lista de canais, se ainda não existir."""
+    def sintonizaCanal(self, canal):
         if canal not in self.lista_de_canais:
             self.lista_de_canais.append(canal)
-            self.lista_de_canais.sort()
             return True
         return False
 
@@ -46,25 +43,23 @@ class ControleRemoto:
     def __init__(self, tv):
         self.tv = tv
 
-    def aumenta_volume(self, valor=1):
-        """Aumenta o volume usando o controle remoto."""
-        return self.tv.aumenta_volume(valor)
+    def aumentaVolume(self):
+        self.tv.aumentaVolume(90)
 
-    def diminui_volume(self, valor=1):
-        """Diminui o volume usando o controle remoto."""
-        return self.tv.diminui_volume(valor)
+    def diminuiVolume(self):
+        self.tv.diminuiVolume(90)
 
-    def troca_canal(self, canal):
-        """Troca de canal usando o controle remoto."""
-        return self.tv.troca_canal(canal)
+    def trocaCanal(self, canal):
+        self.tv.trocaCanal(canal)
 
-    def sintoniza_canal(self, canal):
-        """Sintoniza um novo canal usando o controle remoto."""
-        return self.tv.sintoniza_canal(canal)
-
-    def lista_canais(self):
-        """Retorna a lista de canais disponíveis."""
+    def sintonizaCanal(self, canal):
+        self.tv.sintonizaCanal(canal)
+        
+    def getListaCanais(self):
         return self.tv.lista_de_canais
-
-    def __str__(self):
-        return f"Controle Remoto para {self.tv.fabricante} {self.tv.modelo}"
+        
+    def getCanalAtual(self):
+        return self.tv.canal_atual
+        
+    def getVolume(self):
+        return self.tv.volume
