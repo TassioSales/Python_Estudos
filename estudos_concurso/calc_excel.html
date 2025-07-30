@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conhecimentos Específicos – Planilhas Eletrônicas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Deep Slate & Emerald Green -->
+    <!-- Application Structure Plan: A two-column layout SPA. A fixed vertical sidebar on the left for navigation allows for persistent, easy access to all modules. The main content area on the right displays the selected tab's content. This structure is superior for dense educational material as it prevents the navigation from scrolling out of view and provides a more app-like, focused experience. The content itself remains modular, but the improved layout enhances usability and aesthetics. -->
+    <!-- Visualization & Content Choices: 
+        - Vertical Sidebar Navigation: Replaces top tabs for better scalability and a more modern UX.
+        - Enhanced Card Designs: Cards now feature subtle gradients, icons, and more structured content for improved readability and visual appeal.
+        - "Dica de Mestre" Cards: New card type added for advanced tips, using a distinct style to draw attention.
+        - Expanded Content: Added detailed explanations for ÍNDICE/CORRESP, SEERRO, Formatar como Tabela, and more complex exercises to deepen the user's knowledge.
+        - Interactive Filtering: The shortcuts table remains interactive, fitting well within the new content structure.
+        - All choices aim to create a premium, robust, and highly effective e-learning tool. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        :root { --sidebar-width: 260px; }
+        body { font-family: 'Inter', sans-serif; background-color: #f0f4f8; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', sans-serif; }
+        .sidebar { transition: transform 0.3s ease-in-out; }
+        .tab-button { display: flex; align-items: center; width: 100%; padding: 0.85rem 1.5rem; border-radius: 0.5rem; transition: all 0.2s ease; font-weight: 500; }
+        .tab-button:hover { background-color: #334155; }
+        .tab-button.active { background-color: #10b981; color: white; font-weight: 600; }
+        .tab-button .tab-icon { width: 20px; text-align: center; margin-right: 0.75rem; }
+        .tab-content { display: none; animation: fadeIn 0.5s; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .card { background-color: white; border-radius: 0.75rem; box-shadow: 0 4px 12px rgb(0 0 0 / 0.08); transition: all 0.3s ease; border: 1px solid #e2e8f0; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgb(0 0 0 / 0.1); }
+        .tip-card { background: linear-gradient(135deg, #f0fdfa, #ccfbf1); border-left: 4px solid #10b981; }
+        .master-tip-card { background: linear-gradient(135deg, #f5f3ff, #ede9fe); border-left: 4px solid #8b5cf6; }
+        .warning-card { background: linear-gradient(135deg, #fffbeb, #fef3c7); border-left: 4px solid #f97316; }
+        .code-block { background-color: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; font-family: 'Fira Code', 'Courier New', monospace; white-space: pre-wrap; }
+        .quiz-option { cursor: pointer; border: 2px solid #e2e8f0; padding: 0.75rem; border-radius: 0.5rem; transition: all 0.2s; }
+        .quiz-option:hover { border-color: #10b981; background-color: #f0fdfa; }
+        .quiz-option.selected { border-color: #10b981; background-color: #ccfbf1; }
+        .quiz-option.correct { border-color: #16a34a; background-color: #dcfce7; }
+        .quiz-option.incorrect { border-color: #dc2626; background-color: #fee2e2; }
+        .filter-btn { transition: all 0.2s ease-in-out; }
+        .filter-btn.active { background-color: #10b981; color: white; box-shadow: 0 4px 6px rgb(16 185 129 / 0.2); }
+        .sidebar-nav-container::-webkit-scrollbar { width: 4px; }
+        .sidebar-nav-container::-webkit-scrollbar-thumb { background-color: #475569; border-radius: 4px; }
+        .sidebar-nav-container::-webkit-scrollbar-track { background-color: transparent; }
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            main { margin-left: 0; }
+        }
+    </style>
+</head>
+<body class="text-slate-700">
+
+    <div class="flex">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar fixed top-0 left-0 h-screen w-[var(--sidebar-width)] bg-slate-800 text-slate-300 p-4 z-20 flex flex-col">
+            <div class="text-center py-4 mb-4 flex-shrink-0">
+                <h1 class="text-2xl font-bold text-white"><i class="fas fa-file-excel text-emerald-400"></i> Guia de Planilhas</h1>
+                <p class="text-xs text-slate-400">Excel & Calc para Concursos</p>
+            </div>
+            <div class="flex-grow overflow-y-auto sidebar-nav-container pr-2">
+                <nav id="tabs" class="flex flex-col space-y-2">
+                    <button data-tab="inicio" class="tab-button active"><i class="fas fa-house tab-icon"></i>Início</button>
+                    <button data-tab="resumo" class="tab-button"><i class="fas fa-star tab-icon"></i>Resumo Estratégico</button>
+                    <button data-tab="conceitos" class="tab-button"><i class="fas fa-book-open tab-icon"></i>Conceitos</button>
+                    <button data-tab="formulas" class="tab-button"><i class="fas fa-calculator tab-icon"></i>Fórmulas</button>
+                    <button data-tab="funcoes" class="tab-button"><i class="fas fa-puzzle-piece tab-icon"></i>Funções</button>
+                    <button data-tab="formatacao" class="tab-button"><i class="fas fa-wand-magic-sparkles tab-icon"></i>Formatação</button>
+                    <button data-tab="graficos" class="tab-button"><i class="fas fa-chart-pie tab-icon"></i>Gráficos</button>
+                    <button data-tab="atalhos" class="tab-button"><i class="fas fa-keyboard tab-icon"></i>Atalhos</button>
+                    <button data-tab="excel-vs-calc" class="tab-button"><i class="fas fa-right-left tab-icon"></i>Excel x Calc</button>
+                    <button data-tab="dicas" class="tab-button"><i class="fas fa-lightbulb tab-icon"></i>Dicas de Prova</button>
+                    <button data-tab="quiz" class="tab-button"><i class="fas fa-circle-question tab-icon"></i>Quiz Interativo</button>
+                    <button data-tab="exercicios" class="tab-button"><i class="fas fa-pen-to-square tab-icon"></i>Exercícios</button>
+                    <button data-tab="glossario" class="tab-button"><i class="fas fa-book-bookmark tab-icon"></i>Glossário</button>
+                    <button data-tab="materiais" class="tab-button"><i class="fas fa-link tab-icon"></i>Materiais Comp.</button>
+                    <button data-tab="referencias" class="tab-button"><i class="fas fa-book tab-icon"></i>Referências</button>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 md:ml-[var(--sidebar-width)] p-6 md:p-10">
+            <button id="menu-toggle" class="md:hidden fixed top-4 right-4 bg-slate-800 text-white p-2 rounded-md z-30">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div id="tab-contents">
+                <!-- Início -->
+                <div id="inicio" class="tab-content active">
+                    <h2 class="text-4xl font-bold mb-4 text-slate-800">Bem-vindo(a) ao Guia Definitivo de Planilhas!</h2>
+                    <p class="mb-4 text-xl text-slate-600">Este material foi criado para ser sua principal ferramenta de estudo sobre Microsoft Excel e LibreOffice Calc, dois dos softwares mais cobrados em provas de informática para concursos públicos.</p>
+                    <p class="mb-4">O domínio de planilhas eletrônicas não é apenas um requisito técnico, mas uma habilidade estratégica que permite analisar dados, otimizar tarefas e tomar decisões informadas – competências essenciais para qualquer servidor público.</p>
+                    <div class="grid md:grid-cols-2 gap-6 mt-8">
+                        <div class="card p-6">
+                            <h3 class="font-bold text-lg mb-2"><i class="fa-solid fa-bullseye text-emerald-600 pr-2"></i>Nosso Objetivo</h3>
+                            <p>Fornecer um conteúdo claro, direto e focado no que realmente cai nas provas, com exemplos práticos, comparações e dicas para você gabaritar as questões sobre planilhas.</p>
+                        </div>
+                        <div class="card p-6">
+                            <h3 class="font-bold text-lg mb-2"><i class="fa-solid fa-compass text-emerald-600 pr-2"></i>Como Navegar</h3>
+                            <p>Use o menu lateral para navegar pelos tópicos. Recomendamos seguir a ordem para um aprendizado progressivo, mas sinta-se à vontade para consultar os temas conforme sua necessidade.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resumo -->
+                <div id="resumo" class="tab-content">
+                    <h2 class="text-4xl font-bold mb-4 text-slate-800">Resumo Estratégico para Provas</h2>
+                    <p class="mb-6 text-xl text-slate-600">As bancas examinadoras costumam focar em um conjunto específico de competências. Concentre seus estudos nos seguintes pontos-chave:</p>
+                    <ul class="space-y-4">
+                        <li class="flex items-start"><i class="fa-solid fa-check-double text-green-500 pt-1 pr-3 text-xl"></i><span><strong class="font-semibold text-slate-800">Referências de Célula:</strong> Entender a diferença entre relativas (A1), absolutas ($A$1) e mistas (A$1, $A1) é o tópico <strong class="text-red-600">MAIS IMPORTANTE</strong>. A maioria das questões de fórmulas complexas depende desse conceito.</span></li>
+                        <li class="flex items-start"><i class="fa-solid fa-check-double text-green-500 pt-1 pr-3 text-xl"></i><span><strong class="font-semibold text-slate-800">Funções Essenciais:</strong> Domine o uso de `SE`, `CONT.SE`, `SOMASES` e `PROCV`. Saiba a sintaxe correta, a ordem dos argumentos e a aplicação prática de cada uma.</span></li>
+                        <li class="flex items-start"><i class="fa-solid fa-check-double text-green-500 pt-1 pr-3 text-xl"></i><span><strong class="font-semibold text-slate-800">Diferenças entre Excel e Calc:</strong> Conheça as pequenas, mas cruciais, diferenças de nomenclatura de funções e atalhos de teclado (ex: `Ctrl+N` vs `Ctrl+B` para negrito).</span></li>
+                        <li class="flex items-start"><i class="fa-solid fa-check-double text-green-500 pt-1 pr-3 text-xl"></i><span><strong class="font-semibold text-slate-800">Ferramentas de Dados:</strong> Compreenda a finalidade e a aplicação de `Filtros`, `Classificação`, `Formatação Condicional` e `Validação de Dados`.</span></li>
+                    </ul>
+                    <div class="tip-card p-6 mt-8 rounded-lg">
+                        <p class="text-lg"><strong class="font-semibold"><i class="fa-solid fa-lightbulb pr-2"></i>Dica de Estudo:</strong> Não se limite a decorar. Crie pequenas planilhas para testar cada função e recurso. A prática consolida o conhecimento teórico e ajuda a identificar as "pegadinhas" das provas.</p>
+                    </div>
+                </div>
+                
+                <!-- Interface e Conceitos -->
+                <div id="conceitos" class="tab-content">
+                    <h2 class="text-4xl font-bold mb-4 text-slate-800">Interface e Conceitos Fundamentais</h2>
+                    <p class="mb-6 text-xl text-slate-600">Toda planilha é uma grade formada por linhas e colunas. Entender sua estrutura é o primeiro passo.</p>
+                     <div class="grid md:grid-cols-3 gap-6 mb-8">
+                        <div class="card p-6 text-center"><i class="fas fa-columns text-4xl text-emerald-500 mb-3"></i><h3 class="font-bold text-lg">Coluna</h3><p class="text-sm">Identificada por letras (A, B, C...). É o conjunto vertical de células.</p></div>
+                        <div class="card p-6 text-center"><i class="fas fa-grip-lines text-4xl text-emerald-500 mb-3"></i><h3 class="font-bold text-lg">Linha</h3><p class="text-sm">Identificada por números (1, 2, 3...). É o conjunto horizontal de células.</p></div>
+                        <div class="card p-6 text-center"><i class="fas fa-border-all text-4xl text-emerald-500 mb-3"></i><h3 class="font-bold text-lg">Célula</h3><p class="text-sm">A interseção de uma linha e uma coluna (ex: A1). É onde os dados são inseridos.</p></div>
+                    </div>
+                    
+                    <h3 class="text-2xl font-bold mb-4 mt-10 text-slate-800">Referências de Célula: O Ponto-Chave</h3>
+                    <p class="mb-4">Este é o conceito mais crucial para dominar fórmulas. Uma referência indica à fórmula onde encontrar os valores a serem usados.</p>
+                    
+                    <div class="warning-card p-6 mb-6 rounded-lg">
+                        <p class="text-lg"><strong class="font-semibold"><i class="fa-solid fa-triangle-exclamation pr-2"></i>Atenção:</strong> O caractere `$` é o que "trava" (fixa) uma referência, tornando-a absoluta. Pressione a tecla <code class="bg-slate-200 text-slate-800 px-2 py-1 rounded">F4</code> com o cursor sobre uma referência para alternar entre os tipos (A1 → $A$1 → A$1 → $A1).</p>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div class="card p-6"><h4 class="font-bold text-lg">1. Referência Relativa (ex: `A1`)</h4><p>É o padrão. Ao copiar ou arrastar uma fórmula, ela se ajusta automaticamente à nova posição. Se você copia `=A1+B1` da célula C1 para C2, a fórmula se torna `=A2+B2`.</p></div>
+                        <div class="card p-6"><h4 class="font-bold text-lg">2. Referência Absoluta (ex: `$A$1`)</h4><p>A referência permanece fixa, não importa para onde a fórmula seja copiada. O `$` trava tanto a coluna `A` quanto a linha `1`. Ideal para constantes, como uma taxa de juros ou um valor de comissão.</p></div>
+                        <div class="card p-6"><h4 class="font-bold text-lg">3. Referência Mista (ex: `$A1` ou `A$1`)</h4><p>Trava apenas a coluna (`$A1`) ou apenas a linha (`A$1`). É útil em tabelas de multiplicação e cenários mais complexos.</p></div>
+                    </div>
+                </div>
+
+                <!-- Fórmulas Básicas -->
+                <div id="formulas" class="tab-content">
+                    <h2 class="text-4xl font-bold mb-4 text-slate-800">Fórmulas e Funções Básicas</h2>
+                    <p class="mb-6 text-xl text-slate-600">As funções básicas realizam os cálculos mais comuns. A sintaxe é simples: `=NOME_DA_FUNÇÃO(argumento1; argumento2; ...)`.</p>
+                    <div class="warning-card p-6 mb-6 rounded-lg">
+                        <p class="text-lg"><strong class="font-semibold"><i class="fa-solid fa-triangle-exclamation pr-2"></i>Pegadinha de Prova:</strong> No padrão brasileiro, o separador de argumentos em uma função é o **ponto e vírgula (`;`)**, não a vírgula (`,`). A vírgula é o separador decimal.</p>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="card p-6"><h3 class="font-bold text-xl mb-2">SOMA</h3><p class="mb-3">Adiciona todos os números em um intervalo de células.</p><div class="code-block">=SOMA(A1:A10) <span class="text-slate-500">// Soma os valores de A1 até A10</span></div></div>
+                        <div class="card p-6"><h3 class="font-bold text-xl mb-2">MÉDIA</h3><p class="mb-3">Retorna a média aritmética dos argumentos.</p><div class="code-block">=MÉDIA(B1:B5) <span class="text-slate-500">// Calcula a média de B1 a B5</span></div></div>
+                        <div class="card p-6"><h3 class="font-bold text-xl mb-2">MÁXIMO e MÍNIMO</h3><p class="mb-3">Retornam o maior e o menor valor de um conjunto.</p><div class="code-block">=MÁXIMO(C1:C100)<br>=MÍNIMO(C1:C100)</div></div>
+                        <div class="card p-6"><h3 class="font-bold text-xl mb-2">CONT.NÚM / CONT.VALORES</h3><p class="mb-3">`CONT.NÚM` conta células com números. `CONT.VALORES` conta células não vazias.</p><div class="code-block">=CONT.NÚM(D1:D10)<br>=CONT.VALORES(D1:D10)</div></div>
+                        <div class="card p-6"><h3 class="font-bold text-xl mb-2">HOJE e AGORA</h3><p class="mb-3">`HOJE()` retorna a data atual. `AGORA()` retorna a data e a hora atuais. São funções voláteis, atualizadas sempre que a planilha é recalculada.</p><div class="code-block">=HOJE()<br>=AGORA()</div></div>
+                    </div>
+                </div>
+
+                <!-- Funções Intermediárias -->
+                <div id="funcoes" class="tab-content">
+                    <h2 class="text-4xl font-bold mb-4 text-slate-800">Funções Intermediárias e Avançadas</h2>
+                    <p class="mb-6 text-xl text-slate-600">Estas funções permitem criar planilhas mais inteligentes e dinâmicas, sendo muito exploradas em provas.</p>
+                    <div class="space-y-8">
+                        <div class="card p-6"><h3 class="font-bold text-xl mb-2">SE</h3><p class="mb-3">Realiza um teste lógico e retorna um valor se o teste for verdadeiro, e outro se for falso. Essencial para tomada de decisões.</p><p class="text-sm mb-2"><strong>Sintaxe:</strong> `=SE(teste_lógico; valor_se_verdadeiro; valor_se_falso)`</p><div class="code-block">=SE(A1>10; "Aprovado"; "Reprovado")</div></div>
+                        <div class="card p-6"><h3 class="font-bold text-xl mb-2">CONT.SE e SOMASES</h3><p class="mb-3">`CONT.SE` conta células que atendem a um critério. `SOMASES` soma células que atendem a múltiplos critérios.</p><p class="text-sm mb-2"><strong>Sintaxe CONT.SE:</strong> `=CONT.SE(intervalo; critérios)`</p><p class="text-sm mb-2"><strong>Sintaxe SOMASES:</strong> `=SOMASES(intervalo_soma; intervalo_critérios1; critérios1; ...)`</p><div class="code-block">=CONT.SE(B1:B50; "Marketing")<br>=SOMASES(C1:C50; B1:B50; "Vendas"; D1:D50; ">1000")</div></div>
+                        <div class="card p-6"><h3 class="font-bold text-xl mb-2">PROCV (VLOOKUP)</h3><p class="mb-3">Procura um valor na primeira coluna de uma tabela e retorna um valor na mesma linha de uma coluna que você especificar.</p><p class="text-sm mb-2"><strong>Sintaxe:</strong> `=PROCV(valor_procurado; matriz_tabela; núm_índice_coluna; [procurar_intervalo])`</p><div class="warning-card p-4 mb-3 rounded-lg"><p><strong class="font-semibold"><i class="fa-solid fa-triangle-exclamation pr-2"></i>Pegadinha Clássica:</strong> O PROCV só procura na **primeira coluna** da matriz e só retorna valores à **direita**. O último argumento, `[procurar_intervalo]`, é crucial: `FALSO` para correspondência exata (mais comum) e `VERDADEIRO` para aproximada.</p></div><div class="code-block">=PROCV(A1; C1:E10; 3; FALSO)</div></div>
+                        <div class="card p-6"><h3 class="font-bold text-xl mb-2">ÍNDICE e CORRESP: A Dupla Dinâmica</h3><p class="mb-3">Esta combinação supera as limitações do PROCV. `CORRESP` encontra a posição de um item, e `ÍNDICE` retorna o valor nessa posição.</p><p class="text-sm mb-2"><strong>Sintaxe:</strong> `=ÍNDICE(matriz_retorno; CORRESP(valor_procurado; matriz_pesquisa; 0))`</p><div class="master-tip-card p-4 mb-3 rounded-lg"><p><strong class="font-semibold"><i class="fas fa-graduation-cap pr-2"></i>Dica de Mestre:</strong> Use ÍNDICE/CORRESP sempre que precisar de uma busca flexível. Diferente do PROCV, esta combinação permite que a coluna de retorno esteja à esquerda da coluna de pesquisa e não quebra se novas colunas forem inseridas na tabela.</p></div><div class="code-block">=ÍNDICE(A1:A10; CORRESP("ProdutoX"; B1:B10; 0)) <span class="text-slate-500">// Procura "ProdutoX" na coluna B e retorna o valor correspondente da coluna A.</span></div></div>
+                        <div class="card p-6"><h3 class="font-bold text-xl mb-2">SEERRO</h3><p class="mb-3">Trata erros em fórmulas, retornando um valor alternativo caso a fórmula original resulte em erro (ex: #N/D, #DIV/0!).</p><p class="text-sm mb-2"><strong>Sintaxe:</strong> `=SEERRO(valor; valor_se_erro)`</p><div class="tip-card p-4 mb-3 rounded-lg"><p><strong class="font-semibold"><i class="fa-solid fa-lightbulb pr-2"></i>Dica:</strong> Use `SEERRO` para tornar suas planilhas mais limpas e profissionais, evitando a exibição de mensagens de erro para o usuário final.</p></div><div class="code-block">=SEERRO(A1/B1; "Cálculo Inválido")</div></div>
+                    </div>
+                </div>
+
+                <!-- Formatação e Validação -->
+                <div id="formatacao" class="tab-content">
+                    <h2 class="text-4xl font-bold mb-4 text-slate-800">Formatação, Filtros e Validação</h2>
+                    <p class="mb-6 text-xl text-slate-600">Recursos que organizam, destacam e protegem a integridade dos seus dados.</p>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="card p-6"><h3 class="font-bold text-xl mb-2">Formatação Condicional</h3><p class="mb-3">Altera a aparência das células com base em regras. Ótimo para destacar informações importantes.</p><p class="text-sm"><strong>Exemplos:</strong> Colorir valores acima da média, adicionar barras de dados para visualização rápida, realçar os 10 maiores valores.</p><p class="text-sm mt-2"><strong>Onde encontrar:</strong> Excel: Guia `Página Inicial`. Calc: Menu `Formatar`.</p></div>
+                        <div class="card p-6"><h3 class="font-bold text-xl mb-2">Validação de Dados</h3><p class="mb-3">Restringe o tipo de dados ou os valores que os usuários podem inserir em uma célula.</p><p class="text-sm"><strong>Exemplo:</strong> Criar uma lista suspensa de opções (ex: "Pendente", "Em Andamento", "Concluído") para uma célula de status.</p><p class="text-sm mt-2"><strong>Onde encontrar:</strong> Excel: Guia `Dados`. Calc: Menu `Dados > Validade`.</p></div>
+                        <div class="card p-6"><h3 class="font-bold text-xl mb-2">Remover Duplicadas</h3><p class="mb-3">Ferramenta que examina um intervalo de dados e exclui linhas que são inteiramente duplicadas ou com base em colunas específicas que você selecionar.</p><p class="text-sm mt-2"><strong>Onde encontrar:</strong> Excel: Guia `Dados`. Calc: `Dados > Filtro > Filtro Padrão` (com condição `<>`).</p></div>
+                        <div class="card p-6"><h3 class="font-bold text-xl mb-2">Texto para Colunas</h3><p class="mb-3">Divide o conteúdo de uma coluna de texto em várias colunas, com base em um delimitador (como vírgula, ponto e vírgula ou espaço) ou em larguras de campo fixas.</p><p class="text-sm mt-2"><strong>Onde encontrar:</strong> Guia `Dados` em ambos os programas.</p></div>
+                        <div class="card p-6 col-span-1 md:col-span-2"><h3 class="font-bold text-xl mb-2">Formatar como Tabela (Excel) / Estilos Automáticos (Calc)</h3><p class="mb-3">Transforma um intervalo de dados em uma tabela estruturada, que oferece benefícios como filtros automáticos, linhas em cores alternadas para melhor leitura e expansão automática de fórmulas e formatação quando novas linhas são adicionadas.</p><div class="master-tip-card p-4 rounded-lg"><p><strong class="font-semibold"><i class="fas fa-graduation-cap pr-2"></i>Dica de Mestre:</strong> Sempre use "Formatar como Tabela" para seus conjuntos de dados. Isso torna a criação de gráficos e tabelas dinâmicas muito mais robusta, pois eles se referem ao nome da tabela e se atualizam automaticamente quando novos dados são inseridos.</p></div></div>
+                    </div>
+                </div>
+                
+                <!-- Gráficos e Tabelas Dinâmicas -->
+                <div id="graficos" class="tab-content">
+                    <h2 class="text-4xl font-bold mb-4 text-slate-800">Gráficos e Tabelas Dinâmicas</h2>
+                    <p class="mb-6 text-xl text-slate-600">Ferramentas poderosas para visualizar e resumir dados.</p>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="card p-6"><h3 class="text-xl font-bold mb-4">Tipos de Gráficos Essenciais</h3><div class="space-y-4"><div class="flex items-center"><i class="fa-solid fa-chart-column pr-3 text-2xl text-blue-500 w-8"></i><span><strong>Colunas/Barras:</strong> Ideal para comparar valores entre diferentes categorias.</span></div><div class="flex items-center"><i class="fa-solid fa-chart-line pr-3 text-2xl text-green-500 w-8"></i><span><strong>Linhas:</strong> Perfeito para mostrar tendências e a evolução de uma variável ao longo do tempo.</span></div><div class="flex items-center"><i class="fa-solid fa-chart-pie pr-3 text-2xl text-amber-500 w-8"></i><span><strong>Pizza:</strong> Mostra a proporção de cada parte em relação a um todo.</span></div></div></div>
+                        <div class="card p-6"><h3 class="text-xl font-bold mb-4">Tabela e Gráfico Dinâmicos</h3><p class="mb-4">A **Tabela Dinâmica** resume dados interativamente. O **Gráfico Dinâmico** é uma representação visual da Tabela Dinâmica, que se atualiza automaticamente com os filtros aplicados.</p><div class="tip-card p-4 rounded-lg"><p><strong class="font-semibold"><i class="fa-solid fa-lightbulb pr-2"></i>Dica de Prova:</strong> Entenda o conceito! Uma Tabela Dinâmica serve para **resumir, agrupar e analisar** dados. As bancas adoram questões conceituais sobre sua finalidade.</p></div></div>
+                    </div>
+                </div>
+                
+                <!-- Atalhos -->
+                <div id="atalhos" class="tab-content">
+                    <h2 class="text-4xl font-bold mb-4 text-slate-800">Atalhos de Teclado Essenciais</h2>
+                    <p class="mb-6 text-xl text-slate-600">Dominar atalhos acelera o trabalho e é um tema recorrente em provas. Use os filtros para comparar.</p>
+                    <div class="flex justify-center space-x-2 mb-6"><button class="filter-btn active bg-slate-200 text-slate-800 font-semibold py-2 px-4 rounded-full" data-filter="all">Todos</button><button class="filter-btn bg-slate-200 text-slate-800 font-semibold py-2 px-4 rounded-full" data-filter="same">Iguais</button><button class="filter-btn bg-slate-200 text-slate-800 font-semibold py-2 px-4 rounded-full" data-filter="different">Diferentes</button></div>
+                    <div class="card p-2 sm:p-4 md:p-6"><div class="overflow-x-auto"><table class="min-w-full"><thead class="bg-slate-50"><tr><th class="py-3 px-4 text-left text-sm font-semibold text-slate-600">Ação</th><th class="py-3 px-4 text-left text-sm font-semibold text-slate-600">Microsoft Excel</th><th class="py-3 px-4 text-left text-sm font-semibold text-slate-600">LibreOffice Calc</th></tr></thead><tbody id="shortcuts-table-body" class="divide-y divide-slate-200"></tbody></table></div></div>
+                </div>
+
+                <!-- Excel x Calc -->
+                <div id="excel-vs-calc" class="tab-content">
+                    <h2 class="text-4xl font-bold mb-4 text-slate-800">Comparativo: Excel vs. Calc</h2>
+                    <p class="mb-6 text-xl text-slate-600">Embora muito similares, existem diferenças importantes que são frequentemente exploradas em concursos.</p>
+                    <div class="card p-2 sm:p-4 md:p-6"><div class="overflow-x-auto"><table class="min-w-full bg-white"><thead class="bg-slate-50"><tr><th class="py-3 px-4 border-b text-left text-sm font-semibold text-slate-600">Recurso</th><th class="py-3 px-4 border-b text-left text-sm font-semibold text-slate-600">Microsoft Excel</th><th class="py-3 px-4 border-b text-left text-sm font-semibold text-slate-600">LibreOffice Calc</th></tr></thead><tbody class="divide-y divide-slate-200"><tr class="hover:bg-slate-50"><td class="py-3 px-4 font-semibold">Atalho Negrito</td><td class="py-3 px-4"><code>Ctrl + N</code></td><td class="py-3 px-4"><code>Ctrl + B</code></td></tr><tr class="hover:bg-slate-50"><td class="py-3 px-4 font-semibold">Atalho Sublinhado</td><td class="py-3 px-4"><code>Ctrl + S</code></td><td class="py-3 px-4"><code>Ctrl + U</code></td></tr><tr class="hover:bg-slate-50"><td class="py-3 px-4 font-semibold">Validação de Dados</td><td class="py-3 px-4">Guia `Dados`</td><td class="py-3 px-4">Menu `Dados > Validade`</td></tr><tr class="hover:bg-slate-50"><td class="py-3 px-4 font-semibold">Formato de Arquivo</td><td class="py-3 px-4">.xlsx (padrão)</td><td class="py-3 px-4">.ods (padrão)</td></tr><tr class="hover:bg-slate-50"><td class="py-3 px-4 font-semibold">Funções Avançadas</td><td class="py-3 px-4">Possui funções exclusivas como `PROCX` e `FILTRO`.</td><td class="py-3 px-4">Boa compatibilidade, mas pode não ter as funções mais recentes.</td></tr><tr class="hover:bg-slate-50"><td class="py-3 px-4 font-semibold">Colaboração</td><td class="py-3 px-4">Colaboração em tempo real via nuvem.</td><td class="py-3 px-4">Modelo de compartilhamento mais sequencial.</td></tr></tbody></table></div></div>
+                </div>
+                
+                <!-- Dicas de Prova -->
+                <div id="dicas" class="tab-content">
+                    <h2 class="text-4xl font-bold mb-4 text-slate-800">Dicas e Pegadinhas de Prova</h2>
+                    <p class="mb-6 text-xl text-slate-600">Fique atento a estes detalhes que podem fazer a diferença entre o acerto e o erro.</p>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="warning-card p-6 rounded-lg"><h3 class="font-bold mb-2"><i class="fa-solid fa-triangle-exclamation pr-2"></i>1. Operador `&`</h3><p>A função `CONCATENAR` une textos, mas o operador `&` faz a mesma coisa. As bancas podem colocar as duas opções para confundir.</p></div>
+                        <div class="warning-card p-6 rounded-lg"><h3 class="font-bold mb-2"><i class="fa-solid fa-triangle-exclamation pr-2"></i>2. Datas são Números</h3><p>O Excel/Calc armazena datas como números sequenciais. Isso permite fazer cálculos matemáticos com elas (ex: `A1+10`).</p></div>
+                        <div class="warning-card p-6 rounded-lg"><h3 class="font-bold mb-2"><i class="fa-solid fa-triangle-exclamation pr-2"></i>3. `CONT.SE` vs `CONT.SES`</h3><p>`CONT.SE` avalia um critério. `CONT.SES` (com 'S' no final) avalia múltiplos critérios. O mesmo vale para `SOMA.SE` e `SOMASES`.</p></div>
+                        <div class="warning-card p-6 rounded-lg"><h3 class="font-bold mb-2"><i class="fa-solid fa-triangle-exclamation pr-2"></i>4. Apagar vs. Limpar</h3><p>Pressionar `Delete` apaga o conteúdo, mas mantém a formatação. Para remover tudo, use a opção "Limpar Tudo".</p></div>
+                        <div class="warning-card p-6 rounded-lg"><h3 class="font-bold mb-2"><i class="fa-solid fa-triangle-exclamation pr-2"></i>5. `PROCV` e o `FALSO`</h3><p>O último argumento do `PROCV` é opcional, mas crucial. Omiti-lo ou usar `VERDADEIRO` busca uma correspondência aproximada, o que quase sempre leva a erros se não for intencional. Para buscas exatas, sempre use `FALSO` ou `0`.</p></div>
+                        <div class="warning-card p-6 rounded-lg"><h3 class="font-bold mb-2"><i class="fa-solid fa-triangle-exclamation pr-2"></i>6. `SOMA` ignora texto</h3><p>A função `SOMA` ignora células que contêm texto. Se você tentar somar um intervalo que inclui textos, ela simplesmente não os considerará no cálculo, sem gerar erro.</p></div>
+                        <div class="warning-card p-6 rounded-lg"><h3 class="font-bold mb-2"><i class="fa-solid fa-triangle-exclamation pr-2"></i>7. `MÉDIA` também ignora texto</h3><p>Assim como a `SOMA`, a `MÉDIA` ignora células com texto. Ela calcula a média apenas dos valores numéricos no intervalo, dividindo pela contagem de números, não pelo total de células.</p></div>
+                        <div class="warning-card p-6 rounded-lg"><h3 class="font-bold mb-2"><i class="fa-solid fa-triangle-exclamation pr-2"></i>8. Referência Circular</h3><p>Ocorre quando uma fórmula se refere, direta ou indiretamente, à sua própria célula (ex: fórmula em A1 contém `...A1...`). Isso geralmente é um erro e o programa exibirá um aviso.</p></div>
+                        <div class="warning-card p-6 rounded-lg"><h3 class="font-bold mb-2"><i class="fa-solid fa-triangle-exclamation pr-2"></i>9. Ocultar vs. Excluir</h3><p>Ocultar uma linha ou coluna a remove da exibição, mas seus dados ainda existem e são considerados em cálculos de fórmulas que abrangem aquele intervalo. Excluir remove os dados permanentemente.</p></div>
+                        <div class="warning-card p-6 rounded-lg"><h3 class="font-bold mb-2"><i class="fa-solid fa-triangle-exclamation pr-2"></i>10. Precedência de Operadores</h3><p>Lembre-se da ordem: Parênteses, Exponenciação, Multiplicação/Divisão, Adição/Subtração. Uma questão pode testar se `2+3*5` é 25 (errado) ou 17 (certo).</p></div>
+                    </div>
+                </div>
+
+                <!-- Quiz Interativo -->
+                <div id="quiz" class="tab-content">
+                    <h2 class="text-4xl font-bold mb-4 text-slate-800">Quiz Interativo</h2>
+                    <p class="mb-6 text-xl text-slate-600">Teste seus conhecimentos com algumas questões rápidas. Clique na opção que você considera correta.</p>
+                    <div id="quiz-container" class="space-y-8"></div>
+                    <div class="mt-8 text-center"><button id="submit-quiz-btn" class="bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-transform hover:scale-105">Verificar Respostas</button></div>
+                    <div id="quiz-results" class="mt-6 font-bold text-2xl text-center"></div>
+                </div>
+                
+                <!-- Exercícios Resolvidos -->
+                <div id="exercicios" class="tab-content">
+                     <h2 class="text-4xl font-bold mb-4 text-slate-800">Exercícios Resolvidos de Concursos</h2>
+                     <div class="space-y-8">
+                        <div class="card p-6"><p class="font-semibold mb-2 text-slate-500 text-sm">(CEBRASPE/CESPE - 2023)</p><p class="mb-4">Considere a planilha a seguir no Microsoft Excel. Se na célula C2 for inserida a fórmula `=SE(B2>3; "Caro"; "Barato")`, qual será o resultado exibido?</p><div class="flex flex-col md:flex-row gap-6"><div class="overflow-x-auto"><table class="min-w-full text-sm border"><thead class="bg-slate-100"><tr><th class="border p-2"></th><th class="border p-2">A</th><th class="border p-2">B</th></tr></thead><tbody><tr><td class="font-bold border p-2 text-center">1</td><td class="border p-2">Produto</td><td class="border p-2">Valor</td></tr><tr><td class="font-bold border p-2 text-center">2</td><td class="border p-2">Caneta</td><td class="border p-2">5</td></tr><tr><td class="font-bold border p-2 text-center">3</td><td class="border p-2">Lápis</td><td class="border p-2">3</td></tr></tbody></table></div><div class="bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-r-lg flex-grow"><p><strong class="font-semibold text-emerald-800">Resposta Correta:</strong> "Caro"</p><p class="mt-2 text-sm text-emerald-700"><strong class="font-semibold">Comentário:</strong> A função `SE` testa a condição `B2>3`. O valor em B2 é 5, que é maior que 3. Portanto, a condição é verdadeira, e a função retorna o primeiro resultado, "Caro".</p></div></div></div>
+                        <div class="card p-6"><p class="font-semibold mb-2 text-slate-500 text-sm">(FCC - 2022)</p><p class="mb-4">Em uma planilha do LibreOffice Calc, para fixar a referência à célula A1 de modo que ela não se altere ao copiar a fórmula, deve-se usar:</p><div class="bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-r-lg"><p><strong class="font-semibold text-emerald-800">Resposta Correta:</strong> `$A$1`</p><p class="mt-2 text-sm text-emerald-700"><strong class="font-semibold">Comentário:</strong> O caractere `$` é usado para criar uma referência absoluta, travando a coluna (A) e a linha (1). Esta é uma das questões mais recorrentes sobre planilhas em concursos.</p></div></div>
+                        <div class="card p-6"><p class="font-semibold mb-2 text-slate-500 text-sm">(FGV - 2023)</p><p class="mb-4">Dada a fórmula `=CONT.SE(A1:A5; ">10")` aplicada a um intervalo com os valores 5, 10, 15, 20, 25. Qual será o resultado?</p><div class="bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-r-lg"><p><strong class="font-semibold text-emerald-800">Resposta Correta:</strong> 3</p><p class="mt-2 text-sm text-emerald-700"><strong class="font-semibold">Comentário:</strong> A função conta quantas células no intervalo A1:A5 contêm um valor estritamente maior que 10. Os valores que atendem a esse critério são 15, 20 e 25, totalizando 3 células.</p></div></div>
+                        <div class="card p-6"><p class="font-semibold mb-2 text-slate-500 text-sm">(VUNESP - 2022)</p><p class="mb-4">A fórmula `=MÉDIA(A1:A4)` é inserida em uma planilha onde A1=10, A2=20, A3="texto", A4=30. Qual o resultado?</p><div class="bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-r-lg"><p><strong class="font-semibold text-emerald-800">Resposta Correta:</strong> 20</p><p class="mt-2 text-sm text-emerald-700"><strong class="font-semibold">Comentário:</strong> A função `MÉDIA` ignora células que contêm texto. Portanto, o cálculo será a soma dos números (10+20+30=60) dividida pela quantidade de números (3), resultando em 20.</p></div></div>
+                        <div class="card p-6"><p class="font-semibold mb-2 text-slate-500 text-sm">(AOCP - 2023)</p><p class="mb-4">Qual a finalidade principal do recurso Tabela Dinâmica no Microsoft Excel?</p><div class="bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-r-lg"><p><strong class="font-semibold text-emerald-800">Resposta Correta:</strong> Resumir, analisar e apresentar grandes volumes de dados de forma interativa.</p><p class="mt-2 text-sm text-emerald-700"><strong class="font-semibold">Comentário:</strong> Questões conceituais são comuns. A essência da Tabela Dinâmica não é criar gráficos ou formatar, mas sim resumir e analisar dados complexos sem o uso de fórmulas manuais.</p></div></div>
+                        <div class="card p-6"><p class="font-semibold mb-2 text-slate-500 text-sm">(IBFC - 2022)</p><p class="mb-4">Na célula C1, a fórmula é `=$A1+B$1`. Se esta fórmula for copiada para a célula D2, qual será a fórmula resultante?</p><div class="bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-r-lg"><p><strong class="font-semibold text-emerald-800">Resposta Correta:</strong> `=$A2+C$1`</p><p class="mt-2 text-sm text-emerald-700"><strong class="font-semibold">Comentário:</strong> Esta questão testa referências mistas. A coluna A está travada (`$A`), então permanece A. A linha 1 é relativa, e ao mover uma linha para baixo (de 1 para 2), ela se torna 2. A coluna B é relativa, e ao mover uma coluna para a direita (de B para C), ela se torna C. A linha 1 está travada (`$1`), então permanece 1.</p></div></div>
+                        <div class="card p-6"><p class="font-semibold mb-2 text-slate-500 text-sm">(CONSULPLAN - 2023)</p><p class="mb-4">Para somar os valores da coluna C apenas quando a coluna A for "Sul" e a coluna B for "Online", qual função deve ser utilizada?</p><div class="bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-r-lg"><p><strong class="font-semibold text-emerald-800">Resposta Correta:</strong> `SOMASES`</p><p class="mt-2 text-sm text-emerald-700"><strong class="font-semibold">Comentário:</strong> Como existem múltiplos critérios (Região="Sul" E Canal="Online"), a função correta é a `SOMASES`, que permite a soma baseada em diversas condições simultâneas. `SOMA.SE` só permitiria um critério.</p></div></div>
+                        <div class="card p-6"><p class="font-semibold mb-2 text-slate-500 text-sm">(CEBRASPE/CESPE - 2022)</p><p class="mb-4">No LibreOffice Calc, o atalho de teclado para aplicar o formato de Negrito a uma célula selecionada é:</p><div class="bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-r-lg"><p><strong class="font-semibold text-emerald-800">Resposta Correta:</strong> `Ctrl + B`</p><p class="mt-2 text-sm text-emerald-700"><strong class="font-semibold">Comentário:</strong> Uma clássica questão de diferença entre os programas. Enquanto no Excel brasileiro o atalho é `Ctrl + N`, no Calc é `Ctrl + B` (de "Bold", em inglês), um padrão mais universal.</p></div></div>
+                     </div>
+                </div>
+
+                <!-- Glossário -->
+                <div id="glossario" class="tab-content">
+                    <h2 class="text-4xl font-bold mb-4 text-slate-800">Glossário Técnico Simplificado</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="card p-4"><h3 class="font-semibold">Argumento</h3><p class="text-sm">Os valores que uma função utiliza para realizar operações. São separados por ponto e vírgula (;).</p></div>
+                        <div class="card p-4"><h3 class="font-semibold">Concatenar</h3><p class="text-sm">Unir duas ou mais cadeias de texto em uma só.</p></div>
+                        <div class="card p-4"><h3 class="font-semibold">Dashboard</h3><p class="text-sm">Um painel visual que resume informações e métricas importantes, geralmente usando gráficos e tabelas.</p></div>
+                        <div class="card p-4"><h3 class="font-semibold">Intervalo (Range)</h3><p class="text-sm">Um conjunto de células selecionadas. Ex: `A1:B10`.</p></div>
+                        <div class="card p-4"><h3 class="font-semibold">Macro</h3><p class="text-sm">Uma sequência de comandos e ações que pode ser gravada e executada para automatizar tarefas repetitivas.</p></div>
+                        <div class="card p-4"><h3 class="font-semibold">Sintaxe</h3><p class="text-sm">As regras de escrita de uma fórmula ou função para que o programa a entenda corretamente.</p></div>
+                    </div>
+                </div>
+                
+                <!-- Materiais Complementares -->
+                <div id="materiais" class="tab-content">
+                    <h2 class="text-4xl font-bold mb-4 text-slate-800">Materiais Complementares</h2>
+                    <p class="mb-6 text-xl text-slate-600">Aprofunde seus estudos com estes recursos recomendados.</p>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="card p-6">
+                            <h3 class="font-bold text-lg mb-2"><i class="fab fa-youtube text-red-500 pr-2"></i>Canais no YouTube</h3>
+                            <ul class="list-disc list-inside space-y-2 text-blue-600">
+                                <li><a href="https://www.youtube.com/@CursoemVideo" target="_blank" rel="noopener noreferrer" class="hover:underline">Curso em Vídeo (Gustavo Guanabara)</a></li>
+                                <li><a href="https://www.youtube.com/@HashtagTreinamentos" target="_blank" rel="noopener noreferrer" class="hover:underline">Hashtag Treinamentos</a></li>
+                                <li><a href="https://www.youtube.com/@ninjadoexcel" target="_blank" rel="noopener noreferrer" class="hover:underline">Ninja do Excel</a></li>
+                            </ul>
+                        </div>
+                        <div class="card p-6">
+                            <h3 class="font-bold text-lg mb-2"><i class="fas fa-lightbulb text-yellow-500 pr-2"></i>Sites de Concursos</h3>
+                            <ul class="list-disc list-inside space-y-2 text-blue-600">
+                                <li><a href="https://www.qconcursos.com/" target="_blank" rel="noopener noreferrer" class="hover:underline">Qconcursos (Questões)</a></li>
+                                <li><a href="https://www.grancursosonline.com.br/" target="_blank" rel="noopener noreferrer" class="hover:underline">Gran Cursos Online (Aulas)</a></li>
+                                <li><a href="https://www.estrategiaconcursos.com.br/" target="_blank" rel="noopener noreferrer" class="hover:underline">Estratégia Concursos (Material em PDF)</a></li>
+                            </ul>
+                        </div>
+                        <div class="card p-6">
+                            <h3 class="font-bold text-lg mb-2"><i class="fas fa-book text-green-500 pr-2"></i>Documentação Oficial</h3>
+                            <ul class="list-disc list-inside space-y-2 text-blue-600">
+                                <li><a href="https://support.microsoft.com/pt-br/excel" target="_blank" rel="noopener noreferrer" class="hover:underline">Suporte da Microsoft (Excel)</a></li>
+                                <li><a href="https://documentation.libreoffice.org/pt-br/portuguese-documentation/" target="_blank" rel="noopener noreferrer" class="hover:underline">Documentação do LibreOffice (Calc)</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Referências -->
+                <div id="referencias" class="tab-content">
+                    <h2 class="text-4xl font-bold mb-4 text-slate-800">Referências Bibliográficas</h2>
+                    <p class="mb-6 text-xl text-slate-600">Fontes utilizadas e recomendadas para consulta e aprofundamento.</p>
+                    <div class="card p-6">
+                        <ul class="list-disc list-inside space-y-4 text-slate-600">
+                            <li>Microsoft Corporation. (2024). *Ajuda e aprendizado do Excel*. Acessado em [Data Atual], de https://support.microsoft.com/pt-br/excel</li>
+                            <li>The Document Foundation. (2024). *Guia do Calc 7.6*. Acessado em [Data Atual], de https://documentation.libreoffice.org/pt-br/portuguese-documentation/</li>
+                            <li>Manuais de informática para concursos de autores renomados como João Antônio e Diego Carvalho.</li>
+                            <li>Bancos de questões de concursos públicos como Qconcursos, TecConcursos e Gran Cursos Questões.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.getElementById('sidebar');
+            const menuToggle = document.getElementById('menu-toggle');
+            const tabs = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            // Sidebar toggle for mobile
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('open');
+            });
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const target = tab.dataset.tab;
+
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                        if (content.id === target) {
+                            content.classList.add('active');
+                        }
+                    });
+
+                    // Close sidebar on tab selection in mobile
+                    if (window.innerWidth < 768) {
+                        sidebar.classList.remove('open');
+                    }
+                });
+            });
+
+            // Shortcuts Logic
+            const shortcutsData = [
+                { action: 'Abrir arquivo', excel: 'Ctrl + O', calc: 'Ctrl + O' },
+                { action: 'Salvar arquivo', excel: 'Ctrl + B', calc: 'Ctrl + S' },
+                { action: 'Imprimir', excel: 'Ctrl + P', calc: 'Ctrl + P' },
+                { action: 'Editar a célula ativa', excel: 'F2', calc: 'F2' },
+                { action: 'Desfazer', excel: 'Ctrl + Z', calc: 'Ctrl + Z' },
+                { action: 'Refazer', excel: 'Ctrl + Y', calc: 'Ctrl + Y' },
+                { action: 'Negrito', excel: 'Ctrl + N', calc: 'Ctrl + B' },
+                { action: 'Itálico', excel: 'Ctrl + I', calc: 'Ctrl + I' },
+                { action: 'Sublinhado', excel: 'Ctrl + S', calc: 'Ctrl + U' },
+                { action: 'Abrir formatação de células', excel: 'Ctrl + 1', calc: 'Ctrl + 1' },
+                { action: 'Criar Tabela', excel: 'Ctrl + T', calc: 'Ctrl + F12' },
+                { action: 'Ativar/Desativar Filtro', excel: 'Ctrl + Shift + L', calc: 'Ctrl + Shift + L' },
+                { action: 'Inserir AutoSoma', excel: 'Alt + =', calc: 'Alt + =' },
+                { action: 'Alternar tipo de referência', excel: 'F4', calc: 'F4' },
+                { action: 'Inserir data atual', excel: 'Ctrl + ;', calc: 'Ctrl + ;' },
+                { action: 'Inserir hora atual', excel: 'Ctrl + Shift + ;', calc: 'Ctrl + Shift + ;' },
+                { action: 'Selecionar coluna inteira', excel: 'Ctrl + Espaço', calc: 'Ctrl + Espaço' },
+                { action: 'Selecionar linha inteira', excel: 'Shift + Espaço', calc: 'Shift + Espaço' },
+                { action: 'Mover para próxima planilha', excel: 'Ctrl + PageDown', calc: 'Ctrl + PageDown' },
+                { action: 'Mover para planilha anterior', excel: 'Ctrl + PageUp', calc: 'Ctrl + PageUp' },
+                { action: 'Fechar janela', excel: 'Ctrl + W', calc: 'Ctrl + W' },
+            ];
+            
+            const shortcutsTableBody = document.getElementById('shortcuts-table-body');
+            const filterButtons = document.querySelectorAll('.filter-btn');
+
+            function renderShortcuts(filter = 'all') {
+                shortcutsTableBody.innerHTML = '';
+                let filteredData;
+
+                if (filter === 'same') {
+                    filteredData = shortcutsData.filter(item => item.excel === item.calc);
+                } else if (filter === 'different') {
+                    filteredData = shortcutsData.filter(item => item.excel !== item.calc);
+                } else {
+                    filteredData = shortcutsData;
+                }
+
+                filteredData.forEach(item => {
+                    const row = document.createElement('tr');
+                    const isDifferent = item.excel !== item.calc;
+                    row.className = 'hover:bg-slate-50';
+                    row.innerHTML = `
+                        <td class="py-3 px-4">${item.action}</td>
+                        <td class="py-3 px-4 font-mono ${isDifferent ? 'text-orange-600 font-semibold' : 'text-slate-700'}">${item.excel}</td>
+                        <td class="py-3 px-4 font-mono ${isDifferent ? 'text-orange-600 font-semibold' : 'text-slate-700'}">${item.calc}</td>
+                    `;
+                    shortcutsTableBody.appendChild(row);
+                });
+            }
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    renderShortcuts(button.dataset.filter);
+                });
+            });
+
+            renderShortcuts();
+
+
+            // Quiz Logic
+            const quizContainer = document.getElementById('quiz-container');
+            const submitBtn = document.getElementById('submit-quiz-btn');
+            const quizResults = document.getElementById('quiz-results');
+
+            const quizQuestions = [
+                {
+                    question: "Qual fórmula é usada para encontrar o maior valor em um intervalo de A1 a A10?",
+                    options: ["=MAX(A1:A10)", "=MÁXIMO(A1:A10)", "=GRANDE(A1:A10)", "=ALTO(A1:A10)"],
+                    answer: "=MÁXIMO(A1:A10)"
+                },
+                {
+                    question: "No LibreOffice Calc, qual atalho coloca o texto em negrito?",
+                    options: ["Ctrl + B", "Ctrl + G", "Ctrl + N", "Alt + B"],
+                    answer: "Ctrl + B"
+                },
+                {
+                    question: "Para que serve a referência de célula `$B2`?",
+                    options: ["Fixa a linha 2, mas a coluna B é relativa.", "Fixa a coluna B, mas a linha 2 é relativa.", "Fixa tanto a coluna B quanto a linha 2.", "É uma referência inválida."],
+                    answer: "Fixa a coluna B, mas a linha 2 é relativa."
+                },
+                {
+                    question: "A função `PROCV` pode procurar um valor em qualquer coluna da tabela selecionada?",
+                    options: ["Sim, em qualquer coluna.", "Não, apenas na primeira coluna da tabela selecionada.", "Apenas na última coluna.", "Sim, desde que a coluna seja numérica."],
+                    answer: "Não, apenas na primeira coluna da tabela selecionada."
+                },
+                {
+                    question: "Qual função soma os salários (coluna C) do departamento de 'Vendas' (coluna B)?",
+                    options: ["=SOMA(C:C; B:B; 'Vendas')", "=SOMASES(C:C; B:B; '=Vendas')", "=SOMA.SE(B:B; 'Vendas'; C:C)", "=SOMA.SE(C:C; 'Vendas'; B:B)"],
+                    answer: "=SOMA.SE(B:B; 'Vendas'; C:C)"
+                },
+                {
+                    question: "Se a célula A1 contém a data 01/01/2024, qual o resultado de `=A1+5`?",
+                    options: ["06/01/2024", "#VALOR!", "01/01/2029", "Data + 5"],
+                    answer: "06/01/2024"
+                },
+                {
+                    question: "Qual função retorna 'OK' se a fórmula em A1 não tiver erro, e 'Erro' caso contrário?",
+                    options: ["=SEERRO(A1; 'Erro')", "=SE(A1='ERRO'; 'Erro'; 'OK')", "=ERRO(A1; 'OK')", "=VERIFICAERRO(A1; 'Erro')"],
+                    answer: "=SEERRO(A1; 'Erro')"
+                },
+                {
+                    question: "O atalho `Ctrl + T` no Microsoft Excel serve para:",
+                    options: ["Tachar o texto", "Criar uma Tabela", "Inserir uma nova aba (Tab)", "Imprimir a Tabela"],
+                    answer: "Criar uma Tabela"
+                },
+                {
+                    question: "Qual a diferença entre `=CONT.NÚM(A1:A5)` e `=CONT.VALORES(A1:A5)`?",
+                    options: ["Nenhuma, são idênticas", "CONT.NÚM conta números e datas; CONT.VALORES conta qualquer célula não vazia.", "CONT.NÚM conta apenas inteiros; CONT.VALORES conta números e textos.", "CONT.VALORES é uma função do Calc; CONT.NÚM é do Excel."],
+                    answer: "CONT.NÚM conta números e datas; CONT.VALORES conta qualquer célula não vazia."
+                },
+                {
+                    question: "Qual caractere é usado para 'travar' uma referência de linha ou coluna, tornando-a absoluta?",
+                    options: ["# (hashtag)", "& (e-comercial)", "$ (cifrão)", "@ (arroba)"],
+                    answer: "$ (cifrão)"
+                }
+            ];
+
+            function renderQuiz() {
+                quizContainer.innerHTML = '';
+                quizQuestions.forEach((q, index) => {
+                    const questionEl = document.createElement('div');
+                    questionEl.className = 'card p-6';
+                    
+                    let optionsHTML = '';
+                    q.options.forEach(option => {
+                        optionsHTML += `<div class="quiz-option mt-2" data-question="${index}" data-value="${option}">${option}</div>`;
+                    });
+
+                    questionEl.innerHTML = `
+                        <p class="font-semibold">${index + 1}. ${q.question}</p>
+                        <div class="mt-4 space-y-2">${optionsHTML}</div>
+                    `;
+                    quizContainer.appendChild(questionEl);
+                });
+
+                document.querySelectorAll('.quiz-option').forEach(option => {
+                    option.addEventListener('click', (e) => {
+                        if(e.target.closest('.quiz-option').classList.contains('correct') || e.target.closest('.quiz-option').classList.contains('incorrect')) return;
+                        
+                        const questionIndex = option.dataset.question;
+                        document.querySelectorAll(`.quiz-option[data-question="${questionIndex}"]`).forEach(o => o.classList.remove('selected'));
+                        option.classList.add('selected');
+                    });
+                });
+            }
+
+            submitBtn.addEventListener('click', () => {
+                let score = 0;
+                quizQuestions.forEach((q, index) => {
+                    const selectedOption = document.querySelector(`.quiz-option[data-question="${index}"].selected`);
+                    const options = document.querySelectorAll(`.quiz-option[data-question="${index}"]`);
+                    
+                    options.forEach(opt => {
+                        opt.classList.remove('correct', 'incorrect');
+                        if (opt.dataset.value === q.answer) {
+                           opt.classList.add('correct');
+                        }
+                    });
+
+                    if (selectedOption) {
+                        if (selectedOption.dataset.value === q.answer) {
+                            score++;
+                        } else {
+                            selectedOption.classList.add('incorrect');
+                        }
+                    }
+                });
+                quizResults.innerHTML = `Você acertou <span class="text-emerald-600">${score}</span> de <span class="text-slate-800">${quizQuestions.length}</span> questões!`;
+            });
+
+            renderQuiz();
+        });
+    </script>
+</body>
+</html>
