@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Definitivo de Estudos: Ética no Serviço Público (Decreto 1.171/94)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Modern Professional (Deep Navy, Gold, Cool Gray) -->
+    <!-- Application Structure Plan: A sophisticated single-page application with a fixed sidebar navigation for clear, persistent access to all study modules. The structure is progressive: 'Início' and 'Resumo' provide an overview. 'Princípios', 'Deveres', 'Vedações' cover the core content. 'Comissão', 'Dilemas', 'Ética vs Legalidade' delve into practical application and nuances. 'Dicas', 'Quiz', 'Exercícios' are dedicated exam prep tools. 'Glossário' and 'Materiais' offer support. This structure creates an intelligent, intuitive learning environment, superior to simple top tabs. -->
+    <!-- Visualization & Content Choices: Report Info -> Goal -> Viz/Method -> Interaction -> Justification. 1. Duties/Vedações -> Organize/Inform -> Interactive Accordion Cards -> Click reveals example + 'Pegadinha' -> Deepens understanding by linking rule to common exam pitfalls. 2. Commission Process -> Explain Process -> HTML/CSS Flowchart -> Static Viz -> Visually simplifies the formal procedure for better retention. 3. Dilemas -> Apply Knowledge -> Interactive Case Study Cards -> Click reveals analysis -> Promotes critical thinking over rote memorization. 4. Quiz -> Test Knowledge -> Enhanced JS Quiz with progress bar & instant feedback -> Active recall with immediate reinforcement. All interactions are built with vanilla JS for a lightweight, fast experience, confirming NO SVG/Mermaid. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        :root {
+            --primary-bg: #f8f9fa;
+            --secondary-bg: #ffffff;
+            --sidebar-bg: #1a202c;
+            --text-primary: #2d3748;
+            --text-secondary: #4a5568;
+            --accent-color: #d69e2e;
+            --border-color: #e2e8f0;
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Merriweather', serif;
+        }
+        .sidebar-link {
+            transition: all 0.2s ease-in-out;
+            border-left: 3px solid transparent;
+        }
+        .sidebar-link:hover, .sidebar-link.active {
+            background-color: #2d3748;
+            border-left-color: var(--accent-color);
+            color: #f7fafc;
+        }
+        .card {
+            background-color: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .dica-prova {
+            background-color: #fffaf0;
+            border-left: 4px solid var(--accent-color);
+        }
+        .pegadinha-alerta {
+             background-color: #fff5f5;
+            border-left: 4px solid #c53030;
+        }
+        .quadro-explicativo {
+            background-color: #f0f5ff;
+            border-left: 4px solid #4299e1;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .progress-bar-container {
+            background-color: var(--border-color);
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            background-color: var(--accent-color);
+            transition: width 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div class="flex flex-col md:flex-row min-h-screen">
+        <!-- Sidebar -->
+        <aside class="w-full md:w-72 bg-gray-800 text-gray-200 flex-shrink-0">
+            <div class="p-6 text-center border-b border-gray-700">
+                <h1 class="text-xl font-bold text-white">Guia de Ética</h1>
+                <p class="text-xs text-gray-400">Decreto 1.171/94</p>
+            </div>
+            <nav id="sidebar-nav" class="p-4 space-y-1">
+                <a href="#inicio" class="sidebar-link active flex items-center px-4 py-2.5 rounded-md"><i class="fas fa-home w-6 text-center"></i><span class="ml-3">Início</span></a>
+                <a href="#resumo" class="sidebar-link flex items-center px-4 py-2.5 rounded-md"><i class="fas fa-chalkboard-teacher w-6 text-center"></i><span class="ml-3">Resumo Geral</span></a>
+                <a href="#principios" class="sidebar-link flex items-center px-4 py-2.5 rounded-md"><i class="fas fa-gem w-6 text-center"></i><span class="ml-3">Princípios e Valores</span></a>
+                <a href="#deveres" class="sidebar-link flex items-center px-4 py-2.5 rounded-md"><i class="fas fa-check-double w-6 text-center"></i><span class="ml-3">Deveres do Servidor</span></a>
+                <a href="#vedacoes" class="sidebar-link flex items-center px-4 py-2.5 rounded-md"><i class="fas fa-ban w-6 text-center"></i><span class="ml-3">Vedações Éticas</span></a>
+                <a href="#comissao" class="sidebar-link flex items-center px-4 py-2.5 rounded-md"><i class="fas fa-gavel w-6 text-center"></i><span class="ml-3">Atuação da Comissão</span></a>
+                <a href="#dilemas" class="sidebar-link flex items-center px-4 py-2.5 rounded-md"><i class="fas fa-balance-scale-left w-6 text-center"></i><span class="ml-3">Dilemas e Casos Práticos</span></a>
+                <a href="#etica-legalidade" class="sidebar-link flex items-center px-4 py-2.5 rounded-md"><i class="fas fa-balance-scale w-6 text-center"></i><span class="ml-3">Ética x Legalidade</span></a>
+                <a href="#dicas" class="sidebar-link flex items-center px-4 py-2.5 rounded-md"><i class="fas fa-lightbulb w-6 text-center"></i><span class="ml-3">Dicas de Prova</span></a>
+                <a href="#quiz" class="sidebar-link flex items-center px-4 py-2.5 rounded-md"><i class="fas fa-question-circle w-6 text-center"></i><span class="ml-3">Quiz Interativo</span></a>
+                <a href="#exercicios" class="sidebar-link flex items-center px-4 py-2.5 rounded-md"><i class="fas fa-pen-to-square w-6 text-center"></i><span class="ml-3">Exercícios Resolvidos</span></a>
+                <a href="#glossario" class="sidebar-link flex items-center px-4 py-2.5 rounded-md"><i class="fas fa-book-bookmark w-6 text-center"></i><span class="ml-3">Glossário Ético-Jurídico</span></a>
+                <a href="#materiais" class="sidebar-link flex items-center px-4 py-2.5 rounded-md"><i class="fas fa-box-archive w-6 text-center"></i><span class="ml-3">Materiais Complementares</span></a>
+                <a href="#referencias" class="sidebar-link flex items-center px-4 py-2.5 rounded-md"><i class="fas fa-book w-6 text-center"></i><span class="ml-3">Referências</span></a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6 md:p-10">
+            <section id="inicio" class="content-section">
+                <h2 class="text-4xl font-bold mb-4">Bem-vindo(a) ao seu Guia Definitivo de Ética!</h2>
+                <p class="text-lg text-gray-600 mb-6">Sabemos que a jornada de estudos para concursos é desafiadora. Por isso, criamos esta ferramenta completa e interativa para transformar o denso Decreto nº 1.171/94 em um conhecimento sólido e acessível. Prepare-se para dominar o tema e garantir aqueles pontos que fazem toda a diferença na sua aprovação.</p>
+                <div class="card p-6 rounded-lg mb-8">
+                    <h3 class="font-bold text-xl mb-4">Seu Progresso de Estudo</h3>
+                    <div class="progress-bar-container w-full h-4">
+                        <div id="progress-bar" class="progress-bar h-full rounded-full text-xs text-white text-center"></div>
+                    </div>
+                    <p id="progress-text" class="text-sm text-center mt-2 text-gray-600">Complete as seções para avançar.</p>
+                </div>
+                <div class="quadro-explicativo p-6 rounded-lg mb-8">
+                    <h3 class="font-bold text-xl mb-4"><i class="fas fa-rocket mr-2"></i>O que você encontrará aqui?</h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start"><i class="fas fa-check-circle text-blue-500 mt-1 mr-3"></i><span><strong>Explicações Claras e Diretas:</strong> Traduzimos o "juridiquês" para uma linguagem que você entende e memoriza.</span></li>
+                        <li class="flex items-start"><i class="fas fa-check-circle text-blue-500 mt-1 mr-3"></i><span><strong>Foco Total em Concursos:</strong> Conteúdo 100% direcionado para o que as bancas realmente cobram, sem enrolação.</span></li>
+                        <li class="flex items-start"><i class="fas fa-check-circle text-blue-500 mt-1 mr-3"></i><span><strong>Exemplos e Casos Práticos:</strong> Para você visualizar a teoria no dia a dia do serviço público e entender o raciocínio das questões.</span></li>
+                        <li class="flex items-start"><i class="fas fa-check-circle text-blue-500 mt-1 mr-3"></i><span><strong>Ferramentas Interativas:</strong> Teste e fixe seus conhecimentos com quizzes, exercícios resolvidos e dicas estratégicas.</span></li>
+                    </ul>
+                </div>
+                 <div class="card p-6 rounded-lg text-center bg-gray-800 text-white">
+                    <h3 class="font-bold text-xl mb-2">Pronto(a) para começar?</h3>
+                    <p>Use o menu ao lado para navegar entre os tópicos. <br>Sugerimos iniciar pelo <strong class="text-yellow-400">Resumo Geral</strong> para ter uma visão panorâmica do conteúdo!</p>
+                    <a href="#" id="download-checklist" class="inline-block mt-4 bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded transition-colors"><i class="fas fa-download mr-2"></i>Baixar Checklist de Estudo</a>
+                </div>
+            </section>
+
+            <section id="resumo" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-6"><i class="fas fa-chalkboard-teacher mr-2 text-yellow-600"></i>Resumo Geral e Trilha de Estudos</h2>
+                <div class="card p-6 rounded-lg">
+                    <h3 class="text-xl font-bold mb-4">Sua Trilha para a Maestria</h3>
+                    <p class="mb-6">Para um estudo eficiente, siga esta trilha. Cada etapa constrói o conhecimento para a próxima, do fundamental ao avançado.</p>
+                    <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                        <div class="text-center p-2">
+                            <div class="bg-blue-100 text-blue-700 rounded-full h-16 w-16 flex items-center justify-center mx-auto text-2xl"><i class="fas fa-book"></i></div>
+                            <p class="mt-2 font-bold">1. Fundamentos</p>
+                            <p class="text-sm text-gray-500">Entenda os princípios que são a alma do código.</p>
+                        </div>
+                        <div class="text-gray-300 text-2xl font-light hidden md:block">→</div>
+                        <div class="text-center p-2">
+                            <div class="bg-green-100 text-green-700 rounded-full h-16 w-16 flex items-center justify-center mx-auto text-2xl"><i class="fas fa-list-check"></i></div>
+                            <p class="mt-2 font-bold">2. Regras do Jogo</p>
+                            <p class="text-sm text-gray-500">Memorize os deveres e as proibições.</p>
+                        </div>
+                        <div class="text-gray-300 text-2xl font-light hidden md:block">→</div>
+                        <div class="text-center p-2">
+                            <div class="bg-yellow-100 text-yellow-700 rounded-full h-16 w-16 flex items-center justify-center mx-auto text-2xl"><i class="fas fa-gavel"></i></div>
+                            <p class="mt-2 font-bold">3. Aplicação Prática</p>
+                            <p class="text-sm text-gray-500">Veja como a teoria funciona no dia a dia.</p>
+                        </div>
+                        <div class="text-gray-300 text-2xl font-light hidden md:block">→</div>
+                        <div class="text-center p-2">
+                            <div class="bg-red-100 text-red-700 rounded-full h-16 w-16 flex items-center justify-center mx-auto text-2xl"><i class="fas fa-crosshairs"></i></div>
+                            <p class="mt-2 font-bold">4. Foco na Prova</p>
+                            <p class="text-sm text-gray-500">Teste e aprimore seu conhecimento.</p>
+                        </div>
+                    </div>
+                     <div class="text-center mt-8">
+                        <button id="next-step-btn" class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors"><i class="fas fa-arrow-right mr-2"></i>Próximo Passo Recomendado</button>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="principios" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-6"><i class="fas fa-gem mr-2 text-yellow-600"></i>Princípios e Valores Fundamentais</h2>
+                <p class="mb-6">A base de toda conduta ética. O Código afirma que a conduta do servidor deve ir além da simples legalidade, sendo guiada por valores maiores. Entender esses princípios é a chave para interpretar todas as regras.</p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="card p-5 rounded-lg">
+                        <h4 class="font-bold text-lg">Moralidade e Honestidade</h4>
+                        <p class="text-sm mt-1">Agir com retidão, buscando sempre o bem comum. A finalidade do ato deve ser sempre pública, e não privada.</p>
+                    </div>
+                    <div class="card p-5 rounded-lg">
+                        <h4 class="font-bold text-lg">Decoro e Zelo</h4>
+                        <p class="text-sm mt-1">Manter uma conduta respeitosa e cuidadosa, preservando a imagem da instituição e o patrimônio público.</p>
+                    </div>
+                    <div class="card p-5 rounded-lg">
+                        <h4 class="font-bold text-lg">Eficiência</h4>
+                        <p class="text-sm mt-1">Produzir resultados com qualidade e agilidade, combatendo a burocracia excessiva e desnecessária.</p>
+                    </div>
+                    <div class="card p-5 rounded-lg">
+                        <h4 class="font-bold text-lg">Impessoalidade</h4>
+                        <p class="text-sm mt-1">Tratar todos de forma igual, sem conceder privilégios ou aplicar perseguições por razões pessoais.</p>
+                    </div>
+                    <div class="card p-5 rounded-lg">
+                        <h4 class="font-bold text-lg">Probidade</h4>
+                        <p class="text-sm mt-1">Atuar com integridade, honestidade e boa-fé. É a qualidade de quem é incorruptível.</p>
+                    </div>
+                     <div class="card p-5 rounded-lg">
+                        <h4 class="font-bold text-lg">Cortesia</h4>
+                        <p class="text-sm mt-1">Tratar o público e os colegas com urbanidade e respeito. A comunicação clara e educada é um dever.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="deveres" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-6"><i class="fas fa-check-double mr-2 text-green-600"></i>Deveres Fundamentais do Servidor</h2>
+                <p class="mb-6">As condutas que você, como servidor, é OBRIGADO a seguir. Pense nelas como o "manual de instruções" para uma atuação ética exemplar. Explore os cartões para ver exemplos e dicas.</p>
+                <div id="deveres-accordion" class="space-y-3"></div>
+            </section>
+
+            <section id="vedacoes" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-6"><i class="fas fa-ban mr-2 text-red-600"></i>Vedações Éticas (Proibições)</h2>
+                <p class="mb-6">As condutas expressamente PROIBIDAS. Conhecê-las é essencial para evitar as infrações mais comuns cobradas em prova e para proteger a integridade do serviço público.</p>
+                <div id="vedacoes-accordion" class="space-y-3"></div>
+            </section>
+
+            <section id="comissao" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-6"><i class="fas fa-gavel mr-2 text-gray-600"></i>Atuação da Comissão de Ética</h2>
+                <p class="mb-6">Todo órgão público deve ter uma Comissão de Ética, responsável por orientar, fiscalizar e apurar as condutas. Ela é o "guardião" do Código.</p>
+                <div class="card p-6 rounded-lg mb-8">
+                    <h3 class="font-bold text-xl mb-4 text-center">O Triplo Papel das Comissões</h3>
+                    <div class="grid md:grid-cols-3 gap-6 text-center">
+                        <div>
+                            <i class="fas fa-comments text-3xl text-blue-500"></i>
+                            <h4 class="font-bold mt-2">Função Consultiva</h4>
+                            <p class="text-sm text-gray-600">Orientar servidores sobre dilemas éticos, prevenindo falhas.</p>
+                        </div>
+                        <div>
+                            <i class="fas fa-graduation-cap text-3xl text-green-500"></i>
+                            <h4 class="font-bold mt-2">Função Educativa</h4>
+                            <p class="text-sm text-gray-600">Disseminar o código e promover treinamentos para criar uma cultura de integridade.</p>
+                        </div>
+                        <div>
+                            <i class="fas fa-search text-3xl text-red-500"></i>
+                            <h4 class="font-bold mt-2">Função de Apuração</h4>
+                            <p class="text-sm text-gray-600">Investigar denúncias de violações, podendo aplicar a sanção de "Censura Ética".</p>
+                        </div>
+                    </div>
+                </div>
+                 <div class="pegadinha-alerta p-4 rounded-lg">
+                    <h3 class="font-bold text-lg mb-2"><i class="fas fa-exclamation-triangle mr-2"></i>Atenção Máxima!</h3>
+                    <p>A Comissão de Ética só aplica a pena de <strong>CENSURA</strong>. Se houver indício de infração disciplinar (que pode levar a suspensão ou demissão), o caso deve ser encaminhado para a autoridade competente para instauração de um Processo Administrativo Disciplinar (PAD).</p>
+                </div>
+            </section>
+            
+            <section id="dilemas" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-6"><i class="fas fa-balance-scale-left mr-2 text-purple-600"></i>Dilemas e Casos Práticos</h2>
+                <p class="mb-6">A teoria na prática. A vida do servidor é cheia de "zonas cinzentas". Analise os casos e clique para ver a resolução ética correta.</p>
+                <div id="dilemas-container" class="grid md:grid-cols-2 gap-6"></div>
+            </section>
+
+            <section id="etica-legalidade" class="content-section hidden">
+                 <h2 class="text-3xl font-bold mb-6"><i class="fas fa-balance-scale mr-2 text-indigo-600"></i>Ética vs. Legalidade</h2>
+                 <p class="mb-6">Um dos pontos mais importantes para concursos. Nem tudo que é legal, é ético. A conduta do servidor deve ser exemplar em ambos os campos. Entenda a diferença.</p>
+                 <div class="card rounded-lg overflow-hidden">
+                     <table class="w-full text-sm text-left">
+                         <thead class="bg-gray-100">
+                             <tr>
+                                 <th class="p-4 font-bold">Critério</th>
+                                 <th class="p-4 font-bold">Ato Legal</th>
+                                 <th class="p-4 font-bold">Ato Ético</th>
+                             </tr>
+                         </thead>
+                         <tbody>
+                             <tr class="border-t">
+                                 <td class="p-4 font-semibold">Base</td>
+                                 <td class="p-4">Conformidade com a lei escrita.</td>
+                                 <td class="p-4">Conformidade com princípios (honestidade, justiça, bem comum).</td>
+                             </tr>
+                             <tr class="border-t bg-gray-50">
+                                 <td class="p-4 font-semibold">Exemplo</td>
+                                 <td class="p-4">Pagar o valor mínimo de uma diária para um servidor, mesmo sabendo que o valor é insuficiente para cobrir os custos na localidade. O ato cumpre a norma.</td>
+                                 <td class="p-4">Além de pagar a diária legal, o gestor pode representar à autoridade superior, demonstrando que o valor está defasado e é injusto, buscando a correção da norma.</td>
+                             </tr>
+                              <tr class="border-t">
+                                 <td class="p-4 font-semibold">Foco da Pergunta</td>
+                                 <td class="p-4">"Eu posso fazer isso segundo a lei?"</td>
+                                 <td class="p-4">"Eu devo fazer isso? É o correto, o justo e o melhor para o interesse público?"</td>
+                             </tr>
+                         </tbody>
+                     </table>
+                 </div>
+            </section>
+
+            <section id="dicas" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-6"><i class="fas fa-lightbulb mr-2 text-yellow-500"></i>Dicas de Prova e Pegadinhas</h2>
+                <div class="space-y-6">
+                    <div class="dica-prova p-6 rounded-lg">
+                        <h3 class="font-bold text-xl mb-2">A Regra de Ouro: O Bem Comum</h3>
+                        <p>Em dúvida na questão? Escolha a alternativa que melhor representa o interesse da coletividade e da Administração Pública. A lógica do Código é sempre priorizar o bem comum em detrimento do interesse privado ou pessoal.</p>
+                    </div>
+                    <div class="pegadinha-alerta p-6 rounded-lg">
+                        <h3 class="font-bold text-xl mb-2">Cuidado com o "Espírito de Corpo"</h3>
+                        <p>A vedação de ser conivente com erro de colega é uma das mais importantes. O chamado "espírito de corpo" ou "solidariedade" para acobertar uma infração é uma conduta expressamente proibida pelo Código. A lealdade é com o serviço público.</p>
+                    </div>
+                     <div class="dica-prova p-6 rounded-lg">
+                        <h3 class="font-bold text-xl mb-2">A Ética na Vida Privada</h3>
+                        <p>O Código deixa claro que o servidor deve preservar a honra e a tradição dos serviços públicos também em sua vida particular. Atos que manchem a imagem da instituição, mesmo fora do horário de trabalho, podem ser considerados antiéticos e passíveis de apuração.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="quiz" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-6"><i class="fas fa-question-circle mr-2 text-blue-600"></i>Quiz Interativo</h2>
+                <div id="quiz-container" class="card p-6 rounded-lg"></div>
+            </section>
+
+            <section id="exercicios" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-6"><i class="fas fa-pen-to-square mr-2 text-teal-600"></i>Exercícios Resolvidos de Concursos</h2>
+                <div id="exercicios-container" class="space-y-4"></div>
+            </section>
+
+            <section id="glossario" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-6"><i class="fas fa-book-bookmark mr-2 text-pink-600"></i>Glossário Ético-Jurídico</h2>
+                <div class="card p-6 rounded-lg grid md:grid-cols-2 gap-x-8 gap-y-6">
+                    <div><h4 class="font-bold text-lg">Decoro</h4><p>Conduta respeitosa, digna e compatível com a função pública.</p></div>
+                    <div><h4 class="font-bold text-lg">Probidade</h4><p>Honestidade, integridade, retidão de caráter no trato com a coisa pública. É a qualidade do que é incorruptível.</p></div>
+                    <div><h4 class="font-bold text-lg">Conivência</h4><p>Ser cúmplice ou tolerante com o erro ou a infração de outra pessoa; omissão culposa.</p></div>
+                    <div><h4 class="font-bold text-lg">Zelo</h4><p>Cuidado, dedicação e esmero na execução das tarefas e no cuidado com o patrimônio público.</p></div>
+                    <div><h4 class="font-bold text-lg">Moralidade Administrativa</h4><p>Princípio constitucional que exige do administrador uma conduta ética, não se satisfazendo com a mera legalidade.</p></div>
+                    <div><h4 class="font-bold text-lg">Impessoalidade</h4><p>Princípio que determina que a Administração deve tratar todos de forma igual, sem favoritismos ou perseguições.</p></div>
+                </div>
+            </section>
+
+            <section id="materiais" class="content-section hidden">
+                <h2 class="text-3xl font-bold mb-6"><i class="fas fa-box-archive mr-2 text-orange-600"></i>Materiais Complementares</h2>
+                <div class="card p-6 rounded-lg">
+                    <h3 class="font-bold text-xl mb-4">Aprofunde seus Estudos</h3>
+                    <ul class="list-disc list-inside space-y-3">
+                        <li><a href="http://www.planalto.gov.br/ccivil_03/decreto/d1171.htm" target="_blank" class="text-blue-600 hover:underline">Texto Integral do Decreto nº 1.171/1994</a> - Leitura obrigatória.</li>
+                        <li><a href="https://www.gov.br/cgu/pt-br/etica-e-integridade" target="_blank" class="text-blue-600 hover:underline">Página de Ética e Integridade da CGU</a> - Para conhecer o sistema de gestão da ética.</li>
+                        <li><a href="http://www.planalto.gov.br/ccivil_03/leis/l8112cons.htm" target="_blank" class="text-blue-600 hover:underline">Lei nº 8.112/90 (Regime Jurídico dos Servidores)</a> - Para comparar com o regime disciplinar.</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section id="referencias" class="content-section hidden">
+                 <h2 class="text-3xl font-bold mb-6"><i class="fas fa-book mr-2 text-gray-600"></i>Referências Bibliográficas</h2>
+                 <div class="card p-6 rounded-lg text-sm">
+                     <h3 class="font-bold text-xl mb-4">Fontes e Legislação</h3>
+                     <ul class="list-disc list-inside space-y-3 text-gray-700">
+                         <li>BRASIL. **Decreto nº 1.171, de 22 de junho de 1994**. Aprova o Código de Ética Profissional do Servidor Público Civil do Poder Executivo Federal.</li>
+                         <li>BRASIL. **Constituição da República Federativa do Brasil de 1988**.</li>
+                         <li>BRASIL. **Lei nº 8.112, de 11 de dezembro de 1990**. Dispõe sobre o regime jurídico dos servidores públicos civis da União, das autarquias e das fundações públicas federais.</li>
+                         <li>BRASIL. **Lei nº 8.429, de 2 de junho de 1992**. Dispõe sobre as sanções aplicáveis aos agentes públicos nos casos de enriquecimento ilícito no exercício de mandato, cargo, emprego ou função na administração pública direta, indireta ou fundacional e dá outras providências.</li>
+                         <li>BRASIL. **Decreto nº 6.029, de 1º de fevereiro de 2007**. Institui Sistema de Gestão da Ética do Poder Executivo Federal.</li>
+                     </ul>
+                 </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const navLinks = document.querySelectorAll('#sidebar-nav a');
+        const contentSections = document.querySelectorAll('.content-section');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        const nextStepBtn = document.getElementById('next-step-btn');
+        const totalSections = contentSections.length - 1; 
+
+        let visitedSections = new Set(JSON.parse(localStorage.getItem('visitedSections')) || ['inicio']);
+
+        function updateProgress() {
+            const completedCount = visitedSections.size;
+            const progressPercentage = (completedCount / navLinks.length) * 100;
+            
+            progressBar.style.width = `${progressPercentage}%`;
+            progressBar.textContent = `${Math.round(progressPercentage)}%`;
+            progressText.textContent = `Você visitou ${completedCount} de ${navLinks.length} seções. Continue assim!`;
+        }
+
+        function updateNextStep() {
+            let nextSectionFound = false;
+            for (const link of navLinks) {
+                const sectionId = link.getAttribute('href').substring(1);
+                if (!visitedSections.has(sectionId)) {
+                    nextStepBtn.textContent = `Próximo Passo: ${link.querySelector('span').textContent}`;
+                    nextStepBtn.onclick = () => {
+                        link.click();
+                    };
+                    nextSectionFound = true;
+                    break;
+                }
+            }
+            if (!nextSectionFound) {
+                nextStepBtn.textContent = 'Parabéns, você concluiu o guia!';
+                nextStepBtn.disabled = true;
+                nextStepBtn.classList.add('bg-gray-400', 'cursor-not-allowed');
+            }
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                navLinks.forEach(navLink => navLink.classList.remove('active'));
+                this.classList.add('active');
+
+                contentSections.forEach(section => section.classList.add('hidden'));
+
+                const targetId = this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.classList.remove('hidden');
+                }
+                
+                visitedSections.add(targetId);
+                localStorage.setItem('visitedSections', JSON.stringify(Array.from(visitedSections)));
+                updateProgress();
+                updateNextStep();
+                
+                window.scrollTo(0, 0);
+            });
+        });
+
+        // Initial state
+        updateProgress();
+        updateNextStep();
+
+        // Accordion Data
+        const deveresData = [
+            { title: 'Ser probo, reto, leal e justo', example: 'Ao analisar um processo, o servidor aplica a regra de forma imparcial, sem beneficiar amigos.', pegadinha: 'A lealdade é com o interesse público, não com a chefia ou colegas em caso de ato ilegal.' },
+            { title: 'Desempenhar as atribuições a tempo', example: 'Cumprir os prazos de um processo para não gerar filas e atrasos que prejudicam o cidadão.', pegadinha: 'A eficiência não é só rapidez, mas também qualidade no serviço prestado.' },
+            { title: 'Tratar cuidadosamente os usuários', example: 'Atender um cidadão com paciência, mesmo que ele esteja nervoso.', pegadinha: 'O bom tratamento não é um favor, é um dever fundamental.' },
+            { title: 'Respeitar a hierarquia, mas representar contra ilegalidade', example: 'Obedecer a uma ordem legal do chefe, mas denunciar formalmente se a ordem for manifestamente ilegal.', pegadinha: 'Respeito à hierarquia não significa obediência cega. O dever de denunciar o erro prevalece.' },
+            { title: 'Ser assíduo e frequente ao serviço', example: 'Evitar faltas injustificadas que sobrecarregam a equipe e prejudicam o atendimento.', pegadinha: 'A assiduidade é a base para a continuidade do serviço público.'}
+        ];
+
+        const vedacoesData = [
+            { title: 'Usar o cargo para obter favorecimento', example: 'Utilizar a "carteirada" para tentar evitar uma multa de trânsito.', pegadinha: 'O favorecimento pode ser para si ou para qualquer outra pessoa (amigo, parente, etc.).' },
+            { title: 'Ser conivente com erro ou infração', example: 'Ver um colega usando o carro oficial para fins particulares e não comunicar o fato à chefia.', pegadinha: 'O "espírito de corpo" para acobertar um erro é uma infração ética grave.' },
+            { title: 'Atrasar ou dificultar o exercício de direito', example: '"Engavetar" um processo de aposentadoria de um cidadão por má vontade.', pegadinha: 'A vedação se aplica tanto a atos comissivos (fazer algo para atrapalhar) quanto omissivos (deixar de fazer).' },
+            { title: 'Iludir ou tentar iludir o cidadão', example: 'Dar uma informação incompleta de propósito para que a pessoa desista de um direito.', pegadinha: 'A simples tentativa de iludir, mesmo que não se concretize, já constitui a infração.' },
+            { title: 'Receber presentes, exceto de autoridades estrangeiras', example: 'Aceitar um relógio caro de um fornecedor que tem contrato com o órgão.', pegadinha: 'A exceção para presentes de autoridades estrangeiras tem regras específicas e limites de valor. Na dúvida, recuse.'}
+        ];
+
+        function createAccordion(containerId, data) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = data.map((item, index) => `
+                <div class="card rounded-lg overflow-hidden">
+                    <button class="accordion-button w-full text-left p-4 font-bold flex justify-between items-center hover:bg-gray-50">
+                        <span>${item.title}</span>
+                        <i class="fas fa-plus transition-transform"></i>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="p-4 border-t border-gray-200">
+                            <p class="text-sm mb-3"><strong>Exemplo Prático:</strong> ${item.example}</p>
+                            <div class="pegadinha-alerta p-3 rounded-md">
+                                <p class="text-sm font-semibold"><i class="fas fa-exclamation-triangle mr-2"></i>Pegadinha de Prova:</p>
+                                <p class="text-sm">${item.pegadinha}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        createAccordion('deveres-accordion', deveresData);
+        createAccordion('vedacoes-accordion', vedacoesData);
+
+        document.querySelectorAll('.accordion-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const icon = button.querySelector('i');
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                    icon.classList.remove('fa-minus');
+                    icon.classList.add('fa-plus');
+                } else {
+                    document.querySelectorAll('.accordion-content').forEach(c => c.style.maxHeight = null);
+                    document.querySelectorAll('.accordion-button i').forEach(i => {
+                        i.classList.remove('fa-minus');
+                        i.classList.add('fa-plus');
+                    });
+                    content.style.maxHeight = content.scrollHeight + "px";
+                    icon.classList.add('fa-minus');
+                    icon.classList.remove('fa-plus');
+                }
+            });
+        });
+
+        // Dilemas
+        const dilemasData = [
+            { title: 'O Pedido do Chefe', case: 'Seu chefe pede que você priorize a análise do processo de um "amigo" dele, passando-o na frente de outros mais antigos. O que fazer?', resolution: 'A conduta correta é informar ao chefe, com urbanidade, que a priorização fere o princípio da impessoalidade e da ordem cronológica, e que você seguirá a fila normalmente para garantir a isonomia. Ceder ao pedido seria uma violação ética.'},
+            { title: 'O Presente de Agradecimento', case: 'Após resolver um problema complexo para um cidadão, ele retorna com uma caixa de bombons como forma de agradecimento. Você pode aceitar?', resolution: 'É vedado ao servidor receber presentes de quem tenha interesse em sua decisão. Embora a intenção possa ser boa, aceitar o presente abre um precedente perigoso e pode ser interpretado como uma forma de suborno. Agradeça gentilmente, mas recuse o presente, explicando a regra.'},
+            { title: 'A Informação Sigilosa', case: 'Um jornalista, seu amigo, pede uma informação "em off" sobre uma investigação em andamento na sua repartição. Você deve fornecer?', resolution: 'Jamais. É dever do servidor guardar sigilo sobre assuntos da repartição. Vazar informações, mesmo para um amigo, é uma grave infração ética e pode configurar crime, dependendo do caso.'},
+            { title: 'O Erro do Colega', case: 'Você percebe que um colega cometeu um erro grave em um processo que pode prejudicar um cidadão. O que fazer?', resolution: 'A conduta ética é comunicar o erro. Primeiramente, de forma discreta, ao próprio colega, para que ele possa corrigir. Se ele se recusar, você tem o dever de levar o fato ao conhecimento da chefia para evitar o prejuízo ao cidadão e à administração.'}
+        ];
+        const dilemasContainer = document.getElementById('dilemas-container');
+        dilemasContainer.innerHTML = dilemasData.map(dilema => `
+            <div class="card rounded-lg">
+                <div class="p-5">
+                    <h4 class="font-bold text-lg">${dilema.title}</h4>
+                    <p class="text-sm mt-2">${dilema.case}</p>
+                </div>
+                <div class="border-t p-4 bg-gray-50">
+                    <button class="toggle-dilema text-blue-600 font-bold text-sm">Ver Análise Ética <i class="fas fa-chevron-down ml-1 text-xs"></i></button>
+                    <div class="dilema-resolution hidden mt-3 text-sm text-gray-700">${dilema.resolution}</div>
+                </div>
+            </div>
+        `).join('');
+
+        document.querySelectorAll('.toggle-dilema').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                content.classList.toggle('hidden');
+                const icon = button.querySelector('i');
+                icon.classList.toggle('fa-chevron-down');
+                icon.classList.toggle('fa-chevron-up');
+            });
+        });
+
+        // Quiz Logic
+        const quizData = [
+            { question: "A única penalidade que pode ser aplicada pela Comissão de Ética é a de:", options: ["Advertência", "Suspensão", "Censura", "Multa"], answer: "Censura" },
+            { question: "Um servidor que se recusa a seguir uma ordem de seu superior, por considerá-la manifestamente ilegal, está agindo:", options: ["Incorretamente, pois deve respeitar a hierarquia.", "Corretamente, pois tem o dever de representar contra ato indevido.", "Incorretamente, pois apenas ordens antiéticas podem ser questionadas.", "Corretamente, desde que peça autorização prévia."], answer: "Corretamente, pois tem o dever de representar contra ato indevido." },
+            { question: "Aceitar um presente de um fornecedor da repartição é uma conduta:", options: ["Permitida, se for de baixo valor.", "Vedada em qualquer circunstância.", "Permitida, se não influenciar decisões.", "Vedada, a menos que seja fora do horário de trabalho."], answer: "Vedada em qualquer circunstância." },
+            { question: "A afirmação de que a conduta do servidor deve ir além da simples legalidade, considerando também o que é honesto e justo, refere-se principalmente ao princípio da:", options: ["Eficiência", "Publicidade", "Moralidade", "Hierarquia"], answer: "Moralidade"}
+        ];
+        const quizContainer = document.getElementById('quiz-container');
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function renderQuizQuestion() {
+            if (currentQuestionIndex < quizData.length) {
+                const q = quizData[currentQuestionIndex];
+                quizContainer.innerHTML = `
+                    <div class="mb-4">
+                        <p class="text-sm text-gray-500">Questão ${currentQuestionIndex + 1} de ${quizData.length}</p>
+                        <h4 class="text-lg font-semibold mt-1">${q.question}</h4>
+                    </div>
+                    <div class="space-y-3">
+                        ${q.options.map(opt => `<button class="quiz-option block w-full text-left p-3 border rounded-lg hover:bg-gray-100">${opt}</button>`).join('')}
+                    </div>
+                    <div id="quiz-feedback" class="mt-4"></div>
+                `;
+                document.querySelectorAll('.quiz-option').forEach(btn => btn.addEventListener('click', handleQuizAnswer));
+            } else {
+                renderQuizResults();
+            }
+        }
+
+        function handleQuizAnswer(e) {
+            const selectedAnswer = e.target.textContent;
+            const correctAnswer = quizData[currentQuestionIndex].answer;
+            const feedbackEl = document.getElementById('quiz-feedback');
+            
+            document.querySelectorAll('.quiz-option').forEach(btn => {
+                btn.disabled = true;
+                if(btn.textContent === correctAnswer) btn.classList.add('bg-green-100', 'border-green-400');
+            });
+
+            if (selectedAnswer === correctAnswer) {
+                score++;
+                e.target.classList.add('bg-green-100', 'border-green-400');
+                feedbackEl.innerHTML = `<p class="text-green-600 font-bold">Correto!</p>`;
+            } else {
+                e.target.classList.add('bg-red-100', 'border-red-400');
+                feedbackEl.innerHTML = `<p class="text-red-600 font-bold">Incorreto. A resposta certa é "${correctAnswer}".</p>`;
+            }
+            
+            setTimeout(() => {
+                currentQuestionIndex++;
+                renderQuizQuestion();
+            }, 2000);
+        }
+
+        function renderQuizResults() {
+             quizContainer.innerHTML = `
+                <h3 class="text-2xl font-bold text-center">Quiz Finalizado!</h3>
+                <p class="text-center text-xl my-4">Você acertou ${score} de ${quizData.length} questões.</p>
+                <button id="quiz-restart" class="mt-4 w-full bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">Tentar Novamente</button>
+            `;
+            document.getElementById('quiz-restart').addEventListener('click', () => {
+                currentQuestionIndex = 0;
+                score = 0;
+                renderQuizQuestion();
+            });
+        }
+
+        renderQuizQuestion();
+
+        // Exercícios Resolvidos
+        const exerciciosData = [
+            { banca: "CEBRASPE (Adaptada)", enunciado: "Júlio, servidor público, ao notar que seu colega Mário frequentemente utiliza o telefone da repartição para longas ligações particulares, decide não comunicar o fato a seus superiores para não prejudicar o colega. A conduta de Júlio, segundo o Código de Ética, é considerada:", gabarito: "Uma violação, pois é vedado ser conivente com erro ou infração.", comentario: "O Código de Ética veda expressamente que o servidor seja conivente com erro ou infração, mesmo que por 'espírito de solidariedade'. O dever de lealdade é para com a administração pública e o interesse coletivo." },
+            { banca: "FGV (Adaptada)", enunciado: "Conforme o Decreto nº 1.171/94, o equilíbrio entre a legalidade e a finalidade, na conduta do servidor, é que poderá consolidar a moralidade do ato administrativo. A partir dessa premissa, é correto afirmar que:", gabarito: "A conduta ética exige uma análise que transcende a mera conformidade com a lei.", comentario: "O enunciado estabelece que a ética vai além da legalidade. O servidor precisa analisar não só se o ato é legal, mas se ele é honesto, justo e voltado para o bem comum."}
+        ];
+        const exerciciosContainer = document.getElementById('exercicios-container');
+        exerciciosContainer.innerHTML = exerciciosData.map(ex => `
+            <div class="card rounded-lg overflow-hidden">
+                <div class="p-5">
+                    <p class="text-sm font-bold text-gray-500">${ex.banca}</p>
+                    <p class="mt-2">${ex.enunciado}</p>
+                </div>
+                <div class="border-t">
+                    <button class="toggle-exercicio w-full text-left p-4 font-bold flex justify-between items-center bg-gray-50 hover:bg-gray-100">
+                        <span>Ver Gabarito e Comentário</span>
+                        <i class="fas fa-chevron-down text-sm"></i>
+                    </button>
+                    <div class="exercicio-comentario hidden p-4 bg-green-50 text-sm">
+                        <p><strong>Gabarito:</strong> ${ex.gabarito}</p>
+                        <p class="mt-2"><strong>Comentário:</strong> ${ex.comentario}</p>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+        document.querySelectorAll('.toggle-exercicio').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                content.classList.toggle('hidden');
+                const icon = button.querySelector('i');
+                icon.classList.toggle('fa-chevron-down');
+                icon.classList.toggle('fa-chevron-up');
+            });
+        });
+
+        // Placeholder for PDF download
+        document.getElementById('download-checklist').addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Funcionalidade de download do checklist em PDF será implementada em breve!');
+        });
+    });
+    </script>
+</body>
+</html>
