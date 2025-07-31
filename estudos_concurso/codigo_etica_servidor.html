@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Completo de Ética para Concursos - Decreto 1.171/94</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS Reset & Root Variables */
+        :root {
+            --primary-bg: #f4f7fa;
+            --secondary-bg: #ffffff;
+            --text-color: #1a2a44;
+            --header-color: #1a2a44;
+            --accent-color: #005f73;
+            --accent-hover: #003e4d;
+            --highlight-color: #ffbf00;
+            --border-color: #d1d9e6;
+            --success-bg: #d1e7dd;
+            --success-text: #0a3622;
+            --danger-bg: #f8d7da;
+            --danger-text: #58151c;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --sidebar-width: 280px;
+        }
+
+        [data-theme="dark"] {
+            --primary-bg: #1a2a44;
+            --secondary-bg: #233554;
+            --text-color: #e0e6ed;
+            --header-color: #ffffff;
+            --accent-color: #ffbf00;
+            --accent-hover: #e6ac00;
+            --highlight-color: #00aaff;
+            --border-color: #3b4f74;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-color);
+            line-height: 1.7;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--secondary-bg);
+            padding: 25px 15px;
+            position: fixed;
+            height: 100%;
+            border-right: 1px solid var(--border-color);
+            transition: transform 0.3s ease-in-out;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .sidebar-nav {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.6em;
+            color: var(--header-color);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+        
+        .sidebar ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.95em;
+            font-weight: 500;
+            padding: 12px 15px;
+            margin-block: 4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .sidebar ul li a:hover, .sidebar ul li a.active {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        .sidebar ul li a.active {
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .content {
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            width: calc(100% - var(--sidebar-width));
+        }
+
+        section {
+            display: none; /* Hide all sections by default */
+            padding-bottom: 40px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        section.active {
+            display: block; /* Show only the active section */
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--header-color);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 2em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        h3 {
+            font-size: 1.5em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        h4 {
+            font-size: 1.2em;
+            color: var(--accent-color);
+            margin-bottom: 5px;
+        }
+
+        /* Interactive & Styled Elements */
+        .card {
+            background-color: var(--secondary-bg);
+            padding: 25px;
+            margin: 15px 0;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--accent-color);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            box-shadow: var(--shadow);
+        }
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 12px 15px;
+            text-align: left;
+        }
+        th {
+            background-color: var(--accent-color);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+        tbody tr:nth-child(even) {
+            background-color: var(--primary-bg);
+        }
+
+        button, .download-link {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+        button:hover, .download-link:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+        
+        .quiz-feedback {
+            display: none;
+            margin-top: 10px;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        .quiz-feedback.correct {
+            display: block;
+            background-color: var(--success-bg);
+            color: var(--success-text);
+            border-left: 5px solid #198754;
+        }
+        .quiz-feedback.incorrect {
+            display: block;
+            background-color: var(--danger-bg);
+            color: var(--danger-text);
+            border-left: 5px solid #dc3545;
+        }
+        
+        .theme-switcher {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: var(--primary-bg);
+            border-radius: 8px;
+            text-align: center;
+        }
+        .theme-switcher .switch-label {
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: block;
+            font-size: 0.9em;
+        }
+        .theme-switcher .switch-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        #theme-checkbox { display: none; }
+        .slider-visual {
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        /* Hamburger Menu for Mobile */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px;
+            z-index: 1001;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            :root { --sidebar-width: 250px; }
+            h1 { font-size: 2em; }
+            h2 { font-size: 1.7em; }
+            h3 { font-size: 1.3em; }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            .sidebar {
+                transform: translateX(-100%);
+                border-right: none;
+                box-shadow: var(--shadow);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .content {
+                margin-left: 0;
+                padding: 20px;
+                width: 100%;
+            }
+            section {
+                padding-top: 50px;
+            }
+            h1 { font-size: 1.8em; }
+            h2 { font-size: 1.5em; }
+        }
+    </style>
+</head>
+<body>
+    <button id="menu-toggle" aria-label="Abrir menu">☰</button>
+
+    <div class="container">
+        <nav class="sidebar" id="sidebar" role="navigation" aria-label="Menu de navegação">
+            <div class="sidebar-nav">
+                <h2>Guia de Ética</h2>
+                <ul>
+                    <li><a data-target="inicio" class="active">🏠 Início</a></li>
+                    <li><a data-target="resumo-geral">📋 Resumo Geral</a></li>
+                    <li><a data-target="principios">⚖️ Princípios e Valores</a></li>
+                    <li><a data-target="deveres">✅ Deveres do Servidor</a></li>
+                    <li><a data-target="vedacoes">🚫 Vedações Éticas</a></li>
+                    <li><a data-target="comissao">🏛️ Atuação da Comissão</a></li>
+                    <li><a data-target="dilemas">🤔 Dilemas e Casos Práticos</a></li>
+                    <li><a data-target="etica-legalidade">⚖️ Ética x Legalidade</a></li>
+                    <li><a data-target="dicas-prova">💡 Dicas de Prova</a></li>
+                    <li><a data-target="quiz">🎯 Quiz Interativo</a></li>
+                    <li><a data-target="exercicios">📝 Exercícios Resolvidos</a></li>
+                    <li><a data-target="glossario">📖 Glossário Ético-Jurídico</a></li>
+                    <li><a data-target="materiais">📚 Materiais Complementares</a></li>
+                    <li><a data-target="referencias">🔗 Referências Bibliográficas</a></li>
+                </ul>
+            </div>
+            <div class="theme-switcher">
+                <span class="switch-label">Mudar Tema</span>
+                <div class="switch-container">
+                    <span>☀️</span>
+                    <label for="theme-checkbox" style="cursor:pointer; position: relative; width: 40px; height: 20px; background-color: #ccc; border-radius: 10px;">
+                        <input type="checkbox" id="theme-checkbox">
+                        <span class="slider-visual" style="position: absolute; top: 1px; left: 2px; width: 18px; height: 18px; border-radius: 50%; background-color: white; transition: 0.3s;"></span>
+                    </label>
+                    <span>🌙</span>
+                </div>
+            </div>
+        </nav>
+
+        <main class="content">
+            <section id="inicio" class="active">
+                <h1>Guia Definitivo de Ética no Serviço Público</h1>
+                <p>O <strong>Decreto nº 1.171/94</strong>, que aprova o Código de Ética Profissional do Servidor Público Civil do Poder Executivo Federal, é um marco regulatório essencial. Promulgado em um contexto de redemocratização e busca por maior transparência, ele estabeleceu um padrão de conduta que vai além da simples legalidade, focando na moralidade, na eficiência e no respeito ao cidadão.</p>
+                <p>Este guia foi criado para desmistificar suas regras, deveres e vedações, focando no que as principais bancas, como <strong>CEBRASPE e FGV</strong>, realmente cobram. Navegue pelas seções usando o menu lateral para um estudo focado.</p>
+            </section>
+            
+            <section id="resumo-geral">
+                <h1>Resumo Geral</h1>
+                <p>Esta seção oferece uma síntese dos pontos cruciais do Decreto e uma abordagem estratégica para seus estudos.</p>
+                <h2>Estrutura do Decreto 1.171/94</h2>
+                <table>
+                    <thead><tr><th>Seção do Decreto</th><th>Conteúdo Principal</th><th>Foco para Provas</th></tr></thead>
+                    <tbody>
+                        <tr><td>Regras Deontológicas</td><td>Princípios e valores fundamentais.</td><td>Entender a diferença sutil entre Moralidade e Legalidade.</td></tr>
+                        <tr><td>Deveres</td><td>Condutas obrigatórias ao servidor.</td><td>Memorizar os principais deveres, pois as bancas os transformam em "pegadinhas".</td></tr>
+                        <tr><td>Vedações</td><td>Condutas proibidas.</td><td>Principal alvo de questões práticas e estudos de caso.</td></tr>
+                        <tr><td>Comissões de Ética</td><td>Criação, competência e funcionamento.</td><td>Saber qual a única penalidade aplicável (Censura) e seu papel.</td></tr>
+                    </tbody>
+                </table>
+                 <h2>Mnemônicos para Memorização</h2>
+                 <ul>
+                    <li><strong>Deveres (alguns):</strong> "Seja <strong>ZE</strong>lozo, <strong>CO</strong>rtês, <strong>LE</strong>al e <strong>PRO</strong>bo" (Zelo, Cortesia, Lealdade, Probidade).</li>
+                    <li><strong>Vedações (algumas):</strong> "Não use o <strong>CA</strong>rgo para <strong>PRE</strong>judicar ou ser <strong>CO</strong>nivente" (Cargo, Prejudicar, Conivente).</li>
+                 </ul>
+            </section>
+
+            <section id="principios">
+                <h1>Princípios e Valores</h1>
+                <p>As Regras Deontológicas do decreto (Seção I) traduzem os princípios constitucionais para o dia a dia. A moralidade administrativa, por exemplo, é o grande pilar que sustenta todas as outras regras, exigindo que o servidor distinga o honesto do desonesto, para além do legal e ilegal.</p>
+                 <div class="card">
+                    <h3>A Dignidade e o Decoro como Imagem do Estado</h3>
+                    <p>A dignidade, o decoro e o zelo refletem diretamente na imagem do serviço público. A conduta do servidor, mesmo fora do ambiente de trabalho, pode afetar a reputação da instituição. Por isso, o decreto enfatiza que o servidor deve agir de forma a preservar a honra e a nobreza de sua função.</p>
+                </div>
+                 <div class="card">
+                    <h3>Eficiência e a Cortesia</h3>
+                    <p>A eficiência não é apenas fazer rápido, mas fazer bem feito, com qualidade e presteza. A cortesia, por sua vez, é um dever que materializa o princípio do respeito ao cidadão, que é o verdadeiro destinatário do serviço público.</p>
+                </div>
+            </section>
+            
+            <section id="deveres">
+                <h1>Deveres do Servidor</h1>
+                <p>A Seção II do decreto lista deveres que vão desde a assiduidade até a resistência a pressões. Conhecer a lista é fundamental.</p>
+                 <ul>
+                    <li><strong>Zelo e Dedicação:</strong> Cuidar do patrimônio público e cumprir as atribuições com atenção.</li>
+                    <li><strong>Probidade e Lealdade:</strong> Agir com retidão e ser leal à instituição e não a interesses pessoais ou de terceiros.</li>
+                    <li><strong>Cortesia e Urbanidade:</strong> Tratar a todos com respeito e civilidade.</li>
+                    <li><strong>Sigilo:</strong> Manter em segredo informações sigilosas a que teve acesso em razão do cargo.</li>
+                    <li><strong>Denúncia de Irregularidades:</strong> Comunicar imediatamente à autoridade competente qualquer ato ilegal ou antiético.</li>
+                    <li><strong>Resistência a Pressões:</strong> Negar-se a cumprir ordens ou atender a pedidos que visem obter vantagens indevidas.</li>
+                    <li><strong>Manter-se Atualizado:</strong> Conhecer e aplicar as leis, regulamentos e instruções do serviço.</li>
+                </ul>
+            </section>
+
+            <section id="vedacoes">
+                <h1>Vedações Éticas</h1>
+                <p>A Seção III (Art. XV) é a mais cobrada. Ela proíbe condutas que ferem a ética e a moralidade.</p>
+                <ul>
+                    <li><strong>Uso do Cargo para Favoritismo:</strong> A famosa "carteirada" ou beneficiar a si ou a terceiros.</li>
+                    <li><strong>Prejudicar a Reputação:</strong> Usar o cargo para difamar ou caluniar colegas ou cidadãos.</li>
+                    <li><strong>Ser Conivente com Erros:</strong> Omitir-se diante de uma irregularidade é, por si só, uma falta ética.</li>
+                    <li><strong>Procrastinar Atos:</strong> Atrasar ou dificultar processos e direitos dos cidadãos de forma deliberada.</li>
+                    <li><strong>Receber Vantagens:</strong> Aceitar presentes, favores ou qualquer tipo de benefício em troca de facilidades.</li>
+                    <li><strong>Atuar em Assunto com Conflito de Interesses:</strong> Participar de decisões onde tenha interesses pessoais ou de familiares envolvidos.</li>
+                     <li><strong>Uso de Informação Privilegiada:</strong> Utilizar informações a que teve acesso em razão do cargo para benefício próprio ou de terceiros.</li>
+                </ul>
+            </section>
+            
+            <section id="comissao">
+                <h1>Atuação da Comissão de Ética</h1>
+                <p>A Comissão de Ética (regulada pelo Decreto nº 6.029/2007) é o órgão responsável por zelar pelo cumprimento do código.</p>
+                <h2>Fluxo de um Processo Ético</h2>
+                <ol>
+                    <li><strong>Recebimento da Denúncia:</strong> Qualquer cidadão, servidor ou autoridade pode provocar a atuação da comissão. A denúncia deve conter a descrição do fato e indícios de autoria.</li>
+                    <li><strong>Juízo de Admissibilidade:</strong> A comissão analisa se os fatos narrados configuram, em tese, uma infração ética.</li>
+                    <li><strong>Instauração do Processo:</strong> Se admitida, o processo é instaurado e o servidor é notificado para apresentar sua defesa prévia em 10 dias.</li>
+                    <li><strong>Instrução:</strong> Fase de produção de provas, como oitiva de testemunhas e juntada de documentos.</li>
+                    <li><strong>Relatório e Deliberação:</strong> Ao final, a comissão elabora um relatório e delibera. Se a conclusão for pela culpa do servidor, a única penalidade aplicável é a <strong>CENSURA</strong>.</li>
+                    <li><strong>Encaminhamentos:</strong> Se a conduta também configurar crime ou infração disciplinar, a comissão deve encaminhar o caso ao Ministério Público e/ou à autoridade competente para instauração de PAD.</li>
+                </ol>
+            </section>
+            
+            <section id="dilemas">
+                <h1>Dilemas e Casos Práticos</h1>
+                <p>A teoria ganha vida quando aplicada a situações reais.</p>
+                <div class="card">
+                    <h3>Dilema 1: O "Favor" para o Amigo</h3>
+                     <p><strong>Situação:</strong> Um amigo seu pede para que você, servidor, "dê uma olhada com carinho" no processo dele. <br><strong>Análise:</strong> Fere a <strong>Impessoalidade</strong>. A conduta correta é explicar que todos seguem a mesma ordem de análise.</p>
+                </div>
+                <div class="card">
+                    <h3>Dilema 2: Rede Social e Decoro</h3>
+                    <p><strong>Situação:</strong> Um servidor, em seu perfil pessoal em uma rede social, posta ofensas e críticas agressivas a uma política pública implementada pelo próprio órgão onde trabalha, usando linguagem chula. <br><strong>Análise:</strong> Embora haja liberdade de expressão, o servidor está sujeito ao dever de <strong>decoro</strong>. Críticas são possíveis, mas ofensas e comportamentos que aviltem a dignidade da função pública podem ser considerados falta ética, pois afetam a imagem da instituição.</p>
+                </div>
+            </section>
+            
+            <section id="etica-legalidade">
+                 <h1>Ética x Legalidade</h1>
+                <p><strong>Nem tudo que é legal, é ético.</strong> A lei é o piso mínimo, enquanto a ética é o padrão de excelência.</p>
+                <table>
+                    <thead><tr><th>Critério</th><th>Ato Legal</th><th>Ato Ético</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Base</strong></td><td>Conformidade com a norma escrita.</td><td>Conformidade com princípios de justiça, honestidade e bem comum.</td></tr>
+                        <tr><td><strong>Pergunta-Chave</strong></td><td>"Eu posso fazer isso?"</td><td>"Eu devo fazer isso?"</td></tr>
+                         <tr><td><strong>Exemplo</strong></td><td>Cumprir o prazo mínimo para responder a um cidadão.</td><td>Responder ao cidadão o mais rápido e da forma mais clara possível, mesmo que a lei permita um prazo maior.</td></tr>
+                    </tbody>
+                </table>
+            </section>
+            
+            <section id="dicas-prova">
+                <h1>Dicas de Prova</h1>
+                <p>Fique atento às abordagens das principais bancas.</p>
+                <div class="card">
+                    <h3>CEBRASPE (Certo/Errado)</h3>
+                    <p>Adora usar generalizações e exceções. Fique atento a palavras como "sempre", "nunca", "em nenhuma hipótese". Geralmente, uma assertiva que ignora as exceções (como a dos brindes de baixo valor) estará errada. Também costuma criar cenários onde o servidor está "entre a cruz e a espada" (lealdade vs. dever de denunciar).</p>
+                </div>
+                 <div class="card">
+                    <h3>FGV (Múltipla Escolha)</h3>
+                    <p>Foca muito em casos práticos e na correta classificação da conduta. Ela apresentará um cenário e pedirá que você identifique qual princípio, dever ou vedação foi violado. A chave é identificar o núcleo da conduta: é um favorecimento? É um desleixo? É uma ofensa?</p>
+                </div>
+            </section>
+
+            <section id="quiz">
+                <h1>Quiz Interativo</h1>
+                <p>Teste seus conhecimentos com 10 questões de múltipla escolha.</p>
+                <div id="quiz-container"></div>
+                <button id="check-quiz-btn">Verificar Respostas</button>
+                <div id="quiz-summary" class="card" style="display:none;"></div>
+            </section>
+
+            <section id="exercicios">
+                <h1>Exercícios Resolvidos</h1>
+                <p>Analise questões reais de concursos anteriores comentadas passo a passo.</p>
+                <div class="card">
+                    <h3>(CEBRASPE - 2023)</h3>
+                    <p><strong>Enunciado:</strong> A fim de preservar a harmonia no ambiente de trabalho, o servidor público deve abster-se de denunciar colega de trabalho que tenha cometido irregularidade no exercício do cargo.</p>
+                    <p><strong>Gabarito:</strong> Errado.<br><strong>Comentário:</strong> A assertiva tenta justificar a omissão (conivência) com a "harmonia no ambiente". No entanto, o dever de denunciar irregularidades (Art. XIV, 'j') é uma obrigação legal e ética que se sobrepõe a qualquer conveniência pessoal ou de grupo.</p>
+                </div>
+                <div class="card">
+                    <h3>(FGV - 2024)</h3>
+                    <p><strong>Enunciado:</strong> João, servidor público, utilizou informações sigilosas a que teve acesso em razão do seu cargo para aconselhar um amigo a investir em determinada empresa que seria beneficiada por uma futura decisão governamental. A conduta de João viola diretamente a vedação de:</p>
+                    <p>a) Ser conivente com erro.<br>b) Prejudicar a reputação de outrem.<br>c) Usar informação privilegiada.<br>d) Exercer atividade incompatível com o cargo.</p>
+                    <p><strong>Gabarito:</strong> Letra C.<br><strong>Comentário:</strong> A questão descreve um caso clássico de uso de informação privilegiada. A informação era restrita ao âmbito do serviço e foi utilizada para obter vantagem particular para um terceiro (o amigo), o que é uma vedação expressa no Código de Ética e na Lei de Conflito de Interesses.</p>
+                </div>
+            </section>
+
+            <section id="glossario">
+                <h1>Glossário Ético-Jurídico</h1>
+                <p>Termos importantes para você dominar.</p>
+                <div class="card"><h3>Conflito de Interesses</h3><p>Situação em que interesses privados do servidor (pessoais, familiares, de negócios) podem influenciar ou parecer influenciar o desempenho imparcial de suas funções públicas. A Lei nº 12.813/2013 trata especificamente do tema.</p></div>
+                <div class="card"><h3>Nepotismo</h3><p>Prática de favorecer parentes com cargos ou funções na administração pública. É uma violação direta dos princípios da Impessoalidade e Moralidade.</p></div>
+                <div class="card"><h3>Prevaricação</h3><p>É um crime previsto no Código Penal (Art. 319) que ocorre quando o servidor "retarda ou deixa de praticar, indevidamente, ato de ofício, or pratica-o contra disposição expressa de lei, para satisfazer interesse ou sentimento pessoal". É a forma penalizada da procrastinação antiética.</p></div>
+            </section>
+
+            <section id="materiais">
+                <h1>Materiais Complementares</h1>
+                <p>Recursos adicionais como PDFs, vídeos e artigos para aprofundar seus estudos.</p>
+                 <div class="card">
+                    <h3>Manuais e Documentos Oficiais</h3>
+                    <ul>
+                        <li><a href="https://www.gov.br/cgu/pt-br/centrais-de-conteudo/publicacoes/etica-e-integridade/arquivos/manual-comissoes-de-etica.pdf" target="_blank">Manual Prático das Comissões de Ética (CGU)</a></li>
+                        <li><a href="#" class="download-link" onclick="alert('Funcionalidade de Download indisponível nesta demonstração.'); return false;">Decreto 1.171/94 Compilado (PDF)</a></li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="referencias">
+                <h1>Referências Bibliográficas</h1>
+                <p>Consulte as fontes originais e obras de referência.</p>
+                 <ul>
+                    <li><strong>BRASIL.</strong> <a href="http://www.planalto.gov.br/ccivil_03/decreto/d1171.htm" target="_blank">Decreto nº 1.171, de 22 de junho de 1994.</a></li>
+                    <li><strong>BRASIL.</strong> <a href="https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2007/decreto/d6029.htm" target="_blank">Decreto nº 6.029, de 1º de fevereiro de 2007.</a></li>
+                    <li><strong>DI PIETRO, Maria Sylvia Zanella.</strong> <em>Direito Administrativo.</em> Editora Forense.</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- Theme Switcher Logic ---
+            const themeCheckbox = document.getElementById('theme-checkbox');
+            const sliderVisual = document.querySelector('.slider-visual');
+
+            function applyTheme(theme) {
+                document.documentElement.setAttribute('data-theme', theme);
+                if (theme === 'dark') {
+                    themeCheckbox.checked = true;
+                    sliderVisual.style.transform = 'translateX(20px)';
+                } else {
+                    themeCheckbox.checked = false;
+                    sliderVisual.style.transform = 'translateX(0px)';
+                }
+            }
+            
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            applyTheme(savedTheme);
+
+            themeCheckbox.addEventListener('change', function() {
+                const newTheme = this.checked ? 'dark' : 'light';
+                localStorage.setItem('theme', newTheme);
+                applyTheme(newTheme);
+            });
+
+
+            // --- Tabbed Navigation Logic ---
+            const navLinks = document.querySelectorAll('.sidebar a');
+            const sections = document.querySelectorAll('.content section');
+            const sidebar = document.getElementById('sidebar');
+
+            function showSection(targetId) {
+                sections.forEach(section => section.classList.remove('active'));
+                const targetSection = document.getElementById(targetId);
+                if(targetSection) targetSection.classList.add('active');
+
+                navLinks.forEach(link => link.classList.remove('active'));
+                const activeLink = document.querySelector(`.sidebar a[data-target="${targetId}"]`);
+                if(activeLink) activeLink.classList.add('active');
+                
+                sidebar.classList.remove('open');
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('data-target');
+                    showSection(targetId);
+                });
+            });
+
+            showSection('inicio');
+
+            // --- Mobile Menu Toggle ---
+            const menuToggle = document.getElementById('menu-toggle');
+            const content = document.querySelector('.content');
+            menuToggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+            content.addEventListener('click', () => sidebar.classList.remove('open'));
+
+            // --- QUIZ LOGIC ---
+            const quizData = [
+                { question: "1. Qual a única penalidade que pode ser aplicada pela Comissão de Ética?", options: ["Advertência", "Suspensão", "Demissão", "Censura"], answer: "Censura" },
+                { question: "2. Utilizar o carro oficial para fins particulares fere diretamente o princípio da:", options: ["Publicidade", "Eficiência", "Moralidade", "Legalidade"], answer: "Moralidade" },
+                { question: "3. A conduta de um servidor que se omite diante de uma ilegalidade praticada por um colega é chamada de:", options: ["Procrastinação", "Prevaricação", "Conivência", "Nepotismo"], answer: "Conivência" },
+                { question: "4. A afirmação 'tudo que é legal é também ético' está:", options: ["Correta", "Incorreta"], answer: "Incorreta" },
+                { question: "5. O dever de resistir a pressões de superiores para a prática de atos ilegais está previsto no Código de Ética?", options: ["Sim", "Não"], answer: "Sim" },
+                { question: "6. Um servidor que trata o cidadão com grosseria e má vontade fere principalmente o dever de:", options: ["Zelo", "Probidade", "Cortesia", "Sigilo"], answer: "Cortesia" },
+                { question: "7. Usar uma informação sigilosa para obter vantagem pessoal ou para terceiros é uma:", options: ["Faculdade do cargo", "Vedação ética", "Obrigação do servidor", "Conduta atípica"], answer: "Vedação ética" },
+                { question: "8. O processo na comissão de ética garante ao servidor o direito de defesa?", options: ["Sim, sempre", "Não, o processo é sumário", "Apenas se a falta for grave", "Apenas se o servidor solicitar"], answer: "Sim, sempre" },
+                { question: "9. Divulgar em uma rede social críticas ofensivas à instituição onde trabalha pode ferir o dever de:", options: ["Zelo", "Decoro", "Lealdade", "Eficiência"], answer: "Decoro" },
+                { question: "10. Qual o nome dado à prática de favorecer parentes com cargos na administração?", options: ["Clientelismo", "Patrimonialismo", "Nepotismo", "Coronelismo"], answer: "Nepotismo" },
+            ];
+
+            const quizContainer = document.getElementById('quiz-container');
+            quizContainer.innerHTML = ''; // Clear previous quiz
+            quizData.forEach((q, index) => {
+                const questionElement = document.createElement('div');
+                questionElement.className = 'card';
+                questionElement.innerHTML = `
+                    <h4>${q.question}</h4>
+                    <div id="q${index}-options">
+                        ${q.options.map(opt => `<p><label><input type="radio" name="q${index}" value="${opt}"> ${opt}</label></p>`).join('')}
+                    </div>
+                    <div class="quiz-feedback" id="feedback-q${index}"></div>
+                `;
+                quizContainer.appendChild(questionElement);
+            });
+
+            document.getElementById('check-quiz-btn').addEventListener('click', () => {
+                let score = 0;
+                quizData.forEach((q, index) => {
+                    const feedbackEl = document.getElementById(`feedback-q${index}`);
+                    const selectedOption = document.querySelector(`input[name="q${index}"]:checked`);
+                    if (selectedOption) {
+                        if (selectedOption.value === q.answer) {
+                            score++;
+                            feedbackEl.className = 'quiz-feedback correct';
+                            feedbackEl.innerHTML = `<strong>Correto!</strong>`;
+                        } else {
+                            feedbackEl.className = 'quiz-feedback incorrect';
+                            feedbackEl.innerHTML = `<strong>Incorreto.</strong> A resposta certa é <strong>"${q.answer}"</strong>.`;
+                        }
+                    } else {
+                        feedbackEl.className = 'quiz-feedback incorrect';
+                        feedbackEl.textContent = 'Você não selecionou uma resposta.';
+                    }
+                });
+                const quizSummary = document.getElementById('quiz-summary');
+                quizSummary.style.display = 'block';
+                quizSummary.innerHTML = `<h3>Seu Desempenho</h3><p>Você acertou <strong>${score}</strong> de <strong>${quizData.length}</strong> questões.</p>`;
+            });
+        });
+    </script>
+</body>
+</html>
