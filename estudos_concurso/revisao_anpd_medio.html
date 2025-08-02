@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revisão Completa – ANPD 2025 (Nível Médio – Técnico em Administração)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+       .tab-button {
+            transition: all 0.2s ease-in-out;
+            border-bottom: 3px solid transparent;
+            padding-bottom: 0.75rem;
+        }
+       .tab-button.active {
+            border-bottom-color: #0ea5e9;
+            color: #0c4a6e;
+            font-weight: 600;
+        }
+       .tab-content {
+            display: none;
+        }
+       .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+       .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+            border: 1px solid #e2e8f0;
+        }
+       .alert-box {
+            border-left-width: 4px;
+            padding: 1rem;
+            border-radius: 0.375rem;
+            margin: 1.5rem 0;
+        }
+       .alert-pegadinha {
+            background-color: #fffbeb;
+            border-color: #f59e0b;
+            color: #b45309;
+        }
+       .alert-dica {
+            background-color: #eff6ff;
+            border-color: #3b82f6;
+            color: #1e40af;
+        }
+       .alert-questao {
+            background-color: #f0fdf4;
+            border-color: #22c55e;
+            color: #15803d;
+        }
+       .quiz-option {
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+       .quiz-option.selected {
+            background-color: #dbeafe;
+            border-color: #60a5fa;
+        }
+       .quiz-option.correct {
+            background-color: #dcfce7!important;
+            border-color: #4ade80!important;
+        }
+       .quiz-option.incorrect {
+            background-color: #fee2e2!important;
+            border-color: #f87171!important;
+        }
+       .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: 2rem auto;
+            height: 350px;
+            max-height: 400px;
+        }
+    </style>
+</head>
+<body class="text-slate-700">
+
+    <header class="bg-white shadow-sm sticky top-0 z-40">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex flex-col sm:flex-row justify-between items-center">
+                <div class="flex items-center gap-3 mb-4 sm:mb-0">
+                    <i class="fas fa-user-shield text-4xl text-sky-500"></i>
+                    <div>
+                        <h1 class="text-2xl font-bold text-slate-800">Revisão ANPD 2025</h1>
+                        <p class="text-sm text-slate-500">Nível Médio – Técnico em Administração</p>
+                    </div>
+                </div>
+                <div class="text-sm text-slate-600 text-center sm:text-right">
+                    <p><i class="fas fa-university mr-2 text-sky-500"></i>Banca: <strong>IADES</strong></p>
+                    <p><i class="fas fa-calendar-alt mr-2 text-sky-500"></i>Prova: <strong>17 de Agosto de 2025</strong></p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="overflow-x-auto pb-1 mb-8">
+            <div id="tab-container" class="flex whitespace-nowrap gap-4 sm:gap-6 border-b border-slate-200">
+            </div>
+        </div>
+
+        <main id="content-container">
+        </main>
+    </div>
+
+    <footer class="bg-slate-800 text-white mt-12">
+        <div class="container mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center">
+            <h3 class="font-bold text-lg">Guia de Estudos ANPD 2025</h3>
+            <p class="text-sm mt-2 text-slate-300">Este guia é uma ferramenta de estudo e não substitui a leitura do edital e das fontes oficiais.</p>
+            <p class="mt-4 text-xs text-slate-400">&copy; 2025. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const tabsData = {
+            'inicio': { icon: 'home', label: 'Início' },
+            'lgpd': { icon: 'file-shield', label: 'LGPD' },
+            'adm-publica': { icon: 'landmark', label: 'Adm. Pública' },
+            'legislacao-adm': { icon: 'file-contract', label: 'Legislação' },
+            'etica': { icon: 'handshake-angle', label: 'Ética' },
+            'seguranca-info': { icon: 'lock', label: 'Segurança' },
+            'informatica': { icon: 'laptop-code', label: 'Informática' },
+            'atendimento': { icon: 'users', label: 'Atendimento' },
+            'lingua-portuguesa': { icon: 'spell-check', label: 'Português' },
+            'redacao-oficial': { icon: 'pen-nib', label: 'Redação' },
+            'atualidades': { icon: 'newspaper', label: 'Atualidades' },
+            'exercicios': { icon: 'pen-to-square', label: 'Exercícios' },
+            'materiais': { icon: 'download', label: 'Materiais' }
+        };
+
+        const contentData = {
+            'inicio': `
+                <div class="card">
+                    <h2 class="text-3xl font-bold mb-4 text-sky-700">Seu Guia de Revisão para a ANPD</h2>
+                    <p class="mb-6 text-lg">Bem-vindo(a) à sua plataforma central de estudos! Este guia foi criado para transformar o conteúdo denso do edital em um material de revisão dinâmico, interativo e focado no que a banca IADES realmente cobra.</p>
+                    
+                    <h3 class="text-xl font-semibold mb-3 mt-6">Como Aproveitar ao Máximo:</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                            <h4 class="font-semibold text-slate-800"><i class="fas fa-book-open mr-2 text-sky-500"></i>Estudo por Abas</h4>
+                            <p class="text-sm mt-1">Navegue pelas abas para revisar cada disciplina. O conteúdo é direto ao ponto, com destaques para os tópicos mais importantes.</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                            <h4 class="font-semibold text-slate-800"><i class="fas fa-check-circle mr-2 text-sky-500"></i>Teste seu Conhecimento</h4>
+                            <p class="text-sm mt-1">Vá para a aba "Quiz Interativo" para fazer simulados rápidos com correção e feedback instantâneos. É a melhor forma de fixar o conteúdo.</p>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-semibold mb-3 mt-8">Estrutura da Prova e Prioridades de Estudo</h3>
+                    <p class="mb-4">A prova para nível médio será objetiva. A banca IADES é conhecida por questões contextualizadas. O gráfico abaixo mostra a importância relativa e a dificuldade esperada para cada grande área do conhecimento, ajudando você a direcionar seu tempo e esforço.</p>
+                    <div class="chart-container">
+                        <canvas id="priorityChart"></canvas>
+                    </div>
+                     <div class="alert-box alert-dica">
+                        <h4 class="font-bold mb-1"><i class="fas fa-lightbulb mr-2"></i>Dica do Especialista (IADES)</h4>
+                        <p>A banca IADES adora questões longas e contextualizadas. Ao estudar, sempre se pergunte: "Como este conceito se aplicaria em uma situação real na ANPD?". A resposta a essa pergunta é o que a banca quer avaliar.</p>
+                    </div>
+                </div>
+            `,
+            'lgpd': `
+                <div class="card">
+                    <h2 class="text-2xl font-bold mb-4 text-sky-600"><i class="fas fa-file-shield mr-2"></i>LGPD e Privacidade de Dados</h2>
+                    <p class="mb-6">Esta é a disciplina mais importante do concurso. Seu domínio completo é inegociável. A LGPD (Lei 13.709/2018) estabelece regras sobre como dados pessoais devem ser coletados, usados, compartilhados e armazenados.</p>
+                    
+                    <h3 class="text-xl font-semibold mb-3">Agentes de Tratamento: Controlador vs. Operador vs. Encarregado</h3>
+                    <p class="mb-4">Entender essa distinção é fundamental, pois define as responsabilidades de cada um.</p>
+                    <div class="overflow-x-auto mb-6">
+                        <table class="w-full text-left border-collapse">
+                            <thead class="bg-slate-100">
+                                <tr>
+                                    <th class="p-3 font-semibold border-b-2 border-slate-200">Ator</th>
+                                    <th class="p-3 font-semibold border-b-2 border-slate-200">Definição (Art. 5º)</th>
+                                    <th class="p-3 font-semibold border-b-2 border-slate-200">Palavra-Chave</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-slate-200">
+                                    <td class="p-3 font-medium text-sky-700">Controlador</td>
+                                    <td class="p-3">Pessoa a quem competem as <strong>decisões</strong> referentes ao tratamento de dados.</td>
+                                    <td class="p-3 font-bold text-lg">DECIDE</td>
+                                </tr>
+                                <tr class="border-b border-slate-200">
+                                    <td class="p-3 font-medium text-sky-700">Operador</td>
+                                    <td class="p-3">Pessoa que realiza o tratamento de dados <strong>em nome do controlador</strong>.</td>
+                                    <td class="p-3 font-bold text-lg">EXECUTA</td>
+                                </tr>
+                                 <tr>
+                                    <td class="p-3 font-medium text-sky-700">Encarregado (DPO)</td>
+                                    <td class="p-3">Pessoa indicada para atuar como <strong>canal de comunicação</strong> entre controlador, titulares e a ANPD.</td>
+                                    <td class="p-3 font-bold text-lg">COMUNICA</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="alert-box alert-pegadinha">
+                        <h4 class="font-bold mb-1"><i class="fas fa-exclamation-triangle mr-2"></i>Pegadinha de Prova!</h4>
+                        <p>O Operador responde solidariamente pelos danos causados pelo tratamento quando descumprir as obrigações da LGPD ou quando não tiver seguido as instruções lícitas do controlador. Ele não é isento de responsabilidade!</p>
+                    </div>
+
+                    <h3 class="text-xl font-semibold mb-3 mt-8">10 Princípios da LGPD (Art. 6º)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-slate-50 p-3 rounded-lg flex items-center gap-3"><i class="fas fa-bullseye text-sky-500 fa-fw"></i><div><strong>Finalidade:</strong> Propósitos legítimos, específicos e informados.</div></div>
+                        <div class="bg-slate-50 p-3 rounded-lg flex items-center gap-3"><i class="fas fa-check-double text-sky-500 fa-fw"></i><div><strong>Adequação:</strong> Compatibilidade com a finalidade.</div></div>
+                        <div class="bg-slate-50 p-3 rounded-lg flex items-center gap-3"><i class="fas fa-compress-arrows-alt text-sky-500 fa-fw"></i><div><strong>Necessidade:</strong> Uso do mínimo de dados necessários.</div></div>
+                        <div class="bg-slate-50 p-3 rounded-lg flex items-center gap-3"><i class="fas fa-door-open text-sky-500 fa-fw"></i><div><strong>Livre Acesso:</strong> Consulta facilitada e gratuita.</div></div>
+                        <div class="bg-slate-50 p-3 rounded-lg flex items-center gap-3"><i class="fas fa-award text-sky-500 fa-fw"></i><div><strong>Qualidade dos Dados:</strong> Dados exatos e atualizados.</div></div>
+                        <div class="bg-slate-50 p-3 rounded-lg flex items-center gap-3"><i class="fas fa-glasses text-sky-500 fa-fw"></i><div><strong>Transparência:</strong> Informações claras e acessíveis.</div></div>
+                        <div class="bg-slate-50 p-3 rounded-lg flex items-center gap-3"><i class="fas fa-shield-alt text-sky-500 fa-fw"></i><div><strong>Segurança:</strong> Medidas para proteger os dados.</div></div>
+                        <div class="bg-slate-50 p-3 rounded-lg flex items-center gap-3"><i class="fas fa-umbrella text-sky-500 fa-fw"></i><div><strong>Prevenção:</strong> Adoção de medidas para prevenir danos.</div></div>
+                        <div class="bg-slate-50 p-3 rounded-lg flex items-center gap-3"><i class="fas fa-not-equal text-sky-500 fa-fw"></i><div><strong>Não Discriminação:</strong> Proibição de uso para fins discriminatórios.</div></div>
+                        <div class="bg-slate-50 p-3 rounded-lg flex items-center gap-3"><i class="fas fa-balance-scale text-sky-500 fa-fw"></i><div><strong>Responsabilização e Prestação de Contas.</strong></div></div>
+                    </div>
+                    <div class="alert-box alert-questao mt-6">
+                        <h4 class="font-bold mb-1"><i class="fas fa-question-circle mr-2"></i>Exemplo de Questão (IADES)</h4>
+                        <p>Uma empresa coleta o CPF, nome e e-mail de seus clientes para emissão de nota fiscal (obrigação legal), mas utiliza o e-mail também para enviar marketing sem autorização. A empresa fere principalmente o princípio da: <br> a) Necessidade <br> b) Segurança <br> c) Finalidade <br> d) Livre Acesso</p>
+                        <hr class="my-2 border-green-200">
+                        <p><strong>Gabarito: C.</strong> O tratamento posterior (marketing) é incompatível com a finalidade original informada (emissão de nota fiscal).</p>
+                    </div>
+                </div>
+            `,
+            'adm-publica': `
+                <div class="card">
+                    <h2 class="text-2xl font-bold mb-4 text-sky-600"><i class="fas fa-landmark mr-2"></i>Administração Pública</h2>
+                    <p class="mb-6">Esta disciplina trata dos fundamentos que regem a atuação do Estado e de seus agentes. O foco é entender os princípios, os atos e os poderes que estruturam a atividade administrativa.</p>
+
+                    <h3 class="text-xl font-semibold mb-3">Princípios Constitucionais (Art. 37) - L.I.M.P.E.</h3>
+                    <p class="mb-4">O acrônimo L.I.M.P.E. é a forma mais fácil de memorizar os cinco princípios expressos na Constituição que regem toda a Administração Pública.</p>
+                    <ul class="space-y-2 mb-6">
+                        <li><strong>L</strong>egalidade: A Administração só pode fazer o que a lei permite.</li>
+                        <li><strong>I</strong>mpessoalidade: A atuação deve ser isonômica, sem favorecimentos ou perseguições.</li>
+                        <li><strong>M</strong>oralidade: Agir com ética, honestidade e boa-fé.</li>
+                        <li><strong>P</strong>ublicidade: Os atos devem ser transparentes, como regra geral.</li>
+                        <li><strong>E</strong>ficiência: Buscar os melhores resultados com o menor custo.</li>
+                    </ul>
+
+                    <h3 class="text-xl font-semibold mb-3">Atos Administrativos</h3>
+                    <p class="mb-4">São as manifestações de vontade da Administração Pública. Eles possuem atributos (características) essenciais.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                        <div class="bg-slate-50 p-3 rounded-lg"><strong>Presunção de Legitimidade:</strong> Presume-se que o ato é válido até que se prove o contrário.</div>
+                        <div class="bg-slate-50 p-3 rounded-lg"><strong>Autoexecutoriedade:</strong> A Administração pode executar seus atos sem precisar de autorização do Judiciário.</div>
+                        <div class="bg-slate-50 p-3 rounded-lg"><strong>Tipicidade:</strong> O ato deve corresponder a uma figura prevista em lei.</div>
+                        <div class="bg-slate-50 p-3 rounded-lg"><strong>Imperatividade:</strong> O ato se impõe a terceiros, independentemente de sua concordância.</div>
+                    </div>
+                     <div class="alert-box alert-pegadinha">
+                        <h4 class="font-bold mb-1"><i class="fas fa-exclamation-triangle mr-2"></i>Pegadinha de Prova!</h4>
+                        <p>Nem todo ato administrativo possui todos os atributos. Por exemplo, um ato que apenas emite uma certidão (enunciativo) não tem imperatividade. A autoexecutoriedade também não está presente em todos os atos (ex: cobrança de multa).</p>
+                    </div>
+                </div>
+            `,
+            'legislacao-adm': `
+                <div class="card">
+                    <h2 class="text-2xl font-bold mb-4 text-sky-600"><i class="fas fa-file-contract mr-2"></i>Legislação Administrativa</h2>
+                    <p class="mb-6">Aqui detalhamos as leis que regulam o dia a dia do servidor e os processos do governo. A cobrança da IADES é focada na literalidade da lei ("lei seca").</p>
+
+                    <h3 class="text-xl font-semibold mb-3">Lei 8.112/90 - Regime Jurídico dos Servidores</h3>
+                    <p class="mb-4">Foco total no Título IV - Regime Disciplinar. É o que define sua conduta como servidor.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-slate-800">Principais Deveres (Art. 116)</h4>
+                            <ul class="list-disc list-inside text-sm mt-2 space-y-1">
+                                <li>Exercer com zelo e dedicação.</li>
+                                <li>Ser leal às instituições.</li>
+                                <li>Observar as normas legais.</li>
+                                <li>Guardar sigilo sobre assuntos da repartição.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-slate-800">Principais Vedações (Art. 117)</h4>
+                            <ul class="list-disc list-inside text-sm mt-2 space-y-1">
+                                <li>Ausentar-se sem autorização.</li>
+                                <li>Recusar fé a documentos públicos.</li>
+                                <li>Valer-se do cargo para proveito pessoal.</li>
+                                <li>Participar de gerência de empresa privada.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-semibold mb-3 mt-8">Lei 9.784/99 - Processo Administrativo Federal</h3>
+                    <p class="mb-4">Regula como os processos devem tramitar na Administração Pública Federal. Conhecer os prazos é crucial.</p>
+                     <div class="overflow-x-auto mb-6">
+                        <table class="w-full text-left border-collapse">
+                            <thead class="bg-slate-100"><tr><th class="p-3 font-semibold border-b-2 border-slate-200">Ação Processual</th><th class="p-3 font-semibold border-b-2 border-slate-200">Prazo</th></tr></thead>
+                            <tbody>
+                                <tr class="border-b border-slate-200"><td class="p-3">Interposição de recurso</td><td class="p-3"><strong>10 dias</strong></td></tr>
+                                <tr class="border-b border-slate-200"><td class="p-3">Decisão do recurso (pela autoridade superior)</td><td class="p-3"><strong>Até 30 dias</strong> (prorrogável)</td></tr>
+                                <tr class="border-b border-slate-200"><td class="p-3">Atos em geral, sem prazo específico</td><td class="p-3"><strong>5 dias</strong> (prorrogável)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="text-xl font-semibold mb-3 mt-8">Lei 14.133/21 - Nova Lei de Licitações</h3>
+                    <p class="mb-4">Para nível médio, o foco são os conceitos gerais e as principais mudanças.</p>
+                    <div class="alert-box alert-dica">
+                        <h4 class="font-bold mb-1"><i class="fas fa-lightbulb mr-2"></i>Dica do Especialista</h4>
+                        <p>A maior novidade da Lei 14.133/21 foi a criação da modalidade <strong>Diálogo Competitivo</strong>, usada para contratações complexas e inovadoras. Além disso, o Pregão passou a ser a modalidade padrão para bens e serviços comuns, e a Concorrência para obras e serviços especiais de engenharia.</p>
+                    </div>
+                </div>
+            `,
+            'etica': `
+                <div class="card">
+                    <h2 class="text-2xl font-bold mb-4 text-sky-600"><i class="fas fa-handshake-angle mr-2"></i>Ética e Cidadania no Serviço Público</h2>
+                    <p class="mb-6">Esta seção aborda as regras de conduta que todo servidor deve seguir, com base no Código de Ética e nas normas sobre integridade e combate ao assédio.</p>
+                    
+                    <h3 class="text-xl font-semibold mb-3">Decreto nº 1.171/94 - Código de Ética</h3>
+                    <p class="mb-4">Este decreto estabelece os padrões morais da Administração Pública. A banca IADES costuma cobrar a diferença entre Deveres e Vedações.</p>
+                    <ul class="space-y-2 mb-6">
+                        <li><i class="fas fa-check-circle text-green-500 mr-2"></i><strong>Dever Fundamental:</strong> Ter a dignidade, o decoro, o zelo, a eficácia e a consciência dos princípios morais como norteadores de seus atos.</li>
+                        <li><i class="fas fa-times-circle text-red-500 mr-2"></i><strong>Vedação Principal:</strong> Usar o cargo ou função para obter qualquer tipo de favorecimento para si ou para outrem.</li>
+                    </ul>
+
+                    <h3 class="text-xl font-semibold mb-3">Assédio Moral e Sexual</h3>
+                    <p class="mb-4">A ANPD possui resoluções específicas sobre o tema (Res. 25/2023), o que aumenta a chance de cobrança. É vital saber a diferença conceitual:</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-slate-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-slate-800">Assédio Moral</h4>
+                            <p class="text-sm mt-1">Conduta <strong>repetitiva e prolongada</strong> que expõe alguém a situações humilhantes e constrangedoras, visando desestabilizar a pessoa.</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-slate-800">Assédio Sexual</h4>
+                            <p class="text-sm mt-1">Constrangimento com <strong>conotação sexual</strong> no ambiente de trabalho, com o objetivo de obter vantagem ou favorecimento sexual.</p>
+                        </div>
+                    </div>
+                    <div class="alert-box alert-dica mt-6">
+                         <h4 class="font-bold mb-1"><i class="fas fa-lightbulb mr-2"></i>Dica do Especialista</h4>
+                        <p>A principal diferença é que o assédio moral exige <strong>reiteração</strong> (ser repetitivo), enquanto o assédio sexual pode se configurar com um <strong>único ato</strong>.</p>
+                    </div>
+                </div>
+            `,
+            'seguranca-info': `
+                <div class="card">
+                    <h2 class="text-2xl font-bold mb-4 text-sky-600"><i class="fas fa-lock mr-2"></i>Segurança da Informação</h2>
+                    <p class="mb-6">Em um órgão como a ANPD, a segurança da informação é crucial. Esta seção cobre os conceitos fundamentais para proteger dados e sistemas.</p>
+                    
+                    <h3 class="text-xl font-semibold mb-3">Os 3 Pilares da Segurança - C.I.D.</h3>
+                    <p class="mb-4">Todo o campo da segurança da informação se baseia nestes três princípios:</p>
+                    <div class="space-y-3 mb-6">
+                        <div class="bg-slate-50 p-4 rounded-lg"><strong>Confidencialidade:</strong> Garantia de que a informação é acessível apenas por pessoas autorizadas. (Ex: Criptografia, controle de acesso).</div>
+                        <div class="bg-slate-50 p-4 rounded-lg"><strong>Integridade:</strong> Garantia de que a informação não foi alterada de forma não autorizada. (Ex: Hashes, assinaturas digitais).</div>
+                        <div class="bg-slate-50 p-4 rounded-lg"><strong>Disponibilidade:</strong> Garantia de que a informação estará disponível sempre que necessário. (Ex: Backups, sistemas redundantes).</div>
+                    </div>
+
+                    <h3 class="text-xl font-semibold mb-3">Principais Ameaças Digitais</h3>
+                    <ul class="list-disc list-inside space-y-2 mb-6">
+                        <li><strong>Malware:</strong> Software malicioso. Inclui Vírus, Worms, Spyware, etc.</li>
+                        <li><strong>Phishing:</strong> Tentativa de "pescar" informações confidenciais (senhas, cartões) enganando o usuário, geralmente por e-mail.</li>
+                        <li><strong>Ransomware:</strong> Tipo de malware que sequestra os dados de um sistema (criptografando-os) e exige um resgate para liberá-los.</li>
+                        <li><strong>Engenharia Social:</strong> Técnica de manipulação psicológica para induzir pessoas a realizarem ações ou divulgarem informações confidenciais. O Phishing é um tipo de engenharia social.</li>
+                    </ul>
+                     <div class="alert-box alert-pegadinha">
+                        <h4 class="font-bold mb-1"><i class="fas fa-exclamation-triangle mr-2"></i>Pegadinha de Prova!</h4>
+                        <p>A maior vulnerabilidade de um sistema não é o software, mas o <strong>ser humano</strong>. A maioria dos ataques bem-sucedidos explora falhas humanas através da engenharia social, não falhas técnicas complexas.</p>
+                    </div>
+                </div>
+            `,
+            'informatica': `
+                <div class="card">
+                    <h2 class="text-2xl font-bold mb-4 text-sky-600"><i class="fas fa-laptop-code mr-2"></i>Informática Aplicada</h2>
+                    <p class="mb-6">Esta seção foca nas ferramentas de escritório e conceitos práticos de informática cobrados pela IADES. O foco é na aplicação, não na teoria profunda.</p>
+                    
+                    <h3 class="text-xl font-semibold mb-3">Planilhas: Excel vs. LibreOffice Calc</h3>
+                    <p class="mb-4">As funções mais cobradas são as mesmas nos dois programas. O que muda, às vezes, é o separador de argumentos (ponto e vírgula).</p>
+                    <ul class="list-disc list-inside space-y-2 mb-6">
+                        <li><strong>=SOMA(A1:A10)</strong>: Soma os valores no intervalo.</li>
+                        <li><strong>=MÉDIA(A1:A10)</strong>: Calcula a média dos valores.</li>
+                        <li><strong>=SE(teste_lógico; valor_se_verdadeiro; valor_se_falso)</strong>: Retorna um valor se uma condição for verdadeira, e outro se for falsa. Ex: <code>=SE(A1>10; "Aprovado"; "Reprovado")</code></li>
+                        <li><strong>=PROCV(valor_procurado; matriz_tabela; núm_índice_coluna; [procurar_intervalo])</strong>: Procura um valor na primeira coluna de uma tabela e retorna um valor na mesma linha de uma coluna especificada.</li>
+                    </ul>
+                    
+                    <h3 class="text-xl font-semibold mb-3">Editores de Texto: Word vs. LibreOffice Writer</h3>
+                    <p class="mb-4">A maior fonte de pegadinhas está nos atalhos de teclado. O LibreOffice usa termos em inglês como base.</p>
+                    <div class="overflow-x-auto mb-6">
+                        <table class="w-full text-left border-collapse">
+                            <thead class="bg-slate-100"><tr><th class="p-3 font-semibold border-b-2 border-slate-200">Ação</th><th class="p-3 font-semibold border-b-2 border-slate-200">Microsoft Word</th><th class="p-3 font-semibold border-b-2 border-slate-200">LibreOffice Writer</th></tr></thead>
+                            <tbody>
+                                <tr class="border-b border-slate-200"><td class="p-3">Salvar</td><td class="p-3"><code>Ctrl + B</code></td><td class="p-3"><code>Ctrl + S</code> (Save)</td></tr>
+                                <tr class="border-b border-slate-200"><td class="p-3">Abrir</td><td class="p-3"><code>Ctrl + A</code></td><td class="p-3"><code>Ctrl + O</code> (Open)</td></tr>
+                                <tr class="border-b border-slate-200"><td class="p-3">Novo Documento</td><td class="p-3"><code>Ctrl + O</code></td><td class="p-3"><code>Ctrl + N</code> (New)</td></tr>
+                                <tr><td class="p-3">Justificar</td><td class="p-3"><code>Ctrl + J</code></td><td class="p-3"><code>Ctrl + J</code> (Justify)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="alert-box alert-dica">
+                        <h4 class="font-bold mb-1"><i class="fas fa-lightbulb mr-2"></i>Dica do Especialista</h4>
+                        <p>Para o concurso, memorize os atalhos do LibreOffice, pois são menos intuitivos para quem está acostumado com o pacote da Microsoft e, por isso, mais cobrados.</p>
+                    </div>
+                </div>
+            `,
+            'atendimento': `
+                <div class="card">
+                    <h2 class="text-2xl font-bold mb-4 text-sky-600"><i class="fas fa-users mr-2"></i>Atendimento e Arquivologia</h2>
+                    <p class="mb-6">Estas são competências essenciais para a rotina de um Técnico em Administração, combinando habilidades de comunicação com organização documental.</p>
+
+                    <h3 class="text-xl font-semibold mb-3">Técnicas de Atendimento ao Público</h3>
+                    <p class="mb-4">A qualidade no atendimento é um pilar do serviço público moderno. Os conceitos-chave são:</p>
+                    <ul class="list-disc list-inside space-y-2 mb-6">
+                        <li><strong>Comunicação Assertiva:</strong> Expressar-se de forma clara, direta e respeitosa, sem ser passivo ou agressivo.</li>
+                        <li><strong>Empatia:</strong> Capacidade de se colocar no lugar do outro para compreender suas necessidades e sentimentos.</li>
+                        <li><strong>Cordialidade e Urbanidade:</strong> Tratar o público com cortesia, educação e respeito. É um dever previsto no Código de Ética.</li>
+                    </ul>
+
+                    <h3 class="text-xl font-semibold mb-3 mt-8">Arquivologia: A Gestão de Documentos</h3>
+                    <p class="mb-4">O ciclo de vida dos documentos é o tópico mais importante aqui, conhecido como Teoria das Três Idades.</p>
+                    <div class="space-y-3">
+                        <div class="bg-slate-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-slate-800">1. Arquivo Corrente (Primeira Idade)</h4>
+                            <p class="text-sm mt-1">Documentos de uso <strong>frequente</strong>, que tramitam muito. Ficam perto do setor que os produziu. Ex: Processos em andamento.</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-slate-800">2. Arquivo Intermediário (Segunda Idade)</h4>
+                            <p class="text-sm mt-1">Documentos de uso <strong>pouco frequente</strong>. Já cumpriram sua finalidade imediata, mas ainda precisam ser guardados por razões legais ou precaucionais. Aguardam sua destinação final (eliminação ou guarda permanente).</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-slate-800">3. Arquivo Permanente (Terceira Idade)</h4>
+                            <p class="text-sm mt-1">Documentos que perderam o valor administrativo, mas adquiriram <strong>valor histórico, probatório ou informativo</strong>. São preservados para sempre. Ex: A lei de criação de um órgão.</p>
+                        </div>
+                    </div>
+                     <div class="alert-box alert-pegadinha mt-6">
+                        <h4 class="font-bold mb-1"><i class="fas fa-exclamation-triangle mr-2"></i>Pegadinha de Prova!</h4>
+                        <p>As atividades de <strong>Protocolo</strong> (receber, registrar, classificar, tramitar, expedir) gerenciam o fluxo dos documentos, mas não se confundem com o <strong>arquivamento</strong>, que é a guarda ordenada. O protocolo lida com documentos correntes.</p>
+                    </div>
+                </div>
+            `,
+            'lingua-portuguesa': `
+                <div class="card">
+                    <h2 class="text-2xl font-bold mb-4 text-sky-600"><i class="fas fa-spell-check mr-2"></i>Língua Portuguesa</h2>
+                    <p class="mb-6">Disciplina de alta complexidade na banca IADES, exigindo domínio da gramática normativa e excelente capacidade de interpretação. Foco nos tópicos que mais caem.</p>
+                    
+                    <h3 class="text-xl font-semibold mb-3">Concordância Verbal e Nominal</h3>
+                    <ul class="list-disc list-inside space-y-2 mb-6">
+                        <li><strong>Verbal:</strong> O verbo concorda com o sujeito. Cuidado com sujeitos compostos, oracionais ou com o pronome "se" (partícula apassivadora vs. índice de indeterminação do sujeito).</li>
+                        <li><strong>Nominal:</strong> O adjetivo, pronome, artigo e numeral concordam com o substantivo a que se referem. Atenção para casos como "é proibido entrada" vs. "é proibida a entrada".</li>
+                    </ul>
+
+                    <h3 class="text-xl font-semibold mb-3">Regência Verbal e Nominal</h3>
+                    <p class="mb-4">Estuda a relação de dependência entre as palavras. A regência de alguns verbos muda o sentido da frase.</p>
+                    <div class="overflow-x-auto mb-6">
+                         <table class="w-full text-left border-collapse">
+                            <thead class="bg-slate-100"><tr><th class="p-3 font-semibold border-b-2 border-slate-200">Verbo</th><th class="p-3 font-semibold border-b-2 border-slate-200">Regência e Sentido</th></tr></thead>
+                            <tbody>
+                                <tr class="border-b border-slate-200"><td class="p-3"><strong>Assistir</strong></td><td class="p-3">VTD (ajudar): O médico assistiu <strong>o paciente</strong>.<br>VTI (ver, presenciar): Eu assisti <strong>ao jogo</strong>.</td></tr>
+                                <tr class="border-b border-slate-200"><td class="p-3"><strong>Visar</strong></td><td class="p-3">VTD (mirar): O atirador visou <strong>o alvo</strong>.<br>VTI (almejar, desejar): Ele visa <strong>ao cargo</strong>.</td></tr>
+                                 <tr><td class="p-3"><strong>Implicar</strong></td><td class="p-3">VTD (acarretar, resultar): A decisão implicará <strong>consequências</strong>.<br>VTI (ter implicância com): Ele implica <strong>com o vizinho</strong>.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="alert-box alert-pegadinha">
+                        <h4 class="font-bold mb-1"><i class="fas fa-exclamation-triangle mr-2"></i>Pegadinha de Prova!</h4>
+                        <p>No sentido de "acarretar", o verbo <strong>implicar</strong> é transitivo direto, ou seja, <strong>NÃO</strong> se usa a preposição "em". O correto é "Isso implica demissão", e não "Isso implica na demissão".</p>
+                    </div>
+                </div>
+            `,
+            'redacao-oficial': `
+                <div class="card">
+                    <h2 class="text-2xl font-bold mb-4 text-sky-600"><i class="fas fa-pen-nib mr-2"></i>Técnicas de Redação Oficial</h2>
+                    <p class="mb-6">A comunicação escrita no serviço público segue regras rígidas. O estudo deve ser 100% baseado no <strong>Manual de Redação da Presidência da República</strong>.</p>
+                    
+                    <h3 class="text-xl font-semibold mb-3">Atributos Fundamentais</h3>
+                    <p class="mb-4">Toda comunicação oficial deve possuir as seguintes características:</p>
+                    <ul class="list-disc list-inside space-y-2 mb-6">
+                        <li><strong>Impessoalidade:</strong> O texto é escrito em nome do serviço público, não do servidor. Evita-se a primeira pessoa ("Eu acho que...").</li>
+                        <li><strong>Formalidade e Padronização:</strong> Uso da norma-padrão da língua e obediência às estruturas definidas no manual.</li>
+                        <li><strong>Clareza e Precisão:</strong> O texto deve ser de fácil compreensão e não pode dar margem a duplas interpretações.</li>
+                        <li><strong>Concisão:</strong> Dizer o máximo com o mínimo de palavras, sem ser telegráfico.</li>
+                    </ul>
+
+                    <h3 class="text-xl font-semibold mb-3">Estrutura do Padrão Ofício</h3>
+                    <p class="mb-4">O Manual unificou a estrutura de vários documentos (Ofício, Memorando, Aviso). As partes essenciais são:</p>
+                    <ol class="list-decimal list-inside space-y-2 mb-6">
+                        <li><strong>Cabeçalho:</strong> Com o brasão de armas e nome do órgão.</li>
+                        <li><strong>Identificação do Expediente:</strong> Tipo e número do documento (Ex: Ofício nº 123/2025/ANPD).</li>
+                        <li><strong>Local e Data:</strong> Alinhados à direita.</li>
+                        <li><strong>Endereçamento:</strong> A quem se destina o documento (Ex: Ao Senhor Chefe de Gabinete).</li>
+                        <li><strong>Assunto:</strong> Resumo do tema em uma frase curta.</li>
+                        <li><strong>Corpo do Texto:</strong> O desenvolvimento do assunto.</li>
+                        <li><strong>Fecho:</strong> "Respeitosamente," (para autoridades de mesma hierarquia ou superior) ou "Atenciosamente," (para as demais).</li>
+                        <li><strong>Assinatura e Identificação do Signatário.</strong></li>
+                    </ol>
+                     <div class="alert-box alert-dica">
+                        <h4 class="font-bold mb-1"><i class="fas fa-lightbulb mr-2"></i>Dica do Especialista</h4>
+                        <p>Não existe mais o fecho "Cordialmente". O Manual de Redação atual simplificou para apenas "Respeitosamente" e "Atenciosamente".</p>
+                    </div>
+                </div>
+            `,
+            'atualidades': `
+                <div class="card">
+                    <h2 class="text-2xl font-bold mb-4 text-sky-600"><i class="fas fa-newspaper mr-2"></i>Atualidades e Contexto Digital</h2>
+                    <p class="mb-6">Para a ANPD, "Atualidades" significa estar por dentro dos debates mais recentes sobre tecnologia, privacidade e direitos digitais. A banca IADES usará esses temas para contextualizar as questões.</p>
+                    
+                    <h3 class="text-xl font-semibold mb-3">Temas Quentes (Foco 2024-2025)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-slate-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-slate-800">Inteligência Artificial e Privacidade</h4>
+                            <p class="text-sm mt-1">Debate sobre o uso de dados para treinar IAs, o risco de vieses discriminatórios e a necessidade de regulamentação. A ANPD tem papel central nesse debate no Brasil.</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-slate-800">Cibersegurança e Vazamentos de Dados</h4>
+                            <p class="text-sm mt-1">Ataques de ransomware a governos e empresas, a importância da notificação de incidentes à ANPD e as boas práticas de segurança para cidadãos e organizações.</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-slate-800">Combate à Desinformação (Fake News)</h4>
+                            <p class="text-sm mt-1">Discussões sobre a responsabilidade das plataformas digitais, o uso de dados pessoais para microdirecionamento de notícias falsas e os projetos de lei sobre o tema.</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-slate-800">Transformação Digital no Serviço Público</h4>
+                            <p class="text-sm mt-1">A digitalização de serviços (plataforma Gov.br), o uso de identidade digital e os desafios de garantir o acesso e a proteção de dados de milhões de brasileiros.</p>
+                        </div>
+                    </div>
+                    <div class="alert-box alert-dica mt-6">
+                        <h4 class="font-bold mb-1"><i class="fas fa-lightbulb mr-2"></i>Onde se informar?</h4>
+                        <p>A melhor fonte para esses temas é a seção de <strong>Notícias do site oficial da ANPD</strong>. Acompanhar portais de tecnologia e direito digital também é uma excelente estratégia.</p>
+                    </div>
+                </div>
+            `,
+            'quiz': `
+                <div class="card">
+                    <h2 class="text-2xl font-bold mb-4 text-sky-600"><i class="fas fa-question-circle mr-2"></i>Quiz Interativo por Tema</h2>
+                    <p class="mb-6">Selecione um tema abaixo para iniciar um quiz rápido. Teste seus conhecimentos e receba feedback imediato para cada questão!</p>
+                    
+                    <div id="quiz-selection" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <button data-quiz-id="lgpd" class="quiz-start-btn bg-sky-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-sky-700 transition-colors flex items-center justify-center gap-2">
+                            <i class="fas fa-file-shield"></i>LGPD e Privacidade
+                        </button>
+                        <button data-quiz-id="etica" class="quiz-start-btn bg-slate-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-slate-700 transition-colors flex items-center justify-center gap-2">
+                            <i class="fas fa-handshake-angle"></i>Ética e Conduta
+                        </button>
+                        <button data-quiz-id="seguranca" class="quiz-start-btn bg-slate-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-slate-700 transition-colors flex items-center justify-center gap-2">
+                            <i class="fas fa-lock"></i>Segurança da Informação
+                        </button>
+                    </div>
+
+                    <div id="quiz-container" class="mt-8 hidden"></div>
+                </div>
+            `,
+            'exercicios': `
+                <div class="card">
+                    <h2 class="text-2xl font-bold mb-4 text-sky-600"><i class="fas fa-pen-to-square mr-2"></i>Exercícios Resolvidos</h2>
+                    <p class="mb-6">A prática leva à perfeição. Aqui você encontrará questões de concursos anteriores, com gabarito comentado, para treinar no estilo da banca IADES e outras.</p>
+
+                    <div class="alert-box alert-questao">
+                        <h4 class="font-bold mb-1">(IADES - 2023 - Exemplo Adaptado)</h4>
+                        <p class="font-semibold my-2">No que tange à Lei nº 8.112/1990, constitui um dever do servidor público:</p>
+                        <ul class="list-none space-y-1 my-2">
+                            <li>a) valer-se do cargo para lograr proveito pessoal.</li>
+                            <li>b) recusar fé a documentos públicos.</li>
+                            <li>c) ser leal às instituições a que servir.</li>
+                            <li>d) opor resistência injustificada ao andamento de documento.</li>
+                            <li>e) proceder de forma desidiosa.</li>
+                        </ul>
+                        <hr class="my-2 border-green-200">
+                        <p><strong>Gabarito: C.</strong></p>
+                        <p class="text-sm mt-1"><strong>Comentário:</strong> As alternativas 'a', 'b', 'd' e 'e' são VEDAÇÕES (proibições) expressas no Art. 117 da lei. A lealdade é um DEVER previsto no Art. 116, III. A banca frequentemente testa a capacidade do candidato de diferenciar os deveres das proibições.</p>
+                    </div>
+
+                    <div class="alert-box alert-questao">
+                        <h4 class="font-bold mb-1">(CESPE/CEBRASPE - 2022 - Exemplo Adaptado)</h4>
+                        <p class="font-semibold my-2">Com base na LGPD, julgue o item a seguir: O tratamento de dados pessoais sensíveis somente poderá ocorrer com o consentimento do titular ou de seu responsável legal, de forma específica e destacada, para finalidades específicas.</p>
+                        <ul class="list-none space-y-1 my-2">
+                            <li>( ) Certo</li>
+                            <li>( ) Errado</li>
+                        </ul>
+                        <hr class="my-2 border-green-200">
+                        <p><strong>Gabarito: Errado.</strong></p>
+                        <p class="text-sm mt-1"><strong>Comentário:</strong> Este é um erro comum. Embora o consentimento seja uma base legal, o Art. 11, II, da LGPD prevê outras hipóteses para o tratamento de dados sensíveis SEM o consentimento do titular, como o cumprimento de obrigação legal, a execução de políticas públicas, a proteção da vida, entre outras. Portanto, não é "somente" com o consentimento.</p>
+                    </div>
+                </div>
+            `,
+            'glossario': `
+                <div class="card">
+                     <h2 class="text-2xl font-bold mb-4 text-sky-600"><i class="fas fa-book mr-2"></i>Glossário Técnico e Jurídico</h2>
+                     <p class="mb-4">Não sabe o que um termo significa? Pesquise aqui para uma definição rápida e direta ao ponto.</p>
+                     <div class="relative">
+                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        <input type="text" id="glossary-search" placeholder="Pesquisar termo (ex: Phishing, CID, Operador...)" class="w-full p-3 pl-12 border border-slate-300 rounded-lg mb-6 focus:ring-2 focus:ring-sky-300 focus:border-sky-400 outline-none transition-shadow">
+                     </div>
+                     <div id="glossary-list" class="space-y-4 max-h-[60vh] overflow-y-auto pr-2"></div>
+                </div>
+            `,
+            'materiais': `
+                <div class="card">
+                    <h2 class="text-2xl font-bold mb-4 text-sky-600"><i class="fas fa-download mr-2"></i>Materiais para Download</h2>
+                    <p class="mb-6">Acesse aqui materiais complementares para potencializar seus estudos, como simulados, mapas mentais e o cronograma de revisão.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <a href="#" class="block bg-sky-50 p-4 rounded-lg border border-sky-200 hover:bg-sky-100 hover:shadow-md transition-all">
+                            <h4 class="font-semibold text-sky-800"><i class="fas fa-file-pdf mr-2"></i>Simulado Completo 01.pdf</h4>
+                            <p class="text-sm text-slate-600 mt-1">120 questões no estilo IADES.</p>
+                        </a>
+                        <a href="#" class="block bg-sky-50 p-4 rounded-lg border border-sky-200 hover:bg-sky-100 hover:shadow-md transition-all">
+                            <h4 class="font-semibold text-sky-800"><i class="fas fa-project-diagram mr-2"></i>Mapa Mental - LGPD.pdf</h4>
+                            <p class="text-sm text-slate-600 mt-1">Princípios e Bases Legais.</p>
+                        </a>
+                        <a href="#" class="block bg-sky-50 p-4 rounded-lg border border-sky-200 hover:bg-sky-100 hover:shadow-md transition-all">
+                            <h4 class="font-semibold text-sky-800"><i class="fas fa-calendar-check mr-2"></i>Cronograma de Revisão.xlsx</h4>
+                            <p class="text-sm text-slate-600 mt-1">Planilha editável para seu controle.</p>
+                        </a>
+                    </div>
+                </div>
+            `,
+            'referencias': `
+                <div class="card">
+                    <h2 class="text-2xl font-bold mb-4 text-sky-600"><i class="fas fa-link mr-2"></i>Referências e Fontes Oficiais</h2>
+                    <p class="mb-6">Estude sempre pelas fontes primárias. Abaixo estão os links para os principais documentos e portais que fundamentam este guia de revisão.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-slate-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-slate-800">Legislação Principal</h4>
+                            <ul class="list-disc list-inside text-sm mt-2 space-y-1">
+                                <li><a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm" target="_blank" class="text-sky-600 hover:underline">Lei Geral de Proteção de Dados (LGPD)</a></li>
+                                <li><a href="https://www.planalto.gov.br/ccivil_03/leis/l8112cons.htm" target="_blank" class="text-sky-600 hover:underline">Lei nº 8.112/90 (Regime dos Servidores)</a></li>
+                                <li><a href="https://www.planalto.gov.br/ccivil_03/leis/l9784.htm" target="_blank" class="text-sky-600 hover:underline">Lei nº 9.784/99 (Processo Administrativo)</a></li>
+                                <li><a href="https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2021/lei/L14133.htm" target="_blank" class="text-sky-600 hover:underline">Lei nº 14.133/21 (Licitações)</a></li>
+                                <li><a href="https://www.planalto.gov.br/ccivil_03/decreto/d1171.htm" target="_blank" class="text-sky-600 hover:underline">Decreto nº 1.171/94 (Código de Ética)</a></li>
+                            </ul>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-slate-800">Manuais e Portais Oficiais</h4>
+                            <ul class="list-disc list-inside text-sm mt-2 space-y-1">
+                                <li><a href="https://www.gov.br/anpd/pt-br" target="_blank" class="text-sky-600 hover:underline">Site Oficial da ANPD</a></li>
+                                <li><a href="https://www.gov.br/planalto/pt-br/assuntos/assuntos-estrategicos/publicacoes/manual-de-redacao-da-presidencia-da-republica" target="_blank" class="text-sky-600 hover:underline">Manual de Redação da Presidência</a></li>
+                                <li><a href="https://cartilha.cert.br/" target="_blank" class="text-sky-600 hover:underline">Cartilha de Segurança para Internet (CERT.br)</a></li>
+                                <li><a href="https://www.enap.gov.br/" target="_blank" class="text-sky-600 hover:underline">Escola Nacional de Administração Pública (ENAP)</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            `
+        };
+
+        const quizData = {
+            'lgpd': [
+                {
+                    question: 'Qual órgão é responsável pela fiscalização do cumprimento da LGPD no Brasil?',
+                    options: [
+                        'Ministério da Justiça',
+                        'Autoridade Nacional de Proteção de Dados (ANPD)',
+                        'Comitê Gestor da Internet no Brasil',
+                        'Agência Nacional de Telecomunicações'
+                    ],
+                    answer: 1,
+                    explanation: 'A ANPD é o órgão responsável por fiscalizar e garantir o cumprimento da LGPD no Brasil.'
+                },
+                {
+                    question: 'Quem é responsável por tomar as decisões sobre o tratamento de dados segundo a LGPD?',
+                    options: [
+                        'O Operador',
+                        'O Controlador',
+                        'O Encarregado (DPO)',
+                        'O Titular dos Dados'
+                    ],
+                    answer: 1,
+                    explanation: 'O Controlador é a pessoa natural ou jurídica, de direito público ou privado, a quem competem as decisões referentes ao tratamento de dados pessoais.'
+                },
+                {
+                    question: "Qual dos seguintes princípios da LGPD estabelece que o tratamento de dados deve ser limitado ao mínimo necessário para a realização de suas finalidades?",
+                    options: [
+                        'Princípio da Finalidade',
+                        'Princípio da Adequação',
+                        'Princípio da Necessidade',
+                        'Princípio do Livre Acesso'
+                    ],
+                    answer: 2,
+                    explanation: "O Princípio da Necessidade (também conhecido como minimização dos dados) dita que apenas os dados estritamente necessários para a finalidade informada devem ser coletados e tratados."
+                },
+                {
+                    question: "Um cidadão solicita a uma repartição pública a correção de seus dados cadastrais que estão incompletos. A qual direito, previsto no Art. 18 da LGPD, ele está recorrendo?",
+                    options: [
+                        'Direito de confirmação da existência do tratamento',
+                        'Direito de acesso aos dados',
+                        'Direito de correção de dados',
+                        'Direito à portabilidade dos dados'
+                    ],
+                    answer: 2,
+                    explanation: "O Art. 18, III, da LGPD garante ao titular o direito à correção de dados incompletos, inexatos ou desatualizados. É um dos direitos mais básicos e frequentemente exercidos."
+                }
+            ],
+            'etica': [
+                {
+                    question: "Qual das alternativas melhor descreve a Regra Deontológica I do Código de Ética do Servidor Público?",
+                    options: [
+                        'O servidor deve priorizar a eficiência acima de tudo',
+                        'A dignidade e o decoro devem nortear o servidor',
+                        'A hierarquia deve ser sempre respeitada',
+                        'O sigilo é a principal diretriz'
+                    ],
+                    answer: 1,
+                    explanation: "A Regra Deontológica I afirma que a dignidade, o decoro, o zelo, a eficácia e a consciência dos princípios morais são os primados maiores que devem nortear o servidor público."
+                },
+                {
+                    question: "Utilizar-se do cargo para lograr proveito pessoal ou de outrem, em detrimento da dignidade da função pública, é uma:",
+                    options: [
+                        'Conduta aceitável se em benefício do serviço',
+                        'Infração administrativa leve',
+                        'Infração ética grave',
+                        'Prática comum no serviço público'
+                    ],
+                    answer: 2,
+                    explanation: "O item XV, alínea 'c', das Vedações proíbe expressamente essa conduta, que fere os princípios da impessoalidade e da moralidade."
+                }
+            ],
+            'seguranca': [
+                {
+                    question: "O que significa a sigla CID quando se fala em segurança da informação?",
+                    options: [
+                        'Controle, Integração e Disponibilidade',
+                        'Confidencialidade, Integridade e Disponibilidade',
+                        'Certificação, Integração e Dados',
+                        'Controle, Identificação e Dados'
+                    ],
+                    answer: 1,
+                    explanation: "CID significa Confidencialidade, Integridade e Disponibilidade. Integridade é a garantia de que a informação não foi alterada de forma indevida."
+                },
+                {
+                    question: "Um e-mail fraudulento que se passa pelo banco do servidor, solicitando que ele clique em um link e insira sua senha para 'verificação de segurança', é um exemplo clássico de:",
+                    options: [
+                        'Vírus de computador',
+                        'Ataque DDoS',
+                        'Phishing',
+                        'Cavalo de Tróia'
+                    ],
+                    answer: 2,
+                    explanation: "Isso é um exemplo clássico de Phishing, uma técnica de engenharia social que 'pesca' informações confidenciais da vítima, enganando-a para que ela mesma as forneça."
+                }
+            ]
+        };
+        
+        const glossaryData = [
+            {
+                term: 'LGPD',
+                definition: 'Lei Geral de Proteção de Dados (Lei 13.709/2018) que regula o tratamento de dados pessoais no Brasil.'
+            },
+            {
+                term: 'ANPD',
+                definition: 'Autoridade Nacional de Proteção de Dados, órgão responsável por fiscalizar o cumprimento da LGPD.'
+            },
+            {
+                term: 'Dados Pessoais',
+                definition: 'Informação relacionada a pessoa natural identificada ou identificável.'
+            },
+            {
+                term: 'Titular dos Dados',
+                definition: 'Pessoa natural a quem se referem os dados pessoais que são objeto de tratamento.'
+            },
+            {
+                term: 'Controlador',
+                definition: 'Pessoa natural ou jurídica, de direito público ou privado, a quem competem as decisões referentes ao tratamento de dados pessoais.'
+            },
+            {
+                term: 'Operador',
+                definition: 'Pessoa natural ou jurídica, de direito público ou privado, que realiza o tratamento de dados pessoais em nome do controlador.'
+            },
+            {
+                term: 'Encarregado (DPO)',
+                definition: 'Pessoa indicada pelo controlador e operador para atuar como canal de comunicação entre o controlador, os titulares dos dados e a ANPD.'
+            }
+        ];
+
+
+        const tabContainer = document.getElementById('tab-container');
+        const contentContainer = document.getElementById('content-container');
+
+        function renderTabs() {
+            Object.entries(tabsData).forEach(([id, tab]) => {
+                const button = document.createElement('button');
+                button.className = 'tab-button flex items-center gap-2 py-3 px-1 sm:px-4 text-sm sm:text-base font-medium text-slate-500 hover:text-sky-600';
+                button.dataset.tab = id;
+                button.innerHTML = `<i class="fas fa-${tab.icon} fa-fw"></i> ${tab.label}`;
+                tabContainer.appendChild(button);
+            });
+        }
+
+        function renderContent() {
+            Object.entries(tabsData).forEach(([id, tab]) => {
+                const contentDiv = document.createElement('div');
+                contentDiv.id = id;
+                contentDiv.className = 'tab-content';
+                if (contentData[id]) {
+                    contentDiv.innerHTML = contentData[id];
+                } else {
+                     contentDiv.innerHTML = `<div class="card text-center py-12"><i class="fas fa-${tab.icon} fa-3x text-slate-300 mb-4"></i><h2 class="text-2xl font-bold mb-2 text-slate-600">${tab.label}</h2><p class="text-slate-500">Conteúdo para esta seção será adicionado em breve.</p></div>`;
+                }
+                contentContainer.appendChild(contentDiv);
+            });
+        }
+        
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabId));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.toggle('active', content.id === tabId));
+            
+            if (tabId === 'inicio') {
+                renderPriorityChart();
+            }
+        }
+
+        tabContainer.addEventListener('click', (e) => {
+            const button = e.target.closest('.tab-button');
+            if (button) {
+                switchTab(button.dataset.tab);
+            }
+        });
+        
+        function startQuiz(quizId) {
+            const quizContainer = document.getElementById('quiz-container');
+            const questions = quizData[quizId];
+            if (!questions) return;
+            
+            let currentQuestionIndex = 0;
+            let score = 0;
+
+            function renderQuestion() {
+                const question = questions[currentQuestionIndex];
+                quizContainer.innerHTML = `
+                    <div class="border-b pb-4 mb-4">
+                        <p class="text-sm text-slate-500">Questão ${currentQuestionIndex + 1} de ${questions.length}</p>
+                        <p class="text-lg font-semibold mt-1">${question.question}</p>
+                    </div>
+                    <div id="options-container" class="space-y-3">
+                        ${question.options.map((opt, index) => `
+                            <div class="quiz-option border border-slate-300 p-3 rounded-lg hover:bg-slate-100" data-index="${index}">
+                                <span class="font-bold mr-2">${String.fromCharCode(65 + index)}.</span> ${opt}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div id="feedback" class="mt-4 p-4 rounded-lg hidden"></div>
+                    <div class="flex justify-end mt-6">
+                        <button id="next-question" class="bg-sky-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-sky-700 transition-colors hidden">Próxima</button>
+                        <button id="finish-quiz" class="bg-green-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-green-700 transition-colors hidden">Finalizar Quiz</button>
+                    </div>
+                `;
+
+                document.querySelectorAll('.quiz-option').forEach(opt => {
+                    opt.addEventListener('click', handleOptionClick, { once: true });
+                });
+            }
+
+            function handleOptionClick(e) {
+                const selectedOption = e.currentTarget;
+                const selectedIndex = parseInt(selectedOption.dataset.index);
+                const question = questions[currentQuestionIndex];
+                
+                document.querySelectorAll('.quiz-option').forEach(opt => {
+                    opt.style.cursor = 'default';
+                    opt.classList.remove('hover:bg-slate-100');
+                });
+
+                selectedOption.classList.add('selected');
+
+                const feedbackEl = document.getElementById('feedback');
+                feedbackEl.classList.remove('hidden');
+
+                if (selectedIndex === question.answer) {
+                    score++;
+                    selectedOption.classList.add('correct');
+                    feedbackEl.innerHTML = question.feedback;
+                    feedbackEl.className = 'mt-4 p-4 rounded-lg bg-green-50 border border-green-200 text-green-800';
+                } else {
+                    selectedOption.classList.add('incorrect');
+                    document.querySelector(`.quiz-option[data-index='${question.answer}']`).classList.add('correct');
+                    feedbackEl.innerHTML = question.feedback;
+                    feedbackEl.className = 'mt-4 p-4 rounded-lg bg-red-50 border border-red-200 text-red-800';
+                }
+
+                if (currentQuestionIndex < questions.length - 1) {
+                    document.getElementById('next-question').classList.remove('hidden');
+                } else {
+                    document.getElementById('finish-quiz').classList.remove('hidden');
+                }
+            }
+
+            quizContainer.addEventListener('click', (e) => {
+                if (e.target.id === 'next-question') {
+                    currentQuestionIndex++;
+                    renderQuestion();
+                }
+                if (e.target.id === 'finish-quiz') {
+                    quizContainer.innerHTML = `
+                        <div class="text-center">
+                            <h3 class="text-2xl font-bold">Quiz Finalizado!</h3>
+                            <p class="text-xl mt-4">Sua pontuação final foi:</p>
+                            <p class="text-5xl font-bold text-sky-600 my-4">${score} / ${questions.length}</p>
+                            <p class="text-slate-600">${score > (questions.length / 2)? 'Ótimo trabalho! Continue revisando.' : 'Bom começo! Revise os pontos e tente novamente.'}</p>
+                            <button id="restart-quiz" class="mt-8 bg-slate-500 text-white font-semibold py-2 px-6 rounded-lg hover:bg-slate-600 transition-colors">Voltar para seleção de Quiz</button>
+                        </div>
+                    `;
+                    document.getElementById('restart-quiz').addEventListener('click', () => {
+                         document.getElementById('quiz-container').classList.add('hidden');
+                         document.getElementById('quiz-selection').classList.remove('hidden');
+                    });
+                }
+            });
+
+            document.getElementById('quiz-selection').classList.add('hidden');
+            quizContainer.classList.remove('hidden');
+            renderQuestion();
+        }
+
+        contentContainer.addEventListener('click', (e) => {
+            const button = e.target.closest('.quiz-start-btn');
+            if (button) {
+                startQuiz(button.dataset.quizId);
+            }
+        });
+        
+        function renderGlossary(filter = '') {
+            const list = document.getElementById('glossary-list');
+            if (!list) return;
+            
+            const normalizedFilter = filter.toLowerCase().trim();
+            const filteredData = glossaryData.filter(item => 
+                item.term.toLowerCase().includes(normalizedFilter) ||
+                item.definition.toLowerCase().includes(normalizedFilter)
+            ).sort((a, b) => a.term.localeCompare(b.term));
+            
+            list.innerHTML = '';
+            if (filteredData.length === 0) {
+                list.innerHTML = '<p class="text-slate-500 text-center py-4">Nenhum termo encontrado.</p>';
+                return;
+            }
+            
+            filteredData.forEach(item => {
+                const entry = document.createElement('div');
+                entry.className = 'border-b border-slate-200 pb-3';
+                entry.innerHTML = `
+                    <h3 class="text-lg font-semibold text-sky-700">${item.term}</h3>
+                    <p class="text-slate-600 mt-1">${item.definition}</p>
+                `;
+                list.appendChild(entry);
+            });
+        }
+        
+        contentContainer.addEventListener('input', (e) => {
+            if (e.target.id === 'glossary-search') {
+                renderGlossary(e.target.value);
+            }
+        });
+
+        let priorityChartInstance = null;
+        function renderPriorityChart() {
+            const ctx = document.getElementById('priorityChart');
+            if (!ctx) return;
+            if (priorityChartInstance) {
+                priorityChartInstance.destroy();
+            };
+
+            priorityChartInstance = new Chart(ctx.getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['LGPD', 'Administração Pública', 'Legislação Administrativa', 'Ética', 'Segurança da Informação', 'Outros'],
+                    datasets: [{
+                        label: 'Nível de Prioridade',
+                        data: [5, 4, 4, 3, 5, 2],
+                        backgroundColor: [
+                            '#0ea5e9',
+                            '#38bdf8',
+                            '#7dd3fc',
+                            '#64748b',
+                            '#94a3b8',
+                            '#cbd5e1'
+                        ],
+                        borderRadius: 4,
+                        borderSkipped: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            grid: { display: false, drawBorder: false },
+                            ticks: { display: false }
+                        },
+                        y: {
+                            grid: { display: false, drawBorder: false },
+                            ticks: { font: { weight: '600', size: 14 } }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                           callbacks: {
+                                label: function(context) {
+                                    return ` Nível de Prioridade: ${context.raw}`;
+                                }
+                           }
+                        }
+                    }
+                }
+            });
+        }
+
+        renderTabs();
+        renderContent();
+        switchTab('inicio');
+        renderGlossary();
+    });
+    </script>
+</body>
+</html>
