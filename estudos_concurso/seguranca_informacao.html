@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia de Segurança da Informação para Concursos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Educational Blue & Neutral Tones -->
+    <!-- Application Structure Plan: A tab-based single-page application. This structure is ideal for study materials as it allows users to focus on one topic at a time (e.g., "Criptografia") without losing context or needing to navigate multiple pages. The side navigation provides a clear overview of the content, acting as a syllabus, while the main content area presents the detailed information for the selected topic. This design promotes self-paced, non-linear learning, which is perfect for exam preparation. -->
+    <!-- Visualization & Content Choices: 1. Concepts (CID, LGPD Principles) -> Inform -> Styled cards with icons -> Visually separates concepts for better retention -> HTML/CSS. 2. Comparisons (Backup Types, Crypto Keys) -> Compare -> HTML Tables -> Direct comparison is the most effective way to learn nuanced differences -> HTML/CSS. 3. Quizzes/Exercises -> Test Knowledge -> Interactive forms with JS -> Active recall is a powerful learning technique; immediate feedback reinforces concepts -> HTML/JS. 4. Tips/Alerts -> Highlight -> Colored callout boxes -> Draws user attention to critical information often tested in exams -> HTML/CSS. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f7f9;
+        }
+        .tab-link {
+            transition: all 0.3s ease;
+        }
+        .tab-link.active {
+            background-color: #2563eb;
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .tab-link:not(.active):hover {
+            background-color: #e0e7ff;
+            color: #1d4ed8;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dica-prova {
+            background-color: #fef9c3;
+            border-left: 4px solid #facc15;
+            color: #713f12;
+        }
+        .alerta-pegadinha {
+            background-color: #fee2e2;
+            border-left: 4px solid #ef4444;
+            color: #991b1b;
+        }
+        .exemplo-pratico {
+            background-color: #dcfce7;
+            border-left: 4px solid #22c55e;
+            color: #14532d;
+        }
+        .quiz-option.correct {
+            background-color: #dcfce7 !important;
+            border-color: #22c55e !important;
+        }
+        .quiz-option.incorrect {
+            background-color: #fee2e2 !important;
+            border-color: #ef4444 !important;
+        }
+        .quiz-feedback {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+        .quiz-feedback.correct {
+            background-color: #f0fdf4;
+            color: #166534;
+        }
+        .quiz-feedback.incorrect {
+            background-color: #fef2f2;
+            color: #991b1b;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="flex flex-col md:flex-row min-h-screen">
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar" class="w-full md:w-64 lg:w-72 bg-white shadow-lg p-4 md:p-6 flex-shrink-0">
+            <h1 class="text-2xl font-bold text-blue-600 mb-6 flex items-center">
+                <i class="fas fa-shield-halved mr-3"></i>
+                <span>Segurança da Info</span>
+            </h1>
+            <nav id="tab-navigation" class="space-y-2">
+                <!-- Tab links will be dynamically inserted here -->
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-4 sm:p-6 md:p-8 lg:p-10">
+            <div id="tab-content-container">
+                <!-- Tab contents will be dynamically inserted here -->
+            </div>
+        </main>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const tabs = [
+            { id: 'inicio', icon: 'fa-home', title: 'Início' },
+            { id: 'fundamentos', icon: 'fa-key', title: 'Fundamentos e Princípios' },
+            { id: 'politicas', icon: 'fa-file-alt', title: 'Políticas e Normas' },
+            { id: 'riscos', icon: 'fa-exclamation-triangle', title: 'Gestão de Riscos' },
+            { id: 'ataques', icon: 'fa-bug', title: 'Ataques e Ameaças' },
+            { id: 'criptografia', icon: 'fa-lock', title: 'Criptografia' },
+            { id: 'acesso', icon: 'fa-user-shield', title: 'Controles de Acesso' },
+            { id: 'backup', icon: 'fa-database', title: 'Backup e Recuperação' },
+            { id: 'seguranca-fisica-logica', icon: 'fa-building-lock', title: 'Segurança Física e Lógica' },
+            { id: 'redes', icon: 'fa-network-wired', title: 'Segurança em Redes' },
+            { id: 'lgpd', icon: 'fa-balance-scale', title: 'LGPD e Proteção de Dados' },
+            { id: 'governanca', icon: 'fa-sitemap', title: 'Governança e Continuidade' },
+            { id: 'dicas', icon: 'fa-lightbulb', title: 'Dicas de Prova e Macetes' },
+            { id: 'quiz', icon: 'fa-question-circle', title: 'Quiz Interativo' },
+            { id: 'exercicios', icon: 'fa-pencil-alt', title: 'Exercícios Resolvidos' },
+            { id: 'glossario', icon: 'fa-book', title: 'Glossário de Termos' },
+            { id: 'materiais', icon: 'fa-folder-open', title: 'Materiais Complementares' },
+            { id: 'referencias', icon: 'fa-link', title: 'Referências Técnicas' },
+        ];
+
+        const tabNavigation = document.getElementById('tab-navigation');
+        const tabContentContainer = document.getElementById('tab-content-container');
+
+        tabs.forEach(tab => {
+            // Create navigation link
+            const link = document.createElement('a');
+            link.href = `#${tab.id}`;
+            link.id = `link-${tab.id}`;
+            link.className = 'tab-link flex items-center p-3 rounded-lg text-gray-700';
+            link.innerHTML = `<i class="fas ${tab.icon} w-6 text-center mr-3"></i><span>${tab.title}</span>`;
+            link.dataset.tab = tab.id;
+            tabNavigation.appendChild(link);
+
+            // Create content container
+            const content = document.createElement('div');
+            content.id = tab.id;
+            content.className = 'tab-content';
+            tabContentContainer.appendChild(content);
+        });
+
+        const tabLinks = document.querySelectorAll('.tab-link');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        function activateTab(tabId) {
+            tabLinks.forEach(link => {
+                link.classList.toggle('active', link.dataset.tab === tabId);
+            });
+            tabContents.forEach(content => {
+                content.classList.toggle('active', content.id === tabId);
+            });
+        }
+        
+        tabLinks.forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const tabId = this.dataset.tab;
+                window.location.hash = tabId;
+                activateTab(tabId);
+            });
+        });
+
+        // Content generation
+        document.getElementById('inicio').innerHTML = `
+            <h2 class="text-3xl font-bold mb-4 text-gray-800">Guia de Estudos: Segurança da Informação para Concursos</h2>
+            <p class="text-lg text-gray-600 mb-6">Bem-vindo(a) ao seu guia completo e interativo para dominar a Segurança da Informação. Este material foi cuidadosamente elaborado para atender às exigências dos principais concursos públicos do país, capacitações no setor público e cursos de TI.</p>
+            <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-6 rounded-r-lg">
+                <p class="font-bold">Por que Segurança da Informação é tão importante?</p>
+                <p>Na Administração Pública, a informação é um ativo estratégico. Proteger dados de cidadãos, processos sigilosos e a infraestrutura governamental não é apenas uma obrigação técnica, mas um dever legal e um pilar para a confiança pública. Dominar este tema é um diferencial decisivo para sua aprovação e atuação profissional.</p>
+            </div>
+            <h3 class="text-2xl font-semibold mb-3">Como usar este guia:</h3>
+            <ul class="list-disc list-inside space-y-2 text-gray-700">
+                <li>Navegue pelas abas ao lado para explorar os tópicos de forma progressiva.</li>
+                <li>Preste atenção especial aos quadros de <strong>Dicas de Prova</strong> e <strong>Alertas de Pegadinha</strong>.</li>
+                <li>Teste seus conhecimentos no <strong>Quiz Interativo</strong> e resolva os <strong>Exercícios de Concursos</strong>.</li>
+                <li>Consulte o <strong>Glossário</strong> sempre que encontrar um termo desconhecido.</li>
+            </ul>
+        `;
+
+        document.getElementById('fundamentos').innerHTML = `
+            <h2 class="text-3xl font-bold mb-6">Fundamentos e Princípios</h2>
+            <p class="text-lg mb-8">Toda a disciplina de Segurança da Informação é construída sobre um conjunto de princípios fundamentais. Compreendê-los é o primeiro e mais importante passo.</p>
+            
+            <h3 class="text-2xl font-semibold mb-4">A Tríade CID: O Alicerce da Segurança</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="font-bold text-xl mb-2 text-blue-700"><i class="fas fa-eye-slash mr-2"></i>Confidencialidade</h4>
+                    <p>Garante que a informação seja acessível <strong>apenas por pessoas autorizadas</strong>. É o pilar do sigilo. Mecanismos: Criptografia, controle de acesso.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="font-bold text-xl mb-2 text-green-700"><i class="fas fa-check-circle mr-2"></i>Integridade</h4>
+                    <p>Assegura que os dados <strong>não foram alterados indevidamente</strong>. Garante a precisão e a confiabilidade da informação. Mecanismos: Hash, assinaturas digitais.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="font-bold text-xl mb-2 text-orange-600"><i class="fas fa-server mr-2"></i>Disponibilidade</h4>
+                    <p>Garante que sistemas e dados estejam <strong>acessíveis quando necessários</strong>. Relaciona-se à continuidade dos serviços. Mecanismos: Redundância, backup.</p>
+                </div>
+            </div>
+            <div class="dica-prova p-4 rounded-lg mb-8">
+                <p><strong class="font-bold">Dica de Prova:</strong> As bancas adoram criar cenários e perguntar qual pilar da Tríade CID foi violado. Ex: "Um ataque de ransomware que criptografa os arquivos de um servidor afeta diretamente a <strong>Disponibilidade</strong>". "Um vazamento de dados de clientes fere a <strong>Confidencialidade</strong>".</p>
+            </div>
+
+            <h3 class="text-2xl font-semibold mb-4">Princípios Expandidos (Pós-CID)</h3>
+            <div class="space-y-4">
+                <div class="bg-white p-4 rounded-lg shadow-sm">
+                    <h4 class="font-semibold text-lg">Autenticidade</h4>
+                    <p>Garante que a identidade de um usuário ou sistema é quem ele diz ser. É a prova de identidade. Mecanismos: Senhas, MFA, biometria.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-sm">
+                    <h4 class="font-semibold text-lg">Não Repúdio (Irretratabilidade)</h4>
+                    <p>Fornece prova incontestável de que uma determinada ação foi realizada por alguém, impedindo que essa pessoa negue a autoria. Mecanismo principal: Assinatura Digital.</p>
+                </div>
+                <div class="alerta-pegadinha p-4 rounded-lg">
+                    <p><strong class="font-bold">Alerta de Pegadinha:</strong> Não confunda Autenticidade com Não Repúdio. Autenticidade prova <strong>quem você é</strong>. Não Repúdio prova <strong>o que você fez</strong> e que você não pode negar.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-sm">
+                    <h4 class="font-semibold text-lg">Legalidade / Conformidade</h4>
+                    <p>Garante que o tratamento da informação está em conformidade com as leis e regulamentos vigentes (ex: LGPD).</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-sm">
+                    <h4 class="font-semibold text-lg">Accountability (Responsabilização e Prestação de Contas)</h4>
+                    <p>Princípio da LGPD que exige que o agente de tratamento de dados não apenas cumpra as regras, mas seja capaz de <strong>comprovar</strong> o cumprimento.</p>
+                </div>
+            </div>
+        `;
+
+        document.getElementById('politicas').innerHTML = `
+            <h2 class="text-3xl font-bold mb-6">Políticas e Normas de Segurança</h2>
+            <p class="text-lg mb-8">A segurança da informação não é feita de improviso. Ela é guiada por políticas institucionais e normas internacionais que estruturam as melhores práticas.</p>
+
+            <h3 class="text-2xl font-semibold mb-4">A Família ISO/IEC 27000</h3>
+            <p class="mb-6">É o conjunto de padrões internacionais mais famoso para a gestão da segurança da informação.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="font-bold text-xl mb-2 text-blue-700">ISO/IEC 27001</h4>
+                    <p>Define os <strong>requisitos</strong> para estabelecer, implementar, manter e melhorar um <strong>Sistema de Gestão de Segurança da Informação (SGSI)</strong>. É a norma que permite a <strong>certificação</strong>. Ela diz "o que" fazer.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="font-bold text-xl mb-2 text-green-700">ISO/IEC 27002</h4>
+                    <p>É um <strong>código de boas práticas</strong>. Fornece um catálogo detalhado de controles de segurança e diretrizes de implementação. Não é certificável, mas serve de apoio para a 27001. Ela diz "como" fazer.</p>
+                </div>
+            </div>
+            <div class="alerta-pegadinha p-4 rounded-lg mb-8">
+                <p><strong class="font-bold">Alerta de Pegadinha:</strong> A banca vai tentar te confundir! Lembre-se: <strong>ISO 27001 = Requisitos e Certificação</strong>. <strong>ISO 27002 = Guia de Controles (Boas Práticas)</strong>.</p>
+            </div>
+
+            <h3 class="text-2xl font-semibold mb-4">Política de Segurança da Informação (PSI)</h3>
+            <p class="mb-4">É o documento de mais alto nível que estabelece as diretrizes, responsabilidades e objetivos da segurança da informação em uma organização. A PSI deve ser:</p>
+            <ul class="list-disc list-inside space-y-2 mb-6 text-gray-700">
+                <li>Aprovada pela alta gestão.</li>
+                <li>Divulgada a todos os colaboradores e partes interessadas.</li>
+                <li>Revisada periodicamente.</li>
+            </ul>
+
+            <h3 class="text-2xl font-semibold mb-4">Classificação da Informação</h3>
+            <p class="mb-6">É o processo de categorizar a informação com base em seu nível de sensibilidade, valor e criticidade para a organização. O objetivo é aplicar o nível de proteção adequado a cada tipo de dado.</p>
+            <div class="exemplo-pratico p-4 rounded-lg">
+                <p><strong class="font-bold">Exemplo Prático no Setor Público (baseado na Lei de Acesso à Informação):</strong></p>
+                <ul class="list-decimal list-inside mt-2">
+                    <li><strong>Ultrassecreta:</strong> Protegida por 25 anos. Ex: Planos de defesa nacional.</li>
+                    <li><strong>Secreta:</strong> Protegida por 15 anos. Ex: Informações de investigações sigilosas.</li>
+                    <li><strong>Reservada:</strong> Protegida por 5 anos. Ex: Processos administrativos disciplinares em andamento.</li>
+                    <li><strong>Pública/Ostensiva:</strong> Informação de acesso livre.</li>
+                </ul>
+            </div>
+        `;
+        
+        document.getElementById('riscos').innerHTML = `
+            <h2 class="text-3xl font-bold mb-6">Gestão de Riscos</h2>
+            <p class="text-lg mb-8">A gestão de riscos é o processo proativo de identificar, avaliar e tratar as incertezas que podem afetar os objetivos da organização. Em segurança, o objetivo é proteger os ativos de informação.</p>
+
+            <h3 class="text-2xl font-semibold mb-4">Conceitos Fundamentais</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-4 rounded-lg shadow-sm">
+                    <h4 class="font-bold text-lg mb-2">Ativo</h4>
+                    <p>Qualquer coisa que tenha valor para a organização. Ex: Dados, hardware, software, pessoas, reputação.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-sm">
+                    <h4 class="font-bold text-lg mb-2">Ameaça</h4>
+                    <p>Causa potencial de um incidente indesejado que pode resultar em dano. Ex: Hacker, malware, desastre natural.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-sm">
+                    <h4 class="font-bold text-lg mb-2">Vulnerabilidade</h4>
+                    <p>Uma fraqueza em um ativo ou controle que pode ser explorada por uma ameaça. Ex: Software desatualizado, senha fraca.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-sm">
+                    <h4 class="font-bold text-lg mb-2">Risco</h4>
+                    <p>A probabilidade de uma ameaça explorar uma vulnerabilidade e causar um impacto negativo. <strong>Risco = Ameaça x Vulnerabilidade x Impacto</strong>.</p>
+                </div>
+            </div>
+            <div class="dica-prova p-4 rounded-lg mb-8">
+                <p><strong class="font-bold">Dica de Prova:</strong> A fórmula conceitual <strong>Risco = Ameaça x Vulnerabilidade</strong> é um clássico. Ameaça é o "agente", vulnerabilidade é a "brecha". Um hacker (ameaça) explora um sistema sem patch (vulnerabilidade).</p>
+            </div>
+
+            <h3 class="text-2xl font-semibold mb-4">Estratégias de Tratamento de Riscos</h3>
+            <p class="mb-6">Após identificar e avaliar um risco, a organização pode escolher uma das quatro estratégias para tratá-lo:</p>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="border-b-2 border-gray-200">
+                            <th class="p-3 font-semibold">Estratégia</th>
+                            <th class="p-3 font-semibold">Ação</th>
+                            <th class="p-3 font-semibold">Exemplo Prático</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-gray-100">
+                            <td class="p-3 font-medium text-blue-600">Mitigar (ou Reduzir)</td>
+                            <td class="p-3">Implementar controles para diminuir a probabilidade ou o impacto.</td>
+                            <td class="p-3">Instalar um firewall; aplicar patches de segurança.</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 bg-gray-50">
+                            <td class="p-3 font-medium text-green-600">Transferir</td>
+                            <td class="p-3">Compartilhar o risco com um terceiro.</td>
+                            <td class="p-3">Contratar um seguro cibernético; terceirizar um serviço.</td>
+                        </tr>
+                        <tr class="border-b border-gray-100">
+                            <td class="p-3 font-medium text-orange-600">Aceitar</td>
+                            <td class="p-3">Decidir conscientemente não fazer nada, geralmente quando o custo do controle é maior que o risco.</td>
+                            <td class="p-3">Aceitar o risco de uma falha de hardware em um PC não crítico.</td>
+                        </tr>
+                        <tr class="bg-gray-50">
+                            <td class="p-3 font-medium text-red-600">Evitar (ou Eliminar)</td>
+                            <td class="p-3">Descontinuar a atividade que gera o risco.</td>
+                            <td class="p-3">Proibir o uso de um software inseguro; desativar um serviço vulnerável.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        `;
+        
+        document.getElementById('ataques').innerHTML = `
+            <h2 class="text-3xl font-bold mb-6">Ataques e Ameaças Comuns</h2>
+            <p class="text-lg mb-8">Conhecer o inimigo é o primeiro passo para a defesa. Esta seção detalha os tipos de ataques mais comuns cobrados em provas.</p>
+
+            <div class="space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-2">Engenharia Social</h3>
+                    <p>A arte de manipular psicologicamente as pessoas para que realizem ações ou divulguem informações confidenciais. É um ataque ao "elo mais fraco": o ser humano.</p>
+                    <div class="mt-4">
+                        <h4 class="font-bold">Tipos Comuns:</h4>
+                        <ul class="list-disc list-inside ml-4 mt-2 text-gray-700">
+                            <li><strong>Phishing:</strong> O mais famoso. E-mails fraudulentos que se passam por fontes legítimas para roubar credenciais ou instalar malware.</li>
+                            <li><strong>Vishing:</strong> Phishing por voz (telefone).</li>
+                            <li><strong>Smishing:</strong> Phishing por SMS.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-2">Malware (Software Malicioso)</h3>
+                    <p>Termo genérico para qualquer software projetado para causar danos.</p>
+                    <div class="alerta-pegadinha p-4 rounded-lg my-4">
+                        <p><strong class="font-bold">Alerta de Pegadinha:</strong> As bancas amam as diferenças entre Vírus e Worm!</p>
+                        <ul class="list-disc list-inside mt-2">
+                            <li><strong>Vírus:</strong> Precisa de um "hospedeiro" (um arquivo legítimo) e da ação do usuário para se propagar.</li>
+                            <li><strong>Worm (Verme):</strong> É autônomo. Propaga-se sozinho pela rede, explorando vulnerabilidades. Não precisa de hospedeiro.</li>
+                        </ul>
+                    </div>
+                    <ul class="list-disc list-inside ml-4 text-gray-700">
+                        <li><strong>Ransomware:</strong> Sequestra dados (criptografando-os) e exige um resgate.</li>
+                        <li><strong>Spyware:</strong> Espiona as atividades do usuário. Keyloggers são um tipo de spyware que registram o que é digitado.</li>
+                        <li><strong>Trojan (Cavalo de Troia):</strong> Disfarça-se de software legítimo para enganar o usuário e abrir uma "backdoor" no sistema.</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-2">Ataques a Redes e Servidores</h3>
+                    <ul class="list-disc list-inside ml-4 text-gray-700 space-y-2">
+                        <li><strong>DDoS (Negação de Serviço Distribuída):</strong> Múltiplos computadores (uma botnet) sobrecarregam um servidor com tráfego, tornando-o indisponível. Afeta a <strong>Disponibilidade</strong>.</li>
+                        <li><strong>SQL Injection:</strong> Injeta código SQL malicioso em um campo de formulário web para manipular o banco de dados do servidor. Afeta a <strong>Confidencialidade</strong> e a <strong>Integridade</strong>.</li>
+                        <li><strong>Man-in-the-Middle (MITM):</strong> O atacante se posiciona secretamente entre duas partes que se comunicam, interceptando e possivelmente alterando a comunicação.</li>
+                    </ul>
+                </div>
+            </div>
+        `;
+        
+        document.getElementById('criptografia').innerHTML = `
+            <h2 class="text-3xl font-bold mb-6">Criptografia</h2>
+            <p class="text-lg mb-8">Criptografia é a ciência de codificar informações para que apenas pessoas autorizadas possam lê-las. É a base técnica para a Confidencialidade e a Integridade.</p>
+
+            <h3 class="text-2xl font-semibold mb-4">Chave Simétrica vs. Assimétrica</h3>
+            <p class="mb-6">Esta é a comparação mais importante e mais cobrada em concursos.</p>
+            <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="border-b-2 border-gray-200">
+                            <th class="p-3 font-semibold">Critério</th>
+                            <th class="p-3 font-semibold">Criptografia Simétrica</th>
+                            <th class="p-3 font-semibold">Criptografia Assimétrica</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-gray-100">
+                            <td class="p-3 font-medium">Chaves</td>
+                            <td class="p-3"><strong>Uma única chave</strong> (secreta/compartilhada) para criptografar e descriptografar.</td>
+                            <td class="p-3"><strong>Um par de chaves:</strong> uma pública (para criptografar) e uma privada (para descriptografar).</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 bg-gray-50">
+                            <td class="p-3 font-medium">Velocidade</td>
+                            <td class="p-3">⚡️ <strong>Rápida</strong>. Ideal para grandes volumes de dados.</td>
+                            <td class="p-3">🐢 <strong>Lenta</strong>. Inviável para grandes volumes de dados.</td>
+                        </tr>
+                        <tr class="border-b border-gray-100">
+                            <td class="p-3 font-medium">Problema Principal</td>
+                            <td class="p-3">Distribuição segura da chave secreta.</td>
+                            <td class="p-3">A lentidão do processo.</td>
+                        </tr>
+                        <tr class="bg-gray-50">
+                            <td class="p-3 font-medium">Exemplos</td>
+                            <td class="p-3">AES, DES, 3DES</td>
+                            <td class="p-3">RSA, ECC</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="dica-prova p-4 rounded-lg mb-8">
+                <p><strong class="font-bold">Dica de Prova:</strong> O HTTPS (navegação segura na web) usa um sistema <strong>híbrido</strong>! Ele usa a criptografia <strong>assimétrica</strong> (lenta) apenas no início para trocar de forma segura uma chave <strong>simétrica</strong> (rápida). Depois, toda a comunicação usa a chave simétrica.</p>
+            </div>
+            
+            <h3 class="text-2xl font-semibold mb-4">Hash e Assinatura Digital</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="font-bold text-xl mb-2">Função de Hash</h4>
+                    <p>É um algoritmo que transforma uma entrada de qualquer tamanho em uma saída de tamanho fixo (o "hash"). É uma "impressão digital" do dado.</p>
+                    <ul class="list-disc list-inside mt-2 text-gray-700">
+                        <li><strong>Propriedade chave:</strong> É de mão única (irreversível).</li>
+                        <li><strong>Garante:</strong> A <strong>Integridade</strong>. Se o hash de um arquivo mudou, o arquivo foi alterado.</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="font-bold text-xl mb-2">Assinatura Digital</h4>
+                    <p>É o processo de criptografar o <strong>hash</strong> de um documento com a <strong>chave privada</strong> do remetente.</p>
+                    <ul class="list-disc list-inside mt-2 text-gray-700">
+                         <li><strong>Garante:</strong> Integridade, Autenticidade e <strong>Não Repúdio</strong>.</li>
+                    </ul>
+                </div>
+            </div>
+             <div class="alerta-pegadinha p-4 rounded-lg mt-8">
+                <p><strong class="font-bold">Alerta de Pegadinha:</strong> Criptografar um documento com a chave <strong>pública</strong> garante <strong>Confidencialidade</strong>. Criptografar o hash de um documento com a chave <strong>privada</strong> gera uma <strong>Assinatura Digital</strong> (garante Autenticidade e Não Repúdio).</p>
+            </div>
+        `;
+        
+        document.getElementById('acesso').innerHTML = `
+            <h2 class="text-3xl font-bold mb-6">Controles de Acesso</h2>
+            <p class="text-lg mb-8">Controles de acesso são os mecanismos que garantem que usuários autenticados possam acessar apenas os recursos aos quais têm permissão. Eles aplicam a política de "menor privilégio".</p>
+
+            <h3 class="text-2xl font-semibold mb-4">Fatores de Autenticação</h3>
+            <p class="mb-6">A autenticação confirma a identidade de um usuário. A Autenticação Multifator (MFA) combina dois ou mais destes fatores:</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <i class="fas fa-key text-3xl text-blue-500 mb-3"></i>
+                    <h4 class="font-bold text-lg mb-2">Algo que você sabe</h4>
+                    <p>Senhas, PINs, perguntas de segurança.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <i class="fas fa-mobile-alt text-3xl text-green-500 mb-3"></i>
+                    <h4 class="font-bold text-lg mb-2">Algo que você tem</h4>
+                    <p>Token, smart card, celular (para receber SMS ou usar app autenticador).</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <i class="fas fa-fingerprint text-3xl text-purple-500 mb-3"></i>
+                    <h4 class="font-bold text-lg mb-2">Algo que você é</h4>
+                    <p>Biometria (impressão digital, reconhecimento facial, íris).</p>
+                </div>
+            </div>
+
+            <h3 class="text-2xl font-semibold mb-4">Modelos de Controle de Acesso</h3>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="border-b-2 border-gray-200">
+                            <th class="p-3 font-semibold">Modelo</th>
+                            <th class="p-3 font-semibold">Quem define o acesso?</th>
+                            <th class="p-3 font-semibold">Principal Característica</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-gray-100">
+                            <td class="p-3 font-medium"><strong>DAC</strong> (Discricionário)</td>
+                            <td class="p-3">O <strong>dono</strong> do recurso.</td>
+                            <td class="p-3">Flexível, mas difícil de gerenciar em larga escala.</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 bg-gray-50">
+                            <td class="p-3 font-medium"><strong>MAC</strong> (Obrigatório)</td>
+                            <td class="p-3">O <strong>sistema</strong>, com base em rótulos de segurança.</td>
+                            <td class="p-3">Rígido e seguro. Usado em ambientes militares.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-medium"><strong>RBAC</strong> (Baseado em Funções)</td>
+                            <td class="p-3">O administrador, atribuindo <strong>funções</strong> aos usuários.</td>
+                            <td class="p-3">Escalável e o padrão para a maioria das empresas.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="dica-prova p-4 rounded-lg mt-8">
+                <p><strong class="font-bold">Dica de Prova:</strong> RBAC (Role-Based Access Control) é o modelo mais cobrado em concursos para ambientes corporativos e governamentais. Ele simplifica a gestão de permissões e implementa o princípio do menor privilégio.</p>
+            </div>
+        `;
+        
+        document.getElementById('backup').innerHTML = `
+            <h2 class="text-3xl font-bold mb-6">Backup e Recuperação</h2>
+            <p class="text-lg mb-8">Backup é o processo de criar cópias de segurança dos dados para que possam ser restaurados em caso de perda, corrupção ou desastre. É um controle essencial para garantir a <strong>Disponibilidade</strong> e a <strong>Integridade</strong>.</p>
+            
+            <h3 class="text-2xl font-semibold mb-4">Tipos de Backup</h3>
+            <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="border-b-2 border-gray-200">
+                            <th class="p-3 font-semibold">Tipo</th>
+                            <th class="p-3 font-semibold">O que copia?</th>
+                            <th class="p-3 font-semibold">Velocidade de Backup</th>
+                            <th class="p-3 font-semibold">Velocidade de Restauração</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-gray-100">
+                            <td class="p-3 font-medium"><strong>Completo (Full)</strong></td>
+                            <td class="p-3">Copia <strong>todos</strong> os dados selecionados.</td>
+                            <td class="p-3">Lento</td>
+                            <td class="p-3">Rápida (só precisa do último backup completo).</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 bg-gray-50">
+                            <td class="p-3 font-medium"><strong>Incremental</strong></td>
+                            <td class="p-3">Copia apenas os dados alterados <strong>desde o último backup (de qualquer tipo)</strong>.</td>
+                            <td class="p-3">Rápido</td>
+                            <td class="p-3">Lenta (precisa do último completo + todos os incrementais).</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-medium"><strong>Diferencial</strong></td>
+                            <td class="p-3">Copia apenas os dados alterados <strong>desde o último backup COMPLETO</strong>.</td>
+                            <td class="p-3">Médio</td>
+                            <td class="p-3">Média (precisa do último completo + o último diferencial).</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="alerta-pegadinha p-4 rounded-lg mb-8">
+                <p><strong class="font-bold">Alerta de Pegadinha:</strong> A diferença entre Incremental e Diferencial é o ponto de referência! <strong>Incremental</strong> olha para o <strong>último backup feito</strong>. <strong>Diferencial</strong> olha sempre para o <strong>último backup completo</strong>.</p>
+            </div>
+
+            <h3 class="text-2xl font-semibold mb-4">Métricas de Recuperação</h3>
+             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="font-bold text-xl mb-2">RTO (Recovery Time Objective)</h4>
+                    <p><strong>Tempo</strong> Máximo Tolerável de Recuperação. Define quanto tempo o sistema pode ficar indisponível após um desastre. Responde à pergunta: "Em quanto tempo precisamos estar de volta?".</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="font-bold text-xl mb-2">RPO (Recovery Point Objective)</h4>
+                    <p><strong>Ponto</strong> Máximo Tolerável de Perda de Dados. Define a quantidade máxima de dados que a organização pode perder. Responde à pergunta: "Até que ponto no tempo podemos perder dados?". O RPO define a frequência dos backups.</p>
+                </div>
+            </div>
+        `;
+        
+        document.getElementById('seguranca-fisica-logica').innerHTML = `
+            <h2 class="text-3xl font-bold mb-6">Segurança Física e Lógica</h2>
+            <p class="text-lg mb-8">A segurança é feita em camadas. A segurança física protege o ambiente e os equipamentos, enquanto a segurança lógica protege os dados e sistemas.</p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-4">Segurança Física</h3>
+                    <p class="mb-4">Controles para proteger o acesso físico a áreas restritas, como data centers e salas de servidores.</p>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h4 class="font-bold text-lg mb-3">Exemplos de Controles Físicos:</h4>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li>Controle de acesso com crachás e biometria.</li>
+                            <li>Câmeras de vigilância (CFTV).</li>
+                            <li>Guardas de segurança.</li>
+                            <li>Sensores de movimento e alarmes.</li>
+                            <li>Controle de temperatura e umidade.</li>
+                            <li>Sistemas de supressão de incêndio.</li>
+                            <li>No-breaks (UPS) e geradores de energia.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold mb-4">Segurança Lógica</h3>
+                    <p class="mb-4">Controles implementados em software para proteger os sistemas e os dados.</p>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h4 class="font-bold text-lg mb-3">Exemplos de Controles Lógicos:</h4>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li>Autenticação com senhas e MFA.</li>
+                            <li><strong>Firewalls:</strong> Filtram o tráfego de rede.</li>
+                            <li><strong>Antivírus/Antimalware:</strong> Detectam e removem software malicioso.</li>
+                            <li><strong>IDS/IPS:</strong> Sistemas de Detecção/Prevenção de Intrusão que monitoram a rede em busca de atividades suspeitas.</li>
+                            <li>Criptografia de dados.</li>
+                            <li>Listas de Controle de Acesso (ACLs).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="dica-prova p-4 rounded-lg mt-8">
+                <p><strong class="font-bold">Dica de Prova:</strong> A segurança física é a primeira linha de defesa. De nada adianta ter o firewall mais avançado do mundo se um invasor pode simplesmente entrar no data center e roubar um servidor.</p>
+            </div>
+        `;
+
+        document.getElementById('redes').innerHTML = `
+            <h2 class="text-3xl font-bold mb-6">Segurança em Redes e Internet</h2>
+            <p class="text-lg mb-8">Proteger a comunicação de dados é essencial. Esta seção aborda as principais tecnologias e conceitos para a segurança de redes.</p>
+
+            <h3 class="text-2xl font-semibold mb-4">Protocolos Seguros</h3>
+            <div class="space-y-4 mb-8">
+                <div class="bg-white p-4 rounded-lg shadow-sm">
+                    <p><strong class="font-semibold">HTTPS (Hypertext Transfer Protocol Secure):</strong> Versão segura do HTTP. Usa criptografia (TLS/SSL) para proteger a comunicação entre seu navegador e o site. O cadeado no navegador indica o uso de HTTPS.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-sm">
+                    <p><strong class="font-semibold">SSH (Secure Shell):</strong> Protocolo para acesso remoto seguro a servidores e outros dispositivos de rede. Criptografa toda a sessão, incluindo a autenticação.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-sm">
+                    <p><strong class="font-semibold">VPN (Virtual Private Network):</strong> Cria um "túnel" criptografado sobre uma rede pública (como a internet), permitindo acesso seguro à rede de uma organização como se você estivesse fisicamente lá.</p>
+                </div>
+            </div>
+
+            <h3 class="text-2xl font-semibold mb-4">Segmentação de Rede e DMZ</h3>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h4 class="font-bold text-xl mb-2">Segmentação de Rede</h4>
+                <p class="mb-4">É a prática de dividir uma rede de computadores em sub-redes menores (segmentos). O objetivo é melhorar o desempenho e, principalmente, a segurança. Se um segmento for comprometido, o ataque fica contido e não se espalha facilmente para o resto da rede.</p>
+                
+                <h4 class="font-bold text-xl mb-2">DMZ (Zona Desmilitarizada)</h4>
+                <p>É um segmento de rede isolado que fica entre a rede interna (confiável) e a rede externa (não confiável, a internet). Na DMZ ficam os servidores que precisam ser acessíveis publicamente, como servidores web e de e-mail. A DMZ atua como uma "zona de sacrifício": se um servidor na DMZ for invadido, o atacante ainda terá que passar por outro firewall para chegar à rede interna.</p>
+                <div class="exemplo-pratico p-4 rounded-lg mt-4">
+                    <p><strong class="font-bold">Exemplo Prático:</strong> O portal de serviços ao cidadão de uma prefeitura (servidor web) deve ficar na DMZ. O banco de dados com as informações dos contribuintes (ativo crítico) deve ficar na rede interna, totalmente protegido e inacessível diretamente da internet.</p>
+                </div>
+            </div>
+        `;
+
+        document.getElementById('lgpd').innerHTML = `
+            <h2 class="text-3xl font-bold mb-6">LGPD e Proteção de Dados (Lei nº 13.709/2018)</h2>
+            <p class="text-lg mb-8">A Lei Geral de Proteção de Dados Pessoais (LGPD) mudou radicalmente como as organizações públicas e privadas devem tratar os dados de pessoas físicas no Brasil.</p>
+
+            <h3 class="text-2xl font-semibold mb-4">Princípios Fundamentais da LGPD (Art. 6º)</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                <div class="bg-white p-4 rounded-lg shadow-sm"><strong class="text-blue-600">Finalidade:</strong> Tratar dados apenas para propósitos legítimos e informados.</div>
+                <div class="bg-white p-4 rounded-lg shadow-sm"><strong class="text-blue-600">Adequação:</strong> Compatibilidade do tratamento com a finalidade informada.</div>
+                <div class="bg-white p-4 rounded-lg shadow-sm"><strong class="text-blue-600">Necessidade:</strong> Uso do mínimo de dados necessários (minimização).</div>
+                <div class="bg-white p-4 rounded-lg shadow-sm"><strong class="text-blue-600">Livre Acesso:</strong> Consulta fácil e gratuita sobre o tratamento dos dados.</div>
+                <div class="bg-white p-4 rounded-lg shadow-sm"><strong class="text-blue-600">Qualidade dos Dados:</strong> Dados exatos, claros e atualizados.</div>
+                <div class="bg-white p-4 rounded-lg shadow-sm"><strong class="text-blue-600">Transparência:</strong> Informações claras e acessíveis sobre o tratamento.</div>
+                <div class="bg-white p-4 rounded-lg shadow-sm"><strong class="text-blue-600">Segurança:</strong> Uso de medidas técnicas e administrativas para proteger os dados.</div>
+                <div class="bg-white p-4 rounded-lg shadow-sm"><strong class="text-blue-600">Prevenção:</strong> Adoção de medidas para prevenir a ocorrência de danos.</div>
+                <div class="bg-white p-4 rounded-lg shadow-sm"><strong class="text-blue-600">Não Discriminação:</strong> Impossibilidade de tratamento para fins discriminatórios.</div>
+                <div class="bg-white p-4 rounded-lg shadow-sm col-span-1 md:col-span-2 lg:col-span-3"><strong class="text-blue-600">Responsabilização e Prestação de Contas (Accountability):</strong> Dever de comprovar a adoção de medidas eficazes.</div>
+            </div>
+
+            <h3 class="text-2xl font-semibold mb-4">Agentes de Tratamento e Sanções</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="font-bold text-xl mb-2">Agentes de Tratamento</h4>
+                    <ul class="list-disc list-inside space-y-2 text-gray-700">
+                        <li><strong>Titular:</strong> A pessoa física a quem os dados se referem (você).</li>
+                        <li><strong>Controlador:</strong> Quem toma as decisões sobre o tratamento dos dados (a empresa/órgão).</li>
+                        <li><strong>Operador:</strong> Quem realiza o tratamento em nome do controlador (ex: uma empresa de nuvem).</li>
+                        <li><strong>Encarregado (DPO):</strong> O "fiscal" da LGPD dentro da organização, que faz a ponte com os titulares e a ANPD.</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="font-bold text-xl mb-2">Sanções da ANPD</h4>
+                    <p>A Autoridade Nacional de Proteção de Dados (ANPD) pode aplicar sanções severas em caso de descumprimento, incluindo:</p>
+                    <ul class="list-disc list-inside space-y-2 text-red-700">
+                        <li>Advertência.</li>
+                        <li><strong>Multa de até 2% do faturamento</strong>, limitada a R$ 50 milhões por infração.</li>
+                        <li>Publicização da infração (dano à imagem).</li>
+                        <li>Bloqueio ou eliminação dos dados.</li>
+                    </ul>
+                </div>
+            </div>
+        `;
+        
+        document.getElementById('governanca').innerHTML = `
+            <h2 class="text-3xl font-bold mb-6">Governança e Continuidade</h2>
+            <p class="text-lg mb-8">Governança de TI e Continuidade de Negócios são disciplinas gerenciais que garantem que a TI suporte os objetivos da organização e que o negócio possa sobreviver a desastres.</p>
+
+            <h3 class="text-2xl font-semibold mb-4">Frameworks de Governança</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="font-bold text-xl mb-2">COBIT</h4>
+                    <p>Framework focado na <strong>governança e gestão da TI corporativa</strong>. Seu objetivo é alinhar a TI aos objetivos de negócio, otimizar o uso de recursos e gerenciar os riscos de TI. É mais voltado para "o que" fazer e para a auditoria.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="font-bold text-xl mb-2">ITIL</h4>
+                    <p>Conjunto de boas práticas para o <strong>gerenciamento de serviços de TI (ITSM)</strong>. Foca na entrega de serviços de TI com qualidade e eficiência. É mais operacional, focado em "como" fazer (ex: gestão de incidentes, mudanças, problemas).</p>
+                </div>
+            </div>
+
+            <h3 class="text-2xl font-semibold mb-4">Continuidade de Negócios vs. Recuperação de Desastres</h3>
+            <div class="alerta-pegadinha p-4 rounded-lg mb-8">
+                <p><strong class="font-bold">Alerta de Pegadinha:</strong> PCN e PRD não são a mesma coisa!</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="border-b-2 border-gray-200">
+                            <th class="p-3 font-semibold">Plano</th>
+                            <th class="p-3 font-semibold">Foco</th>
+                            <th class="p-3 font-semibold">Objetivo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-gray-100">
+                            <td class="p-3 font-medium"><strong>PCN</strong> (Plano de Continuidade de Negócios)</td>
+                            <td class="p-3"><strong>Negócio</strong> (Pessoas, Processos).</td>
+                            <td class="p-3">Manter as operações críticas funcionando <strong>durante</strong> a crise.</td>
+                        </tr>
+                        <tr class="bg-gray-50">
+                            <td class="p-3 font-medium"><strong>PRD</strong> (Plano de Recuperação de Desastres)</td>
+                            <td class="p-3"><strong>Tecnologia</strong> (TI).</td>
+                            <td class="p-3">Restaurar a infraestrutura de TI <strong>após</strong> o desastre.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="mt-4 text-sm text-gray-600">O PRD é um subconjunto do PCN.</p>
+            </div>
+        `;
+        
+        document.getElementById('dicas').innerHTML = `
+            <h2 class="text-3xl font-bold mb-6">Dicas de Prova e Macetes</h2>
+            <p class="text-lg mb-8">Aqui estão compiladas algumas das dicas e macetes mais importantes para você não cair nas pegadinhas das bancas.</p>
+            <div class="space-y-6">
+                <div class="dica-prova p-4 rounded-lg">
+                    <h4 class="font-bold mb-2"><i class="fas fa-lightbulb mr-2"></i>Mnemônico para a Tríade CID</h4>
+                    <p>Associe cada pilar a uma palavra-chave: <strong>C</strong>onfidencialidade = <strong>S</strong>igilo; <strong>I</strong>ntegridade = <strong>E</strong>xatidão; <strong>D</strong>isponibilidade = <strong>A</strong>cesso. Lembre-se do "SEA".</p>
+                </div>
+                <div class="alerta-pegadinha p-4 rounded-lg">
+                    <h4 class="font-bold mb-2"><i class="fas fa-exclamation-circle mr-2"></i>Firewall não é Antivírus</h4>
+                    <p>Firewall filtra o tráfego de rede (como um porteiro). Antivírus escaneia arquivos em busca de códigos maliciosos (como um segurança que revista as malas). São funções diferentes e complementares.</p>
+                </div>
+                <div class="dica-prova p-4 rounded-lg">
+                    <h4 class="font-bold mb-2"><i class="fas fa-lightbulb mr-2"></i>A Chave da Criptografia</h4>
+                    <p>A regra de ouro: O que é criptografado com uma chave só pode ser descriptografado com sua correspondente. Se usou a <strong>pública</strong> para fechar o cofre (confidencialidade), só a <strong>privada</strong> abre. Se usou a <strong>privada</strong> para assinar (autenticidade), a <strong>pública</strong> verifica.</p>
+                </div>
+                <div class="alerta-pegadinha p-4 rounded-lg">
+                    <h4 class="font-bold mb-2"><i class="fas fa-exclamation-circle mr-2"></i>Backup Incremental vs. Diferencial</h4>
+                    <p>A restauração do backup <strong>incremental</strong> é mais lenta e complexa, pois precisa do último backup completo e de <strong>TODOS</strong> os incrementais desde então. A do <strong>diferencial</strong> é mais rápida, precisando apenas do último completo e do <strong>ÚLTIMO</strong> diferencial.</p>
+                </div>
+                <div class="dica-prova p-4 rounded-lg">
+                    <h4 class="font-bold mb-2"><i class="fas fa-lightbulb mr-2"></i>LGPD: Dado Pessoal vs. Dado Sensível</h4>
+                    <p><strong>Dado Pessoal:</strong> qualquer informação que identifica ou torna identificável uma pessoa (nome, CPF, e-mail). <strong>Dado Pessoal Sensível:</strong> tem um potencial discriminatório maior e exige mais proteção (origem racial, convicção religiosa, dado de saúde, dado genético ou biométrico).</p>
+                </div>
+            </div>
+        `;
+
+        document.getElementById('quiz').innerHTML = `
+            <h2 class="text-3xl font-bold mb-6">Quiz Interativo</h2>
+            <p class="text-lg mb-8">Teste seus conhecimentos com 10 questões de múltipla escolha. Selecione uma resposta e veja o feedback instantâneo.</p>
+            <div id="quiz-container" class="space-y-8"></div>
+        `;
+
+        document.getElementById('exercicios').innerHTML = `
+            <h2 class="text-3xl font-bold mb-6">Exercícios Resolvidos de Concursos</h2>
+            <p class="text-lg mb-8">Analise 5 questões reais de concursos e entenda o raciocínio por trás da resposta correta.</p>
+            <div id="exercicios-container" class="space-y-8"></div>
+        `;
+
+        document.getElementById('glossario').innerHTML = `
+            <h2 class="text-3xl font-bold mb-6">Glossário de Termos Técnicos</h2>
+            <p class="text-lg mb-8">Um dicionário rápido para os termos mais comuns em segurança da informação.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white p-4 rounded-lg shadow-sm"><strong class="text-blue-600">Firewall:</strong> Dispositivo ou software que controla o tráfego de rede entre redes.</div>
+                <div class="bg-white p-4 rounded-lg shadow-sm"><strong class="text-blue-600">Hash:</strong> Uma "impressão digital" de um dado, de tamanho fixo e gerada por um algoritmo. Usado para verificar a integridade.</div>
+                <div class="bg-white p-4 rounded-lg shadow-sm"><strong class="text-blue-600">Token:</strong> Dispositivo físico ou lógico que gera senhas de uso único para autenticação.</div>
+                <div class="bg-white p-4 rounded-lg shadow-sm"><strong class="text-blue-600">IDS/IPS:</strong> Sistemas de Detecção/Prevenção de Intrusão que monitoram a rede em busca de atividades maliciosas.</div>
+                <div class="bg-white p-4 rounded-lg shadow-sm"><strong class="text-blue-600">Endpoint:</strong> Qualquer dispositivo final conectado a uma rede (computador, celular, servidor).</div>
+                <div class="bg-white p-4 rounded-lg shadow-sm"><strong class="text-blue-600">VPN:</strong> Rede Privada Virtual. Cria um túnel seguro sobre uma rede pública.</div>
+                <div class="bg-white p-4 rounded-lg shadow-sm"><strong class="text-blue-600">Phishing:</strong> Técnica de engenharia social que usa e-mails falsos para roubar informações.</div>
+                <div class="bg-white p-4 rounded-lg shadow-sm"><strong class="text-blue-600">Ransomware:</strong> Malware que sequestra dados e exige resgate.</div>
+                <div class="bg-white p-4 rounded-lg shadow-sm"><strong class="text-blue-600">Backdoor:</strong> Ponto de entrada secreto em um sistema, que contorna a autenticação normal.</div>
+            </div>
+        `;
+        
+        document.getElementById('materiais').innerHTML = `
+            <h2 class="text-3xl font-bold mb-6">Materiais Complementares</h2>
+            <p class="text-lg mb-8">Aprofunde seus estudos com estes materiais oficiais e confiáveis.</p>
+            <div class="space-y-4">
+                <a href="https://cartilha.cert.br/" target="_blank" class="block bg-white p-4 rounded-lg shadow-sm hover:bg-gray-50 transition-colors">
+                    <strong class="text-blue-600"><i class="fas fa-book-reader mr-2"></i>Cartilha de Segurança para Internet - CERT.br</strong>
+                    <p class="text-sm text-gray-600">Leitura obrigatória. Linguagem acessível e conteúdo fundamental.</p>
+                </a>
+                <a href="https://www.gov.br/anpd/pt-br" target="_blank" class="block bg-white p-4 rounded-lg shadow-sm hover:bg-gray-50 transition-colors">
+                    <strong class="text-blue-600"><i class="fas fa-gavel mr-2"></i>Site da Autoridade Nacional de Proteção de Dados (ANPD)</strong>
+                    <p class="text-sm text-gray-600">Guias, notas técnicas e tudo sobre a LGPD.</p>
+                </a>
+                <a href="https://www.gov.br/gsi/pt-br/seguranca-da-informacao" target="_blank" class="block bg-white p-4 rounded-lg shadow-sm hover:bg-gray-50 transition-colors">
+                    <strong class="text-blue-600"><i class="fas fa-landmark mr-2"></i>Gabinete de Segurança Institucional (GSI)</strong>
+                    <p class="text-sm text-gray-600">Normas e publicações sobre segurança no Governo Federal.</p>
+                </a>
+            </div>
+        `;
+        
+        document.getElementById('referencias').innerHTML = `
+            <h2 class="text-3xl font-bold mb-6">Referências Técnicas</h2>
+            <p class="text-lg mb-8">Bibliografia e normas que fundamentam este guia.</p>
+            <ul class="list-disc list-inside space-y-2 text-gray-700">
+                <li>ISO/IEC 27001:2022 - Information security, cybersecurity and privacy protection.</li>
+                <li>ISO/IEC 27002:2022 - Information security, cybersecurity and privacy protection — Information security controls.</li>
+                <li>Lei nº 13.709, de 14 de agosto de 2018 - Lei Geral de Proteção de Dados Pessoais (LGPD).</li>
+                <li>NIST Special Publication 800-53 - Security and Privacy Controls for Information Systems and Organizations.</li>
+                <li>CERT.br - Centro de Estudos, Resposta e Tratamento de Incidentes de Segurança no Brasil.</li>
+                <li>Doutrina de autores como Stallings, W., & Brown, L., Forouzan, B. A., e Tannenbaum, A. S.</li>
+            </ul>
+        `;
+
+        // Quiz Logic
+        const quizData = [
+            {
+                question: "Um ataque que visa sobrecarregar um servidor com um volume massivo de tráfego, tornando-o inacessível para usuários legítimos, afeta diretamente qual pilar da Segurança da Informação?",
+                options: ["Confidencialidade", "Integridade", "Disponibilidade", "Autenticidade"],
+                answer: "Disponibilidade",
+                feedback: "Correto! Ataques de Negação de Serviço (DoS/DDoS) têm como objetivo principal tornar um sistema ou serviço indisponível, ferindo o pilar da Disponibilidade."
+            },
+            {
+                question: "Qual mecanismo criptográfico é fundamental para garantir o Não Repúdio (Irretratabilidade) de uma transação eletrônica?",
+                options: ["Criptografia Simétrica", "Função de Hash", "Assinatura Digital", "Esteganografia"],
+                answer: "Assinatura Digital",
+                feedback: "Exato! A Assinatura Digital, que utiliza a chave privada do remetente, é o mecanismo que fornece prova incontestável da autoria, garantindo o Não Repúdio."
+            },
+            {
+                question: "(CESPE/CEBRASPE) Um worm diferencia-se de um vírus de computador por uma característica fundamental. Qual é ela?",
+                options: ["Ser sempre destrutivo.", "Necessitar de um programa hospedeiro.", "Propagar-se automaticamente pela rede.", "Ser detectado apenas por firewalls."],
+                answer: "Propagar-se automaticamente pela rede.",
+                feedback: "Perfeito! Esta é a principal diferença. O vírus precisa de um hospedeiro e da ação do usuário para se espalhar. O worm é autônomo e se propaga sozinho pela rede."
+            },
+            {
+                question: "Na criptografia assimétrica, para que um remetente envie uma mensagem confidencial a um destinatário, ele deve usar qual chave para criptografar a mensagem?",
+                options: ["A chave privada do remetente", "A chave pública do remetente", "A chave privada do destinatário", "A chave pública do destinatário"],
+                answer: "A chave pública do destinatário",
+                feedback: "Correto! Para garantir a confidencialidade, a mensagem é 'trancada' com a chave pública do destinatário. Assim, somente o destinatário, com sua chave privada correspondente, poderá 'abrir' e ler a mensagem."
+            },
+            {
+                question: "De acordo com a LGPD, a empresa que toma as decisões referentes ao tratamento de dados pessoais é denominada:",
+                options: ["Operador", "Controlador", "Encarregado (DPO)", "Titular"],
+                answer: "Controlador",
+                feedback: "Isso mesmo! O Controlador é quem decide sobre a finalidade e os meios do tratamento. O Operador apenas executa as ordens do Controlador."
+            },
+            {
+                question: "Qual tipo de backup copia apenas os dados que foram alterados desde o último backup COMPLETO, resultando em backups que crescem ao longo da semana?",
+                options: ["Backup Completo", "Backup Incremental", "Backup Diferencial", "Backup de Cópia"],
+                answer: "Backup Diferencial",
+                feedback: "Correto! O backup diferencial sempre olha para o último backup completo como referência. Por isso, cada backup diferencial tende a ser maior que o anterior."
+            },
+            {
+                question: "Um funcionário recebe um e-mail do 'banco' pedindo para clicar em um link e atualizar seus dados cadastrais. Trata-se de um ataque de:",
+                options: ["DDoS", "Ransomware", "Phishing", "Spyware"],
+                answer: "Phishing",
+                feedback: "Exato! Phishing é a técnica de engenharia social que utiliza iscas (como e-mails falsos) para 'pescar' informações sensíveis das vítimas."
+            },
+            {
+                question: "O modelo de controle de acesso que atribui permissões a usuários com base em seus cargos ou responsabilidades na organização é o:",
+                options: ["DAC (Discricionário)", "MAC (Obrigatório)", "RBAC (Baseado em Funções)", "ACL (Lista de Controle de Acesso)"],
+                answer: "RBAC (Baseado em Funções)",
+                feedback: "Perfeito! O RBAC (Role-Based Access Control) é o modelo mais utilizado em ambientes corporativos por sua escalabilidade e alinhamento com a estrutura organizacional."
+            },
+            {
+                question: "A norma ISO/IEC que especifica os REQUISITOS para um Sistema de Gestão de Segurança da Informação (SGSI) e que é certificável é a:",
+                options: ["ISO/IEC 27001", "ISO/IEC 27002", "ISO/IEC 9001", "ITIL"],
+                answer: "ISO/IEC 27001",
+                feedback: "Correto! A ISO 27001 define 'o que' fazer e é a base para a certificação. A ISO 27002 é o guia de boas práticas que detalha 'como' implementar os controles."
+            },
+            {
+                question: "Um firewall que monitora o estado das conexões ativas, permitindo o tráfego de resposta a uma solicitação interna, mas bloqueando tráfego não solicitado, é do tipo:",
+                options: ["Stateless (Filtragem de Pacotes)", "Proxy de Aplicação", "Stateful (Inspeção de Estado)", "NGFW"],
+                answer: "Stateful (Inspeção de Estado)",
+                feedback: "Exato! A capacidade de manter uma 'tabela de estados' e entender o contexto da conexão é a característica que define um firewall Stateful."
+            }
+        ];
+
+        const quizContainer = document.getElementById('quiz-container');
+        quizData.forEach((q, index) => {
+            const questionBlock = document.createElement('div');
+            questionBlock.className = 'bg-white p-6 rounded-lg shadow-md';
+            
+            let optionsHTML = '';
+            q.options.forEach(opt => {
+                optionsHTML += `<button class="quiz-option block w-full text-left p-3 my-2 border rounded-lg hover:bg-gray-100 transition-colors">${opt}</button>`;
+            });
+
+            questionBlock.innerHTML = `
+                <p class="font-semibold mb-4">${index + 1}. ${q.question}</p>
+                <div class="options-container">${optionsHTML}</div>
+                <div class="quiz-feedback"><p>${q.feedback}</p></div>
+            `;
+            quizContainer.appendChild(questionBlock);
+        });
+
+        quizContainer.addEventListener('click', function(e) {
+            if (e.target.classList.contains('quiz-option')) {
+                const questionBlock = e.target.closest('.bg-white');
+                const options = questionBlock.querySelectorAll('.quiz-option');
+                const feedback = questionBlock.querySelector('.quiz-feedback');
+                const questionIndex = Array.from(quizContainer.children).indexOf(questionBlock);
+                const correctAnswer = quizData[questionIndex].answer;
+
+                options.forEach(opt => {
+                    opt.disabled = true;
+                    if (opt.textContent === correctAnswer) {
+                        opt.classList.add('correct');
+                    }
+                });
+
+                if (e.target.textContent === correctAnswer) {
+                    feedback.classList.add('correct');
+                } else {
+                    e.target.classList.add('incorrect');
+                    feedback.classList.add('incorrect');
+                }
+                feedback.style.display = 'block';
+            }
+        });
+
+        // Exercícios Resolvidos
+        const exerciciosData = [
+            {
+                banca: "FGV",
+                ano: 2022,
+                orgao: "SEFAZ-AM",
+                cargo: "Auditor Fiscal",
+                enunciado: "O princípio da segurança da informação que visa garantir que a informação não seja alterada de forma não autorizada é conhecido como:",
+                options: ["a) disponibilidade.", "b) confidencialidade.", "c) integridade.", "d) autenticidade.", "e) irretratabilidade."],
+                resposta: "c",
+                comentario: "A <strong>integridade</strong> é o pilar que assegura a precisão e a confiabilidade dos dados, garantindo que eles não sofreram alterações indevidas. A questão descreve exatamente a definição de integridade. Confidencialidade se refere ao sigilo, e disponibilidade ao acesso quando necessário."
+            },
+            {
+                banca: "CESPE/CEBRASPE",
+                ano: 2023,
+                orgao: "TJ-ES",
+                cargo: "Analista Judiciário",
+                enunciado: "Julgue o item a seguir, a respeito de noções de segurança da informação. O ransomware é um tipo de software malicioso que, ao infectar um computador, torna os dados armazenados no equipamento inacessíveis, geralmente usando criptografia, e exige pagamento de resgate para restabelecer o acesso ao usuário.",
+                options: ["Certo", "Errado"],
+                resposta: "Certo",
+                comentario: "O item descreve perfeitamente o modus operandi do <strong>ransomware</strong>. Ele 'sequestra' (torna inacessível) os dados da vítima através de criptografia e exige um resgate (ransom) para liberar o acesso. A descrição está totalmente correta."
+            },
+            {
+                banca: "VUNESP",
+                ano: 2023,
+                orgao: "TJ-SP",
+                cargo: "Escrevente Técnico Judiciário",
+                enunciado: "Um usuário, ao final de seu expediente, realiza um backup que copia somente os arquivos que foram alterados desde o último backup completo. Esse tipo de backup é conhecido como:",
+                options: ["a) completo.", "b) incremental.", "c) de cópia.", "d) normal.", "e) diferencial."],
+                resposta: "e",
+                comentario: "A chave da questão está em 'desde o último backup <strong>completo</strong>'. O backup que usa o último backup completo como ponto de referência para copiar apenas os arquivos alterados é o <strong>diferencial</strong>. Se a referência fosse 'desde o último backup de qualquer tipo', seria o incremental."
+            },
+            {
+                banca: "FCC",
+                ano: 2022,
+                orgao: "TRT-9",
+                cargo: "Analista Judiciário - TI",
+                enunciado: "Na criptografia de chave pública, também conhecida como assimétrica, a chave que deve ser mantida em segredo absoluto pelo seu proprietário e que é utilizada para gerar uma assinatura digital é a chave:",
+                options: ["a) simétrica.", "b) pública.", "c) privada.", "d) compartilhada.", "e) de sessão."],
+                resposta: "c",
+                comentario: "Na criptografia assimétrica, o par de chaves consiste em uma pública e uma privada. A chave <strong>pública</strong> pode ser distribuída. A chave <strong>privada</strong> é secreta e intransferível, sendo utilizada para descriptografar mensagens confidenciais e para criar assinaturas digitais, provando a identidade do dono."
+            },
+            {
+                banca: "CESPE/CEBRASPE",
+                ano: 2021,
+                orgao: "Polícia Federal",
+                cargo: "Agente de Polícia Federal",
+                enunciado: "Com relação à segurança da informação, julgue o item. O firewall é um mecanismo de segurança que atua como filtro de pacotes, sendo capaz de identificar e bloquear malwares, como vírus e worms, em arquivos anexados a e-mails.",
+                options: ["Certo", "Errado"],
+                resposta: "Errado",
+                comentario: "O item está <strong>errado</strong>. A função de identificar e bloquear malwares em arquivos é do <strong>antivírus</strong> ou de uma solução de e-mail gateway com antimalware. O firewall atua em um nível mais baixo, filtrando o tráfego de rede com base em regras de portas, IPs e protocolos. Ele não inspeciona o conteúdo de arquivos para detectar vírus."
+            }
+        ];
+
+        const exerciciosContainer = document.getElementById('exercicios-container');
+        exerciciosData.forEach((ex, index) => {
+            const exercicioBlock = document.createElement('div');
+            exercicioBlock.className = 'bg-white p-6 rounded-lg shadow-md';
+            
+            let optionsHTML = '';
+            ex.options.forEach(opt => {
+                optionsHTML += `<div class="p-2">${opt}</div>`;
+            });
+
+            exercicioBlock.innerHTML = `
+                <p class="text-sm text-gray-500 font-mono mb-2">${ex.banca} - ${ex.ano} - ${ex.orgao} (${ex.cargo})</p>
+                <p class="mb-4">${index + 1}. ${ex.enunciado}</p>
+                <div class="bg-gray-50 p-4 rounded-md mb-4">${optionsHTML}</div>
+                <button class="toggle-resposta bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">Mostrar Resposta e Comentário</button>
+                <div class="resposta-comentario hidden mt-4 p-4 bg-green-50 border-l-4 border-green-500 rounded-r-lg">
+                    <p class="font-bold mb-2">Resposta Correta: ${ex.resposta.toUpperCase()}</p>
+                    <p>${ex.comentario}</p>
+                </div>
+            `;
+            exerciciosContainer.appendChild(exercicioBlock);
+        });
+
+        exerciciosContainer.addEventListener('click', function(e) {
+            if (e.target.classList.contains('toggle-resposta')) {
+                const comentario = e.target.nextElementSibling;
+                comentario.classList.toggle('hidden');
+                e.target.textContent = comentario.classList.contains('hidden') ? 'Mostrar Resposta e Comentário' : 'Ocultar Resposta';
+            }
+        });
+
+        // Activate tab based on hash or default to 'inicio'
+        const initialTab = window.location.hash.substring(1) || 'inicio';
+        if (tabs.some(t => t.id === initialTab)) {
+            activateTab(initialTab);
+        } else {
+            activateTab('inicio');
+        }
+    });
+    </script>
+</body>
+</html>
