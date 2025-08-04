@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia de Estudos: Redação Oficial ANPD 2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Chosen Palette: ANPD Inspired (Blue, Gray, White) - Refined -->
+    <!-- Application Structure Plan: A single-page educational application for the ANPD 2025 exam. The structure is pedagogical, guiding the user from foundational concepts to practical application. It uses a top navigation bar for direct access to ALL thematic sections as requested: 1) Introduction; 2) Concepts; 3) Document Structures (now expanded); 4) Linguistics; 5) Annotated Models; 6) Common Errors; 7) Interactive Quiz; 8) Solved Exercises; 9) Review Cards; 10) Glossary; and 11) Downloadable Materials. This structure is now fully implemented to be comprehensive and user-driven. -->
+    <!-- Visualization & Content Choices: 1. Concepts: Interactive Cards with hover effects. 2. Structures: Expanded Tabbed Interface. 3. Quiz: Enhanced with immediate feedback per question. 4. Exercises: Accordion/Toggle for active study. 5. Errors/Tips: Redesigned callout boxes for better visual hierarchy. 6. Glossary/Downloads: Clear, actionable layouts. All choices are refined for a more robust and modern user experience. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+        }
+        .side-nav-link {
+            transition: all 0.2s ease-in-out;
+            border-left: 3px solid transparent;
+        }
+        .side-nav-link:hover {
+            background-color: #f1f5f9; /* slate-100 */
+            border-left-color: #64748b; /* slate-500 */
+            color: #1e293b; /* slate-800 */
+        }
+        .side-nav-link.active {
+            background-color: #eef2ff; /* indigo-50 */
+            border-left-color: #3b82f6; /* blue-500 */
+            color: #1e3a8a; /* blue-900 */
+            font-weight: 600;
+        }
+        .section-title {
+            color: #1e3a8a; /* blue-900 */
+        }
+        .callout {
+            border-left-width: 4px;
+            padding: 1rem;
+            border-radius: 0.375rem; /* rounded-md */
+            margin-bottom: 1rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+        }
+        .callout-pegadinha {
+            background-color: #fefce8; /* yellow-50 */
+            border-color: #facc15; /* yellow-400 */
+            color: #854d0e; /* yellow-800 */
+        }
+        .callout-dica {
+            background-color: #f0fdf4; /* green-50 */
+            border-color: #4ade80; /* green-400 */
+            color: #166534; /* green-800 */
+        }
+        .callout-exemplo {
+            background-color: #eff6ff; /* blue-50 */
+            border-color: #60a5fa; /* blue-400 */
+            color: #1e40af; /* blue-800 */
+        }
+        .quiz-option.selected {
+            background-color: #dbeafe; /* blue-200 */
+            border-color: #3b82f6; /* blue-500 */
+            transform: scale(1.02);
+        }
+        .quiz-option.correct {
+            background-color: #dcfce7; /* green-200 */
+            border-color: #22c55e; /* green-500 */
+        }
+        .quiz-option.incorrect {
+            background-color: #fee2e2; /* red-200 */
+            border-color: #ef4444; /* red-500 */
+        }
+        .tab.active {
+            background-color: #1e40af;
+            color: #ffffff;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased">
+
+    <div class="relative min-h-screen lg:flex">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="bg-white text-slate-600 w-64 fixed inset-y-0 left-0 transform -translate-x-full lg:relative lg:translate-x-0 transition-transform duration-200 ease-in-out z-30 border-r border-slate-200">
+            <div class="p-6">
+                <a href="#inicio" class="flex items-center space-x-3 nav-trigger">
+                    <i class="fas fa-shield-alt text-3xl text-blue-800"></i>
+                    <span class="text-xl font-bold text-slate-900">Guia ANPD</span>
+                </a>
+            </div>
+            <nav class="px-3">
+                <a href="#inicio" class="side-nav-link active flex items-center px-4 py-3 rounded-md nav-trigger"><i class="fas fa-home w-6 mr-2"></i> Início</a>
+                <a href="#conceitos" class="side-nav-link flex items-center px-4 py-3 rounded-md nav-trigger"><i class="fas fa-book w-6 mr-2"></i> Conceitos</a>
+                <a href="#estruturas" class="side-nav-link flex items-center px-4 py-3 rounded-md nav-trigger"><i class="fas fa-sitemap w-6 mr-2"></i> Estruturas</a>
+                <a href="#linguistica" class="side-nav-link flex items-center px-4 py-3 rounded-md nav-trigger"><i class="fas fa-spell-check w-6 mr-2"></i> Linguística</a>
+                <a href="#modelos-comentados" class="side-nav-link flex items-center px-4 py-3 rounded-md nav-trigger"><i class="fas fa-comment-dots w-6 mr-2"></i> Modelos</a>
+                <a href="#erros-comuns" class="side-nav-link flex items-center px-4 py-3 rounded-md nav-trigger"><i class="fas fa-exclamation-triangle w-6 mr-2"></i> Erros Comuns</a>
+                <a href="#quiz" class="side-nav-link flex items-center px-4 py-3 rounded-md nav-trigger"><i class="fas fa-question-circle w-6 mr-2"></i> Quiz</a>
+                <a href="#exercicios" class="side-nav-link flex items-center px-4 py-3 rounded-md nav-trigger"><i class="fas fa-pencil-alt w-6 mr-2"></i> Exercícios</a>
+                <a href="#cards-revisao" class="side-nav-link flex items-center px-4 py-3 rounded-md nav-trigger"><i class="fas fa-layer-group w-6 mr-2"></i> Cards de Revisão</a>
+                <a href="#glossario" class="side-nav-link flex items-center px-4 py-3 rounded-md nav-trigger"><i class="fas fa-book-open w-6 mr-2"></i> Glossário</a>
+                <a href="#materiais" class="side-nav-link flex items-center px-4 py-3 rounded-md nav-trigger"><i class="fas fa-download w-6 mr-2"></i> Materiais</a>
+            </nav>
+        </aside>
+
+        <!-- Overlay for mobile -->
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black opacity-50 hidden z-20"></div>
+
+        <!-- Main content -->
+        <div class="flex-1">
+            <header class="lg:hidden bg-white/80 backdrop-blur-sm sticky top-0 z-10 p-4 shadow-sm flex justify-between items-center">
+                 <a href="#inicio" class="flex items-center space-x-3 nav-trigger">
+                    <i class="fas fa-shield-alt text-2xl text-blue-800"></i>
+                    <span class="text-lg font-bold text-slate-900">Guia ANPD</span>
+                </a>
+                <button id="mobile-menu-button" class="p-2 rounded-md text-slate-600 hover:bg-slate-100">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </header>
+
+            <main class="p-6 md:p-10">
+                <section id="inicio" class="content-section">
+                    <div class="text-center">
+                        <h2 class="text-4xl md:text-5xl font-extrabold section-title mb-4">Prepare-se para Gabaritar Redação Oficial</h2>
+                        <p class="text-lg md:text-xl max-w-3xl mx-auto text-slate-600">Este guia interativo é sua ferramenta completa para dominar os tópicos de Redação Oficial exigidos no edital da ANPD (Banca IADES).</p>
+                        <div class="mt-10 bg-white p-8 rounded-2xl shadow-xl border border-slate-200 max-w-4xl mx-auto">
+                            <h3 class="font-bold text-xl text-slate-800 mb-4">Foco do Edital ANPD - Técnico em Administração</h3>
+                            <p class="text-slate-600">A banca IADES exige conhecimento prático do **Manual de Redação da Presidência da República (3ª edição)**, com ênfase em: **clareza, concisão, impessoalidade, formalidade, padronização**, estrutura dos documentos (Ofício, Parecer, etc.) e aspectos gramaticais aplicados.</p>
+                            <div class="mt-6">
+                                <h4 class="font-semibold text-lg text-slate-700 mb-3">Cronograma de Revisão Sugerido</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
+                                    <div class="bg-slate-100 p-4 rounded-lg border border-slate-200"><strong>Semana 1:</strong> Fundamentos e Princípios. Foco nos cards e conceitos.</div>
+                                    <div class="bg-slate-100 p-4 rounded-lg border border-slate-200"><strong>Semana 2:</strong> Estruturas e Modelos. Estudo das seções de estruturas e modelos comentados.</div>
+                                    <div class="bg-slate-100 p-4 rounded-lg border border-slate-200"><strong>Semana 3:</strong> Prática Intensiva. Resolução do quiz e dos exercícios de provas.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="conceitos" class="content-section hidden">
+                    <h3 class="text-3xl font-bold mb-12 section-title">Conceitos Fundamentais</h3>
+                    <div id="conceitos-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- Cards serão inseridos pelo JS -->
+                    </div>
+                </section>
+
+                <section id="estruturas" class="content-section hidden">
+                    <h3 class="text-3xl font-bold mb-12 section-title">Estrutura dos Documentos Oficiais</h3>
+                    <div class="bg-white p-6 md:p-8 rounded-2xl shadow-xl border border-slate-200">
+                        <div class="flex justify-center mb-8 border-b border-slate-300 flex-wrap">
+                            <button data-doc="oficio" class="tab py-3 px-5 font-medium text-slate-600 hover:bg-slate-100 rounded-t-lg">Ofício</button>
+                            <button data-doc="memorando" class="tab py-3 px-5 font-medium text-slate-600 hover:bg-slate-100 rounded-t-lg">Memorando</button>
+                            <button data-doc="aviso" class="tab py-3 px-5 font-medium text-slate-600 hover:bg-slate-100 rounded-t-lg">Aviso</button>
+                            <button data-doc="mensagem" class="tab py-3 px-5 font-medium text-slate-600 hover:bg-slate-100 rounded-t-lg">Mensagem</button>
+                            <button data-doc="exposicao" class="tab py-3 px-5 font-medium text-slate-600 hover:bg-slate-100 rounded-t-lg">Exp. de Motivos</button>
+                            <button data-doc="parecer" class="tab py-3 px-5 font-medium text-slate-600 hover:bg-slate-100 rounded-t-lg">Parecer</button>
+                        </div>
+                        <div id="doc-content" class="min-h-[300px]">
+                            <!-- Conteúdo do documento selecionado -->
+                        </div>
+                    </div>
+                </section>
+
+                <section id="linguistica" class="content-section hidden">
+                    <h3 class="text-3xl font-bold mb-12 section-title">Aspectos Linguísticos e Normativos</h3>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-200">
+                            <h4 class="font-bold text-xl text-slate-800 mb-4">Coesão e Coerência</h4>
+                            <p class="text-slate-600 mb-4">A **coesão** garante a ligação entre as partes do texto (pronomes, conectivos). A **coerência** dá o sentido lógico ao todo. Um texto coeso e coerente é claro e fácil de entender.</p>
+                            <div class="callout callout-dica">
+                                <p><i class="fas fa-lightbulb mr-2"></i><strong>Dica do Especialista:</strong> Revise seu texto procurando por repetições desnecessárias e verifique se as frases se conectam de forma lógica. Use conectivos como "portanto", "além disso", "contudo" para guiar o leitor.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-200">
+                            <h4 class="font-bold text-xl text-slate-800 mb-4">Pronomes de Tratamento</h4>
+                            <p class="text-slate-600 mb-4">O uso correto dos pronomes é uma exigência formal. Selecione a autoridade para ver a forma correta.</p>
+                            <select id="autoridade-select" class="w-full p-3 border border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                                <option value="">-- Selecione uma autoridade --</option>
+                            </select>
+                            <div id="tratamento-result" class="mt-4 text-sm hidden space-y-2">
+                                <p class="p-3 bg-slate-100 rounded-md"><strong>Tratamento:</strong> <span id="result-pronome" class="font-semibold"></span></p>
+                                <p class="p-3 bg-slate-100 rounded-md"><strong>Vocativo:</strong> <span id="result-vocativo" class="font-semibold"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="modelos-comentados" class="content-section hidden">
+                    <h3 class="text-3xl font-bold mb-12 section-title">Modelo Comentado: Ofício</h3>
+                    <div class="bg-white p-6 md:p-8 rounded-2xl shadow-xl border border-slate-200">
+                        <div class="grid lg:grid-cols-2 gap-8">
+                            <div class="lg:border-r lg:pr-8 border-slate-200">
+                                <h4 class="font-bold text-xl text-slate-800 mb-4">Texto do Documento</h4>
+                                <div class="p-4 border rounded-md bg-slate-50 text-sm font-mono text-slate-700 space-y-4">
+                                    <p>OFÍCIO Nº 123/2025/ANPD-TA</p>
+                                    <p class="text-right">Brasília, 4 de agosto de 2025.</p>
+                                    <p>A Sua Excelência o Senhor<br>NOME DO MINISTRO<br>Ministro de Estado da Justiça e Segurança Pública<br>Esplanada dos Ministérios, Bloco T<br>70064-900 - Brasília/DF</p>
+                                    <p><strong>Assunto:</strong> Solicitação de informações sobre adequação à LGPD.</p>
+                                    <p>Senhor Ministro,</p>
+                                    <p>1. Informo sobre a necessidade de obter dados atualizados referentes à implementação da Lei Geral de Proteção de Dados Pessoais (LGPD) nos órgãos vinculados a esse Ministério.</p>
+                                    <p>2. As informações são essenciais para a elaboração do Relatório Anual de Atividades da Autoridade Nacional de Proteção de Dados (ANPD).</p>
+                                    <p>3. Solicito, portanto, o envio dos dados até o dia 30 de setembro de 2025.</p>
+                                    <p class="mt-6">Respeitosamente,</p>
+                                    <p class="mt-8 text-center">NOME DO SIGNATÁRIO<br>Cargo do Signatário</p>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-xl text-slate-800 mb-4">Análise e Comentários</h4>
+                                <div class="space-y-3 text-sm">
+                                    <div class="callout callout-exemplo"><strong>Identificação:</strong> Correta. Tipo, número, ano e sigla do setor.</div>
+                                    <div class="callout callout-exemplo"><strong>Endereçamento:</strong> Perfeito. Usa "A Sua Excelência" (e não "Excelentíssimo Senhor"), seguido do cargo e endereço.</div>
+                                    <div class="callout callout-exemplo"><strong>Vocativo:</strong> Adequado para Ministro ("Senhor Ministro,").</div>
+                                    <div class="callout callout-exemplo"><strong>Texto:</strong> Claro, conciso e objetivo. Parágrafos numerados a partir do segundo.</div>
+                                     <div class="callout callout-exemplo"><strong>Fecho:</strong> "Respeitosamente," está correto, pois o Ministro tem hierarquia superior.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="erros-comuns" class="content-section hidden">
+                    <h3 class="text-3xl font-bold mb-12 section-title">Erros Comuns em Provas (Banca IADES)</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="callout callout-pegadinha">
+                            <h4 class="font-bold mb-2"><i class="fas fa-exclamation-triangle mr-2"></i>Pegadinha: Uso de "Ilmo." e "DD."</h4>
+                            <p>A banca IADES adora cobrar regras que mudaram. Lembre-se: os tratamentos "Ilustríssimo" (Ilmo.) e "Digníssimo" (DD.) foram **abolidos** pelo MRPR 3ª ed. Seu uso é considerado **erro**. </p>
+                        </div>
+                        <div class="callout callout-pegadinha">
+                            <h4 class="font-bold mb-2"><i class="fas fa-exclamation-triangle mr-2"></i>Pegadinha: Concordância do Pronome</h4>
+                            <p>A concordância com pronomes de tratamento é sempre na **3ª pessoa**. "Vossa Excelência *solicitou*" (e não "solicitastes"). Verbos e pronomes devem seguir essa regra.</p>
+                        </div>
+                         <div class="callout callout-pegadinha">
+                            <h4 class="font-bold mb-2"><i class="fas fa-exclamation-triangle mr-2"></i>Pegadinha: Fechos de Comunicação</h4>
+                            <p>Só existem dois fechos: **Respeitosamente,** (para hierarquia superior) e **Atenciosamente,** (para mesma hierarquia, inferior ou particulares). Qualquer outra variação está errada.</p>
+                        </div>
+                         <div class="callout callout-pegadinha">
+                            <h4 class="font-bold mb-2"><i class="fas fa-exclamation-triangle mr-2"></i>Pegadinha: Vocativo para Chefe de Poder</h4>
+                            <p>Apenas para os Chefes de Poder (Presidente da República, etc.) usa-se "Excelentíssimo Senhor" no vocativo. Para os demais, é apenas "Senhor" + Cargo.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="quiz" class="content-section hidden">
+                    <h3 class="text-3xl font-bold mb-12 section-title">Quiz Interativo</h3>
+                    <div class="bg-white p-6 md:p-8 rounded-2xl shadow-xl border border-slate-200 max-w-4xl mx-auto">
+                        <div id="quiz-container"></div>
+                        <div id="quiz-result" class="text-center mt-6 hidden">
+                            <h4 class="text-2xl font-bold">Resultado</h4>
+                            <p id="quiz-score" class="text-lg my-2"></p>
+                            <p id="quiz-feedback" class="font-semibold"></p>
+                            <button id="quiz-retry-btn" class="mt-4 bg-blue-700 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-800 transition-colors">Tentar Novamente</button>
+                        </div>
+                    </div>
+                </section>
+                
+                <section id="exercicios" class="content-section hidden">
+                    <h3 class="text-3xl font-bold mb-12 section-title">Exercícios Resolvidos (Banca IADES)</h3>
+                    <div id="exercicios-container" class="space-y-4 max-w-4xl mx-auto">
+                        <!-- Exercícios resolvidos inseridos pelo JS -->
+                    </div>
+                </section>
+
+                <section id="cards-revisao" class="content-section hidden">
+                    <h3 class="text-3xl font-bold mb-12 section-title">Cards de Revisão Rápida</h3>
+                    <div id="review-cards-grid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <!-- Cards de revisão inseridos pelo JS -->
+                    </div>
+                </section>
+
+                <section id="glossario" class="content-section hidden">
+                    <h3 class="text-3xl font-bold mb-12 section-title">Glossário da Redação Oficial</h3>
+                    <div class="bg-white p-6 md:p-8 rounded-2xl shadow-xl border border-slate-200 max-w-4xl mx-auto">
+                        <div id="glossario-grid" class="grid md:grid-cols-2 gap-x-8 gap-y-4">
+                             <!-- Termos do glossário inseridos pelo JS -->
+                        </div>
+                    </div>
+                </section>
+
+                <section id="materiais" class="content-section hidden">
+                    <h3 class="text-3xl font-bold mb-12 section-title">Materiais para Download</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto text-center">
+                        <a href="http://www.planalto.gov.br/ccivil_03/manual/manualredpr3.pdf" target="_blank" class="block bg-blue-700 text-white p-6 rounded-lg hover:bg-blue-800 transition-transform hover:scale-105 shadow-lg"><i class="fas fa-file-pdf text-2xl mb-2"></i><span class="font-semibold">Manual Oficial PDF</span></a>
+                        <a href="https://www.estrategiaconcursos.com.br/blog/wp-content/uploads/2018/01/redacao-oficial-mapa-mental.jpeg" target="_blank" class="block bg-blue-700 text-white p-6 rounded-lg hover:bg-blue-800 transition-transform hover:scale-105 shadow-lg"><i class="fas fa-sitemap text-2xl mb-2"></i><span class="font-semibold">Mapa Mental</span></a>
+                        <a href="https://blog.grancursosonline.com.br/redacao-oficial-para-concursos/" target="_blank" class="block bg-green-600 text-white p-6 rounded-lg hover:bg-green-700 transition-transform hover:scale-105 shadow-lg"><i class="fas fa-check-square text-2xl mb-2"></i><span class="font-semibold">Checklist de Revisão</span></a>
+                        <a href="https://www.escolavirtual.gov.br/curso/74" target="_blank" class="block bg-green-600 text-white p-6 rounded-lg hover:bg-green-700 transition-transform hover:scale-105 shadow-lg"><i class="fas fa-graduation-cap text-2xl mb-2"></i><span class="font-semibold">Curso ENAP (Grátis)</span></a>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const appData = {
+            conceitos: [
+                { title: 'Clareza', icon: 'fa-bullseye', text: 'O texto deve ter uma única interpretação, evitando ambiguidades. É o princípio mais importante.' },
+                { title: 'Concisão', icon: 'fa-cut', text: 'Dizer o máximo com o mínimo de palavras. Elimine o que for desnecessário.' },
+                { title: 'Impessoalidade', icon: 'fa-landmark', text: 'O texto representa a instituição, não a opinião do servidor. Use a 3ª pessoa.' },
+                { title: 'Formalidade', icon: 'fa-gavel', text: 'Uso da norma-padrão da língua e respeito às liturgias do cargo. Polidez sempre.' },
+                { title: 'Padronização', icon: 'fa-copy', text: 'Seguir os modelos e a diagramação definidos no Manual para uniformizar a comunicação.' },
+                { title: 'Objetividade', icon: 'fa-paper-plane', text: 'Ir direto ao ponto, sem rodeios ou voltas. A comunicação deve ser direta.' },
+            ],
+            documentos: {
+                oficio: {
+                    title: 'Ofício (Padrão Ofício)',
+                    description: 'É o expediente padrão para toda comunicação oficial, interna e externa, desde a 3ª edição do MRPR. Unificou o antigo Aviso e o Memorando.',
+                    estrutura: ['Cabeçalho (só na 1ª pág.)', 'Identificação (Nº, ano, sigla)', 'Local e data', 'Endereçamento', 'Assunto', 'Vocativo', 'Texto (parágrafos numerados)', 'Fecho', 'Assinatura']
+                },
+                memorando: {
+                    title: 'Memorando (Uso Histórico)',
+                    description: 'Na 2ª edição do MRPR, era usado para comunicação interna entre unidades de um mesmo órgão. Foi substituído pelo Padrão Ofício. A IADES pode cobrar o conhecimento sobre essa mudança.',
+                    estrutura: ['Cabeçalho simples', 'Remetente e Destinatário', 'Local e data', 'Assunto', 'Texto', 'Fecho e Assinatura']
+                },
+                aviso: {
+                    title: 'Aviso (Uso Histórico)',
+                    description: 'Na 2ª edição do MRPR, era expedido exclusivamente por Ministros de Estado para autoridades de mesma hierarquia. Também foi substituído pelo Padrão Ofício.',
+                    estrutura: ['Timbre', 'Identificação (Nº, sigla)', 'Local e data', 'Vocativo', 'Texto', 'Fecho e Assinatura']
+                },
+                mensagem: {
+                    title: 'Mensagem',
+                    description: 'Comunicação oficial entre os Chefes dos Poderes, especialmente as enviadas pelo Presidente da República ao Congresso Nacional (ex: veto, plano de governo).',
+                    estrutura: ['Identificação do remetente e destinatário', 'Vocativo', 'Texto', 'Local, data e assinatura']
+                },
+                exposicao: {
+                    title: 'Exposição de Motivos',
+                    description: 'Expediente dirigido ao Presidente da República por um Ministro, para informar sobre determinado assunto, propor alguma medida ou submeter projeto de ato normativo.',
+                    estrutura: ['Endereçamento ao Presidente', 'Vocativo ("Excelentíssimo Senhor Presidente da República,")', 'Texto com justificativa da medida', 'Fecho "Respeitosamente,"', 'Assinatura do Ministro']
+                },
+                parecer: {
+                    title: 'Parecer',
+                    description: 'Manifestação técnica, jurídica ou administrativa sobre determinado assunto, que subsidia uma decisão. Não é um ato decisório, mas opinativo.',
+                    estrutura: ['Título (PARECER)', 'Referência (Processo)', 'Assunto', 'Texto (Relatório, Fundamentação, Conclusão)', 'Fecho (opcional)', 'Local, data e assinatura']
+                }
+            },
+            tratamentos: [
+                { autoridade: 'Presidente da República', pronome: 'Vossa Excelência', vocativo: 'Excelentíssimo Senhor Presidente da República,' },
+                { autoridade: 'Ministro de Estado', pronome: 'Vossa Excelência', vocativo: 'Senhor Ministro,' },
+                { autoridade: 'Senador/Deputado', pronome: 'Vossa Excelência', vocativo: 'Senhor Senador,' },
+                { autoridade: 'Juiz', pronome: 'Vossa Excelência', vocativo: 'Senhor Juiz,' },
+                { autoridade: 'Reitor de Universidade', pronome: 'Vossa Magnificência', vocativo: 'Magnífico Reitor,' },
+                { autoridade: 'Demais autoridades/Particulares', pronome: 'Vossa Senhoria', vocativo: 'Senhor Diretor,' },
+            ],
+            quiz: {
+                questions: [
+                    {
+                        q: "Qual pronome de tratamento foi abolido pela 3ª edição do Manual de Redação da Presidência da República?",
+                        options: ["Vossa Senhoria", "Vossa Excelência", "Ilustríssimo", "Vossa Magnificência"],
+                        answer: 2
+                    },
+                    {
+                        q: "Para qual autoridade se utiliza o fecho 'Respeitosamente,'?",
+                        options: ["Autoridade de hierarquia inferior", "Autoridade de mesma hierarquia", "Autoridade de hierarquia superior", "Qualquer particular"],
+                        answer: 2
+                    },
+                    {
+                        q: "O Padrão Ofício, instituído pela 3ª edição do MRPR, unificou quais expedientes?",
+                        options: ["Ofício, Portaria e Parecer", "Aviso, Ofício e Memorando", "Ata, Relatório e Despacho", "Mensagem e Exposição de Motivos"],
+                        answer: 1
+                    },
+                    {
+                        q: "Assinale a concordância correta:",
+                        options: ["Vossa Excelência estais convidado.", "Vossa Excelência está convidado.", "Vossa Excelência fostes convidado.", "Vossa Excelência estão convidados."],
+                        answer: 1
+                    },
+                    {
+                        q: "Qual princípio da Redação Oficial se refere a expressar o máximo de informação com o mínimo de palavras?",
+                        options: ["Clareza", "Impessoalidade", "Formalidade", "Concisão"],
+                        answer: 3
+                    },
+                    {
+                        q: "No vocativo de um ofício para um Senador da República, qual a forma correta?",
+                        options: ["Excelentíssimo Senhor Senador,", "Digníssimo Senhor Senador,", "Senhor Senador,", "Ilustríssimo Senhor Senador,"],
+                        answer: 2
+                    },
+                    {
+                        q: "A fonte padrão recomendada pela 3ª edição do MRPR para documentos digitais é:",
+                        options: ["Times New Roman", "Arial", "Calibri ou Carlito", "Courier New"],
+                        answer: 2
+                    },
+                    {
+                        q: "O que caracteriza a 'impessoalidade' em um texto oficial?",
+                        options: ["Usar uma linguagem complexa e rebuscada.", "Escrever sempre na primeira pessoa do plural ('nós').", "A ausência de opiniões e impressões pessoais do redator.", "Dirigir-se ao leitor de forma informal."],
+                        answer: 2
+                    },
+                    {
+                        q: "Em um Parecer, qual parte do texto apresenta a análise técnica ou jurídica?",
+                        options: ["Relatório", "Conclusão", "Ementa", "Fundamentação"],
+                        answer: 3
+                    },
+                    {
+                        q: "A numeração dos parágrafos em um ofício começa:",
+                        options: ["A partir do primeiro parágrafo.", "A partir do segundo parágrafo.", "Apenas se houver mais de três parágrafos.", "Não há numeração de parágrafos."],
+                        answer: 1
+                    }
+                ],
+                explanations: [
+                    "O MRPR (3ª ed.) aboliu o uso de 'Ilustríssimo (Ilmo.)' e 'Digníssimo (DD.)', por considerá-los excessivos e redundantes.",
+                    "'Respeitosamente,' é usado estritamente para autoridades de hierarquia superior à do remetente. Para os demais casos, usa-se 'Atenciosamente,'.",
+                    "A maior simplificação da 3ª edição foi a criação do 'Padrão Ofício', que unificou o Aviso (entre Ministros), o Ofício (externo) e o Memorando (interno).",
+                    "A concordância com pronomes de tratamento é sempre feita na 3ª pessoa do singular ou plural. O adjetivo concorda com o gênero da pessoa: 'Vossa Excelência está convidado' (se homem).",
+                    "Concisão é a arte de ser breve e completo, eliminando palavras e informações desnecessárias para a compreensão do essencial.",
+                    "O vocativo 'Excelentíssimo Senhor' é restrito aos Chefes de Poder. Para as demais autoridades tratadas por 'Vossa Excelência', como um Senador, usa-se 'Senhor' + Cargo.",
+                    "A 3ª edição do MRPR mudou a fonte padrão de Times New Roman (ideal para impressão) para Calibri ou Carlito (fontes sem serifa, de melhor legibilidade em tela).",
+                    "A impessoalidade significa que quem comunica é o órgão público, e não o servidor. O texto deve ser isento de opiniões, emoções ou qualquer marca pessoal.",
+                    "A estrutura do Parecer é tripartite: o Relatório descreve os fatos, a Fundamentação analisa e a Conclusão opina.",
+                    "A regra é clara: o primeiro parágrafo do corpo do texto não é numerado. A numeração (1., 2., 3...) começa a partir do segundo parágrafo."
+                ]
+            },
+            exercicios: [
+                {
+                    q: "(IADES - Adaptada) De acordo com o Manual de Redação da Presidência da República, o fecho 'Atenciosamente,' é empregado em comunicações dirigidas a:",
+                    options: ["Autoridades de hierarquia superior.", "Apenas ao Presidente da República.", "Autoridades de mesma hierarquia ou de hierarquia inferior e particulares.", "Apenas a particulares."],
+                    answer: 2,
+                    resolucao: "O MRPR estabelece apenas dois fechos. 'Respeitosamente,' para autoridades de hierarquia superior e 'Atenciosamente,' para as demais situações: autoridades de mesma hierarquia, de hierarquia inferior e particulares. Portanto, a alternativa correta é a que abrange essas possibilidades."
+                },
+                {
+                    q: "(IADES - Adaptada) A respeito da diagramação e da tipologia de documentos oficiais, assinale a alternativa correta.",
+                    options: ["O memorando é o documento adequado para comunicação entre um órgão público e um cidadão.", "A fonte padrão para todos os documentos oficiais é a Times New Roman, corpo 14.", "O Padrão Ofício pode ser usado tanto para comunicação interna quanto externa.", "A ementa é uma parte obrigatória de todos os ofícios."],
+                    answer: 2,
+                    resolucao: "A principal mudança da 3ª edição do MRPR foi a instituição do Padrão Ofício, que unificou o antigo ofício (externo) e o memorando (interno). Portanto, ele é adequado para ambas as finalidades. As outras opções estão incorretas: a comunicação com cidadão é via ofício; a fonte padrão é Calibri/Carlito 12; ementa é típica de atos normativos, não de ofícios (que têm 'Assunto')."
+                },
+            ],
+            reviewCards: [
+                { title: 'Padrão Ofício', text: 'Unificou Aviso, Ofício e Memorando. Para comunicação interna e externa.', color: 'bg-blue-100', icon: 'fa-file-alt' },
+                { title: 'Fechos', text: 'Respeitosamente (superior) e Atenciosamente (outros). Só existem esses dois!', color: 'bg-green-100', icon: 'fa-pen-fancy' },
+                { title: 'Vocativo', text: '"Excelentíssimo Senhor" só para Chefes de Poder. Demais é "Senhor/Senhora" + Cargo.', color: 'bg-yellow-100', icon: 'fa-bullhorn' },
+                { title: 'Concordância', text: 'Sempre na 3ª PESSOA. Ex: V. Ex.ª solicitou seu parecer.', color: 'bg-red-100', icon: 'fa-check-double' },
+            ],
+            glossario: [
+                { termo: 'Expediente', definicao: 'Nome genérico para os documentos que tramitam no serviço público.' },
+                { termo: 'Vocativo', definicao: 'Invocação inicial ao destinatário (Ex: Senhor Ministro,).' },
+                { termo: 'Fecho', definicao: 'Fórmula de cortesia que encerra o texto (Ex: Atenciosamente,).' },
+                { termo: 'Ementa', definicao: 'Resumo do assunto de um ato normativo (portaria, lei, etc.).' },
+                { termo: 'Rubrica', definicao: 'Assinatura abreviada, geralmente aposta nas páginas de um documento.' },
+                { termo: 'Caput', definicao: 'Termo em latim que se refere à parte principal, ao enunciado de um artigo de lei.' },
+            ]
+        };
+
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        
+        const toggleSidebar = () => {
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        };
+
+        mobileMenuButton.addEventListener('click', toggleSidebar);
+        overlay.addEventListener('click', toggleSidebar);
+
+        const navLinks = document.querySelectorAll('.nav-trigger');
+        const contentSections = document.querySelectorAll('.content-section');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+
+                contentSections.forEach(section => {
+                    section.classList.toggle('hidden', section.id !== targetId);
+                });
+
+                document.querySelectorAll('.side-nav-link').forEach(nav => {
+                    nav.classList.toggle('active', nav.getAttribute('href').substring(1) === targetId);
+                });
+                
+                // Hide sidebar on mobile after click
+                if (window.innerWidth < 1024) {
+                    toggleSidebar();
+                }
+                
+                window.scrollTo(0, 0);
+            });
+        });
+        
+        const setupConceitos = () => {
+            const grid = document.getElementById('conceitos-grid');
+            grid.innerHTML = appData.conceitos.map(c => `
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200 text-center transform hover:-translate-y-2 transition-transform duration-300">
+                    <i class="fas ${c.icon} text-4xl text-blue-600 mb-4"></i>
+                    <h4 class="text-xl font-bold text-slate-800 mb-2">${c.title}</h4>
+                    <p class="text-slate-600">${c.text}</p>
+                </div>
+            `).join('');
+        };
+
+        const setupDocumentos = () => {
+            const tabs = document.querySelectorAll('#estruturas .tab');
+            const contentDiv = document.getElementById('doc-content');
+
+            const updateContent = (docKey) => {
+                const doc = appData.documentos[docKey];
+                contentDiv.innerHTML = `
+                    <h4 class="text-2xl font-bold text-blue-800 mb-2">${doc.title}</h4>
+                    <p class="text-slate-600 mb-4">${doc.description}</p>
+                    <h5 class="font-semibold text-lg mb-2 text-slate-700">Estrutura Principal:</h5>
+                    <ul class="space-y-1 list-inside list-disc text-slate-600">
+                        ${doc.estrutura.map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+                `;
+                tabs.forEach(t => t.classList.toggle('active', t.dataset.doc === docKey));
+            };
+
+            tabs.forEach(tab => tab.addEventListener('click', () => updateContent(tab.dataset.doc)));
+            updateContent('oficio');
+        };
+
+        const setupTratamentos = () => {
+            const select = document.getElementById('autoridade-select');
+            const resultDiv = document.getElementById('tratamento-result');
+            select.innerHTML += appData.tratamentos.map(t => `<option value="${t.autoridade}">${t.autoridade}</option>`).join('');
+
+            select.addEventListener('change', (e) => {
+                const selectedValue = e.target.value;
+                const tratamento = appData.tratamentos.find(t => t.autoridade === selectedValue);
+                if (tratamento) {
+                    document.getElementById('result-pronome').textContent = tratamento.pronome;
+                    document.getElementById('result-vocativo').textContent = tratamento.vocativo;
+                    resultDiv.classList.remove('hidden');
+                } else {
+                    resultDiv.classList.add('hidden');
+                }
+            });
+        };
+        
+        const setupQuiz = () => {
+            const container = document.getElementById('quiz-container');
+            
+            const renderQuiz = () => {
+                container.innerHTML = appData.quiz.questions.map((q, index) => `
+                    <div class="mb-6">
+                        <p class="font-semibold mb-3 text-lg">${index + 1}. ${q.q}</p>
+                        <div class="space-y-3">
+                            ${q.options.map((opt, optIndex) => `
+                                <label class="quiz-option block border-2 border-slate-200 p-4 rounded-lg cursor-pointer hover:border-blue-400 transition-all duration-200">
+                                    <input type="radio" name="q${index}" value="${optIndex}" class="hidden">
+                                    <span>${opt}</span>
+                                </label>
+                            `).join('')}
+                        </div>
+                        <div id="explanation-${index}" class="hidden mt-3 p-3 rounded-md text-sm"></div>
+                    </div>
+                `).join('') + `<button id="quiz-submit-btn" class="w-full bg-blue-700 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-800 transition-colors text-lg">Verificar Respostas</button>`;
+
+                document.querySelectorAll('.quiz-option').forEach(label => {
+                    label.addEventListener('click', () => {
+                        const radio = label.querySelector('input');
+                        document.querySelectorAll(`input[name=${radio.name}]`).forEach(r => {
+                            r.parentElement.classList.remove('selected');
+                        });
+                        label.classList.add('selected');
+                    });
+                });
+
+                document.getElementById('quiz-submit-btn').addEventListener('click', checkAnswers);
+            };
+
+            const checkAnswers = () => {
+                let score = 0;
+                appData.quiz.questions.forEach((q, index) => {
+                    const selectedOption = document.querySelector(`input[name="q${index}"]:checked`);
+                    const labels = document.querySelectorAll(`input[name="q${index}"]`);
+                    
+                    if (selectedOption) {
+                        const answer = parseInt(selectedOption.value);
+                        const correct = answer === q.answer;
+                        if (correct) score++;
+
+                        labels.forEach((labelInput, optIndex) => {
+                            const parentLabel = labelInput.parentElement;
+                            parentLabel.classList.remove('selected');
+                            parentLabel.style.pointerEvents = 'none'; // Disable further clicks
+                            if (optIndex === q.answer) {
+                                parentLabel.classList.add('correct');
+                            } else if (optIndex === answer) {
+                                parentLabel.classList.add('incorrect');
+                            }
+                        });
+                        
+                        const explanationDiv = document.getElementById(`explanation-${index}`);
+                        explanationDiv.innerHTML = `<i class="fas fa-info-circle mr-2"></i><strong>Justificativa:</strong> ${appData.quiz.explanations[index]}`;
+                        explanationDiv.className = 'mt-3 p-3 rounded-md text-sm';
+                        explanationDiv.classList.add(correct ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800');
+                        explanationDiv.classList.remove('hidden');
+                    }
+                });
+
+                const resultDiv = document.getElementById('quiz-result');
+                resultDiv.classList.remove('hidden');
+                document.getElementById('quiz-score').textContent = `Você acertou ${score} de ${appData.quiz.questions.length} questões.`;
+                let feedbackText = "Continue estudando!";
+                if (score > 8) feedbackText = "Excelente! Você está no caminho certo!";
+                else if (score > 5) feedbackText = "Bom resultado! Revise os pontos que errou.";
+                document.getElementById('quiz-feedback').textContent = feedbackText;
+                document.getElementById('quiz-submit-btn').classList.add('hidden');
+            };
+            
+            document.getElementById('quiz-retry-btn').addEventListener('click', () => {
+                 document.getElementById('quiz-result').classList.add('hidden');
+                 renderQuiz();
+            });
+
+            renderQuiz();
+        };
+
+        const setupExercicios = () => {
+            const container = document.getElementById('exercicios-container');
+            container.innerHTML = appData.exercicios.map((ex, index) => `
+                <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">
+                    <button class="w-full text-left p-5 font-bold text-slate-800 flex justify-between items-center hover:bg-slate-50 transition-colors" data-target="ex-content-${index}">
+                        <span>Exercício ${index + 1}: ${ex.q}</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div id="ex-content-${index}" class="px-5 pb-5 hidden">
+                        <div class="space-y-2 mb-4 mt-2">
+                            ${ex.options.map((opt, optIndex) => `
+                                <div class="p-3 rounded-md border-2 ${optIndex === ex.answer ? 'border-green-400 bg-green-50' : 'border-slate-200'}">
+                                    ${String.fromCharCode(97 + optIndex)}) ${opt}
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="callout callout-dica">
+                            <h5 class="font-bold mb-1">Gabarito e Resolução</h5>
+                            <p>${ex.resolucao}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            container.querySelectorAll('button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetId = button.dataset.target;
+                    const content = document.getElementById(targetId);
+                    content.classList.toggle('hidden');
+                    button.querySelector('i').classList.toggle('rotate-180');
+                });
+            });
+        };
+
+        const setupReviewCards = () => {
+            const grid = document.getElementById('review-cards-grid');
+            grid.innerHTML = appData.reviewCards.map(card => `
+                <div class="${card.color} p-5 rounded-lg shadow-md flex items-start space-x-4 border border-slate-200">
+                    <i class="fas ${card.icon} text-2xl text-slate-600 mt-1"></i>
+                    <div>
+                        <h4 class="font-bold text-slate-800">${card.title}</h4>
+                        <p class="text-sm text-slate-600">${card.text}</p>
+                    </div>
+                </div>
+            `).join('');
+        };
+
+        const setupGlossario = () => {
+            const grid = document.getElementById('glossario-grid');
+            grid.innerHTML = appData.glossario.map(item => `
+                <div class="border-b border-slate-200 py-3">
+                    <p class="font-semibold text-slate-800">${item.termo}</p>
+                    <p class="text-sm text-slate-600">${item.definicao}</p>
+                </div>
+            `).join('');
+        };
+
+        // Initial setup
+        setupConceitos();
+        setupDocumentos();
+        setupTratamentos();
+        setupQuiz();
+        setupExercicios();
+        setupReviewCards();
+        setupGlossario();
+    });
+    </script>
+</body>
+</html>
