@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudo de Redação Oficial - ANPD 2025 (IADES)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { scroll-behavior: smooth; }
+        .card { transition: transform 0.3s; }
+        .card:hover { transform: scale(1.05); }
+        .quiz-option { cursor: pointer; }
+        .quiz-option:hover { background-color: #e5e7eb; }
+        .hidden { display: none; }
+        #sidebar { transition: transform 0.3s ease-in-out; }
+        #sidebar.hidden { transform: translateX(-100%); }
+        @media (max-width: 768px) {
+            #sidebar { transform: translateX(-100%); }
+            #sidebar.open { transform: translateX(0); }
+        }
+        .tab-button { border-bottom: 2px solid transparent; }
+        .tab-button.active { border-bottom-color: #1e40af; color: #1e40af; font-weight: bold; }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans flex">
+    <!-- Sidebar -->
+    <div id="sidebar" class="bg-blue-800 text-white w-64 min-h-screen p-4 fixed md:static md:translate-x-0 z-20">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-xl font-bold">Redação Oficial</h1>
+            <button id="close-sidebar" class="md:hidden text-white">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <ul class="space-y-2">
+            <li><a href="#inicio" class="tab-link block p-2 hover:bg-blue-700 rounded" data-tab="inicio">Início</a></li>
+            <li><a href="#conceitos" class="tab-link block p-2 hover:bg-blue-700 rounded" data-tab="conceitos">Conceitos</a></li>
+            <li><a href="#estruturas" class="tab-link block p-2 hover:bg-blue-700 rounded" data-tab="estruturas">Estruturas</a></li>
+            <li><a href="#linguistica" class="tab-link block p-2 hover:bg-blue-700 rounded" data-tab="linguistica">Linguística</a></li>
+            <li><a href="#modelos" class="tab-link block p-2 hover:bg-blue-700 rounded" data-tab="modelos">Modelos</a></li>
+            <li><a href="#erros" class="tab-link block p-2 hover:bg-blue-700 rounded" data-tab="erros">Erros Comuns</a></li>
+            <li><a href="#quiz" class="tab-link block p-2 hover:bg-blue-700 rounded" data-tab="quiz">Quiz</a></li>
+            <li><a href="#exercicios" class="tab-link block p-2 hover:bg-blue-700 rounded" data-tab="exercicios">Exercícios</a></li>
+            <li><a href="#cards" class="tab-link block p-2 hover:bg-blue-700 rounded" data-tab="cards">Cards</a></li>
+            <li><a href="#glossario" class="tab-link block p-2 hover:bg-blue-700 rounded" data-tab="glossario">Glossário</a></li>
+            <li><a href="#downloads" class="tab-link block p-2 hover:bg-blue-700 rounded" data-tab="downloads">Downloads</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1">
+        <!-- Mobile Menu Button -->
+        <button id="open-sidebar" class="md:hidden bg-blue-800 text-white p-4 fixed top-0 left-0 z-30">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Tab Content -->
+        <div class="container mx-auto px-4 py-10">
+            <!-- Tab Navigation -->
+            <div class="flex flex-wrap border-b border-gray-200 mb-6">
+                <button class="tab-button px-4 py-2 text-blue-800" data-tab="inicio">Início</button>
+                <button class="tab-button px-4 py-2 text-blue-800" data-tab="conceitos">Conceitos</button>
+                <button class="tab-button px-4 py-2 text-blue-800" data-tab="estruturas">Estruturas</button>
+                <button class="tab-button px-4 py-2 text-blue-800" data-tab="linguistica">Linguística</button>
+                <button class="tab-button px-4 py-2 text-blue-800" data-tab="modelos">Modelos</button>
+                <button class="tab-button px-4 py-2 text-blue-800" data-tab="erros">Erros Comuns</button>
+                <button class="tab-button px-4 py-2 text-blue-800" data-tab="quiz">Quiz</button>
+                <button class="tab-button px-4 py-2 text-blue-800" data-tab="exercicios">Exercícios</button>
+                <button class="tab-button px-4 py-2 text-blue-800" data-tab="cards">Cards</button>
+                <button class="tab-button px-4 py-2 text-blue-800" data-tab="glossario">Glossário</button>
+                <button class="tab-button px-4 py-2 text-blue-800" data-tab="downloads">Downloads</button>
+            </div>
+
+            <!-- Tab Content Sections -->
+            <div id="tab-content">
+                <!-- Início -->
+                <section id="inicio" class="tab-panel bg-white p-6 rounded-lg hidden">
+                    <h2 class="text-3xl font-bold mb-4 text-blue-800">Bem-vindo ao Estudo de Redação Oficial - ANPD 2025</h2>
+                    <p class="text-lg mb-4">Esta página é um recurso completo para preparar você para a prova de Redação Oficial do Processo Seletivo Simplificado da Autoridade Nacional de Proteção de Dados (ANPD) 2025, cargo de Técnico em Administração – Nível Médio, organizado pela banca IADES. O conteúdo foi estruturado para cobrir todos os aspectos exigidos no edital, com base no Manual de Redação da Presidência da República, incluindo conceitos, estruturas, exemplos, exercícios e quizzes interativos.</p>
+                    <div class="bg-blue-100 p-4 rounded-lg mb-4">
+                        <h3 class="text-xl font-semibold mb-2">Resumo do Edital (Redação Oficial)</h3>
+                        <p>A prova objetiva, marcada para 17 de agosto de 2025, inclui 8 questões de Língua Portuguesa e Redação Oficial (peso 1), cobrindo tópicos como correspondência oficial, elementos estruturais de documentos, e-mail corporativo, tipos de documentos, e atos normativos, conforme o Manual de Redação da Presidência da República. A IADES exige clareza, concisão, formalidade, impessoalidade e padronização, com questões que testam aplicação prática e identificação de erros.</p>[](https://jcconcursos.com.br/concurso/concurso-anpd-79868)
+                    </div>
+                    <div class="bg-green-100 p-4 rounded-lg mb-4">
+                        <h3 class="text-xl font-semibold mb-2">Dicas de Estudo</h3>
+                        <ul class="list-disc pl-6">
+                            <li>Leia o Manual de Redação da Presidência da República (disponível em <a href="http://www.planalto.gov.br" class="text-blue-600 hover:underline">planalto.gov.br</a>).</li>
+                            <li>Pratique a escrita de ofícios, memorandos e e-mails com base em modelos oficiais.</li>
+                            <li>Resolva questões de provas anteriores da IADES para entender o estilo da banca (acessíveis em sites como <a href="http://www.pciconcursos.com.br" class="text-blue-600 hover:underline">pciconcursos.com.br</a>).</li>
+                            <li>Revise os princípios de clareza, concisão, formalidade, impessoalidade e padronização diariamente.</li>
+                            <li>Use os quizzes e exercícios desta página para testar seu conhecimento.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-yellow-100 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-2">Por que Estudar Redação Oficial?</h3>
+                        <p>Redação Oficial é essencial para o cargo de Técnico em Administração na ANPD, que envolve atividades de apoio operacional, como redação de documentos e gestão documental. A IADES é conhecida por textos longos e questões contextualizadas, exigindo familiaridade com normas e prática na identificação de erros formais.</p>[](https://jcconcursos.com.br/concurso/concurso-anpd-79868)[](https://blog.grancursosonline.com.br/banca-iades-perfil-questoes/)
+                    </div>
+                </section>
+
+                <!-- Conceitos Fundamentais -->
+                <section id="conceitos" class="tab-panel bg-gray-50 p-6 rounded-lg hidden">
+                    <h2 class="text-3xl font-bold mb-4 text-blue-800">Conceitos Fundamentais</h2>
+                    <p class="text-lg mb-4">A Redação Oficial é a comunicação escrita usada no serviço público, regida pelo Manual de Redação da Presidência da República. Seus princípios garantem que os documentos sejam claros, objetivos e formais, atendendo às necessidades administrativas.</p>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li><strong>Clareza:</strong> Uso de linguagem objetiva, evitando ambiguidades. Exemplo: "Solicita-se o envio dos relatórios" é mais claro que "Pedimos que, se possível, enviem os relatórios".</li>
+                        <li><strong>Concisão:</strong> Uso do mínimo de palavras necessário. Exemplo: "Informamos que a reunião foi adiada" em vez de "Vimos por meio deste informar que a reunião foi adiada para outra data".</li>
+                        <li><strong>Impessoalidade:</strong> Foco no assunto, sem referências pessoais. Exemplo: "A diretoria solicita" em vez de "Eu, diretor, solicito".</li>
+                        <li><strong>Formalidade:</strong> Uso da norma culta, com vocabulário técnico e adequado. Exemplo: "Atenciosamente" como fecho, nunca "Abraços".</li>
+                        <li><strong>Padronização:</strong> Seguimento de modelos oficiais para estrutura e formatação, como cabeçalho, número e vocativo.</li>
+                    </ul>
+                    <div class="bg-yellow-100 p-4 rounded-lg mb-4">
+                        <h3 class="text-xl font-semibold mb-2">Dica do Especialista</h3>
+                        <p>A IADES frequentemente cobra questões que exigem identificar violações desses princípios, como uso de linguagem coloquial ou ausência de impessoalidade. Leia exemplos de documentos oficiais no site do Planalto para se familiarizar com o tom formal.</p>[](https://blog.grancursosonline.com.br/banca-iades-perfil-questoes/)
+                    </div>
+                    <div class="bg-blue-100 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-2">Exemplo Prático</h3>
+                        <p><strong>Incorreto:</strong> "Oi, tudo bem? Queria que você enviasse os documentos até amanhã, tá?"<br><strong>Correto:</strong> "Solicita-se o envio dos documentos até 05/08/2025."<br><strong>Comentário:</strong> O exemplo correto elimina coloquialismos, mantém a impessoalidade e usa linguagem direta.</p>
+                    </div>
+                </section>
+
+                <!-- Estrutura dos Documentos Oficiais -->
+                <section id="estruturas" class="tab-panel bg-white p-6 rounded-lg hidden">
+                    <h2 class="text-3xl font-bold mb-4 text-blue-800">Estrutura dos Documentos Oficiais</h2>
+                    <p class="text-lg mb-4">Os documentos oficiais seguem estruturas padronizadas para garantir consistência e formalidade. Abaixo, uma tabela comparativa dos principais documentos cobrados pela IADES:</p>
+                    <div class="overflow-x-auto mb-4">
+                        <table class="w-full text-left border-collapse bg-gray-50 rounded-lg">
+                            <thead class="bg-blue-800 text-white">
+                                <tr>
+                                    <th class="p-2">Documento</th>
+                                    <th class="p-2">Finalidade</th>
+                                    <th class="p-2">Estrutura</th>
+                                    <th class="p-2">Destinatário</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b">
+                                    <td class="p-2">Ofício</td>
+                                    <td class="p-2">Comunicação formal entre órgãos públicos ou para particulares</td>
+                                    <td class="p-2">Timbre, número, local, data, vocativo, assunto, texto, fecho, assinatura</td>
+                                    <td class="p-2">Autoridades ou particulares</td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="p-2">Memorando</td>
+                                    <td class="p-2">Comunicação interna em um órgão</td>
+                                    <td class="p-2">Timbre, número, local, data, destinatário, texto, fecho, assinatura</td>
+                                    <td class="p-2">Setores internos</td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="p-2">Aviso</td>
+                                    <td class="p-2">Comunicação de ministro a outros órgãos</td>
+                                    <td class="p-2">Semelhante ao ofício, mas exclusivo de ministros</td>
+                                    <td class="p-2">Autoridades</td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="p-2">Mensagem</td>
+                                    <td class="p-2">Comunicação do Presidente a outros poderes</td>
+                                    <td class="p-2">Timbre, número, local, data, vocativo, texto, fecho, assinatura</td>
+                                    <td class="p-2">Congresso Nacional, autoridades</td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="p-2">E-mail Corporativo</td>
+                                    <td class="p-2">Comunicação rápida e formal</td>
+                                    <td class="p-2">Assunto, saudação, texto, fecho, assinatura</td>
+                                    <td class="p-2">Interno ou externo</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="bg-green-100 p-4 rounded-lg mb-4">
+                        <h3 class="text-xl font-semibold mb-2">Dica de Estudo</h3>
+                        <p>Memorize a estrutura de cada documento, especialmente ofício e memorando, que são frequentemente cobrados. A IADES pode pedir que você identifique elementos ausentes ou incorretos em um documento simulado.</p>
+                    </div>
+                    <div class="bg-blue-100 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-2">Exemplo de Estrutura: Ofício</h3>
+                        <p><strong>Timbre:</strong> Autoridade Nacional de Proteção de Dados<br><strong>Número:</strong> Ofício nº 789/2025<br><strong>Local e Data:</strong> Brasília, 4 de agosto de 2025<br><strong>Vocativo:</strong> Ao Senhor Diretor do Departamento de Pessoal<br><strong>Assunto:</strong> Solicitação de Relatórios<br><strong>Texto:</strong> Solicita-se o envio dos relatórios de desempenho até 10/08/2025.<br><strong>Fecho:</strong> Atenciosamente,<br><strong>Assinatura:</strong> João Silva, Diretor-Geral</p>
+                    </div>
+                </section>
+
+                <!-- Aspectos Linguísticos e Normativos -->
+                <section id="linguistica" class="tab-panel bg-gray-50 p-6 rounded-lg hidden">
+                    <h2 class="text-3xl font-bold mb-4 text-blue-800">Aspectos Linguísticos e Normativos</h2>
+                    <p class="text-lg mb-4">A redação oficial exige linguagem culta, coesão, coerência e uso correto de pronomes de tratamento. Abaixo, os principais aspectos linguísticos cobrados:</p>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li><strong>Pronomes de Tratamento:</strong> Use "Vossa Excelência" para altas autoridades (e.g., ministros, presidentes) e "Vossa Senhoria" para servidores públicos em geral. Exemplo: "Vossa Excelência, o Presidente da República".</li>
+                        <li><strong>Norma Culta:</strong> Evite coloquialismos e use construções formais. Exemplo: "Informamos" em vez de "A gente informa".</li>
+                        <li><strong>Coesão e Coerência:</strong> Use conectivos (e.g., "portanto", "assim") para ligar ideias. Exemplo: "A reunião foi adiada, portanto, nova data será comunicada."</li>
+                        <li><strong>Concordância e Regência:</strong> Respeite regras gramaticais. Exemplo: "Solicita-se o envio dos documentos" (impessoal, singular).</li>
+                        <li><strong>E-mail Corporativo:</strong> Mantenha formalidade, com saudação (e.g., "Prezado Senhor") e fecho (e.g., "Atenciosamente").</li>
+                    </ul>
+                    <div class="bg-red-100 p-4 rounded-lg mb-4">
+                        <h3 class="text-xl font-semibold mb-2">Pegadinhas de Prova</h3>
+                        <p>A IADES testa erros como uso incorreto de pronomes de tratamento (e.g., "Vossa Senhoria" para um ministro), ausência de fechos formais, ou uso de crase inadequado. Revise questões de provas anteriores em sites como <a href="http://www.qconcursos.com" class="text-blue-600 hover:underline">qconcursos.com</a>.</p>[](https://www.qconcursos.com/questoes-de-concursos/disciplinas/direito-direito-digital/autoridade-nacional-de-protecao-de-dados-anpd-e-conselho-nacional-de-protecao-de-dados-pessoais-e-da-privacidade/questoes)
+                    </div>
+                    <div class="bg-blue-100 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-2">Exemplo de E-mail Corporativo</h3>
+                        <p><strong>Assunto:</strong> Solicitação de Reunião<br><strong>Saudação:</strong> Prezado Senhor Diretor,<br><strong>Texto:</strong> Solicitamos a realização de uma reunião para discutir os relatórios de 2025. Aguardamos confirmação até 10/08/2025.<br><strong>Fecho:</strong> Atenciosamente,<br><strong>Assinatura:</strong> Maria Oliveira, Coordenadora</p>
+                    </div>
+                </section>
+
+                <!-- Modelos Comentados -->
+                <section id="modelos" class="tab-panel bg-white p-6 rounded-lg hidden">
+                    <h2 class="text-3xl font-bold mb-4 text-blue-800">Modelos Comentados</h2>
+                    <p class="text-lg mb-4">Abaixo, exemplos comentados de documentos oficiais frequentemente cobrados pela IADES, baseados no Manual de Redação da Presidência da República.</p>
+                    <div class="bg-blue-100 p-4 rounded-lg mb-4">
+                        <h3 class="text-xl font-semibold mb-2">Exemplo 1: Ofício</h3>
+                        <p><strong>Ofício nº 123/2025</strong><br>Autoridade Nacional de Proteção de Dados<br>Brasília, 4 de agosto de 2025<br>Ao Senhor Diretor do Departamento de Pessoal<br><strong>Assunto:</strong> Solicitação de Documentos<br><br>Solicita-se o envio dos relatórios de desempenho até 10/08/2025, conforme disposto na Portaria nº 99/2024.<br>Atenciosamente,<br>João Silva<br>Diretor-Geral</p>
+                        <p class="mt-2"><strong>Comentário:</strong> O ofício inclui timbre, número, local, data, vocativo, assunto, texto conciso e fecho formal. A citação da portaria reforça a formalidade.</p>
+                    </div>
+                    <div class="bg-blue-100 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-2">Exemplo 2: Memorando</h3>
+                        <p><strong>Memorando nº 456/2025</strong><br>Autoridade Nacional de Proteção de Dados<br>Brasília, 4 de agosto de 2025<br>Ao Setor de Recursos Humanos<br><strong>Assunto:</strong> Atualização de Cadastro<br><br>Solicita-se a atualização dos cadastros de servidores até 15/08/2025.<br>Atenciosamente,<br>Maria Oliveira<br>Coordenadora Administrativa</p>
+                        <p class="mt-2"><strong>Comentário:</strong> O memorando é interno, com estrutura semelhante ao ofício, mas sem vocativo formal. O texto é direto e impessoal.</p>
+                    </div>
+                    <div class="bg-green-100 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-2">Dica de Estudo</h3>
+                        <p>Pratique a redação de ofícios e memorandos com base em situações reais, como solicitações administrativas. Compare seus textos com os modelos do Manual de Redação da Presidência da República.</p>
+                    </div>
+                </section>
+
+                <!-- Erros Comuns -->
+                <section id="erros" class="tab-panel bg-gray-50 p-6 rounded-lg hidden">
+                    <h2 class="text-3xl font-bold mb-4 text-blue-800">Erros Comuns em Provas</h2>
+                    <p class="text-lg mb-4">A IADES explora erros frequentes em redação oficial para testar o conhecimento dos candidatos. Abaixo, os principais erros a evitar:</p>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li><strong>Linguagem Coloquial:</strong> Exemplo: "Tá tudo certo com os documentos?" (Incorreto). Correto: "Os documentos estão em conformidade?"</li>
+                        <li><strong>Pronome de Tratamento Errado:</strong> Exemplo: "Vossa Senhoria" para um ministro (Incorreto). Correto: "Vossa Excelência".</li>
+                        <li><strong>Ausência de Fecho Formal:</strong> Exemplo: Encerrar com "Valeu!" (Incorreto). Correto: "Atenciosamente".</li>
+                        <li><strong>Falta de Padronização:</strong> Exemplo: Omitir número ou data em um ofício.</li>
+                        <li><strong>Erro de Crase:</strong> Exemplo: "À Vossa Excelência" (Incorreto). Correto: "A Vossa Excelência".</li>
+                    </ul>
+                    <div class="bg-red-100 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-2">Dica de Estudo</h3>
+                        <p>Revise questões de provas anteriores da IADES (disponíveis em <a href="http://www.pciconcursos.com.br" class="text-blue-600 hover:underline">pciconcursos.com.br</a>) para identificar pegadinhas comuns, como erros de formalidade ou estrutura.</p>[](https://www.pciconcursos.com.br/provas/iades)
+                    </div>
+                </section>
+
+                <!-- Quiz Interativo -->
+                <section id="quiz" class="tab-panel bg-white p-6 rounded-lg hidden">
+                    <h2 class="text-3xl font-bold mb-4 text-blue-800">Quiz Interativo</h2>
+                    <p class="text-lg mb-4">Teste seus conhecimentos com questões no estilo IADES, baseadas no Manual de Redação da Presidência da República.</p>
+                    <div id="quiz-container">
+                        <div class="quiz-question mb-6">
+                            <p class="font-semibold">1. Qual pronome de tratamento é usado para um ministro?</p>
+                            <div class="quiz-option p-2" data-correct="true">a) Vossa Excelência</div>
+                            <div class="quiz-option p-2">b) Vossa Senhoria</div>
+                            <div class="quiz-option p-2">c) Vossa Magnificência</div>
+                            <div class="quiz-option p-2">d) Senhor</div>
+                            <div class="hidden feedback text-green-600 mt-2">Correto! "Vossa Excelência" é usado para altas autoridades, como ministros.</div>
+                            <div class="hidden feedback text-red-600 mt-2">Incorreto. "Vossa Excelência" é o correto para ministros.</div>
+                        </div>
+                        <div class="quiz-question mb-6">
+                            <p class="font-semibold">2. Qual princípio da redação oficial é violado na frase: "Eu acho que a reunião deve ser adiada"?</p>
+                            <div class="quiz-option p-2">a) Clareza</div>
+                            <div class="quiz-option p-2" data-correct="true">b) Impessoalidade</div>
+                            <div class="quiz-option p-2">c) Formalidade</div>
+                            <div class="quiz-option p-2">d) Padronização</div>
+                            <div class="hidden feedback text-green-600 mt-2">Correto! A frase usa "Eu acho", violando a impessoalidade.</div>
+                            <div class="hidden feedback text-red-600 mt-2">Incorreto. A frase viola a impessoalidade por usar "Eu acho".</div>
+                        </div>
+                        <div class="quiz-question mb-6">
+                            <p class="font-semibold">3. Qual é o fecho correto para um ofício endereçado a uma autoridade?</p>
+                            <div class="quiz-option p-2">a) Abraços</div>
+                            <div class="quiz-option p-2">b) Até logo</div>
+                            <div class="quiz-option p-2" data-correct="true">c) Atenciosamente</div>
+                            <div class="quiz-option p-2">d) Com carinho</div>
+                            <div class="hidden feedback text-green-600 mt-2">Correto! "Atenciosamente" é o fecho formal para ofícios.</div>
+                            <div class="hidden feedback text-red-600 mt-2">Incorreto. "Atenciosamente" é o fecho correto.</div>
+                        </div>
+                        <div class="quiz-question mb-6">
+                            <p class="font-semibold">4. Qual elemento é obrigatório em um memorando?</p>
+                            <div class="quiz-option p-2">a) Vocativo formal</div>
+                            <div class="quiz-option p-2" data-correct="true">b) Número do documento</div>
+                            <div class="quiz-option p-2">c) Timbre colorido</div>
+                            <div class="quiz-option p-2">d) Assinatura digital</div>
+                            <div class="hidden feedback text-green-600 mt-2">Correto! O número do documento é essencial para identificação.</div>
+                            <div class="hidden feedback text-red-600 mt-2">Incorreto. O número do documento é obrigatório.</div>
+                        </div>
+                        <div class="quiz-question mb-6">
+                            <p class="font-semibold">5. Qual frase está correta em um e-mail corporativo?</p>
+                            <div class="quiz-option p-2" data-correct="true">a) Prezado Senhor, solicitamos sua presença na reunião.</div>
+                            <div class="quiz-option p-2">b) Oi, pode vir na reunião amanhã?</div>
+                            <div class="quiz-option p-2">c) Amigo, confirma a reunião, tá?</div>
+                            <div class="quiz-option p-2">d) E aí, bora pra reunião?</div>
+                            <div class="hidden feedback text-green-600 mt-2">Correto! A frase usa saudação formal e linguagem objetiva.</div>
+                            <div class="hidden feedback text-red-600 mt-2">Incorreto. A frase correta é formal e objetiva.</div>
+                        </div>
+                        <div class="quiz-question mb-6">
+                            <p class="font-semibold">6. Qual erro está presente na frase: "À Vossa Senhoria, informamos que a reunião foi cancelada"?</p>
+                            <div class="quiz-option p-2">a) Uso incorreto de pronome</div>
+                            <div class="quiz-option p-2">b) Uso incorreto de crase</div>
+                            <div class="quiz-option p-2">c) Falta de fecho</div>
+                            <div class="quiz-option p-2" data-correct="true">d) Ambos a e b</div>
+                            <div class="hidden feedback text-green-600 mt-2">Correto! "À Vossa Senhoria" tem crase incorreta e o pronome pode estar errado dependendo do destinatário.</div>
+                            <div class="hidden feedback text-red-600 mt-2">Incorreto. Há erros de crase e pronome de tratamento.</div>
+                        </div>
+                    </div>
+                    <button id="submit-quiz" class="bg-blue-800 text-white px-4 py-2 rounded">Enviar Respostas</button>
+                    <p id="quiz-score" class="mt-4 font-semibold"></p>
+                    <div class="bg-green-100 p-4 rounded-lg mt-4">
+                        <h3 class="text-xl font-semibold mb-2">Dica de Estudo</h3>
+                        <p>Resolva quizzes regularmente para fixar conceitos e identificar pontos fracos. A IADES usa questões de múltipla escolha com textos longos e pegadinhas.</p>[](https://blog.grancursosonline.com.br/banca-iades-perfil-questoes/)
+                    </div>
+                </section>
+
+                <!-- Exercícios Resolvidos -->
+                <section id="exercicios" class="tab-panel bg-gray-50 p-6 rounded-lg hidden">
+                    <h2 class="text-3xl font-bold mb-4 text-blue-800">Exercícios Resolvidos</h2>
+                    <p class="text-lg mb-4">Abaixo, exercícios resolvidos no estilo IADES, com explicações detalhadas para reforçar o aprendizado.</p>
+                    <div class="bg-blue-100 p-4 rounded-lg mb-4">
+                        <p><strong>Questão 1:</strong> Escreva um ofício solicitando documentos.</p>
+                        <p><strong>Resolução:</strong><br><strong>Ofício nº 456/2025</strong><br>Autoridade Nacional de Proteção de Dados<br>Brasília, 4 de agosto de 2025<br>Ao Senhor Diretor do Setor de Arquivos<br><strong>Assunto:</strong> Solicitação de Documentos<br><br>Solicita-se o envio dos relatórios de conformidade com a LGPD até 10/08/2025.<br>Atenciosamente,<br>Maria Oliveira<br>Coordenadora Administrativa</p>
+                        <p><strong>Comentário:</strong> O texto segue a estrutura padrão (timbre, número, data, vocativo, assunto, texto, fecho, assinatura), com linguagem clara, concisa e impessoal.</p>
+                    </div>
+                    <div class="bg-blue-100 p-4 rounded-lg mb-4">
+                        <p><strong>Questão 2:</strong> Corrija a frase: "Oi, por favor, envie os documentos até amanhã, tá bom?"</p>
+                        <p><strong>Resolução:</strong> Solicita-se o envio dos documentos até 05/08/2025.</p>
+                        <p><strong>Comentário:</strong> A frase original é coloquial e pessoal. A correção elimina "Oi", "por favor" e "tá bom", adotando impessoalidade e formalidade.</p>
+                    </div>
+                    <div class="bg-blue-100 p-4 rounded-lg">
+                        <p><strong>Questão 3:</strong> Escreva um e-mail corporativo convidando para uma reunião.</p>
+                        <p><strong>Resolução:</strong><br><strong>Assunto:</strong> Convite para Reunião<br>Prezado Senhor Coordenador,<br>Convidamos Vossa Senhoria para a reunião sobre a LGPD, a realizar-se em 10/08/2025, às 14h, na sala 101.<br>Atenciosamente,<br>João Silva<br>Diretor Administrativo</p>
+                        <p><strong>Comentário:</strong> O e-mail inclui assunto, saudação formal, texto objetivo e fecho adequado, respeitando as normas de redação oficial.</p>
+                    </div>
+                    <div class="bg-green-100 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-2">Dica de Estudo</h3>
+                        <p>Pratique a escrita de documentos com base em cenários administrativos reais. Use o Manual de Redação da Presidência da República para validar suas respostas.</p>
+                    </div>
+                </section>
+
+                <!-- Cards de Revisão -->
+                <section id="cards" class="tab-panel bg-white p-6 rounded-lg hidden">
+                    <h2 class="text-3xl font-bold mb-4 text-blue-800">Cards de Revisão</h2>
+                    <p class="text-lg mb-4">Use estes cards para revisar os conceitos principais de forma rápida e eficaz.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="card bg-blue-200 p-4 rounded-lg">
+                            <h3 class="font-semibold">Clareza</h3>
+                            <p>Escreva de forma objetiva, evitando ambiguidades. Exemplo: "Solicita-se a entrega dos relatórios."</p>
+                        </div>
+                        <div class="card bg-green-200 p-4 rounded-lg">
+                            <h3 class="font-semibold">Concisão</h3>
+                            <p>Use apenas as palavras necessárias. Exemplo: "A reunião foi adiada" em vez de "Informamos que a reunião foi adiada para outra data".</p>
+                        </div>
+                        <div class="card bg-yellow-200 p-4 rounded-lg">
+                            <h3 class="font-semibold">Impessoalidade</h3>
+                            <p>Foco no assunto, sem menções pessoais. Exemplo: "A diretoria solicita" em vez de "Eu solicito".</p>
+                        </div>
+                        <div class="card bg-red-200 p-4 rounded-lg">
+                            <h3 class="font-semibold">Formalidade</h3>
+                            <p>Use a norma culta e vocabulário técnico. Exemplo: "Atenciosamente" em vez de "Valeu".</p>
+                        </div>
+                        <div class="card bg-purple-200 p-4 rounded-lg">
+                            <h3 class="font-semibold">Padronização</h3>
+                            <p>Siga modelos oficiais. Exemplo: Ofício com timbre, número, data e fecho.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Glossário -->
+                <section id="glossario" class="tab-panel bg-gray-50 p-6 rounded-lg hidden">
+                    <h2 class="text-3xl font-bold mb-4 text-blue-800">Glossário da Redação Oficial</h2>
+                    <p class="text-lg mb-4">Termos essenciais para entender a redação oficial:</p>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li><strong>Expediente:</strong> Documento que registra comunicações administrativas, como ofícios e memorandos.</li>
+                        <li><strong>Vocativo:</strong> Forma de tratamento inicial, como "Senhor Diretor" ou "Vossa Excelência".</li>
+                        <li><strong>Fecho:</strong> Saudação final, como "Atenciosamente" ou "Respeitosamente".</li>
+                        <li><strong>Timbre:</strong> Identificação do órgão emissor no cabeçalho do documento.</li>
+                        <li><strong>Assunto:</strong> Resumo do propósito do documento, indicado antes do texto.</li>
+                    </ul>
+                    <div class="bg-green-100 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-2">Dica de Estudo</h3>
+                        <p>Memorize os termos do glossário, pois a IADES pode cobrar questões que testam o uso correto de elementos como vocativo e fecho.</p>
+                    </div>
+                </section>
+
+                <!-- Materiais para Download -->
+                <section id="downloads" class="tab-panel bg-white p-6 rounded-lg hidden">
+                    <h2 class="text-3xl font-bold mb-4 text-blue-800">Materiais para Download</h2>
+                    <p class="text-lg mb-4">Recursos adicionais para aprofundar seus estudos:</p>
+                    <ul class="list-disc pl-6">
+                        <li><a href="http://www.planalto.gov.br/ccivil_03/manual/manual_redacao.pdf" class="text-blue-600 hover:underline">Manual de Redação da Presidência da República (PDF)</a></li>
+                        <li><a href="#" class="text-blue-600 hover:underline">Modelos de Documentos Oficiais (PDF)</a></li>
+                        <li><a href="#" class="text-blue-600 hover:underline">Checklist de Redação Oficial (PDF)</a></li>
+                        <li><a href="http://www.pciconcursos.com.br/provas" class="text-blue-600 hover:underline">Provas Anteriores IADES (PDF)</a></li>
+                    </ul>
+                    <div class="bg-green-100 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-2">Dica de Estudo</h3>
+                        <p>Baixe e estude o Manual de Redação da Presidência da República. Resolva provas anteriores da IADES para se familiarizar com o estilo das questões.</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Sidebar and Tabs -->
+    <script>
+        // Sidebar Toggle
+        const sidebar = document.getElementById('sidebar');
+        const openSidebarBtn = document.getElementById('open-sidebar');
+        const closeSidebarBtn = document.getElementById('close-sidebar');
+
+        openSidebarBtn.addEventListener('click', () => {
+            sidebar.classList.remove('hidden');
+            sidebar.classList.add('open');
+        });
+
+        closeSidebarBtn.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+            sidebar.classList.add('hidden');
+        });
+
+        // Tab Functionality
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabPanels = document.querySelectorAll('.tab-panel');
+
+        function showTab(tabId) {
+            tabPanels.forEach(panel => panel.classList.add('hidden'));
+            tabButtons.forEach(button => button.classList.remove('active'));
+            
+            const activePanel = document.getElementById(tabId);
+            const activeButton = document.querySelector(`.tab-button[data-tab="${tabId}"]`);
+            
+            if (activePanel && activeButton) {
+                activePanel.classList.remove('hidden');
+                activeButton.classList.add('active');
+            }
+        }
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                showTab(button.dataset.tab);
+            });
+        });
+
+        document.querySelectorAll('.tab-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                showTab(link.dataset.tab);
+                if (window.innerWidth < 768) {
+                    sidebar.classList.remove('open');
+                    sidebar.classList.add('hidden');
+                }
+            });
+        });
+
+        // Show the first tab by default
+        showTab('inicio');
+
+        // Quiz Functionality
+        document.querySelectorAll('.quiz-option').forEach(option => {
+            option.addEventListener('click', () => {
+                const feedback = option.nextElementSibling;
+                const isCorrect = option.dataset.correct === 'true';
+                feedback.classList.remove('hidden');
+                option.style.backgroundColor = isCorrect ? '#d1fae5' : '#fee2e2';
+            });
+        });
+
+        document.getElementById('submit-quiz').addEventListener('click', () => {
+            document.getElementById('quiz-score').textContent = 'Pontuação: Em desenvolvimento!';
+        });
+    </script>
+</body>
+</html>
