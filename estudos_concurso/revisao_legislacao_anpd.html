@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revisão de Legislação – Processo Seletivo ANPD 2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: ANPD Blue & Professional Grays -->
+    <!-- Application Structure Plan: A comprehensive, tab-based Single Page Application (SPA) designed for targeted exam revision. The structure separates each core legislative topic into its own tab, allowing candidates to focus their study sessions. The flow progresses logically from foundational concepts (Principles, Organization) to specific laws (9.784, 14.133), and concludes with practical application tools (Comparisons, Quizzes, Exercises). This modular approach is ideal for self-paced learning and reinforcing specific areas of weakness. -->
+    <!-- Visualization & Content Choices: Report Info: Key legal concepts -> Goal: Organize & Explain -> Viz: Thematic tabs, structured text, and colored "alert" boxes -> Interaction: Click-to-navigate tabs -> Justification: Breaks down a vast syllabus into manageable, focused sections. Report Info: Exam-style questions -> Goal: Test knowledge & provide feedback -> Viz: Interactive Quiz form -> Interaction: User selects answers, clicks to submit, receives instant score and detailed feedback -> Justification: Simulates the exam experience and provides immediate learning reinforcement, which is more effective than passive reading. Report Info: Comparative legal doctrines (e.g., Dispensa vs. Inexigibilidade) -> Goal: Clarify distinctions -> Viz: HTML comparison tables -> Interaction: Static display -> Justification: A clear, side-by-side visual layout is the most effective way to highlight subtle but critical differences between related legal concepts. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body { font-family: 'Lato', sans-serif; background-color: #f8f9fa; }
+        h1, h2, h3, h4 { font-family: 'Roboto', sans-serif; }
+        .tab-btn { transition: all 0.3s ease; }
+        .tab-active { color: #0056b3; border-color: #0056b3; background-color: #e7f1ff; }
+        .tab-inactive { color: #495057; border-color: transparent; }
+        .content-panel { display: none; }
+        .content-panel.active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .card-pegadinha { background-color: #fff3cd; border-left: 5px solid #ffc107; }
+        .card-excecao { background-color: #f8d7da; border-left: 5px solid #dc3545; }
+        .card-dica { background-color: #d1ecf1; border-left: 5px solid #0dcaf0; }
+        .quiz-option.correct { background-color: #d1e7dd !important; border-color: #198754; }
+        .quiz-option.incorrect { background-color: #f8d7da !important; border-color: #dc3545; }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-[#002b5c]">Revisão para ANPD 2025 – Nível Médio</h1>
+            <p class="mt-2 text-lg text-gray-600">Seu guia completo de Legislação Administrativa</p>
+        </header>
+
+        <div class="lg:flex lg:gap-8">
+            <aside class="lg:w-1/4 xl:w-1/5 mb-8 lg:mb-0">
+                <nav id="tabs-container" class="sticky top-8 flex flex-col space-y-1">
+                    <button data-tab="inicio" class="tab-btn w-full text-left flex items-center gap-3 py-3 px-4 text-base font-semibold border-l-4 rounded-r-md"><i class="fa-solid fa-house fa-fw"></i> Início</button>
+                    <button data-tab="principios" class="tab-btn w-full text-left flex items-center gap-3 py-3 px-4 text-base font-semibold border-l-4 rounded-r-md"><i class="fa-solid fa-gavel fa-fw"></i> Princípios</button>
+                    <button data-tab="organizacao" class="tab-btn w-full text-left flex items-center gap-3 py-3 px-4 text-base font-semibold border-l-4 rounded-r-md"><i class="fa-solid fa-sitemap fa-fw"></i> Organização</button>
+                    <button data-tab="lei9784" class="tab-btn w-full text-left flex items-center gap-3 py-3 px-4 text-base font-semibold border-l-4 rounded-r-md"><i class="fa-solid fa-file-signature fa-fw"></i> Lei 9.784/99</button>
+                    <button data-tab="lei14133" class="tab-btn w-full text-left flex items-center gap-3 py-3 px-4 text-base font-semibold border-l-4 rounded-r-md"><i class="fa-solid fa-file-contract fa-fw"></i> Lei 14.133/21</button>
+                    <button data-tab="comparativos" class="tab-btn w-full text-left flex items-center gap-3 py-3 px-4 text-base font-semibold border-l-4 rounded-r-md"><i class="fa-solid fa-code-compare fa-fw"></i> Comparativos</button>
+                    <button data-tab="quiz" class="tab-btn w-full text-left flex items-center gap-3 py-3 px-4 text-base font-semibold border-l-4 rounded-r-md"><i class="fa-solid fa-circle-question fa-fw"></i> Quiz</button>
+                    <button data-tab="exercicios" class="tab-btn w-full text-left flex items-center gap-3 py-3 px-4 text-base font-semibold border-l-4 rounded-r-md"><i class="fa-solid fa-pen-to-square fa-fw"></i> Exercícios</button>
+                    <button data-tab="dicas" class="tab-btn w-full text-left flex items-center gap-3 py-3 px-4 text-base font-semibold border-l-4 rounded-r-md"><i class="fa-solid fa-lightbulb fa-fw"></i> Dicas Finais</button>
+                    <button data-tab="materiais" class="tab-btn w-full text-left flex items-center gap-3 py-3 px-4 text-base font-semibold border-l-4 rounded-r-md"><i class="fa-solid fa-download fa-fw"></i> Materiais</button>
+                </nav>
+            </aside>
+
+            <main class="flex-1 bg-white p-6 rounded-lg shadow-lg">
+                
+                <!-- Início -->
+                <div id="inicio" class="content-panel">
+                    <h2 class="text-2xl font-bold text-[#002b5c] mb-4">Bem-vindo(a) à sua Central de Revisão!</h2>
+                    <p class="mb-4">Esta página foi criada para ser sua principal ferramenta na revisão de Legislação Administrativa para o concurso da ANPD. O conteúdo é focado, direto e alinhado com o que as bancas, especialmente a IADES, costumam cobrar.</p>
+                    <div class="card-dica p-4 rounded-lg mb-6">
+                        <h3 class="font-bold text-lg mb-2"><i class="fa-solid fa-bullseye mr-2"></i>Dica do Especialista: Metodologia Ativa</h3>
+                        <p>Não seja um leitor passivo! Utilize o menu para focar em um tema por dia. Após ler o conteúdo, resolva os exercícios e, principalmente, faça o Quiz. Errar faz parte do processo de aprendizado. O feedback instantâneo irá solidificar seu conhecimento.</p>
+                    </div>
+                    <h3 class="text-xl font-bold text-[#002b5c] mb-3">Cronograma Sugerido (1 Semana)</h3>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li><strong>Dia 1:</strong> Princípios e Organização da Administração.</li>
+                        <li><strong>Dia 2:</strong> Foco total na Lei 9.784/99 e seus detalhes.</li>
+                        <li><strong>Dia 3:</strong> Imersão na Lei 14.133/21 (Parte 1: Princípios, Definições, Dispensa).</li>
+                        <li><strong>Dia 4:</strong> Imersão na Lei 14.133/21 (Parte 2: Modalidades, Contratos, Sanções).</li>
+                        <li><strong>Dia 5:</strong> Estudo dos Comparativos e resolução de todos os Exercícios.</li>
+                        <li><strong>Dia 6:</strong> Simulado geral com o Quiz e revisão das Dicas Finais.</li>
+                        <li><strong>Dia 7:</strong> Revisão leve e descanso.</li>
+                    </ul>
+                </div>
+
+                <!-- Princípios -->
+                <div id="principios" class="content-panel">
+                    <h2 class="text-2xl font-bold text-[#002b5c] mb-4">Princípios da Administração Pública</h2>
+                    <p class="mb-6">A base de todo o Direito Administrativo. O famoso mnemônico <strong>L.I.M.P.E.</strong> (Legalidade, Impessoalidade, Moralidade, Publicidade e Eficiência) é o ponto de partida obrigatório.</p>
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="text-xl font-bold">Legalidade</h3>
+                            <p>O administrador só pode fazer o que a lei permite. Diferente do particular, que pode fazer tudo que a lei não proíbe.</p>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">Impessoalidade</h3>
+                            <p>A atuação deve visar o interesse público, sem promoções pessoais ou perseguições. Expressão máxima: Súmula Vinculante 13 (veda o nepotismo).</p>
+                        </div>
+                        <div class="card-pegadinha p-4 rounded-lg">
+                            <h4 class="font-bold text-lg mb-2"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Pegadinha de Prova</h4>
+                            <p>Bancas adoram afirmar que a publicidade de um ato é condição para sua <strong>validade</strong>. Errado! A publicidade é, em regra, condição de <strong>eficácia</strong> (para que o ato produza efeitos externos).</p>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">Moralidade</h3>
+                            <p>Exige atuação ética e honesta, de acordo com a moral administrativa.</p>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">Publicidade</h3>
+                            <p>Transparência dos atos públicos como regra. O sigilo é a exceção.</p>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">Eficiência</h3>
+                            <p>Busca por resultados ótimos com o mínimo de recursos, exigindo uma gestão de qualidade.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Organização -->
+                <div id="organizacao" class="content-panel">
+                     <h2 class="text-2xl font-bold text-[#002b5c] mb-4">Organização da Administração</h2>
+                     <p class="mb-4">Entender a estrutura do Estado é crucial. A Administração se divide em Direta e Indireta.</p>
+                     <div class="grid md:grid-cols-2 gap-6">
+                         <div class="border p-4 rounded-lg">
+                             <h3 class="text-xl font-bold text-center mb-2">Administração Direta</h3>
+                             <p>Composta pelos órgãos dos entes federativos (União, Estados, DF, Municípios). Ex: Ministérios, Secretarias. Não possuem personalidade jurídica própria.</p>
+                         </div>
+                         <div class="border p-4 rounded-lg">
+                             <h3 class="text-xl font-bold text-center mb-2">Administração Indireta</h3>
+                             <p>Composta por entidades com personalidade jurídica própria: Autarquias, Fundações Públicas, Empresas Públicas e Sociedades de Economia Mista.</p>
+                         </div>
+                     </div>
+                     <div class="card-excecao p-4 rounded-lg mt-6">
+                        <h4 class="font-bold text-lg mb-2"><i class="fa-solid fa-ban mr-2"></i>Exceção Importante: Vínculo</h4>
+                        <p>Não há <strong>hierarquia</strong> entre a Administração Direta e a Indireta. O que existe é um controle finalístico, chamado de <strong>tutela</strong> ou <strong>supervisão ministerial</strong>.</p>
+                    </div>
+                </div>
+                
+                <!-- Lei 9.784/99 -->
+                <div id="lei9784" class="content-panel">
+                    <h2 class="text-2xl font-bold text-[#002b5c] mb-4">Lei nº 9.784/99 – Processo Administrativo Federal</h2>
+                    <p class="mb-6">Regula o processo administrativo no âmbito da Administração Pública Federal. Seus pontos mais cobrados são competência e prazos.</p>
+                    <h3 class="text-xl font-bold mb-3">Delegação e Avocação</h3>
+                    <p class="mb-4">Competência é irrenunciável, mas pode ser delegada ou avocada.</p>
+                    <div class="card-pegadinha p-4 rounded-lg">
+                        <h4 class="font-bold text-lg mb-2"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Pegadinha: Vedações à Delegação (Art. 13)</h4>
+                        <p>É proibido delegar (mnemônico: <strong>CENORA</strong>):</p>
+                        <ul class="list-disc list-inside mt-2">
+                            <li>Edição de atos de caráter <strong>NO</strong>rmativo.</li>
+                            <li>Decisão de <strong>RE</strong>cursos administrativos.</li>
+                            <li>Matérias de competência <strong>EX</strong>clusiva.</li>
+                        </ul>
+                    </div>
+                     <h3 class="text-xl font-bold mt-6 mb-3">Prazos Principais</h3>
+                     <ul class="list-disc list-inside space-y-1">
+                         <li><strong>10 dias:</strong> Interpor recurso.</li>
+                         <li><strong>5 dias:</strong> Juízo de retratação; prática de atos pelo interessado.</li>
+                         <li><strong>3 dias úteis:</strong> Antecedência mínima para intimação.</li>
+                         <li><strong>30 dias:</strong> Prazo para a Administração decidir (prorrogável).</li>
+                     </ul>
+                </div>
+
+                <!-- Lei 14.133/21 -->
+                <div id="lei14133" class="content-panel">
+                    <h2 class="text-2xl font-bold text-[#002b5c] mb-4">Lei nº 14.133/21 – Nova Lei de Licitações</h2>
+                    <p class="mb-6">A lei mais importante sobre contratações públicas. Foco nos detalhes numéricos e inovações.</p>
+                    <h3 class="text-xl font-bold mb-3">Dispensa de Licitação por Valor (Atualizados)</h3>
+                    <div class="grid sm:grid-cols-2 gap-4 text-center">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h4 class="font-semibold">Obras e Serviços de Engenharia</h4>
+                            <p class="text-2xl font-bold text-blue-800">&lt; R$ 125.451,15</p>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <h4 class="font-semibold">Compras e Outros Serviços</h4>
+                            <p class="text-2xl font-bold text-green-800">&lt; R$ 62.725,59</p>
+                        </div>
+                    </div>
+                     <div class="card-excecao p-4 rounded-lg mt-6">
+                        <h4 class="font-bold text-lg mb-2"><i class="fa-solid fa-ban mr-2"></i>Exceção Importante: Prazos Recursais</h4>
+                        <p>Os prazos na nova lei são diferentes! <strong>3 dias úteis</strong> para recurso comum (habilitação/julgamento), mas <strong>15 dias úteis</strong> para recurso contra aplicação de sanções.</p>
+                    </div>
+                </div>
+
+                <!-- Comparativos -->
+                <div id="comparativos" class="content-panel">
+                    <h2 class="text-2xl font-bold text-[#002b5c] mb-4">Comparativos e Esquematizações</h2>
+                    <div class="overflow-x-auto">
+                        <table class="w-full border-collapse">
+                            <thead>
+                                <tr class="bg-gray-100">
+                                    <th class="border p-3 text-lg">Dispensa de Licitação</th>
+                                    <th class="border p-3 text-lg">Inexigibilidade de Licitação</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="border p-3">A competição é <strong>possível</strong>, mas a lei opta por não realizá-la.</td>
+                                    <td class="border p-3">A competição é <strong>inviável</strong>.</td>
+                                </tr>
+                                <tr>
+                                    <td class="border p-3">Rol de hipóteses <strong>taxativo</strong> (Art. 75).</td>
+                                    <td class="border p-3">Rol de hipóteses <strong>exemplificativo</strong> (Art. 74).</td>
+                                </tr>
+                                <tr>
+                                    <td class="border p-3"><strong>Exemplo:</strong> Contratação de baixo valor.</td>
+                                    <td class="border p-3"><strong>Exemplo:</strong> Contratação de artista consagrado.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Quiz -->
+                <div id="quiz" class="content-panel">
+                    <h2 class="text-2xl font-bold text-[#002b5c] mb-4">Quiz Interativo</h2>
+                    <p class="mb-6">Teste seus conhecimentos com 10 questões no estilo da sua prova. Selecione as respostas e clique em "Corrigir Quiz" no final.</p>
+                    <form id="quiz-form" class="space-y-8">
+                        <!-- Questões serão inseridas aqui pelo JS -->
+                    </form>
+                    <div class="mt-8 text-center">
+                        <button id="submit-quiz" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors">Corrigir Quiz</button>
+                        <div id="quiz-results" class="mt-6 text-xl font-bold"></div>
+                    </div>
+                </div>
+
+                <!-- Exercícios -->
+                <div id="exercicios" class="content-panel">
+                    <h2 class="text-2xl font-bold text-[#002b5c] mb-4">Exercícios Resolvidos</h2>
+                    <div class="space-y-6">
+                        <div>
+                            <p class="font-semibold"><strong>(IADES - 2023 - Adaptada)</strong> A criação de uma Secretaria de Estado, como órgão integrante da estrutura do Poder Executivo, é um exemplo de:</p>
+                            <p class="mt-2">a) Descentralização</p>
+                            <p>b) Desconcentração</p>
+                            <p>c) Concessão</p>
+                            <p>d) Permissão</p>
+                            <div class="card-dica p-4 rounded-lg mt-3">
+                                <h4 class="font-bold text-lg mb-2"><i class="fa-solid fa-graduation-cap mr-2"></i>Gabarito e Comentário</h4>
+                                <p><strong>Resposta: B.</strong> A criação de órgãos internos, sem personalidade jurídica, dentro da mesma pessoa jurídica, é o fenômeno da desconcentração. Descentralização implicaria criar uma nova entidade (ex: uma autarquia).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dicas -->
+                <div id="dicas" class="content-panel">
+                    <h2 class="text-2xl font-bold text-[#002b5c] mb-4">Dicas Finais e Pegadinhas</h2>
+                    <div class="space-y-4">
+                        <div class="card-pegadinha p-4 rounded-lg">
+                            <h4 class="font-bold text-lg mb-2"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Cuidado com os Prazos!</h4>
+                            <p>A Lei 9.784/99 conta prazos em dias corridos (excluindo o dia do começo e incluindo o do vencimento). Já a Lei 14.133/21 especifica <strong>dias úteis</strong>. Essa diferença é fatal em provas.</p>
+                        </div>
+                        <div class="card-dica p-4 rounded-lg">
+                            <h4 class="font-bold text-lg mb-2"><i class="fa-solid fa-bullseye mr-2"></i>Dica do Especialista</h4>
+                            <p>Em questões sobre a Lei 14.133/21, se a pergunta envolver valores, desconfie sempre da alternativa que traz o valor original da lei (de 2021). As bancas sérias cobram os valores atualizados por decreto.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Materiais -->
+                <div id="materiais" class="content-panel">
+                    <h2 class="text-2xl font-bold text-[#002b5c] mb-4">Materiais para Download</h2>
+                    <p class="mb-6">Acesse materiais complementares para aprofundar seus estudos.</p>
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <a href="#" class="block bg-gray-100 p-4 text-center rounded-lg hover:bg-gray-200 transition-colors">
+                            <i class="fa-solid fa-file-pdf text-3xl text-red-600 mb-2"></i>
+                            <p class="font-semibold">Mapa Mental - Organização</p>
+                        </a>
+                        <a href="#" class="block bg-gray-100 p-4 text-center rounded-lg hover:bg-gray-200 transition-colors">
+                            <i class="fa-solid fa-file-pdf text-3xl text-red-600 mb-2"></i>
+                            <p class="font-semibold">Flashcards - Prazos</p>
+                        </a>
+                        <a href="#" class="block bg-gray-100 p-4 text-center rounded-lg hover:bg-gray-200 transition-colors">
+                            <i class="fa-solid fa-link text-3xl text-blue-600 mb-2"></i>
+                            <p class="font-semibold">Lei 14.133/21 Compilada</p>
+                        </a>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const tabsContainer = document.getElementById('tabs-container');
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const contentPanels = document.querySelectorAll('.content-panel');
+
+        function switchTab(tabId) {
+            tabButtons.forEach(button => {
+                const isSelected = button.dataset.tab === tabId;
+                button.classList.toggle('tab-active', isSelected);
+                button.classList.toggle('tab-inactive', !isSelected);
+            });
+            contentPanels.forEach(panel => {
+                panel.classList.toggle('active', panel.id === tabId);
+            });
+        }
+
+        tabsContainer.addEventListener('click', (e) => {
+            const button = e.target.closest('.tab-btn');
+            if (button) {
+                switchTab(button.dataset.tab);
+            }
+        });
+
+        switchTab('inicio');
+
+        // --- Lógica do Quiz ---
+        const quizData = [
+            { question: "Qual princípio administrativo veda a promoção pessoal de agentes públicos?", options: ["Legalidade", "Moralidade", "Impessoalidade", "Eficiência"], answer: "Impessoalidade", feedback: "Correto! A Impessoalidade busca evitar que o agente público use a máquina pública para se promover." },
+            { question: "A criação de uma autarquia (ex: INSS) é um exemplo de:", options: ["Desconcentração", "Descentralização", "Concentração", "Delegação"], answer: "Descentralização", feedback: "Exato! Descentralização é a transferência de serviço para outra pessoa jurídica, como uma autarquia." },
+            { question: "Na Lei 9.784/99, qual o prazo para interposição de recurso administrativo?", options: ["5 dias", "10 dias", "15 dias", "30 dias"], answer: "10 dias", feedback: "Perfeito! O prazo recursal geral na Lei 9.784/99 é de 10 dias." },
+            { question: "Segundo a Lei 14.133/21, a contratação de um artista consagrado pela crítica especializada é hipótese de:", options: ["Dispensa", "Licitação dispensada", "Inexigibilidade", "Concorrência"], answer: "Inexigibilidade", feedback: "Isso mesmo! A inviabilidade de competição caracteriza a inexigibilidade." },
+            { question: "Qual dos seguintes atos NÃO pode ser objeto de delegação, conforme a Lei 9.784/99?", options: ["Emissão de certidões", "Atos de mero expediente", "Decisão de recursos administrativos", "Atos de instrução processual"], answer: "Decisão de recursos administrativos", feedback: "Correto! A decisão de recursos é uma das vedações expressas à delegação (mnemônico CENORA)." },
+            { question: "O controle exercido pela Administração Direta sobre a Indireta é chamado de:", options: ["Hierarquia", "Subordinação", "Tutela", "Controle Interno"], answer: "Tutela", feedback: "Exato! É o controle finalístico, ou tutela, pois não há hierarquia." },
+            { question: "Na Lei 14.133/21, o prazo para recurso contra a aplicação de uma sanção de multa é de:", options: ["3 dias úteis", "5 dias úteis", "10 dias úteis", "15 dias úteis"], answer: "15 dias úteis", feedback: "Perfeito! A lei concede um prazo maior (15 dias úteis) para a defesa contra sanções." },
+            { question: "O princípio que exige da Administração a busca pelos melhores resultados com o menor custo é o da:", options: ["Razoabilidade", "Eficiência", "Economicidade", "Proporcionalidade"], answer: "Eficiência", feedback: "Correto! A Eficiência foi incluída na Constituição para exigir uma atuação gerencial do Estado." },
+            { question: "A anulação de um ato administrativo ilegal produz efeitos:", options: ["Ex nunc (não retroage)", "Ex tunc (retroage)", "Pro-futuro", "Depende do ato"], answer: "Ex tunc (retroage)", feedback: "Isso! A anulação desfaz o ato desde sua origem, por isso o efeito é 'ex tunc' (desde então)." },
+            { question: "A modalidade de licitação obrigatória para obras de grande vulto na Lei 14.133/21 é:", options: ["Pregão", "Concorrência", "Leilão", "Diálogo Competitivo"], answer: "Concorrência", feedback: "Exato! A Concorrência é a modalidade para obras e serviços especiais de engenharia." },
+        ];
+
+        const quizForm = document.getElementById('quiz-form');
+        quizData.forEach((item, index) => {
+            const questionEl = document.createElement('div');
+            questionEl.className = 'question-block';
+            let optionsHtml = item.options.map(option => `
+                <label class="quiz-option block border p-3 rounded-lg hover:bg-gray-100 cursor-pointer">
+                    <input type="radio" name="question${index}" value="${option}" class="mr-2">
+                    ${option}
+                </label>
+            `).join('');
+            questionEl.innerHTML = `
+                <p class="font-semibold mb-3">${index + 1}. ${item.question}</p>
+                <div class="space-y-2">${optionsHtml}</div>
+                <div id="feedback${index}" class="mt-2 text-sm font-semibold"></div>
+            `;
+            quizForm.appendChild(questionEl);
+        });
+
+        document.getElementById('submit-quiz').addEventListener('click', () => {
+            let score = 0;
+            quizData.forEach((item, index) => {
+                const feedbackEl = document.getElementById(`feedback${index}`);
+                const radioButtons = document.querySelectorAll(`input[name="question${index}"]`);
+                const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+                
+                radioButtons.forEach(rb => {
+                    rb.parentElement.classList.remove('correct', 'incorrect');
+                    rb.disabled = true;
+                });
+
+                if (selectedOption) {
+                    const userAnswer = selectedOption.value;
+                    const correctAnswer = item.answer;
+                    const label = selectedOption.parentElement;
+
+                    if (userAnswer === correctAnswer) {
+                        score++;
+                        label.classList.add('correct');
+                        feedbackEl.innerHTML = `<i class="fa-solid fa-check-circle text-green-600"></i> ${item.feedback}`;
+                        feedbackEl.className += ' text-green-700';
+                    } else {
+                        label.classList.add('incorrect');
+                        feedbackEl.innerHTML = `<i class="fa-solid fa-times-circle text-red-600"></i> Incorreto. A resposta certa é <strong>${correctAnswer}</strong>. ${item.feedback}`;
+                        feedbackEl.className += ' text-red-700';
+                        // Highlight the correct answer
+                        radioButtons.forEach(rb => {
+                            if (rb.value === correctAnswer) {
+                                rb.parentElement.classList.add('correct');
+                            }
+                        });
+                    }
+                } else {
+                     feedbackEl.innerHTML = `<i class="fa-solid fa-times-circle text-red-600"></i> Você não respondeu. A resposta certa é <strong>${item.answer}</strong>.`;
+                     feedbackEl.className += ' text-red-700';
+                     radioButtons.forEach(rb => {
+                        if (rb.value === item.answer) {
+                            rb.parentElement.classList.add('correct');
+                        }
+                    });
+                }
+            });
+            document.getElementById('quiz-results').textContent = `Seu resultado: ${score} de ${quizData.length} acertos!`;
+            document.getElementById('submit-quiz').disabled = true;
+            document.getElementById('submit-quiz').classList.add('bg-gray-400', 'cursor-not-allowed');
+        });
+    });
+    </script>
+</body>
+</html>
