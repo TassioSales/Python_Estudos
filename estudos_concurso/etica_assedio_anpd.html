@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revisão ANPD 2025: Ética e Assédio no Serviço Público</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Professional Blue, Neutral Grays, and Accent Colors -->
+    <!-- Application Structure Plan: A comprehensive, multi-tab single-page application (SPA) for targeted exam revision. The tabbed structure logically segments complex topics as requested (Ethics, Moral Harassment, Sexual Harassment, Discrimination, etc.), aligning perfectly with a structured study plan for the ANPD exam. This non-linear navigation allows users to focus on specific areas of need. The flow is designed to move from theory (definitions, laws) to practice (quizzes, commented questions), a proven method for effective learning and retention. -->
+    <!-- Visualization & Content Choices: 1. Comparative Tables: HTML tables are used to directly contrast 'Assédio Moral vs. Conflito', clarifying common points of confusion. 2. Interactive Cards: Key concepts, tips ('Dica do Especialista'), and common pitfalls ('Pegadinha da Prova') are highlighted in visually distinct cards (HTML/CSS) with icons, drawing user attention to critical information. 3. Interactive Quiz: A JS-powered quiz with 10 questions provides immediate, commented feedback and a final score, transforming passive study into an active self-assessment tool. 4. Accordions: Used for the glossary and commented questions to present large amounts of information compactly, reducing cognitive load and improving user experience. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        .tab-button { transition: all 0.3s ease; white-space: nowrap; }
+        .tab-button.active { color: #2563eb; border-color: #2563eb; background-color: #eff6ff; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .special-card { border-left-width: 4px; }
+        .card-dica { border-color: #2563eb; background-color: #eff6ff; }
+        .card-pegadinha { border-color: #e11d48; background-color: #fff1f2; }
+        .card-exemplo { border-color: #16a34a; background-color: #f0fdf4; }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between py-4">
+                <div class="flex items-center space-x-3">
+                    <i class="fa-solid fa-shield-halved text-3xl text-blue-600"></i>
+                    <h1 class="text-xl md:text-2xl font-bold text-slate-900">Revisão Especializada ANPD 2025</h1>
+                </div>
+            </div>
+            <div class="border-b border-slate-200">
+                <nav class="-mb-px flex space-x-4 md:space-x-6 overflow-x-auto pb-2" aria-label="Tabs">
+                    <button class="tab-button active py-3 px-4 text-sm font-medium rounded-t-lg border-b-2" data-tab="inicio"><i class="fa-solid fa-house mr-2"></i>Início</button>
+                    <button class="tab-button py-3 px-4 text-sm font-medium rounded-t-lg border-b-2 border-transparent" data-tab="fundamentos"><i class="fa-solid fa-scale-balanced mr-2"></i>Fundamentos</button>
+                    <button class="tab-button py-3 px-4 text-sm font-medium rounded-t-lg border-b-2 border-transparent" data-tab="codigo-etica"><i class="fa-solid fa-book-open mr-2"></i>Código de Ética</button>
+                    <button class="tab-button py-3 px-4 text-sm font-medium rounded-t-lg border-b-2 border-transparent" data-tab="assedio-moral"><i class="fa-solid fa-user-ninja mr-2"></i>Assédio Moral</button>
+                    <button class="tab-button py-3 px-4 text-sm font-medium rounded-t-lg border-b-2 border-transparent" data-tab="assedio-sexual"><i class="fa-solid fa-hand-paper mr-2"></i>Assédio Sexual</button>
+                    <button class="tab-button py-3 px-4 text-sm font-medium rounded-t-lg border-b-2 border-transparent" data-tab="discriminacao"><i class="fa-solid fa-users-slash mr-2"></i>Discriminação</button>
+                    <button class="tab-button py-3 px-4 text-sm font-medium rounded-t-lg border-b-2 border-transparent" data-tab="integridade"><i class="fa-solid fa-building-shield mr-2"></i>Integridade</button>
+                    <button class="tab-button py-3 px-4 text-sm font-medium rounded-t-lg border-b-2 border-transparent" data-tab="questoes"><i class="fa-solid fa-pen-to-square mr-2"></i>Questões</button>
+                    <button class="tab-button py-3 px-4 text-sm font-medium rounded-t-lg border-b-2 border-transparent" data-tab="quiz"><i class="fa-solid fa-circle-question mr-2"></i>Quiz</button>
+                    <button class="tab-button py-3 px-4 text-sm font-medium rounded-t-lg border-b-2 border-transparent" data-tab="glossario"><i class="fa-solid fa-book-bookmark mr-2"></i>Glossário</button>
+                    <button class="tab-button py-3 px-4 text-sm font-medium rounded-t-lg border-b-2 border-transparent" data-tab="downloads"><i class="fa-solid fa-download mr-2"></i>Materiais</button>
+                    <button class="tab-button py-3 px-4 text-sm font-medium rounded-t-lg border-b-2 border-transparent" data-tab="fontes"><i class="fa-solid fa-book mr-2"></i>Fontes</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <div id="inicio" class="tab-content active">
+            <h2 class="text-3xl font-bold mb-4">Revisão Especializada: Assédio e Ética para ANPD 2025</h2>
+            <p class="mb-6 text-lg text-slate-600">Bem-vindo(a), futuro(a) Técnico(a) em Administração da ANPD! Esta página é sua aliada na preparação para os temas de Ética e Assédio, cruciais para a sua aprovação. O conteúdo foi estruturado com base no edital e no perfil da banca IADES, focando em uma revisão ativa e estratégica.</p>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200"><h3 class="font-bold text-xl mb-3"><i class="fa-solid fa-bullseye text-blue-600 mr-2"></i>Como a Banca IADES Cobra o Tema?</h3><p class="text-slate-600">A banca IADES é conhecida por sua abordagem direta, valorizando o conhecimento da literalidade da lei, mas também a aplicação em casos práticos. Espere questões que exijam:</p><ul class="list-disc list-inside mt-4 space-y-2"><li>Diferenciação precisa entre assédio moral, sexual e conflitos.</li><li>Conhecimento detalhado dos deveres e vedações do Decreto nº 1.171/94.</li><li>Análise de cenários hipotéticos para aplicação das normas.</li><li>Identificação dos princípios éticos (Moralidade, Impessoalidade, etc.) por trás das regras.</li></ul></div>
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200"><h3 class="font-bold text-xl mb-3"><i class="fa-solid fa-lightbulb text-blue-600 mr-2"></i>Dicas de Uso e Estratégia</h3><p class="text-slate-600">Para maximizar seu aprendizado, siga estes passos:</p><ul class="list-disc list-inside mt-4 space-y-2"><li>Navegue pelas abas para revisar a teoria. Preste atenção nos quadros de "Pegadinhas de Prova".</li><li>Use as tabelas comparativas para fixar as diferenças-chave.</li><li>Resolva o Quiz Temático para um teste rápido e com feedback imediato.</li><li>Aprofunde-se nas Questões Comentadas para entender o raciocínio da banca.</li><li>Consulte o Glossário para solidificar os termos técnicos.</li></ul></div>
+            </div>
+        </div>
+        
+        <div id="fundamentos" class="tab-content"><h2 class="text-3xl font-bold mb-4">Fundamentos da Ética no Serviço Público</h2><p class="mb-6 text-lg text-slate-600">A ética no serviço público transcende a simples legalidade. Ela se baseia em um conjunto de princípios que orientam a conduta do agente público para a busca do bem comum.</p><div class="space-y-4"><div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200"><h3 class="font-bold text-xl mb-2">Princípios Fundamentais (Art. 37, CF)</h3><ul class="list-disc list-inside mt-3 space-y-1 text-slate-600"><li><strong>Moralidade:</strong> Agir com honestidade e boa-fé, buscando sempre o bem comum.</li><li><strong>Impessoalidade:</strong> Tratar todos de forma isonômica, sem favoritismos.</li><li><strong>Publicidade:</strong> Garantir a transparência dos atos públicos.</li><li><strong>Eficiência:</strong> Prestar o serviço com qualidade e rapidez.</li><li><strong>Decoro e Zelo:</strong> Manter conduta compatível com a dignidade do cargo.</li></ul></div><div class="special-card card-dica p-4 rounded-lg"><h4 class="font-bold"><i class="fa-solid fa-lightbulb mr-2"></i>Dica do Especialista</h4><p class="text-slate-700 mt-1">Entenda a conexão! Cada dever e vedação do Código de Ética existe para proteger um ou mais desses princípios. Ao analisar uma questão, pergunte-se: "Qual princípio está sendo violado?".</p></div></div></div>
+        
+        <div id="codigo-etica" class="tab-content"><h2 class="text-3xl font-bold mb-4">Código de Ética (Decreto nº 1.171/1994)</h2><p class="mb-6 text-lg text-slate-600">Este decreto estabelece as normas de conduta para os servidores públicos civis do Poder Executivo Federal. Seu domínio é essencial.</p><div class="grid md:grid-cols-2 gap-8"><div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200"><h3 class="font-bold text-xl mb-3 text-green-700">XIV - Deveres Fundamentais</h3><ul class="list-decimal list-inside space-y-2 text-slate-600"><li>Desempenhar as atribuições a tempo e com eficiência.</li><li>Ser probo, reto, leal e justo.</li><li>Respeitar a hierarquia, mas representar contra ilegalidades.</li><li>Resistir a pressões para obter favores ou vantagens indevidas.</li><li>Abster-se de exercer a função com finalidade estranha ao interesse público.</li></ul></div><div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200"><h3 class="font-bold text-xl mb-3 text-red-700">XV - Vedações ao Servidor</h3><ul class="list-decimal list-inside space-y-2 text-slate-600"><li>Usar o cargo para obter favorecimento para si ou para outrem.</li><li>Ser conivente com erro ou infração.</li><li>Receber qualquer tipo de vantagem, presente ou doação.</li><li>Desviar servidor para atendimento de interesse particular.</li><li>Fazer uso de informações privilegiadas.</li></ul></div></div><div class="special-card card-pegadinha p-4 rounded-lg mt-6"><h4 class="font-bold"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Pegadinha da Prova</h4><p class="text-slate-700 mt-1">A banca adora a aparente contradição do dever de "respeitar a hierarquia" com o de "representar contra ilegalidades". Lembre-se: a lealdade é ao interesse público, não à pessoa do chefe. Omitir-se é uma infração ética.</p></div></div>
+        
+        <div id="assedio-moral" class="tab-content"><h2 class="text-3xl font-bold mb-4">Assédio Moral no Serviço Público</h2><p class="mb-6 text-lg text-slate-600">É a exposição de pessoas a situações humilhantes e constrangedoras, repetitivas e prolongadas. É uma forma de violência psicológica.</p><div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200 mb-6"><h3 class="font-bold text-xl mb-3">Elementos Essenciais</h3><ul class="list-disc list-inside space-y-2 text-slate-600"><li><strong>Conduta Abusiva:</strong> Ações que extrapolam o poder diretivo.</li><li><strong>Reiteração:</strong> Conduta repetitiva e prolongada (regra geral).</li><li><strong>Intenção de Prejudicar:</strong> Objetivo de desestabilizar a vítima.</li></ul></div><div class="special-card card-exemplo p-4 rounded-lg mb-6"><h4 class="font-bold"><i class="fa-solid fa-list-check mr-2"></i>Exemplo Clássico</h4><p class="text-slate-700 mt-1">Um chefe que, sistematicamente, retira as tarefas de um subordinado para deixá-lo ocioso ("geladeira"), espalha boatos e o critica aos gritos em reuniões.</p></div><h3 class="font-bold text-2xl mb-4 text-center">Assédio Moral vs. Conflito Interpessoal</h3><div class="overflow-x-auto bg-white p-4 rounded-lg shadow-sm border border-slate-200"><table class="w-full text-left border-collapse"><thead><tr class="bg-slate-100"><th class="p-3 font-bold uppercase text-slate-600 border-b-2 border-slate-200">Critério</th><th class="p-3 font-bold uppercase text-slate-600 border-b-2 border-slate-200">Assédio Moral</th><th class="p-3 font-bold uppercase text-slate-600 border-b-2 border-slate-200">Conflito de Trabalho</th></tr></thead><tbody><tr class="hover:bg-slate-50"><td class="p-3 font-semibold border-b border-slate-200">Duração</td><td class="p-3 border-b border-slate-200">Prolongada e repetitiva.</td><td class="p-3 border-b border-slate-200">Pontual, esporádico.</td></tr><tr class="hover:bg-slate-50"><td class="p-3 font-semibold border-b border-slate-200">Intencionalidade</td><td class="p-3 border-b border-slate-200">Intenção de destruir/humilhar.</td><td class="p-3 border-b border-slate-200">Geralmente não há intenção de prejudicar.</td></tr><tr class="hover:bg-slate-50"><td class="p-3 font-semibold border-b border-slate-200">Partes</td><td class="p-3 border-b border-slate-200">Relação desigual (agressor vs. vítima).</td><td class="p-3 border-b border-slate-200">Oposição de interesses entre as partes.</td></tr></tbody></table></div></div>
+        
+        <div id="assedio-sexual" class="tab-content"><h2 class="text-3xl font-bold mb-4">Assédio Sexual no Serviço Público</h2><p class="mb-6 text-lg text-slate-600">É o constrangimento com conotação sexual no ambiente de trabalho. O elemento central é a ausência de consentimento da vítima.</p><div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200 mb-6"><h3 class="font-bold text-xl mb-3">Tipificação e Diferenças</h3><ul class="list-disc list-inside space-y-2 text-slate-600"><li><strong>Crime de Assédio Sexual (Art. 216-A, CP):</strong> Exige que o agressor seja <strong>superior hierárquico</strong>.</li><li><strong>Crime de Importunação Sexual (Art. 215-A, CP):</strong> Praticar ato libidinoso sem anuência, mas <strong>não exige hierarquia</strong>.</li><li><strong>Infração Administrativa:</strong> Pode ser configurada por um único ato.</li></ul></div><div class="special-card card-pegadinha p-4 rounded-lg mb-6"><h4 class="font-bold"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Pegadinha da Prova</h4><p class="text-slate-700 mt-1">A banca vai criar um cenário com um colega de mesmo nível hierárquico fazendo um convite sexual insistente. Isso NÃO é o crime de Assédio Sexual do Art. 216-A (falta hierarquia), mas pode ser Importunação Sexual e, certamente, é uma infração administrativa gravíssima.</p></div></div>
+        
+        <div id="discriminacao" class="tab-content"><h2 class="text-3xl font-bold mb-4">Discriminação Institucional e Preconceito</h2><p class="mb-6 text-lg text-slate-600">A discriminação no serviço público viola princípios fundamentais e pode se manifestar de forma sutil ou explícita, prejudicando tanto servidores quanto cidadãos.</p><div class="grid md:grid-cols-2 gap-6"><div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200"><h3>Conceitos-Chave</h3><ul class="list-disc list-inside mt-2 space-y-1"><li><strong>Discriminação Direta:</strong> Tratamento desfavorável explícito baseado em raça, gênero, orientação sexual, etc.</li><li><strong>Discriminação Indireta:</strong> Norma ou prática aparentemente neutra que, na prática, prejudica desproporcionalmente um grupo específico.</li><li><strong>Interseccionalidade:</strong> Análise que considera o acúmulo de múltiplas formas de discriminação (ex: mulher negra e periférica).</li></ul></div><div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200"><h3>Ações Afirmativas</h3><p>São políticas públicas voltadas a corrigir desigualdades históricas e promover a igualdade de oportunidades para grupos socialmente vulneráveis, como as cotas raciais em concursos públicos.</p></div></div></div>
+        
+        <div id="integridade" class="tab-content"><h2 class="text-3xl font-bold mb-4">Integridade e Ouvidoria</h2><p class="mb-6 text-lg text-slate-600">A integridade pública é o alinhamento consistente da conduta do servidor aos valores e princípios éticos. A Ouvidoria é um canal essencial para fortalecer essa cultura.</p><div class="grid md:grid-cols-2 gap-6"><div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200"><h3>Função da Ouvidoria</h3><p>É o canal de comunicação entre o cidadão e a Administração. Recebe, analisa e encaminha manifestações como:</p><ul class="list-disc list-inside mt-2 space-y-1"><li>Reclamações</li><li>Denúncias</li><li>Sugestões e Elogios</li><li>Solicitações de informação</li></ul></div><div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200"><h3>Papel da CGU</h3><p>A Controladoria-Geral da União atua como órgão central do Sistema de Controle Interno e do Sistema de Ouvidorias do Poder Executivo Federal, estabelecendo normas e fiscalizando a atuação dos órgãos para promover a transparência e combater a corrupção.</p></div></div></div>
+        
+        <div id="questoes" class="tab-content"><h2 class="text-3xl font-bold mb-4">Questões Comentadas</h2><p class="mb-6 text-lg text-slate-600">Analise questões de concursos anteriores. Clique em uma questão para ver o gabarito e o comentário detalhado.</p><div id="commented-questions-container" class="space-y-3"></div></div>
+        
+        <div id="quiz" class="tab-content"><h2 class="text-3xl font-bold mb-4">Quiz Temático Interativo</h2><p class="mb-6 text-lg text-slate-600">Teste seus conhecimentos com 10 questões no estilo da banca IADES. A correção é instantânea!</p><div id="quiz-container" class="bg-white p-6 rounded-lg shadow-sm border border-slate-200"></div></div>
+        
+        <div id="glossario" class="tab-content"><h2 class="text-3xl font-bold mb-4">Glossário Ético-Jurídico</h2><p class="mb-6 text-lg text-slate-600">Reforce os conceitos-chave. Clique em um termo para expandir a definição.</p><div id="glossary-container" class="space-y-3"></div></div>
+
+        <div id="downloads" class="tab-content"><h2 class="text-3xl font-bold mb-4">Materiais para Download</h2><p class="mb-6 text-lg text-slate-600">Acesse materiais de apoio para complementar sua revisão.</p><div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6"><a href="#" class="block bg-blue-600 text-white text-center p-6 rounded-lg shadow hover:bg-blue-700 transition-transform hover:-translate-y-1"><i class="fa-solid fa-file-pdf text-4xl mb-3"></i><span class="font-bold">Resumo em PDF</span></a><a href="#" class="block bg-green-600 text-white text-center p-6 rounded-lg shadow hover:bg-green-700 transition-transform hover:-translate-y-1"><i class="fa-solid fa-sitemap text-4xl mb-3"></i><span class="font-bold">Mapas Mentais</span></a><a href="#" class="block bg-purple-600 text-white text-center p-6 rounded-lg shadow hover:bg-purple-700 transition-transform hover:-translate-y-1"><i class="fa-solid fa-list-check text-4xl mb-3"></i><span class="font-bold">Checklist de Revisão</span></a></div></div>
+        
+        <div id="fontes" class="tab-content"><h2 class="text-3xl font-bold mb-4">Fontes Oficiais e Referências</h2><p class="mb-6 text-lg text-slate-600">Todo o conteúdo desta página foi elaborado com base nas seguintes fontes oficiais:</p><div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200"><ul class="list-disc list-inside space-y-2"><li>Decreto nº 1.171/1994 – Código de Ética Profissional do Servidor Público</li><li>Constituição Federal de 1988 – Art. 37</li><li>Código Penal – Art. 216-A (Assédio Sexual) e Art. 215-A (Importunação Sexual)</li><li>Cartilhas da CGU sobre ética, assédio e integridade</li><li>Guias da ENAP sobre conduta ética e ouvidoria</li><li>Manuais de integridade e boas práticas no serviço público</li><li>Análise de editais e provas anteriores da Banca IADES</li></ul></div></div>
+
+    </main>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(item => item.classList.remove('active'));
+            tab.classList.add('active');
+            const target = tab.getAttribute('data-tab');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+                if (content.id === target) {
+                    content.classList.add('active');
+                }
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+
+    function createAccordion(container, data) {
+        let html = '';
+        data.forEach(item => {
+            html += `<div class="bg-white rounded-lg shadow-sm overflow-hidden border border-slate-200"><button class="accordion-button w-full text-left p-4 flex justify-between items-center font-medium hover:bg-slate-50"><span>${item.title}</span><i class="fa-solid fa-chevron-down transition-transform"></i></button><div class="accordion-content bg-slate-50"><div class="p-4 border-t border-slate-200">${item.content}</div></div></div>`;
+        });
+        container.innerHTML = html;
+        container.querySelectorAll('.accordion-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const icon = button.querySelector('i');
+                const isOpen = content.style.maxHeight && content.style.maxHeight !== '0px';
+                if (isOpen) {
+                    content.style.maxHeight = '0px';
+                    icon.classList.remove('rotate-180');
+                } else {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    icon.classList.add('rotate-180');
+                }
+            });
+        });
+    }
+
+    const commentedQuestionsData = [
+        { title: "Questão 1: Conivência e Hierarquia", content: "<strong>(Ética/IADES - Adaptada) Julgue o item:</strong> De acordo com o Decreto 1.171/94, é vedado ao servidor público ser, em função de seu espírito de solidariedade, conivente com erro ou infração ao Código de Ética. Contudo, essa vedação é relativizada pelo dever de respeito à hierarquia.<br><br><strong>Gabarito:</strong> ERRADO.<br><strong>Comentário:</strong> A vedação à conivência é absoluta e reforçada pelo dever de representar contra ilegalidades, mesmo de um superior. A lealdade ao interesse público se sobrepõe ao temor hierárquico." },
+        { title: "Questão 2: Moralidade Administrativa", content: "<strong>(Ética/IADES - Adaptada) Julgue o item:</strong> A moralidade da Administração Pública, segundo o Código de Ética, limita-se à distinção entre o bem e o mal, sendo o papel do servidor ater-se estritamente à legalidade de seus atos.<br><br><strong>Gabarito:</strong> ERRADO.<br><strong>Comentário:</strong> O Código afirma que a moralidade 'não se limita à distinção entre o bem e o mal, devendo ser acrescida da ideia de que o fim é sempre o bem comum'. A ética transcende a legalidade estrita." },
+        { title: "Questão 3: Reiteração no Assédio Sexual", content: "<strong>(Assédio/IADES - Adaptada) Julgue o item:</strong> O assédio sexual, para sua configuração no âmbito administrativo-disciplinar, exige, tal como o assédio moral, a reiteração da conduta do agente.<br><br><strong>Gabarito:</strong> ERRADO.<br><strong>Comentário:</strong> Diferente do assédio moral (cuja regra é a reiteração), o assédio sexual pode ser configurado por um único ato, dada a sua gravidade." }
+    ];
+    createAccordion(document.getElementById('commented-questions-container'), commentedQuestionsData);
+    
+    const glossaryData = [
+        { title: "Decoro", content: "Conduta respeitosa e digna, compatível com a função pública, tanto no ambiente de trabalho quanto fora dele. É a imagem que o servidor projeta da Administração." },
+        { title: "Probidade", content: "Qualidade de quem age com retidão, honestidade e integridade. É um dos pilares da moralidade administrativa." },
+        { title: "Conflito de Interesses", content: "Situação em que interesses privados do servidor podem influenciar ou parecer influenciar o desempenho imparcial de suas funções públicas." },
+        { title: "Ouvidoria", content: "Canal de comunicação entre o cidadão e a Administração Pública, responsável por receber, analisar e encaminhar manifestações como reclamações, denúncias, sugestões e elogios." }
+    ];
+    createAccordion(document.getElementById('glossary-container'), glossaryData);
+
+    const quizData = [
+        { q: "Um servidor, ao perceber que seu chefe imediato cometeu uma infração ao Código de Ética, decide não relatar o fato por lealdade. A conduta do servidor está correta?", a: 2, o: ["Sim, pois o respeito à hierarquia prevalece.", "Não, pois ele foi conivente com a infração, violando um dever ético.", "Sim, para manter o bom clima organizacional."], exp: "A vedação à conivência e o dever de representar contra ilegalidades se sobrepõem à lealdade pessoal." },
+        { q: "A principal diferença legal entre o crime de Assédio Sexual (Art. 216-A) e o de Importunação Sexual (Art. 215-A) é:", a: 1, o: ["A necessidade de contato físico na importunação.", "A existência de relação de superioridade hierárquica no assédio.", "A reiteração da conduta no assédio."], exp: "O tipo penal do Assédio Sexual exige que o agente se prevaleça da sua condição de superior hierárquico, o que não é um requisito para a Importunação Sexual." },
+        { q: "Qual situação MELHOR descreve um ato que viola o princípio da Impessoalidade?", a: 2, o: ["Um servidor que demora para atender os cidadãos.", "Um servidor que utiliza um veículo oficial para fins particulares.", "Um servidor que acelera o processo de um amigo, passando-o na frente de outros."], exp: "A Impessoalidade exige tratamento isonômico a todos. Conceder vantagem a um amigo é a violação clássica deste princípio." },
+        { q: "Um único ato de extrema gravidade, como uma agressão verbal humilhante em público, pode configurar assédio moral?", a: 0, o: ["Sim, entendimentos mais recentes admitem essa possibilidade em casos excepcionais.", "Não, pois o assédio moral exige, por definição, a reiteração da conduta.", "Não, isso configuraria apenas dano moral, mas não assédio."], exp: "Embora a regra seja a reiteração, a jurisprudência tem admitido que um único ato, a depender de sua gravidade, pode ser suficiente para configurar o assédio moral." },
+        { q: "Receber um presente de baixo valor, como uma caneta, de um fornecedor, constitui infração ao Código de Ética?", a: 1, o: ["Não, pois presentes de baixo valor são meras cortesias.", "Sim, pois a vedação a receber presentes ou vantagens é absoluta, não importando o valor.", "Não, desde que o servidor não tenha a intenção de favorecer o fornecedor."], exp: "O Código veda receber 'qualquer tipo de... doação ou vantagem'. A norma não estabelece exceção para o valor, visando evitar qualquer aparência de conflito de interesses." },
+        { q: "A conduta de um servidor fora do horário de trabalho pode ser objeto de apuração pela Comissão de Ética?", a: 0, o: ["Sim, se a conduta comprometer o decoro da função pública.", "Não, a vida privada do servidor é inviolável e não se relaciona com a função.", "Apenas se a conduta for um crime."], exp: "O Código de Ética estabelece que os primados maiores, como o decoro, devem nortear o servidor 'seja no exercício do cargo ou função, ou fora dele'." },
+        { q: "A criação de um ambiente de trabalho com piadas e imagens de conotação sexual, sem visar uma vítima específica, pode configurar assédio sexual?", a: 0, o: ["Sim, na modalidade de assédio por intimidação ou ambiental.", "Não, pois o assédio sexual exige uma vítima determinada.", "Não, isso seria apenas uma conduta antiética, mas não assédio."], exp: "O assédio sexual pode se manifestar pela criação de um ambiente hostil ou ofensivo, conhecido como assédio ambiental ou por intimidação." },
+        { q: "O que consolida a moralidade do ato administrativo, segundo o Código de Ética?", a: 2, o: ["Apenas a observância estrita da lei.", "Apenas a busca pela finalidade do bem comum.", "O equilíbrio entre a legalidade e a finalidade."], exp: "O Código é expresso ao afirmar que 'O equilíbrio entre a legalidade e a finalidade, na conduta do servidor público, é que poderá consolidar a moralidade do ato administrativo'." },
+        { q: "A pena que pode ser aplicada diretamente pela Comissão de Ética é a de:", a: 1, o: ["Advertência.", "Censura.", "Suspensão."], exp: "A única penalidade que a Comissão de Ética pode aplicar diretamente ao servidor é a de censura. Outras penalidades dependem de Processo Administrativo Disciplinar." },
+        { q: "A discriminação que ocorre por meio de regras ou práticas da instituição, aparentemente neutras, mas que na prática prejudicam um grupo, é chamada de:", a: 1, o: ["Discriminação direta.", "Discriminação indireta.", "Discriminação interseccional."], exp: "A discriminação indireta é aquela que não é explícita, mas que resulta de práticas ou normas institucionais que acabam por gerar um impacto desproporcionalmente negativo sobre um grupo vulnerável." }
+    ];
+    
+    const quizContainer = document.getElementById('quiz-container');
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    function renderQuiz() {
+        if (currentQuestionIndex >= quizData.length) {
+            quizContainer.innerHTML = `<div class="text-center"><h3 class="text-2xl font-bold">Quiz Finalizado!</h3><p class="text-lg my-4">Sua pontuação: <span class="font-bold text-blue-600 text-2xl">${score} / ${quizData.length}</span></p><button id="restart-quiz-btn" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">Refazer Quiz</button></div>`;
+            document.getElementById('restart-quiz-btn').addEventListener('click', () => {
+                currentQuestionIndex = 0;
+                score = 0;
+                renderQuiz();
+            });
+            return;
+        }
+
+        const q = quizData[currentQuestionIndex];
+        let optionsHTML = '';
+        q.o.forEach((opt, index) => {
+            optionsHTML += `<label class="flex items-center p-3 rounded-lg border border-slate-300 hover:bg-slate-100 cursor-pointer"><input type="radio" name="quiz-q" value="${index}" class="mr-3"><span>${opt}</span></label>`;
+        });
+
+        quizContainer.innerHTML = `
+            <div class="mb-4">
+                <div class="flex justify-between items-center mb-2"><span class="text-sm font-medium text-slate-500">Questão ${currentQuestionIndex + 1} de ${quizData.length}</span><span class="text-sm font-medium text-slate-500">Pontos: ${score}</span></div>
+                <div class="w-full bg-slate-200 rounded-full h-2"><div class="bg-blue-600 h-2 rounded-full" style="width: ${((currentQuestionIndex) / quizData.length) * 100}%"></div></div>
+            </div>
+            <div class="mb-6"><p class="font-bold text-lg">${q.q}</p></div>
+            <div class="space-y-3">${optionsHTML}</div>
+            <div id="quiz-feedback" class="mt-4"></div>
+            <button id="check-quiz-btn" class="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 disabled:opacity-50" disabled>Verificar</button>
+        `;
+        
+        const radioButtons = quizContainer.querySelectorAll('input[type="radio"]');
+        const checkBtn = document.getElementById('check-quiz-btn');
+        radioButtons.forEach(radio => {
+            radio.addEventListener('change', () => checkBtn.disabled = false);
+        });
+
+        checkBtn.addEventListener('click', checkQuizAnswer);
+    }
+
+    function checkQuizAnswer() {
+        const selected = quizContainer.querySelector('input[name="quiz-q"]:checked');
+        if (!selected) return;
+
+        const answerIndex = parseInt(selected.value);
+        const q = quizData[currentQuestionIndex];
+        const feedbackEl = document.getElementById('quiz-feedback');
+        const isCorrect = answerIndex === q.a;
+
+        if (isCorrect) {
+            score++;
+            feedbackEl.innerHTML = `<div class="p-4 rounded-lg bg-green-100 text-green-800"><p class="font-bold">Correto!</p><p class="mt-2">${q.exp}</p></div>`;
+        } else {
+            feedbackEl.innerHTML = `<div class="p-4 rounded-lg bg-red-100 text-red-800"><p class="font-bold">Incorreto.</p><p class="mt-2">${q.exp}</p></div>`;
+        }
+        
+        document.getElementById('check-quiz-btn').textContent = "Próxima Questão";
+        document.getElementById('check-quiz-btn').onclick = () => {
+            currentQuestionIndex++;
+            renderQuiz();
+        };
+    }
+
+    renderQuiz();
+});
+</script>
+
+</body>
+</html>
